@@ -1,0 +1,62 @@
+NSIndex Benchmark — 10M keys, 1M queries per test
+AVX2: YES, AVX-512: YES
+
+=== POINT LOOKUPS (sequential dataset) ===
+std::lower_bound:  321.437 ns/lookup
+std::map:         1458.1  ns/lookup
+NSIndex (random):   60.211 ns/lookup  (5.3x vs lower_bound)
+NSIndex (hits):     12.602 ns/lookup  (10.1x vs PGM)
+NSIndex (clustered): 21.477 ns/lookup (17.5x vs lower_bound)
+PGM-Index:         127.729 ns/lookup
+
+=== MISS ===
+NSIndex:             7.995 ns/miss  (7.3x vs lower_bound, 1.5x vs PGM)
+std::lower_bound:    57.986 ns/miss
+PGM-Index:           11.837 ns/miss
+
+=== PREDECESSOR / SUCCESSOR ===
+NSIndex predecessor:  2.019 ns/query  (35.6x vs lower_bound)
+NSIndex successor:    2.905 ns/query  (24.5x vs lower_bound)
+std::lower_bound pred: 71.878 ns/query
+std::lower_bound succ: 71.314 ns/query
+
+=== INSERT ===
+NSIndex (auto-flush): 28.389 ns/insert (8.6x vs std::map)
+std::map:             243.098 ns/insert
+Insert+flush correctness: PASS
+
+=== RANGE QUERIES: Exponential Distribution ===
+NSIndex range (5 results):    368.475 ns/query (avg 165 results)
+BitBlock range (5 results):  348.780 ns/query (avg 165 results)
+std::lower_bound (5 results): 720.333 ns/query (avg 4503 results)
+NSIndex range (50 results):   396.791 ns/query (avg 166 results)
+BitBlock range (50 results):  375.803 ns/query (avg 166 results)
+NSIndex range (100 results):  377.065 ns/query (avg 166 results)
+BitBlock range (100 results): 380.908 ns/query (avg 166 results)
+NSIndex range (1000 results): 387.459 ns/query (avg 166 results)
+BitBlock range (1000 results): 403.190 ns/query (avg 166 results)
+
+ALEX range (5 results):    8791.99 ns/query (avg 4503 results)
+ALEX range (50 results):  15718.3  ns/query (avg 9894 results)
+ALEX range (100 results): 16959.9  ns/query (avg 9948 results)
+ALEX range (1000 results): 17261.9 ns/query (avg 9992 results)
+
+NSIndex vs ALEX: 25.2x (5), 39.6x (50), 44.9x (100), 44.5x (1000)
+
+=== RANGE QUERIES: Clustered Distribution ===
+NSIndex range (5 results):    405.250 ns/query (avg 184 results)
+BitBlock range (5 results):   408.331 ns/query (avg 184 results)
+std::lower_bound (5 results): 110.490 ns/query (avg 6915 results)
+NSIndex range (50 results):   413.850 ns/query (avg 184 results)
+BitBlock range (50 results):  398.822 ns/query (avg 184 results)
+NSIndex range (100 results):  429.604 ns/query (avg 184 results)
+BitBlock range (100 results): 488.730 ns/query (avg 184 results)
+NSIndex range (1000 results): 416.993 ns/query (avg 184 results)
+BitBlock range (1000 results): 427.212 ns/query (avg 184 results)
+
+ALEX range (5 results):    2593.97 ns/query (avg 1031 results)
+ALEX range (50 results):   7804.13 ns/query (avg 4136 results)
+ALEX range (100 results): 10731.8  ns/query (avg 5919 results)
+ALEX range (1000 results): 16308.1 ns/query (avg 9142 results)
+
+NSIndex vs ALEX: 6.4x (5), 19.0x (50), 25.0x (100), 39.1x (1000)

@@ -1,0 +1,29 @@
+NSFix vs hffix vs QuickFIX (native build, -O3 -march=native) — 100K NewOrderSingle messages
+
+Parser                                          | Throughput (msg/sec)
+------------------------------------------------|---------------------
+NSFix (full: mmap log + multi-session + recovery) | ~8.5M
+hffix (equivalent workload, fair)               | 8.1M
+cpp_fix_codec (parse)                           | 3.1M
+QuickFIX 1.15.1 (full engine)                   | 452K
+
+--- BARE BENCHMARK ---
+
+NSFix Bare Metal Throughput Ladder (11th Gen Intel Core i7-1165G7, single core)
+
+Layer  Description                          | Throughput      | GB/sec
+--------------------------------------------|-----------------|-------
+0      AVX2 raw SOH scan                    | 1.1B SOH/sec   | 10
+0a     AVX-512 raw SOH scan                 | 1.6B SOH/sec   | 14
+1      AVX2 message boundary detection      | 43M msg/sec    | 5
+2      AVX2 bare parser (7 fields)          | 15M msg/sec    | 2
+2a     AVX-512 two-phase (scan + extract)   | 13M msg/sec    | 2
+2b     AVX-512 schema-aware (no tag decode) | 16M msg/sec    | 2
+2c     AVX-512 hardcoded tag lengths        | 24M msg/sec    | 3
+3      NSFix feed_batch (no callback)       | 11M msg/sec    | 1
+4      NSFix feed_batch + full callback      | 11M msg/sec    | 1
+5      NSFix feed per-message (contiguous)   | 10M msg/sec    | 1
+6      NSFix feed per-message (vector)       | 11M msg/sec    | 1
+
+memcpy bandwidth: 19.1 GB/sec
+Theoretical maximum: 154M msg/sec

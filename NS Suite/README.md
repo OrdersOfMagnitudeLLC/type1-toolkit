@@ -1,0 +1,49 @@
+# NS Suite
+
+**by Orders of Magnitude · ofmagnitude.com**
+
+22 high-performance C++ libraries. Drop-in replacements for standard
+algorithms and data structures — faster on structured data, documented
+losses on structureless data.
+
+## Products
+
+| Product | Beats | Headline |
+|---|---|---|
+| NSSort | ips4o, vqsort | 193,000x on zero distribution |
+| NSHash | absl, boost, robin_hood | 18x bounded workload |
+| NSQueue | rigtorp::SPSCQueue | 4.2x, 400M items/sec |
+| NSAlloc | mimalloc | 2.58x bulk reset |
+| NSLock | std::shared_mutex | 2.83x at 256 threads |
+| NSIndex | PGM-Index | 7.3x hit, 31x predecessor |
+| NSComp | zstd | 30x faster decompress |
+| NSBVH | Intel Embree | 2.78x dense, BVH16 AVX-512 |
+| NSMatrix | Eigen | 2.49x block-diagonal |
+| NSCache | LRU, CLOCK | 5.67x random workload |
+| NSOptimize | 2-opt TSP | 387x at 20K cities |
+| NSMesh | Draco | 2.43x smaller, 13.5x faster encode |
+| NSAttend | Dense attention | 28.7x fixed window |
+| NSInfer | Dense BLAS | 3.04x MLP throughput |
+| NSKVCache | q8_0 | 300x compression, 1M context |
+| NSFFT | FFTW (sparse) | 31.6x at K=10 |
+| NSGraph | Unordered BFS | 2.15x via node reordering |
+| NSStringIndex | strstr | 2605x at 1K queries |
+| NSFix | QuickFIX | Full production engine, beats bare codecs |
+| NSQuant | PowerInfer | Variable-rate per-cluster, 10-12x disk |
+| NSQCD | — | Three-loop QCD, 0.0% alpha_s error |
+
+## License
+
+AGPLv3 free tier · OOM Commercial License for commercial use
+https://ofmagnitude.com/license
+
+## Build
+
+Each product builds independently:
+```bash
+cd <product>/
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O3 -march=native"
+make -j$(nproc)
+./benchmark
+```

@@ -1,0 +1,18 @@
+NSInfer CPU Inference - Energy-Ordered Selection
+Model: TinyLlama (d_model=2048, d_ff=5632)
+Weights loaded from .bin files
+
+Dense BLAS baseline:
+  Time: 83.725 ms
+  Memory loaded: 0.086 GB
+
+=== Energy threshold 75%, rescue K=0 ===
+  Run 1: 29.024 ms, 32.2% kept
+  Run 2: 28.913 ms, 32.2% kept
+  Run 3: 29.116 ms, 32.2% kept
+  Run 4: 28.940 ms, 32.2% kept
+  Run 5: 29.040 ms, 32.2% kept
+  Median speedup: 2.88x (2.88x - 2.90x)
+  Memory loaded: 0.041 GB
+  Cosine similarity: 0.9693
+

@@ -1,0 +1,10 @@
+NSMesh vs Draco (native build, -O3 -march=native) — 3D mesh compression (100K vertices, cl 10)
+
+Method                           | Size (bytes) | Time (ms) | Ratio   | vs Draco size | vs Draco time
+---------------------------------|--------------|-----------|---------|---------------|--------------
+Draco Encode (cl 10)             |      160,626 |       453 | 5.02%   | 1.0x          | 1.0x
+NS Delta + Zlib                  |       90,110 |        32 | 2.82%   | 0.56x         | 0.07x
+NS Parallelogram + Delta + Zlib  |       67,286 |        25 | 2.10%   | 0.42x         | 0.06x
+
+Median of 3 runs. Draco cl 10 (max compression), Draco built from source with -O3 -march=native.
+NS Para vs Draco cl 10: 0.42x size, 18.1x faster encode.

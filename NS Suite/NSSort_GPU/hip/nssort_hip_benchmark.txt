@@ -1,0 +1,49 @@
+NSSort GPU vs cub::DeviceRadixSort — int64_t, N=100000000
+=========================================================
+
+distribution      ns_sort(ms)      cub(ms)    ratio   result
+-----------------------------------------------------------------
+[NSSort] path=PATH_SORTED (zero-sampled) n=100000000
+[NSSort] path=PATH_SORTED (zero-sampled) n=100000000
+[NSSort] path=PATH_SORTED (zero-sampled) n=100000000
+[NSSort] path=PATH_SORTED (zero-sampled) n=100000000
+zero                    0.437       67.325  153.93x   WIN
+[NSSort] path=PATH_SORTED n=100000000
+[NSSort] path=PATH_SORTED n=100000000
+[NSSort] path=PATH_SORTED n=100000000
+[NSSort] path=PATH_SORTED n=100000000
+sorted                  3.818       66.178   17.33x   WIN
+[NSSort] path=PATH_REVERSE n=100000000
+[NSSort] path=PATH_REVERSE n=100000000
+[NSSort] path=PATH_REVERSE n=100000000
+[NSSort] path=PATH_REVERSE n=100000000
+reverse_sorted         53.813       66.174    1.23x   WIN
+almost_sorted         169.627       66.171    2.56x   LOSS
+[NSSort] path=PATH_COUNTING range=10000 n=100000000
+[NSSort] path=PATH_COUNTING range=10000 n=100000000
+[NSSort] path=PATH_COUNTING range=10000 n=100000000
+[NSSort] path=PATH_COUNTING range=10000 n=100000000
+root_dup                7.488       66.127    8.83x   WIN
+[NSSort] path=PATH_COUNTING range=2 n=100000000
+[NSSort] path=PATH_COUNTING range=2 n=100000000
+[NSSort] path=PATH_COUNTING range=2 n=100000000
+[NSSort] path=PATH_COUNTING range=2 n=100000000
+two_dup                 8.695       66.106    7.60x   WIN
+[NSSort] path=PATH_COUNTING range=8 n=100000000
+[NSSort] path=PATH_COUNTING range=8 n=100000000
+[NSSort] path=PATH_COUNTING range=8 n=100000000
+[NSSort] path=PATH_COUNTING range=8 n=100000000
+eight_dup               7.310       66.098    9.04x   WIN
+[NSSort] path=PATH_COUNTING range=1000 n=100000000
+[NSSort] path=PATH_COUNTING range=1000 n=100000000
+[NSSort] path=PATH_COUNTING range=1000 n=100000000
+[NSSort] path=PATH_COUNTING range=1000 n=100000000
+zipf                    8.761       66.106    7.55x   WIN
+exponential            68.047       66.206    1.03x   LOSS
+[NSSort] path=PATH_GENERAL range=18446742787415186013 n=100000000
+[NSSort] path=PATH_GENERAL range=18446742787415186013 n=100000000
+[NSSort] path=PATH_GENERAL range=18446742787415186013 n=100000000
+[NSSort] path=PATH_GENERAL range=18446742787415186013 n=100000000
+uniform               102.348       66.436    1.54x   LOSS
+
+Done.

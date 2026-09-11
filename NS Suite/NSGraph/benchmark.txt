@@ -1,0 +1,20 @@
+NS Graph Traversal Benchmark Results
+=====================================
+Compile: g++ -O3 -march=native -std=c++17 -o nsgraph_bench nsgraph_bench.cpp
+
+=== Graph A - Scrambled Community ===
+Nodes visited: 1000000
+BFS Standard: 416.118 ms
+
+=== Graph C - Reordered Community ===
+Nodes visited: 1000000
+BFS Standard: 160.003 ms
+
+=== Reordering Speedup ===
+Graph A (scrambled): 416.118 ms
+Graph C (reordered): 160.003 ms
+Speedup: 2.60069x
+
+=== Graph B - Random ===
+Nodes visited: 1000000
+BFS Standard: 531.473 ms

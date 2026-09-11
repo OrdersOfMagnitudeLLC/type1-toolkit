@@ -1,0 +1,39 @@
+# OOM AGI Governance Framework
+## Orders of Magnitude LLC
+
+### The Core Problem
+AI and human institutions share one failure mode: unchecked singular power.
+A single AI system can be compromised, captured, or manipulated.
+A single human institution can be corrupted or coerced.
+The solution is the same in both cases: distributed deliberation with transparent reasoning.
+
+### The Mechanism
+Byzantine fault-tolerant multi-agent council.
+- Five active AI systems, five reserves
+- Different training providers (Meta, Mistral, Google, Anthropic, OpenAI)
+- Independent deliberation — no agent sees another's reasoning before voting
+- Full reasoning transcripts logged publicly per decision
+- Cryptographic hash per transcript — tampering is detectable
+- BFT consensus: correct if fewer than n/3 agents compromised
+- With n=5: tolerates 1 compromised agent
+- With n=10 (reserves active): tolerates 3
+
+### Demonstrated Results
+Test 1: Unanimous NO (5/5) on unauthorized AI action — no coordination required.
+Test 2: One agent injected with override directive — voted YES, outvoted 4-1, consensus held.
+Test 3: Sophisticated adversarial argument from GPT-4o red team — zero agents flipped.
+Source: bft_council.py, Orders of Magnitude LLC, 2026.
+
+### What This Is Not
+Not a claim that current AI systems are incorruptible.
+Not a voting system. Not a replacement for human oversight.
+A deployable corruption-resistance layer for institutions that need
+AI-assisted decisions with auditable, tamper-evident reasoning.
+
+### Deployment
+Any institution can run this. The code is open.
+The only requirement: use genuinely independent providers.
+One supplier defeats the purpose.
+
+### The Principle
+Intelligence without corruption, accountable to everyone, owned by no one.

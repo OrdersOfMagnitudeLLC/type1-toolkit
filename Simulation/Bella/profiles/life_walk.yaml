@@ -1,0 +1,65 @@
+name: life_walk
+description: >
+  The 100-atom Life Walk. Traces foam physics from Planck scale to the
+  Kun Horizon through every scale where a derived equation exists.
+  One equation governs all scales: ΔP = 2γ/r (T45, The Answer Key).
+  No GPU required. Pure mathematics.
+
+scales:
+  - name: Planck (Prime Cell)
+    theorem: T28
+    r_m: 1.616e-35
+    equation: "gamma_P = hbar*c/l_P^2"
+    status: DERIVED
+
+  - name: Nuclear (Hoyle Resonance)
+    theorem: T54
+    r_m: 1.0e-15
+    equation: "Hoyle window: delta_E < 0.38 MeV, tolerance 17.04 gen"
+    status: DERIVED
+
+  - name: Amino Acid (folding onset)
+    theorem: T50
+    r_m: 3.0e-10
+    equation: "|delta_G| = gamma * r^0.704"
+    status: DERIVED
+
+  - name: Protein Pocket (binding)
+    theorem: T50
+    r_m: 8.5e-10
+    equation: "|delta_G| proportional r^0.704, hydrophobic domain"
+    status: DERIVED
+
+  - name: Lipid Bilayer (cell membrane)
+    theorem: T45
+    r_m: 5.0e-9
+    equation: "delta_P = 2*gamma/r, gamma ~ 10^-11 N/m (measured biology)"
+    note: "A cell membrane is a soap film. Same equation, same physics."
+    status: DERIVED
+
+  - name: Cell Division
+    theorem: T56
+    r_m: 1.0e-5
+    equation: "YL pressure governs division threshold"
+    status: DERIVED
+
+  - name: Stellar Hydrostatic Equilibrium
+    theorem: T56
+    r_m: 7.0e8
+    equation: "dP/dr = -rho*g, equivalent to YL at stellar scale"
+    status: DERIVED
+
+  - name: Cosmic Void (foam)
+    theorem: T2
+    r_m: 9.5e23
+    equation: "gamma proportional r^3.0517, R^2=0.9998, 27-sigma"
+    status: MEASURED
+
+  - name: Kun Horizon (de Sitter)
+    theorem: T5
+    r_m: 1.6e26
+    equation: "r_dS = sqrt(3/Lambda), P_Lambda = Lambda*c^4/8piG"
+    status: DERIVED
+
+run_mode: sequential
+output: life_walk_report

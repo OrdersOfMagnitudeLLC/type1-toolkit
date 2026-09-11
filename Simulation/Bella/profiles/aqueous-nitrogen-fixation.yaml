@@ -1,0 +1,35 @@
+name: aqueous-nitrogen-fixation
+description: Nitrogenase mimics — ambient aqueous N2 fixation, no heating, soil-deployable
+  powder
+required_elements_preferred:
+- Fe
+- V
+- Ti
+- Mn
+- Mo
+excluded_elements:
+- Ru
+- Rh
+- Pd
+- Pt
+- Ir
+- Eu
+- Ce
+- rare earths
+min_element_ppm: 10
+required_chemistry:
+- must contain Fe AND (V OR Ti OR Mn OR Mo)
+- must be nitride OR oxynitride OR carbonitride
+synthesis_temp_max_C: 800
+aqueous_stable: true
+bandgap_range:
+- 1.8
+- 2.8
+notes: 'Target: ambient aqueous activation, sunlight or pH trigger, NH4+ output directly
+  in soil. No factory. No burning.'
+adsorb_molecules:
+- N2
+neb_molecule: N2
+watch_auto_adsorb: true
+watch_auto_neb: true
+category: materials-energy

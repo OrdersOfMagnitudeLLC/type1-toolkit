@@ -1,0 +1,71 @@
+query_inject: lead-free piezoelectric material perovskite non-toxic
+  earth-abundant ferroelectric
+protein_query: null
+description: 'Lead-free piezoelectric ceramics and ferroelectrics using abundant
+  elements. No rare earths or precious metals.'
+required_elements:
+- Na
+- K
+- Ba
+- Ca
+- Sr
+- Zn
+- Ti
+- Zr
+- Hf
+- Sn
+- Nb
+- Ta
+- O
+- N
+- S
+excluded_elements:
+- Pb
+- Pt
+- Ir
+- Pd
+- Rh
+- Ru
+- Au
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Ba
+- Ti
+- Zr
+- O
+required_chemistry:
+- perovskite, tetragonal, or wurtzite piezoelectric structure
+- must contain Ti, Zr, Hf, Sn, or Nb on B-site
+excluded_chemistry:
+- contains lead
+- pure intermetallic
+name: piezoelectric-leadfree
+synthesis_temp_max_C: 1200
+aqueous_stable: false
+bandgap_range:
+- 2.0
+- 5.0
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: false
+adsorb_molecules:
+- H2O
+neb_molecule: H2O
+category: materials-sensing

@@ -1,0 +1,6 @@
+NSInfer vs Dense BLAS — TinyLlama d_model=2048, d_ff=5632
+
+Method                  | Time (ms) | Speedup | Memory (GB)
+------------------------|-----------|---------|------------
+Dense BLAS baseline      |    61.797 |   1.0x  | 0.086
+Energy 75%, K=0 (median)|    57.427 |   1.08x | 0.086

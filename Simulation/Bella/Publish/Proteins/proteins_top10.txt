@@ -1,0 +1,57 @@
+PROTEINS TOP 10 — BEST CANDIDATES BY DISEASE CATEGORY
+====================================================
+Source: proteins_priority1000_calibrated_53k.csv (v3 calibrated, 53,349 clean)
+Filter: tox_score <= 3, top 3 by D_score closest to 0
+
+rank  category               target          D_score  protein_class  SMILES
+------------------------------------------------------------------------------------------------------------------------
+   1  aging                  MMP3             -3.831  protease       CCN(C)CCC(=O)NC[C@H]1[C@@H]2CN(C(=O)Cn3cnnn3)C[C@H]12
+   2  aging                  MMP3             -3.831  protease       CN(C[C@H](O)CN(C)C(=O)[C@]1(F)CCOC1)C(=O)c1cn(C)nn1
+   3  aging                  MMP3             -3.831  protease       C[C@@H](CNC(=O)COc1cnn(C)c1)NC(=O)[C@H]1COCCO1
+
+   1  cancer                 GPR137B          -7.070  gpcr           O=C(CN1CCOCC1=O)NCC1=CCN(CCn2cncn2)CC1
+   2  cancer                 GPR137B          -7.070  gpcr           C[C@@H]1CN(C(=O)COc2cnn(C)c2)C[C@H]1CCNC(=O)C(N)=O
+   3  cancer                 GPR137B          -7.071  gpcr           C[C@@H](C(=O)N(C)C1CC(NC(=O)Cc2nc[nH]n2)C1)S(C)(=O)=O
+
+   1  neurodegeneration      TNFRSF12A       -11.322  default        O=C(NCCCN1C(=O)CNC1=O)c1cn(C[C@@H]2CCOC2)nn1
+   2  neurodegeneration      TNFRSF12A       -11.322  default        Cn1ncc(CNC2(CNC(=O)[C@@H]3COCCO3)CCOCC2)n1
+   3  neurodegeneration      TNFRSF12A       -11.322  default        CN(C)CC1(C(=O)NC[C@H]2[C@@H]3CN(C(=O)c4nnn(C)n4)C[C@H]23)CC1
+
+   1  infectious_disease     CASP8            -2.235  protease       CC[C@H](CNC(=O)c1ccncn1)NC(=O)CN1C(=O)CN(C)C1=O
+   2  infectious_disease     CASP8            -2.235  protease       CNC(=O)C1(C(=O)N2CC(NC(=O)c3cnn(CCOC)c3)C2)CC1
+   3  infectious_disease     CASP8            -2.235  protease       C[C@@H](CN(C)C(=O)C1(n2cnnn2)CCOCC1)NC[C@@H](C)O
+
+   1  cardiovascular         ACE              -2.115  protease       C[C@@H](NC(=O)CN1CC(N(C)C(=O)c2ncccn2)C1)C(=O)N(C)C
+   2  cardiovascular         ACE              -2.115  protease       Cc1nnc(CC(=O)NC2CN(C(=O)COCCN(C)C)C2)o1
+   3  cardiovascular         ACE              -2.115  protease       CN(CC(=O)NC[C@H]1CCN1C(=O)Cc1cnoc1)S(C)(=O)=O
+
+   1  autoimmune             PSMA1            -7.227  default        O=C(CCN1CCCC1=O)NCC1CN(C(=O)Cn2nccn2)C1
+   2  autoimmune             PSMA1            -7.227  default        O=C(NCCN1CCCC1=O)C(=O)N1CC[C@H](Cn2ccnn2)C1
+   3  autoimmune             PSMA1            -7.227  default        CNC(=O)CC(=O)N1C[C@H]2[C@H](NC(=O)c3cnc(N(C)C)cn3)[C@H]2C1
+
+   1  metabolic              SPCS3            -7.283  default        CN1CCO[C@@H](C(=O)N(C)CCOCCNC(=O)c2cc[nH]n2)C1
+   2  metabolic              SPCS3            -7.284  default        Cc1nnc(CN(C)CCNC(=O)CN2C(=O)CNC2=O)s1
+   3  metabolic              SPCS3            -7.284  default        CCn1nnc(C)c1C(=O)N1CC[C@](O)(CNC(=O)COC)C1
+
+      antibiotic_resistance  NO_DATA             ---  ---            ---
+
+   1  mental_health          APP              -7.297  default        CCOCCC(=O)N1CCN(C2CN(Cc3nnnn3C)C2)CC1
+   2  mental_health          APP              -7.297  default        CN(CCN1CC[C@@H]1CNC(=O)Cn1cccn1)S(C)(=O)=O
+   3  mental_health          APP              -7.297  default        CCCOCC(=O)NCCN1CCN(C(=O)Cn2cncn2)CC1
+
+   1  rare_disease           GPR31            -8.895  gpcr           Cn1c(=O)ccn(CC(=O)NC/C=C\CNC[C@H]2CCOC2)c1=O
+   2  rare_disease           GPR31            -8.895  gpcr           CC[C@@H](NC(C)=O)C(=O)N1CCC[C@H](NC(=O)c2nnn(C)n2)C1
+   3  rare_disease           GPR31            -8.895  gpcr           CC[C@H](NC(C)=O)C(=O)N1CC[C@](C)(NC(=O)c2nnn(C)n2)C1
+
+GAPS:
+  antibiotic_resistance — no DHFR, GyrA, GyrB, or MurA targets exist in the
+  v3 target set. The 1,000-priority target list is disease-focused (human
+  proteins) and does not include bacterial enzyme targets. A dedicated
+  antibiotic screen with bacterial target entries would be required.
+
+NOTE:
+  ACE, ACE2, TMPRSS2, MMP2, MMP3, MMP14 are classified as protease by
+  protein_class but are cardiovascular-relevant (ACE/ACE2 = blood pressure
+  regulation, TMPRSS2 = vascular protease, MMPs = extracellular matrix
+  remodeling in atherosclerosis). PSMA1, PSMB8, PSMB9, PSMB10 are proteasome
+  subunits with autoimmune relevance (antigen presentation, MHC class I).

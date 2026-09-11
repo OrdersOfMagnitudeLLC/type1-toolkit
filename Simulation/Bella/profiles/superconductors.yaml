@@ -1,0 +1,56 @@
+query_inject: superconductor critical temperature Tc high critical current cuprate
+  iron pnictide
+protein_query: null
+description: 'High-Tc superconductors: Cu/Ba/La/Hg oxides and Fe-pnictides with Tc
+  >77K.'
+required_elements:
+- Cu
+- Ba
+- La
+- Hg
+- Fe
+- As
+- P
+- O
+excluded_elements:
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+min_crustal_ppm: 1
+required_elements_preferred:
+- Cu
+- Ba
+- La
+- Hg
+- Fe
+- As
+- P
+- O
+- N
+- S
+required_chemistry:
+- must contain Cu OR Ba OR La OR Hg OR Fe OR As OR P OR O or N
+- must be oxide OR pnictide OR carbide class
+excluded_chemistry:
+- pure sulfide without O
+- pure intermetallic
+name: superconductors
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+watch_auto_adsorb: false
+watch_auto_neb: false
+category: materials-energy

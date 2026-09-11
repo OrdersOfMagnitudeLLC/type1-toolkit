@@ -1,0 +1,9 @@
+numpy
+pandas
+scipy
+astropy
+astroquery
+matplotlib
+sympy
+requests
+healpy

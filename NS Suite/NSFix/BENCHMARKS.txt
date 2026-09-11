@@ -1,0 +1,38 @@
+NSFix Full Feature Benchmark — 100K NewOrderSingle messages, 10 timed runs
+Features: mmap persistence + NSHash session manager + recovery
+
+=== NSFix Full Feature Benchmark ===
+Features: mmap persistence + NSHash session manager + recovery
+
+Generating 100000 NewOrderSingle messages...
+Generated 100000 messages
+Sample message: 8=FIX.4.29=9435=D49=CLIENT56=BROKER34=252=20240101-12:00:0011=ORD255=AAPL54=138=10044=150.5040=210=193
+
+--- Feature 1: Memory-mapped persistence ---
+Log open: YES
+Log file: nsfix_session.log (256MB circular buffer)
+
+--- Feature 2: Multi-session via NSHash ---
+Session count: 1
+Session state: seq_in=1 seq_out=1
+After logon: state=2
+After 2nd session: session count: 2
+
+--- Benchmark: parse + mmap log (hot path) ---
+Warmup runs: 5
+Timed runs: 10
+NSFix (parse + mmap log): 9.10821e+06 messages/sec
+Callback count: 1000000
+Log write position: 825668 bytes
+
+--- Feature 3: Recovery/replay ---
+Recovering messages with seq > 99990 for CLIENT/BROKER...
+Recovered 11 messages for replay
+First recovered message: 8=FIX.4.29=10235=D49=CLIENT56=BROKER34=9999152=2024010...
+Recovery for non-existent session: 0 messages
+
+=== Summary ===
+NSFix (parse + mmap log): 9108214 msg/sec
+hffix equivalent workload: 8,137,954 msg/sec (reference)
+Threshold: 8,000,000 msg/sec
+PASS: Throughput above 8M msg/sec threshold

@@ -1,0 +1,14 @@
+=== NSQCD Benchmark vs Lattice/Measured ===
+
+          Observable |      NSQCD |   Measured |    Error | Thresh | Result
+---------------------------------------------------------------------------
+      m_gap glueball |     1.5349 |     1.5000 |     2.3% |   5.0% |   PASS
+    Lambda_Nf3 MSbar |     0.3487 |     0.3320 |     5.0% |   6.0% |   PASS
+        alpha_s(m_Z) |     0.1179 |     0.1179 |     0.0% |   1.0% |   PASS
+---------------------------------------------------------------------------
+PASS: 3/3, Mean error: 2.5%
+Runtime: 3.3 ms
+
+Thresholds: m_gap <5%, Lambda_Nf3 <6% (3-loop perturbative uncertainty), alpha_s(m_Z) <1%
+Excluded: Lambda_Nf0 (perturbative vs lattice — different theories), alpha_s(<2 GeV) (non-perturbative)
+No GPU. No lattice. No free parameters.

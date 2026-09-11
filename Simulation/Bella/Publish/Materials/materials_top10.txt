@@ -1,0 +1,37 @@
+MATERIALS TOP 10 — BEST NOVEL CANDIDATES BY CATEGORY
+=====================================================
+Source: results/materials_full_run_sept06.csv/phonon_queue.txt
+Filter: NOVEL only, top 3 per category by priority score
+
+category                        | formula       | score | Debye_T | accessibility | note
+--------------------------------|---------------|-------|---------|---------------|--------------------
+nitrogen_fixation               | AlFe          |    16 | 913C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air. (SUPPORTED — Nature Synthesis 2026)
+nitrogen_fixation               | AlFe3         |    16 | 806C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air.
+nitrogen_fixation               | BaAl9Fe2      |    16 | 584C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air.
+co2_reduction_catalyst          | AlFe          |    17 | 913C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
+co2_reduction_catalyst          | AlFe3         |    17 | 806C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
+co2_reduction_catalyst          | BaAl9Fe2      |    17 | 584C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
+superconductor_ambient          | CaAl2         |    14 | 602C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
+superconductor_ambient          | MgAl3         |    14 | 546C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
+superconductor_ambient          | BaAl9Fe2      |    14 | 584C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
+water_splitting_catalysts       | AlFe          |    14 | 913C    | VILLAGE       | Green hydrogen production, distributed fuel.
+water_splitting_catalysts       | AlFe3         |    14 | 806C    | VILLAGE       | Green hydrogen production, distributed fuel.
+water_splitting_catalysts       | NaHO          |    14 | 177C    | VILLAGE       | Green hydrogen production, distributed fuel.
+solar_absorber_leadfree         | AlSb          |    14 | 278C    | VILLAGE       | Semiconductor converts sunlight to electricity (PV).
+solar_absorber_leadfree         | KMgSb         |    14 | 161C    | VILLAGE       | Semiconductor converts sunlight to electricity (PV).
+solar_absorber_leadfree         | K2AgSb        |    14 | 56C     | VILLAGE       | Semiconductor converts sunlight to electricity (PV).
+thermoelectric_high_zt          | Ca2Sn         |    14 | 191C    | VILLAGE       | Temperature gradient to electricity directly (Seebeck effect).
+thermoelectric_high_zt          | Li2AgSb       |    14 | 288C    | VILLAGE       | Temperature gradient to electricity directly (Seebeck effect).
+thermoelectric_high_zt          | Mg3Sb2        |    14 | 203C    | VILLAGE       | Temperature gradient to electricity directly (Seebeck effect).
+permanent_magnet_ree_free       | NO_DATA       |   --- | ---     | ---           | No novel candidates in this category in the phonon queue.
+topological_quantum             | Ca2Sn         |    14 | 191C    | VILLAGE       | Protected electronic states at surface, immune to disorder.
+topological_quantum             | Mg3Sb2        |    14 | 203C    | VILLAGE       | Protected electronic states at surface, immune to disorder.
+topological_quantum             | Na3Sb         |    14 | 183C    | VILLAGE       | Protected electronic states at surface, immune to disorder.
+low_carbon_cement               | Mg3Si2H4O9    |    15 | 295C    | VILLAGE       | Replaces Portland cement (8% of global CO2).
+low_carbon_cement               | Mg2H2O3       |    14 | 296C    | VILLAGE       | Replaces Portland cement (8% of global CO2).
+low_carbon_cement               | Mg3H4O5       |    14 | 291C    | VILLAGE       | Replaces Portland cement (8% of global CO2).
+hydrogen_storage_hydrides       | Mg2FeH6       |    14 | 177C    | VILLAGE       | Distributed energy storage, off-grid hydrogen.
+hydrogen_storage_hydrides       | NaAlH4        |    14 | 177C    | VILLAGE       | Distributed energy storage, off-grid hydrogen.
+hydrogen_storage_hydrides       | CaBH42        |    14 | 177C    | VILLAGE       | Distributed energy storage, off-grid hydrogen.
+
+GAP: permanent_magnet_ree_free — no novel candidates found in phonon queue for this category.

@@ -1,0 +1,22 @@
+[
+  {
+    "source_name": "HIP62505",
+    "frequency": 1420.87113,
+    "drift_rate": 0.482799,
+    "snr": 536.373839,
+    "matched_frequency": "hydrogen_line",
+    "anomaly_score": 0.77241985,
+    "ra": "12h48m32.232s",
+    "dec": "-15d43m08.4s"
+  },
+  {
+    "source_name": "HIP62505",
+    "frequency": 1419.986232,
+    "drift_rate": 0.512358,
+    "snr": 78.806823,
+    "matched_frequency": "hydrogen_line",
+    "anomaly_score": 0.692080992,
+    "ra": "12h48m32.232s",
+    "dec": "-15d43m08.4s"
+  }
+]

@@ -1,0 +1,8 @@
+phonon_runs/*
+!phonon_runs/.gitkeep
+cif_cache/*
+!cif_cache/.gitkeep
+data/*
+!data/.gitkeep
+screening_runs/*
+!screening_runs/.gitkeep

@@ -1,0 +1,20 @@
+# aging_18targets.txt
+# Format: UniProt_ID | gene_name | disease | priority_score | r_pocket | source
+P45452 | MMP13 | AgingScreen | 9000.0 | 6.0 | manual
+P10415 | BCL2 | AgingScreen | 9000.0 | 6.0 | manual
+Q07817 | BCL2L1 | AgingScreen | 9000.0 | 6.0 | manual
+P42345 | MTOR | AgingScreen | 9000.0 | 6.8 | manual
+Q96EB6 | SIRT1 | AgingScreen | 9000.0 | 6.0 | manual
+O43524 | FOXO3 | AgingScreen | 9000.0 | 6.0 | manual
+O14746 | TERT | AgingScreen | 9000.0 | 6.0 | manual
+P39900 | MMP12 | AgingScreen | 9000.0 | 6.0 | manual
+P42574 | CASP3 | AgingScreen | 9000.0 | 5.5 | manual
+P29466 | CASP1 | AgingScreen | 9000.0 | 6.0 | manual
+P08254 | MMP3 | AgingScreen | 9000.0 | 6.0 | manual
+P12821 | ACE | AgingScreen | 9000.0 | 5.5 | manual
+Q9NTG7 | SIRT3 | AgingScreen | 9000.0 | 5.5 | manual
+Q8N6T7 | SIRT6 | AgingScreen | 9000.0 | 5.0 | manual
+Q13131 | PRKAA1 | AgingScreen | 9000.0 | 6.0 | manual
+P54646 | PRKAA2 | AgingScreen | 9000.0 | 6.0 | manual
+P28907 | CD38 | AgingScreen | 9000.0 | 5.5 | manual
+P43490 | NAMPT | AgingScreen | 9000.0 | 5.5 | manual

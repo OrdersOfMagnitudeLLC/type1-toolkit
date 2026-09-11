@@ -1,0 +1,500 @@
+What is 1+1?
+Explain cooking in one sentence.
+Hello, how are you today?
+Write a short story about dark computer.
+Translate 'hello' to Russian.
+Fix this bug: int x = 6;
+Once upon a time in a loud kingdom,
+Calculate 8 * 22.
+Why is the sky blue?
+Give me a recipe for salad.
+Tell me a joke about computer.
+What are the benefits of machine learning?
+How do I learn programming?
+Describe a bright day.
+Write a haiku about tree.
+Who invented physics?
+Is 17 a prime number?
+Sort the list [18, 11, 28].
+What does German mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 21 and 20.
+Compare programming and poetry.
+Convert 23 degrees Celsius to Fahrenheit.
+What is the capital of Canada?
+Generate a name for a loud idea.
+Why does quantization matter?
+List three uses of cooking.
+Once, a city met another city.
+Write a todo list for a history project.
+Solve: 30x + 6 = 0.
+Summarize the concept of quantization.
+Design a database schema for problem.
+What is the binary form of 33?
+Create a regex for physics.
+How many ideas fit in a France?
+Define history.
+Write an email to request problem.
+What is the meaning of life?
+Make a pun about history.
+Plot a small character.
+Predict the next number: 4, 39, 27, ...
+Refactor this: for i in range(5):
+What is 2^6?
+Describe the color ancient.
+How do you say goodbye in Russian?
+List the first 13 prime numbers.
+Make a marketing slogan for quantization.
+Why did the problem cross the road?
+What is recursion?
+Explain Q3 quantization.
+What is 14+28?
+Explain physics in one sentence.
+Hello, how are you today?
+Write a short story about quiet star.
+Translate 'hello' to Japanese.
+Fix this bug: int x = 19;
+Once upon a time in a cold kingdom,
+Calculate 21 * 8.
+Why is the sky blue?
+Give me a recipe for bread.
+Tell me a joke about car.
+What are the benefits of poetry?
+How do I learn programming?
+Describe a quiet day.
+Write a haiku about book.
+Who invented mathematics?
+Is 30 a prime number?
+Sort the list [31, 38, 17].
+What does Korean mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 34 and 6.
+Compare quantization and space.
+Convert 36 degrees Celsius to Fahrenheit.
+What is the capital of Egypt?
+Generate a name for a lazy robot.
+Why does space matter?
+List three uses of poetry.
+Once, a dog met another dog.
+Write a todo list for a physics project.
+Solve: 6x + 33 = 0.
+Summarize the concept of history.
+Design a database schema for cat.
+What is the binary form of 9?
+Create a regex for mathematics.
+How many oceans fit in a Canada?
+Define physics.
+Write an email to request computer.
+What is the meaning of life?
+Make a pun about quantization.
+Plot a warm character.
+Predict the next number: 17, 25, 16, ...
+Refactor this: for i in range(18):
+What is 2^19?
+Describe the color large.
+How do you say goodbye in French?
+List the first 40 prime numbers.
+Make a marketing slogan for mathematics.
+Why did the problem cross the road?
+What is recursion?
+Explain Q5 quantization.
+What is 27+14?
+Explain mathematics in one sentence.
+Hello, how are you today?
+Write a short story about modern tree.
+Translate 'hello' to Russian.
+Fix this bug: int x = 32;
+Once upon a time in a modern kingdom,
+Calculate 34 * 35.
+Why is the sky blue?
+Give me a recipe for cake.
+Tell me a joke about problem.
+What are the benefits of physics?
+How do I learn mathematics?
+Describe a bright day.
+Write a haiku about idea.
+Who invented travel?
+Is 6 a prime number?
+Sort the list [7, 24, 6].
+What does Spanish mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 10 and 33.
+Compare physics and poetry.
+Convert 12 degrees Celsius to Fahrenheit.
+What is the capital of Brazil?
+Generate a name for a large tree.
+Why does physics matter?
+List three uses of space.
+Once, a house met another house.
+Write a todo list for a mathematics project.
+Solve: 19x + 19 = 0.
+Summarize the concept of history.
+Design a database schema for cat.
+What is the binary form of 22?
+Create a regex for cooking.
+How many dogs fit in a Brazil?
+Define space.
+Write an email to request ocean.
+What is the meaning of life?
+Make a pun about travel.
+Plot a sad character.
+Predict the next number: 30, 11, 5, ...
+Refactor this: for i in range(31):
+What is 2^32?
+Describe the color large.
+How do you say goodbye in Chinese?
+List the first 26 prime numbers.
+Make a marketing slogan for history.
+Why did the idea cross the road?
+What is recursion?
+Explain Q7 quantization.
+What is 3+41?
+Explain poetry in one sentence.
+Hello, how are you today?
+Write a short story about quiet car.
+Translate 'hello' to Japanese.
+Fix this bug: int x = 8;
+Once upon a time in a quiet kingdom,
+Calculate 10 * 21.
+Why is the sky blue?
+Give me a recipe for pasta.
+Tell me a joke about robot.
+What are the benefits of poetry?
+How do I learn history?
+Describe a small day.
+Write a haiku about book.
+Who invented programming?
+Is 19 a prime number?
+Sort the list [20, 10, 24].
+What does German mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 23 and 19.
+Compare programming and machine learning.
+Convert 25 degrees Celsius to Fahrenheit.
+What is the capital of Japan?
+Generate a name for a quiet tree.
+Why does physics matter?
+List three uses of machine learning.
+Once, a house met another house.
+Write a todo list for a cooking project.
+Solve: 32x + 5 = 0.
+Summarize the concept of cooking.
+Design a database schema for problem.
+What is the binary form of 35?
+Create a regex for travel.
+How many stars fit in a Japan?
+Define history.
+Write an email to request bird.
+What is the meaning of life?
+Make a pun about programming.
+Plot a quick character.
+Predict the next number: 6, 38, 23, ...
+Refactor this: for i in range(7):
+What is 2^8?
+Describe the color bright.
+How do you say goodbye in French?
+List the first 12 prime numbers.
+Make a marketing slogan for programming.
+Why did the robot cross the road?
+What is recursion?
+Explain Q3 quantization.
+What is 16+27?
+Explain machine learning in one sentence.
+Hello, how are you today?
+Write a short story about lazy bird.
+Translate 'hello' to Chinese.
+Fix this bug: int x = 21;
+Once upon a time in a happy kingdom,
+Calculate 23 * 7.
+Why is the sky blue?
+Give me a recipe for sushi.
+Tell me a joke about star.
+What are the benefits of poetry?
+How do I learn space?
+Describe a bright day.
+Write a haiku about cat.
+Who invented machine learning?
+Is 32 a prime number?
+Sort the list [33, 37, 13].
+What does German mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 36 and 5.
+Compare cooking and mathematics.
+Convert 1 degrees Celsius to Fahrenheit.
+What is the capital of Australia?
+Generate a name for a ancient bird.
+Why does physics matter?
+List three uses of physics.
+Once, a house met another house.
+Write a todo list for a travel project.
+Solve: 8x + 32 = 0.
+Summarize the concept of poetry.
+Design a database schema for idea.
+What is the binary form of 11?
+Create a regex for cooking.
+How many computers fit in a Japan?
+Define programming.
+Write an email to request house.
+What is the meaning of life?
+Make a pun about space.
+Plot a large character.
+Predict the next number: 19, 24, 12, ...
+Refactor this: for i in range(20):
+What is 2^21?
+Describe the color quick.
+How do you say goodbye in Russian?
+List the first 39 prime numbers.
+Make a marketing slogan for programming.
+Why did the ocean cross the road?
+What is recursion?
+Explain Q5 quantization.
+What is 29+13?
+Explain history in one sentence.
+Hello, how are you today?
+Write a short story about sad robot.
+Translate 'hello' to German.
+Fix this bug: int x = 34;
+Once upon a time in a bright kingdom,
+Calculate 36 * 34.
+Why is the sky blue?
+Give me a recipe for pizza.
+Tell me a joke about robot.
+What are the benefits of cooking?
+How do I learn machine learning?
+Describe a happy day.
+Write a haiku about dog.
+Who invented programming?
+Is 8 a prime number?
+Sort the list [9, 23, 2].
+What does French mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 12 and 32.
+Compare cooking and travel.
+Convert 14 degrees Celsius to Fahrenheit.
+What is the capital of Japan?
+Generate a name for a dark city.
+Why does physics matter?
+List three uses of machine learning.
+Once, a tree met another tree.
+Write a todo list for a space project.
+Solve: 21x + 18 = 0.
+Summarize the concept of programming.
+Design a database schema for problem.
+What is the binary form of 24?
+Create a regex for machine learning.
+How many robots fit in a Egypt?
+Define space.
+Write an email to request book.
+What is the meaning of life?
+Make a pun about mathematics.
+Plot a sad character.
+Predict the next number: 32, 10, 1, ...
+Refactor this: for i in range(33):
+What is 2^34?
+Describe the color bright.
+How do you say goodbye in Chinese?
+List the first 25 prime numbers.
+Make a marketing slogan for programming.
+Why did the bird cross the road?
+What is recursion?
+Explain Q7 quantization.
+What is 5+40?
+Explain travel in one sentence.
+Hello, how are you today?
+Write a short story about lazy star.
+Translate 'hello' to Latin.
+Fix this bug: int x = 10;
+Once upon a time in a loud kingdom,
+Calculate 12 * 20.
+Why is the sky blue?
+Give me a recipe for salad.
+Tell me a joke about city.
+What are the benefits of space?
+How do I learn space?
+Describe a happy day.
+Write a haiku about problem.
+Who invented poetry?
+Is 21 a prime number?
+Sort the list [22, 9, 20].
+What does Latin mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 25 and 18.
+Compare mathematics and history.
+Convert 27 degrees Celsius to Fahrenheit.
+What is the capital of Mars?
+Generate a name for a ancient star.
+Why does space matter?
+List three uses of space.
+Once, a computer met another computer.
+Write a todo list for a cooking project.
+Solve: 34x + 4 = 0.
+Summarize the concept of machine learning.
+Design a database schema for cat.
+What is the binary form of 37?
+Create a regex for quantization.
+How many cars fit in a Canada?
+Define mathematics.
+Write an email to request robot.
+What is the meaning of life?
+Make a pun about programming.
+Plot a small character.
+Predict the next number: 8, 37, 19, ...
+Refactor this: for i in range(9):
+What is 2^10?
+Describe the color happy.
+How do you say goodbye in Chinese?
+List the first 11 prime numbers.
+Make a marketing slogan for mathematics.
+Why did the problem cross the road?
+What is recursion?
+Explain Q3 quantization.
+What is 18+26?
+Explain travel in one sentence.
+Hello, how are you today?
+Write a short story about modern idea.
+Translate 'hello' to Korean.
+Fix this bug: int x = 23;
+Once upon a time in a cold kingdom,
+Calculate 25 * 6.
+Why is the sky blue?
+Give me a recipe for cake.
+Tell me a joke about bird.
+What are the benefits of machine learning?
+How do I learn mathematics?
+Describe a small day.
+Write a haiku about computer.
+Who invented poetry?
+Is 34 a prime number?
+Sort the list [35, 36, 9].
+What does Japanese mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 1 and 4.
+Compare mathematics and programming.
+Convert 3 degrees Celsius to Fahrenheit.
+What is the capital of Mars?
+Generate a name for a small tree.
+Why does history matter?
+List three uses of physics.
+Once, a tree met another tree.
+Write a todo list for a space project.
+Solve: 10x + 31 = 0.
+Summarize the concept of quantization.
+Design a database schema for book.
+What is the binary form of 13?
+Create a regex for space.
+How many houses fit in a Canada?
+Define mathematics.
+Write an email to request robot.
+What is the meaning of life?
+Make a pun about programming.
+Plot a lazy character.
+Predict the next number: 21, 23, 8, ...
+Refactor this: for i in range(22):
+What is 2^23?
+Describe the color quiet.
+How do you say goodbye in German?
+List the first 38 prime numbers.
+Make a marketing slogan for poetry.
+Why did the book cross the road?
+What is recursion?
+Explain Q5 quantization.
+What is 31+12?
+Explain cooking in one sentence.
+Hello, how are you today?
+Write a short story about lazy dog.
+Translate 'hello' to Japanese.
+Fix this bug: int x = 36;
+Once upon a time in a small kingdom,
+Calculate 1 * 33.
+Why is the sky blue?
+Give me a recipe for bread.
+Tell me a joke about bird.
+What are the benefits of cooking?
+How do I learn poetry?
+Describe a quiet day.
+Write a haiku about ocean.
+Who invented physics?
+Is 10 a prime number?
+Sort the list [11, 22, 27].
+What does Spanish mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 14 and 31.
+Compare history and poetry.
+Convert 16 degrees Celsius to Fahrenheit.
+What is the capital of India?
+Generate a name for a quick dog.
+Why does quantization matter?
+List three uses of travel.
+Once, a tree met another tree.
+Write a todo list for a poetry project.
+Solve: 23x + 17 = 0.
+Summarize the concept of programming.
+Design a database schema for city.
+What is the binary form of 26?
+Create a regex for travel.
+How many dogs fit in a Canada?
+Define programming.
+Write an email to request house.
+What is the meaning of life?
+Make a pun about physics.
+Plot a ancient character.
+Predict the next number: 34, 9, 26, ...
+Refactor this: for i in range(35):
+What is 2^36?
+Describe the color large.
+How do you say goodbye in German?
+List the first 24 prime numbers.
+Make a marketing slogan for physics.
+Why did the robot cross the road?
+What is recursion?
+Explain Q7 quantization.
+What is 7+39?
+Explain history in one sentence.
+Hello, how are you today?
+Write a short story about bright book.
+Translate 'hello' to French.
+Fix this bug: int x = 12;
+Once upon a time in a modern kingdom,
+Calculate 14 * 19.
+Why is the sky blue?
+Give me a recipe for soup.
+Tell me a joke about bird.
+What are the benefits of programming?
+How do I learn poetry?
+Describe a happy day.
+Write a haiku about house.
+Who invented quantization?
+Is 23 a prime number?
+Sort the list [24, 8, 16].
+What does French mean?
+The quick brown fox jumps over the lazy dog.
+Implement a function to add 27 and 17.
+Compare history and poetry.
+Convert 29 degrees Celsius to Fahrenheit.
+What is the capital of France?
+Generate a name for a small idea.
+Why does machine learning matter?
+List three uses of cooking.
+Once, a dog met another dog.
+Write a todo list for a physics project.
+Solve: 36x + 3 = 0.
+Summarize the concept of physics.
+Design a database schema for computer.
+What is the binary form of 2?
+Create a regex for poetry.
+How many dogs fit in a France?
+Define physics.
+Write an email to request computer.
+What is the meaning of life?
+Make a pun about quantization.
+Plot a large character.
+Predict the next number: 10, 36, 15, ...
+Refactor this: for i in range(11):
+What is 2^12?
+Describe the color lazy.
+How do you say goodbye in Japanese?
+List the first 10 prime numbers.
+Make a marketing slogan for physics.
+Why did the idea cross the road?
+What is recursion?
+Explain Q3 quantization.

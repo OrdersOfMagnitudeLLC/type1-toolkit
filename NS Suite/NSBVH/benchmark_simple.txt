@@ -1,0 +1,17 @@
+=== NS-BVH Simple Kill Test ===
+Objects: 10000 | Clusters: 20 | Rays: 100000
+
+  Grid: 10x8x1 cells (812.2x765.2x122.0 unit size)
+=== DENSE SCENE (2000-unit spacing) ===
+  Embree: 7.56 ms | Hits: 50010
+  BVH2:   14.76 ms | Hits: 50010
+  NS:     12.89 ms | Hits: 50010
+  NS vs Embree: 1.71x slower
+
+  Grid: 10x8x1 cells (4012.2x3765.2x122.0 unit size)
+=== SPARSE SCENE (10000-unit spacing) ===
+  Embree: 8.48 ms | Hits: 50000
+  BVH2:   14.87 ms | Hits: 50000
+  NS:     13.30 ms | Hits: 50000
+  NS vs Embree: 1.57x slower
+

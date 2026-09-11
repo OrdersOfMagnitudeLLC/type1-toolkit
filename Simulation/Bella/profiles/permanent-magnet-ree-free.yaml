@@ -1,0 +1,67 @@
+query_inject: rare-earth-free permanent magnet hard magnetic material
+  earth-abundant high coercivity
+protein_query: null
+description: 'Rare-earth-free permanent magnets based on Fe, Co, Mn, Al, or
+  nitride systems. No platinum-group or rare-earth elements.'
+required_elements:
+- Fe
+- Co
+- Ni
+- Mn
+- Al
+- N
+- C
+- B
+- O
+- Cr
+- Cu
+- Zn
+excluded_elements:
+- Pt
+- Ir
+- Pd
+- Rh
+- Ru
+- Au
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Fe
+- Co
+- Mn
+- Al
+- N
+required_chemistry:
+- hard magnetic compound or tetragonal/hexagonal ferrite
+- must contain Fe, Co, or Mn as magnetic element
+excluded_chemistry:
+- pure rare-earth magnet composition
+- pure noble-metal magnet
+name: permanent-magnet-ree-free
+synthesis_temp_max_C: 1500
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: false
+adsorb_molecules:
+- H2O
+- O2
+neb_molecule: H2O
+category: materials-energy

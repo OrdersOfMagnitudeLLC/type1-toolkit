@@ -1,0 +1,75 @@
+query_inject: transparent conducting oxide ITO alternative earth-abundant
+  TCO flexible transparent electrode
+protein_query: null
+description: 'Earth-abundant transparent conducting oxides and electrodes as
+  ITO alternatives. No indium, rare earths, or precious metals.'
+required_elements:
+- Zn
+- Sn
+- Al
+- Ga
+- Mg
+- B
+- F
+- O
+- S
+- Ti
+- Nb
+- Ta
+- Cu
+- Ni
+- Ag
+- C
+excluded_elements:
+- In
+- Pt
+- Ir
+- Pd
+- Rh
+- Ru
+- Au
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Zn
+- Sn
+- Al
+- O
+- F
+required_chemistry:
+- transparent conducting oxide or doped oxide
+- sheet resistance target < 100 ohm/sq
+- optical bandgap > 3.0 eV
+excluded_chemistry:
+- pure metal film
+- bulk opaque intermetallic
+name: transparent-conductor
+synthesis_temp_max_C: 500
+aqueous_stable: false
+bandgap_range:
+- 3.0
+- 5.0
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: false
+adsorb_molecules:
+- H2O
+- O2
+neb_molecule: H2O
+category: materials-energy

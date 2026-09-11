@@ -1,0 +1,64 @@
+query_inject: telomerase substrate senolytic small molecule anti aging blood brain
+  barrier
+protein_query: telomerase TERT sirtuin p16INK4a p21
+description: 'Anti-aging small molecules: telomerase substrates and senolytics via
+  protein-path interactions.'
+required_elements:
+- C
+- H
+- N
+- O
+- P
+- S
+- Cl
+- Na
+- K
+- Ca
+- Fe
+- F
+excluded_elements:
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+min_element_ppm: 0
+required_elements_preferred:
+- C
+- H
+- N
+- O
+- P
+- S
+- Cl
+- Na
+- K
+- Ca
+- Fe
+- F
+required_chemistry:
+- must contain C OR H OR N OR O or P or S (small molecule)
+- must contain C AND N (amine/heterocycle)
+excluded_chemistry:
+- pure intermetallic
+- halide
+name: anti-aging
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+watch_auto_adsorb: false
+watch_auto_neb: false
+category: life-sciences

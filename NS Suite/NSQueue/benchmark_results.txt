@@ -1,0 +1,8 @@
+NSQueue vs competitors — 10M items, batch size 32
+
+Queue              | Throughput (M items/sec) | Avg Latency (ns)
+-------------------|--------------------------|----------------
+NaiveQueue         |                    5.669 |          67.377
+NaiveBatchQueue     |                   69.514 |         416.148
+NSQueue            |                  329.001 |          56.197
+rigtorp::SPSCQueue |                   81.423 |         352.620

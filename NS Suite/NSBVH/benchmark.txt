@@ -1,0 +1,11 @@
+NSBVH8 vs Embree 4.4.1 (native build, -O3 -march=native) — 100K rays, 10K AABBs, 25x20x1 grid (250-unit cells)
+
+Scene                              | Ray Type                  | NS rays/sec | Embree rays/sec | NS BVH8 (ms) | Embree (ms) | Ratio
+-----------------------------------|--------------------------|-------------|-----------------|-------------|-------------|-----------
+Dense Uniform (10K random, 80/80)  | random                   | 13,561,260  | 15,982,659      | 7.37        | 6.26        | 1.18x slower
+Sparse Clustered (20 clusters, 20/80)| 70% targeted + 30% random| 9,358,008   | 6,049,015       | 10.69       | 16.53       | 1.55x faster
+Mixed (10 clusters + 5K random, 80/80)| 70% targeted + 30% random| 7,501,795  | 4,625,682       | 13.33       | 21.62       | 1.62x faster
+
+Win condition: Sparse clustered and mixed scenes with targeted rays.
+NS-BVH grid skips empty cells (96% in sparse scene), delivering 1.55-1.62x speedup.
+Dense uniform narrowed to 1.18x — Embree SAH-optimized BVH2 wins on build quality for uniform distributions.

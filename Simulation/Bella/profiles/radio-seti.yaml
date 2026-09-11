@@ -1,0 +1,17 @@
+---
+name: radio-seti
+category: planetary-science
+description: "Narrowband radio technosignature search via Breakthrough Listen public data"
+signals:
+  - id: hydrogen_line_match
+    frequency_hz: 1420405000
+    weight: 0.40
+  - id: water_hole_match
+    frequency_hz: 1727000000
+    weight: 0.30
+  - id: drift_sparsity
+    weight: 0.30
+data_sources: [breakthrough_listen]
+ns_products: [NSSort, NSStringIndex, NSFFT]
+max_hits: 500000
+use_cache: true

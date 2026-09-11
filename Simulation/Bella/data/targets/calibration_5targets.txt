@@ -1,0 +1,8 @@
+# calibration_5targets.txt
+# Format: UniProt_ID | gene_name | disease | priority_score | r_pocket | source
+#
+P00533 | EGFR | CalibrationTest | 9000.0 | 4.30 | manual
+P24941 | CDK2 | CalibrationTest | 8000.0 | 4.50 | manual
+P25440 | BRD4 | CalibrationTest | 8500.0 | 4.20 | manual
+P10415 | BCL2 | CalibrationTest | 7500.0 | 4.90 | manual
+P09874 | PARP1 | CalibrationTest | 7000.0 | 4.05 | manual

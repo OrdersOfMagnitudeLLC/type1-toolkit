@@ -1,0 +1,12 @@
+NSHash vs competitors — 1M ops, ns/op (lower is better)
+All competitors built with -O3 -march=native
+Ratios measured under concurrent system load
+
+Workload    | NSHash (ns) | absl (ns) | ankerl (ns) | robinhood (ns) | std (ns) | fph (ns) | boost (ns)
+------------|------------|-----------|-------------|----------------|----------|----------|-----------
+Sequential  |  15,314   |  49,449   |  40,589     |  26,074        |  25,764  | 20,684   | 26,205
+Random      |  19,086   |  46,413   |  28,381     |  25,662        |  53,623  | 24,577   | 23,858
+Bounded     |   2,602   |  47,403   |  18,237     |  13,661        |   3,456  |  7,110   | 18,650
+Timestamp   |   2,737   |  42,611   |  22,450     |  23,285        |   4,180  | 18,321   | 28,456
+
+vs absl: Sequential 3.2x | Random 2.4x | Bounded 18.2x | Timestamp 15.6x

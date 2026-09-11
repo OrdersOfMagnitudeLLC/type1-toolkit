@@ -1,0 +1,13 @@
+name: riemann
+type: sim
+target: math
+command: bella_riemann
+description: Riemann hypothesis zero spacing analysis via Z(t) formula
+params:
+  max_t: 300
+  n: 50
+  max_ram_gb: 4
+  resume: true
+watch_auto_adsorb: false
+watch_auto_neb: false
+category: mathematics

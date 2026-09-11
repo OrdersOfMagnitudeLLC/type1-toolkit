@@ -1,0 +1,105 @@
+=== NSATTEND BENCHMARK ===
+
+--- SCENARIO 1: LOCAL HEAD ---
+=== LOCAL (seq_len=256) ===
+NS time (ms): 0.545428
+Local-window dense time (ms): 1.587072
+Full dense time (ms): 3.144891
+Max diff vs local-window: 1.169392e-07
+Correct: YES
+
+=== LOCAL (seq_len=512) ===
+NS time (ms): 1.930376
+Local-window dense time (ms): 6.475312
+Full dense time (ms): 13.021494
+Max diff vs local-window: 1.197914e-07
+Correct: YES
+
+=== LOCAL (seq_len=1024) ===
+NS time (ms): 7.933459
+Local-window dense time (ms): 27.087252
+Full dense time (ms): 51.440230
+Max diff vs local-window: 7.287599e-08
+Correct: YES
+
+=== LOCAL (seq_len=2048) ===
+NS time (ms): 29.924812
+Local-window dense time (ms): 112.884987
+Full dense time (ms): 202.067068
+Max diff vs local-window: 9.313226e-08
+Correct: YES
+
+--- SCENARIO 2: GLOBAL HEAD ---
+=== GLOBAL (seq_len=1024) ===
+NS time (ms): 49.312695
+Full dense time (ms): 48.203789
+
+=== GLOBAL (seq_len=2048) ===
+NS time (ms): 199.664730
+Full dense time (ms): 198.762366
+
+=== GLOBAL (seq_len=4096) ===
+NS time (ms): 878.310412
+Full dense time (ms): 905.662125
+
+--- SCENARIO 3: UNIFORM REGRESSION ---
+=== UNIFORM REGRESSION (seq_len=1024) ===
+NS time (ms): 53.142618
+Full dense time (ms): 51.300552
+Overhead: 3.59%
+Max diff vs full dense: 0.00e+00
+
+=== UNIFORM REGRESSION (seq_len=2048) ===
+NS time (ms): 214.509889
+Full dense time (ms): 260.349145
+Overhead: -17.61%
+Max diff vs full dense: 0.00e+00
+
+=== UNIFORM REGRESSION (seq_len=4096) ===
+NS time (ms): 830.964728
+Full dense time (ms): 1029.835882
+Overhead: -19.31%
+Max diff vs full dense: 0.00e+00
+
+--- SCENARIO 4: MIXED BATCH ---
+=== MIXED BATCH (seq_len=256, batch=8) ===
+NS time (ms): 17.090935
+Dense time (ms): 14.205061
+
+=== MIXED BATCH (seq_len=512, batch=8) ===
+NS time (ms): 63.610395
+Dense time (ms): 53.399307
+
+=== MIXED BATCH (seq_len=1024, batch=8) ===
+NS time (ms): 259.409504
+Dense time (ms): 221.593506
+
+=== MIXED BATCH (seq_len=2048, batch=8) ===
+NS time (ms): 938.041829
+Dense time (ms): 837.935672
+
+--- SCENARIO 4b: MIXED BATCH (FIXED WINDOW 512) ---
+=== MIXED BATCH (seq_len=4096, batch=8, window=512) ===
+NS time (ms): 447.597030
+Dense time (ms): 3385.759751
+
+=== MIXED BATCH (seq_len=8192, batch=8, window=512) ===
+NS time (ms): 996.867003
+Dense time (ms): 13673.215461
+
+--- SCENARIO 5: FIXED WINDOW (512) ---
+=== FIXED WINDOW (seq_len=1024, window=512) ===
+NS time (ms): 10.120644
+Full dense time (ms): 56.654893
+
+=== FIXED WINDOW (seq_len=2048, window=512) ===
+NS time (ms): 36.556298
+Full dense time (ms): 244.404030
+
+=== FIXED WINDOW (seq_len=4096, window=512) ===
+NS time (ms): 64.581797
+Full dense time (ms): 829.753396
+
+=== FIXED WINDOW (seq_len=8192, window=512) ===
+NS time (ms): 115.739897
+Full dense time (ms): 3320.314403
