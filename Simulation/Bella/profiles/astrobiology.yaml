@@ -1,5 +1,5 @@
 name: astrobiology
-description: Biosignatures in planetary atmospheres — O2+CH4 disequilibrium, N2O,
+description: Biosignatures in planetary atmospheres : O2+CH4 disequilibrium, N2O,
   vegetation red edge
 query_inject: habitable zone K dwarf G dwarf M dwarf exoplanet atmosphere spectroscopy
 protein_query: null

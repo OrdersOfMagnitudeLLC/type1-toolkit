@@ -3,7 +3,7 @@
 // See LICENSE.md in the repository root or ofmagnitude.com
 
 /*
- * NSSort GPU — two-level MSD radix sort with five-way input routing.
+ * NSSort GPU: two-level MSD radix sort with five-way input routing.
  * Ported from the NSSort CPU engine (NS/NSSort/NSSort.hpp): PATH_SORTED,
  * PATH_REVERSE, PATH_NEARLY_SORTED, PATH_COUNTING and PATH_GENERAL, with a
  * size-based REFINE split (single-block fused vs. multi-block pipeline).
@@ -212,7 +212,7 @@ __global__ void hist_kernel(const uint64_t* arr, size_t n, uint32_t* g_hist) {
 }
 
 // ---------------------------------------------------------------------------
-// FAST PATH — DO NOT MODIFY
+// FAST PATH: DO NOT MODIFY
 // REVERSE kernel: trivial parallel reversal
 // Each thread: output[i] = input[n-1-i]
 // ---------------------------------------------------------------------------
@@ -224,7 +224,7 @@ __global__ void reverse_kernel(const int64_t* __restrict__ input, int64_t* __res
 }
 
 // ---------------------------------------------------------------------------
-// FAST PATH — DO NOT MODIFY
+// FAST PATH: DO NOT MODIFY
 // PATH_COUNTING: parallel counting sort for small-range data.
 // Kernel 1: block-local shared-mem histogram over grid-stride input, values
 // pre-shifted to [0, range) by the caller so they can index directly.
@@ -284,7 +284,7 @@ __global__ void fill_kernel(int64_t* __restrict__ output, const int* __restrict_
     } while(0)
 
 // ---------------------------------------------------------------------------
-// GPU memory manager — allocate once, reuse across distributions
+// GPU memory manager: allocate once, reuse across distributions
 // ---------------------------------------------------------------------------
 class GPUMemory {
 public:
@@ -453,7 +453,7 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-// FAST PATH — DO NOT MODIFY
+// FAST PATH: DO NOT MODIFY
 // PATH_COUNTING: parallel counting sort. Assumes values pre-shifted to
 // [0, num_unique). 3-kernel approach: count (shared mem) -> CUB scan -> fill.
 // ---------------------------------------------------------------------------
@@ -504,7 +504,7 @@ float gpu_counting_sort(int64_t* h_arr, int n, GPUMemory& mem, int num_unique,
 }
 
 // ---------------------------------------------------------------------------
-// Zero sampling kernel — quick check for all-equal arrays
+// Zero sampling kernel: quick check for all-equal arrays
 // ---------------------------------------------------------------------------
 __global__ void zero_sample_kernel(const int64_t* __restrict__ d_input, int* __restrict__ d_all_equal, int n) {
     int tid = threadIdx.x;
@@ -542,7 +542,7 @@ __global__ void flip_sign_bit_kernel(int64_t* d_data, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// Fused REFINE kernel — one block per coarse sector (gridDim.x==COARSE_BINS,
+// Fused REFINE kernel: one block per coarse sector (gridDim.x==COARSE_BINS,
 // blockDim.x==256). Empty sectors (g_hist[s]==0) exit immediately.
 //   1. Sub-histogram over the sector's own value range (rescaled to 256 bins).
 //   2. cub::BlockScan exclusive-sum -> relative offsets within the sector.
@@ -581,7 +581,7 @@ __global__ void hist_kernel_rescale(const uint64_t* arr, size_t n, uint32_t* g_h
 }
 
 // ---------------------------------------------------------------------------
-// CHUNK scatter — 256-thread block, epoch-barrier drain.
+// CHUNK scatter: 256-thread block, epoch-barrier drain.
 // Per epoch (one element per thread): each thread computes its bin, stages
 // into s_stage[bin][slot] (or writes directly to global on overflow), then
 // after a barrier thread t drains bin t's staged elements to global. A
@@ -695,7 +695,7 @@ __global__ void chunk_scatter_kernel_rescale(const uint64_t* __restrict__ arr, s
 // Reads scatter_out[g_base[s]..g_base[s]+g_hist[s]), writes d_sec_minmax[2s]/[2s+1].
 
 // ===========================================================================
-// Single-block REFINE — indirection wrappers for small-sector path
+// Single-block REFINE: indirection wrappers for small-sector path
 //
 // These wrap sec_minmax_kernel / refine_fused_rescale_kernel logic but use
 // a sector_list[] indirection so the grid can contain only occupied small
@@ -801,7 +801,7 @@ __global__ void refine_fused_sb_kernel(
 }
 
 // ===========================================================================
-// Multi-block REFINE — four-kernel replacement for sec_minmax + refine_fused
+// Multi-block REFINE: four-kernel replacement for sec_minmax + refine_fused
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
@@ -810,10 +810,10 @@ __global__ void refine_fused_sb_kernel(
 // Each block reduces over its assigned chunk [chunk_off .. chunk_off+chunk_len).
 // Atomically updates d_g_sec_minmax_mb[s*2+0] (min) and [s*2+1] (max).
 //
-// d_blk_sector[b]     : coarse sector index for block b
-// d_blk_chunk_off[b]  : start element index within the sector's data
-// d_blk_chunk_len[b]  : number of elements this block processes
-// d_g_sec_minmax_mb   : 256*2 uint32 (initialised to 0xFFFFFFFF/0 by host)
+// d_blk_sector[b]    : coarse sector index for block b
+// d_blk_chunk_off[b] : start element index within the sector's data
+// d_blk_chunk_len[b] : number of elements this block processes
+// d_g_sec_minmax_mb  : 256*2 uint32 (initialised to 0xFFFFFFFF/0 by host)
 // ---------------------------------------------------------------------------
 __global__ void refine_minmax_mb_kernel(
     const uint64_t* __restrict__ scatter_out,
@@ -989,7 +989,7 @@ __global__ void refine_scatter_mb_kernel(
 
 
 // ---------------------------------------------------------------------------
-// Section 4 — NEARLY-SORTED PATH
+// Section 4: NEARLY-SORTED PATH
 // ---------------------------------------------------------------------------
 
 // ns_max_disp_kernel: displacement check for fake-sorted routing.
@@ -1080,7 +1080,7 @@ __global__ void ns_repair_kernel(int64_t* __restrict__ arr, int n,
         arr[start + i] = smem.data[i];
 }
 
-// ns_window_flag_kernel: Regime B extraction — flag every element inside a
+// ns_window_flag_kernel: Regime B extraction: flag every element inside a
 // dirty window (one block per window). Extracting whole windows (rather
 // than just violation-adjacent elements) guarantees no displaced element
 // inside a dirty window is silently left in the clean set.
@@ -1399,7 +1399,7 @@ float gpu_nssort_general(int64_t* h_arr, int n, int64_t h_min, int64_t h_max, GP
         CUDA_CHECK(cudaDeviceSynchronize());
     }
 
-    // ---- 3.5 REFINE — size-based routing ------------------------------------
+    // ---- 3.5 REFINE: size-based routing ------------------------------------
     //
     // Threshold: SECTOR_MB_THRESHOLD = 2,000,000 elements.
     //   Small sectors (count < threshold): single-block fused path
@@ -1450,7 +1450,7 @@ float gpu_nssort_general(int64_t* h_arr, int n, int64_t h_min, int64_t h_max, GP
             }
         }
 
-        // Zero the segment counter once — both paths atomicAdd into it
+        // Zero the segment counter once: both paths atomicAdd into it
         int zero = 0;
         CUDA_CHECK(cudaMemcpy(mem.d_fused_num_segs, &zero, sizeof(int), cudaMemcpyHostToDevice));
 
@@ -1558,7 +1558,7 @@ float gpu_nssort_general(int64_t* h_arr, int n, int64_t h_min, int64_t h_max, GP
     int num_segs = 0;
     CUDA_CHECK(cudaMemcpy(&num_segs, mem.d_fused_num_segs, sizeof(int), cudaMemcpyDeviceToHost));
     if (num_segs > 0) {
-        // Segment offset arrays already live on device — no upload needed.
+        // Segment offset arrays already live on device: no upload needed.
         cub::DoubleBuffer<uint64_t> d_keys(mem.d_refine_tmp, mem.d_scatter_out);
         cub::DeviceSegmentedSort::SortKeys(
             mem.d_segsort_storage, mem.segsort_storage_bytes,
@@ -1592,7 +1592,7 @@ float gpu_nssort_general(int64_t* h_arr, int n, int64_t h_min, int64_t h_max, GP
 }
 
 // ---------------------------------------------------------------------------
-// Main NSSort entry point — Section 1.1 routing (exact spec chain)
+// Main NSSort entry point: Section 1.1 routing (exact spec chain)
 // ---------------------------------------------------------------------------
 float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
     // Single H2D copy upfront
@@ -1661,7 +1661,7 @@ float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
                           sizeof(VerifyResult), cudaMemcpyDeviceToHost));
 
     // =========================================================================
-    // Section 1.1 ROUTING TABLE — exact spec chain, in this order
+    // Section 1.1 ROUTING TABLE: exact spec chain, in this order
     // =========================================================================
 
     // --- Branch 1: PATH_SORTED (desc_violations == 0 in sample) -------------
@@ -1671,7 +1671,7 @@ float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
     if (h_viol.desc == 0) {
         if (h_ver.sorted_flag) {
             // =====================================================
-            // FAST PATH — DO NOT MODIFY
+            // FAST PATH: DO NOT MODIFY
             // =====================================================
             printf("[NSSort] path=PATH_SORTED n=%d\n", n);
             float ms = finish();
@@ -1761,7 +1761,7 @@ float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
     if (h_viol.asc == 0) {
         if (h_ver.rev_flag) {
             // =====================================================
-            // FAST PATH — DO NOT MODIFY
+            // FAST PATH: DO NOT MODIFY
             // =====================================================
             printf("[NSSort] path=PATH_REVERSE n=%d\n", n);
             int blocks = (n + 255) / 256;
@@ -1780,7 +1780,7 @@ float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
 
     // --- Branch 3: PATH_COUNTING (range < n * COUNTING_RANGE_FRAC) ----------
     // =====================================================
-    // FAST PATH — DO NOT MODIFY
+    // FAST PATH: DO NOT MODIFY
     // =====================================================
     cub::DeviceReduce::Min(mem.d_reduce_storage, mem.reduce_storage_bytes,
                            mem.d_input, mem.d_min_val, n);
@@ -1839,7 +1839,7 @@ float gpu_nssort(int64_t* h_arr, int n, GPUMemory& mem) {
 }
 
 // ---------------------------------------------------------------------------
-// CUB Radix Sort (OneSweep-style single call) — the benchmark opponent.
+// CUB Radix Sort (OneSweep-style single call): the benchmark opponent.
 // ---------------------------------------------------------------------------
 float gpu_cub_radix_sort_onesweep(int64_t* h_arr, int n, GPUMemory& mem) {
     CUDA_CHECK(cudaMemcpy(mem.d_input, h_arr, n * sizeof(int64_t), cudaMemcpyHostToDevice));
@@ -1870,7 +1870,7 @@ float gpu_cub_radix_sort_onesweep(int64_t* h_arr, int n, GPUMemory& mem) {
 
 
 // ---------------------------------------------------------------------------
-// Data generators — exact port of NS/NSSort/nssort_bench2.cpp distributions
+// Data generators: exact port of NS/NSSort/nssort_bench2.cpp distributions
 // (same seeds, same algorithms) so the GPU and CPU benchmarks sort
 // bit-identical inputs.
 // ---------------------------------------------------------------------------

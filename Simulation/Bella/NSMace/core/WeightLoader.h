@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 #pragma once
 #include "NSMace.h"
 #include <vector>

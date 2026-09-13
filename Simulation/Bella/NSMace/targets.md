@@ -1,4 +1,4 @@
-# NSMace — Target-Aware Force Field Selection
+# NSMace: Target-Aware Force Field Selection
 
 NSMace now supports a `--target` flag through the `nsmace_target.py` wrapper.
 The flag selects the appropriate MACE model for the simulation domain.

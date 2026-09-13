@@ -1,4 +1,4 @@
-FULL DISEASE SCREEN — SUMMARY
+FULL DISEASE SCREEN: SUMMARY
 ======================================================================
 Total targets completed:   18
 Targets with >=20 clean:   0
@@ -30,7 +30,7 @@ Top 20 targets by D_score closest to 0 (best diagnostic window):
   BCL2L1                            -13.515
   BCL2                              -13.524
 
-Bottom 20 (exhausted or <5 clean) — flag for manual review:
+Bottom 20 (exhausted or <5 clean): flag for manual review:
   target                         clean_count
   ----------------------------------------
   BCL2                                    0

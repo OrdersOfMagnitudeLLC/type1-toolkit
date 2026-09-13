@@ -1,4 +1,4 @@
-NSSort GPU vs cub::DeviceRadixSort — int64_t, N=100000000
+NSSort GPU vs cub::DeviceRadixSort: int64_t, N=100000000
 =========================================================
 
 distribution      ns_sort(ms)      cub(ms)    ratio   result

@@ -1,10 +1,10 @@
-FULL DISEASE SCREEN — SUMMARY
+FULL DISEASE SCREEN: SUMMARY
 ======================================================================
 Total targets completed:   995
-Targets with >=20 clean:   866
+Targets with >=20 clean:   872
 Targets with 10-19 clean:  0
-Targets with <10 clean:    129 (need manual review)
-Total clean candidates:    53349
+Targets with <10 clean:    123 (need manual review)
+Total clean candidates:    53469
 Total relaxed candidates:  0
 Total exhausted:           0
 Runtime minutes:           6.2
@@ -33,7 +33,7 @@ Top 20 targets by D_score closest to 0 (best diagnostic window):
   CAPN6                              -7.221
   PSMA1                              -7.227
 
-Bottom 20 (exhausted or <5 clean) — flag for manual review:
+Bottom 20 (exhausted or <5 clean): flag for manual review:
   target                         clean_count
   ----------------------------------------
   CDKN1A                                  0

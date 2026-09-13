@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Session 4: correct message-passing interaction block.
 // conv_tp: 128x0e x (0e+1o+2e+3o) -> 128x0e+128x1o+128x2e+128x3o (uvu, per-l scalar mul)
 // linear:  per-l 128x128 mix (irreps_mid -> irreps_mid), path_weight=1/sqrt(128)

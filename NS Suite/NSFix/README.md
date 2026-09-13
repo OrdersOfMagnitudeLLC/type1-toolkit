@@ -1,6 +1,6 @@
 # NSFix
 
-**Full production FIX engine — faster than bare codecs.**
+**Full production FIX engine: faster than bare codecs.**
 
 FIX protocol parser with SIMD-accelerated tag extraction, callback-based message dispatch,
 memory-mapped persistence, NSHash multi-session management, and session recovery/replay.
@@ -42,16 +42,16 @@ cmake -B build_full && cmake --build build_full  # full feature bench
 | cpp_fix_codec (parse) | 3.1M |
 | QuickFIX 1.15.1 (full engine) | 452K |
 
-*Benchmarked on isolated runs — system load affects all FIX parser throughputs.*
+*Benchmarked on isolated runs: system load affects all FIX parser throughputs.*
 
 ## Bare Metal Benchmark
 
 NSFix's production parser (full session: mmap log, multi-session,
-recovery) runs at ~9.5M msg/sec — matching or beating bare codecs
+recovery) runs at ~9.5M msg/sec: matching or beating bare codecs
 that do none of this.
 
 The bare scanner (AVX-512, no field extraction) hits 1.6B SOH/sec
-— 14 GB/sec, 73% of this machine's 19.1 GB/sec memory bandwidth
+ 14 GB/sec, 73% of this machine's 19.1 GB/sec memory bandwidth
 ceiling. Theoretical maximum: 154M msg/sec.
 
 The production gap to theoretical is the irreducible cost of
@@ -73,7 +73,7 @@ Run: `./build/nsfix_bare`
 
 ## Third-party
 
-- **QuickFIX** — BSD License (tested against stable 1.15.1; latest HEAD has memory safety issues under native flags)
-- **nlohmann/json** — MIT License (vendored header, used by server only)
-- **hffix** — BSL-1.0 License (benchmark comparison only)
-- **NSHash** — proprietary (used for multi-session management)
+- **QuickFIX**: BSD License (tested against stable 1.15.1; latest HEAD has memory safety issues under native flags)
+- **nlohmann/json**: MIT License (vendored header, used by server only)
+- **hffix**: BSL-1.0 License (benchmark comparison only)
+- **NSHash**: proprietary (used for multi-session management)

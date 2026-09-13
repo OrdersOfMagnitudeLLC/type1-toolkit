@@ -3,7 +3,7 @@
 // See LICENSE.md in the repository root or ofmagnitude.com
 
 /*
- * nssort_bench.cpp — Manual chrono benchmark for NSSort v10 vs IPS4o
+ * nssort_bench.cpp: Manual chrono benchmark for NSSort v10 vs IPS4o
  *
  * Methodology matches the original sealed benchmark:
  *   - Element type: int64_t for both NSSort and IPS4o
@@ -36,7 +36,7 @@ using namespace std::chrono;
 constexpr size_t N = 100'000'000;  // 100M
 
 // ---------------------------------------------------------------------------
-// Distribution generators — all produce int64_t directly
+// Distribution generators: all produce int64_t directly
 // ---------------------------------------------------------------------------
 
 void gen_zero(int64_t* data, size_t n) {
@@ -139,7 +139,7 @@ bool is_sorted_check(int64_t* data, size_t n) {
 }
 
 // ---------------------------------------------------------------------------
-// Benchmark harness — matches original methodology
+// Benchmark harness: matches original methodology
 // ---------------------------------------------------------------------------
 
 array<double, 3> benchmark_ns_sort(int64_t* data, size_t n, int warm_runs) {

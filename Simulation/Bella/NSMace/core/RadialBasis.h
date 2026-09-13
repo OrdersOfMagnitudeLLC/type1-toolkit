@@ -1,5 +1,5 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
-// Bessel radial basis + polynomial envelope — matches MACE-MP-0 radial embedding
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// Bessel radial basis + polynomial envelope: matches MACE-MP-0 radial embedding
 #pragma once
 #include "NSMace.h"
 #include <cmath>
@@ -99,9 +99,9 @@ inline void compute_edge_features(Real dx, Real dy, Real dz, Real r,
 }
 
 // Real spherical harmonics, matching e3nn's o3.spherical_harmonics() exactly
-// (normalize=True, normalization='component' — this is what MACE's
+// (normalize=True, normalization='component': this is what MACE's
 // model.spherical_harmonics module uses internally, verified against the
-// live model). NOTE: e3nn's l=1 component order is (x, y, z) directly —
+// live model). NOTE: e3nn's l=1 component order is (x, y, z) directly :
 // NOT the (y, z, x) Condon-Shortley convention found in most QM textbooks.
 // Higher l blocks are built recursively via Clebsch-Gordan-derived
 // polynomials (see e3nn/o3/_spherical_harmonics.py::_spherical_harmonics),

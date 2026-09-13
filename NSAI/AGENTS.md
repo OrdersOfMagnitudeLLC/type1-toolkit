@@ -1,4 +1,4 @@
-# NSAI — Agent Startup Instructions
+# NSAI: Agent Startup Instructions
 
 ## Every session, do this first:
 1. Check if /tmp/qwen3b_stream.nsm exists. If not, regenerate it:
@@ -21,7 +21,7 @@
 - Build:       cd $NS_HOME/NSAI && make clean && make
 
 ## Rules:
-- COLD_THR = 0.0f permanent — do not change
+- COLD_THR = 0.0f permanent: do not change
 - Q6_K panel kernel permanently off-limits (14x regression)
 - debug_float32 must be OFF before benchmarks
 - make clean && make mandatory after any .h change

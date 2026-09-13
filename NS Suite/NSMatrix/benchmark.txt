@@ -1,4 +1,4 @@
-NSMatrix Block Matmul — AVX-512
+NSMatrix Block Matmul: AVX-512
 
 Operation          | Time (ms)
 -------------------|----------

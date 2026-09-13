@@ -7,7 +7,7 @@ from ase import Atoms
 import numpy as np
 import json
 
-# Water molecule — known geometry
+# Water molecule: known geometry
 mol = Atoms(
     symbols=['O', 'H', 'H'],
     positions=[

@@ -155,7 +155,7 @@ public:
     std::vector<float> buf_scores_;
     std::vector<float> buf_v_cache_;  // [max_seq_len * head_dim] for fused KV attention reads
 
-    // Cached norm weights — dequantized once at load time instead of every token.
+    // Cached norm weights: dequantized once at load time instead of every token.
     struct CachedNormWeights {
         std::vector<float> attn_norm_w;
         std::vector<float> ffn_norm_w;
@@ -196,7 +196,7 @@ public:
         return result;
     }
 
-    // Weight access — returns float ptr into mmap'd data, dequantized on demand
+    // Weight access: returns float ptr into mmap'd data, dequantized on demand
     const float* get_weight_f32(const std::string& name,
                                  std::vector<float>& buf) const;
 

@@ -1,4 +1,4 @@
-NSQueue vs competitors — 10M items, batch size 32
+NSQueue vs competitors: 10M items, batch size 32
 
 Queue              | Throughput (M items/sec) | Avg Latency (ns)
 -------------------|--------------------------|----------------

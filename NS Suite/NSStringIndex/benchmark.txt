@@ -1,4 +1,4 @@
-NSStringIndex vs strstr — 5M Apache log lines, fresh run
+NSStringIndex vs strstr: 5M Apache log lines, fresh run
 
 Scenario          | Baseline (ms) | NSStringIndex (ms) | Speedup
 ------------------|---------------|---------------------|--------
@@ -7,4 +7,4 @@ Single (cold)     |        125.82 |               72.57 | 0.6x (baseline faster)
 1,000 queries     |     136,613.44 |               63.44 | 2153.5x
 
 Build time: 57.88ms (AVX2 + OpenMP)
-Correctness: 404=500000, 200=4000000, 500=500000 — CORRECT
+Correctness: 404=500000, 200=4000000, 500=500000: CORRECT

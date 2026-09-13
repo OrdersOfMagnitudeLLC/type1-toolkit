@@ -226,7 +226,7 @@ static inline float vec_dot_q4k_q8k(const block_q4_K* vx, const block_q8_K* vy, 
     return sumf;
 }
 
-#else  // non-AVX-512 fallback — Highway widened int16 path
+#else  // non-AVX-512 fallback: Highway widened int16 path
 
 #include "hwy/highway.h"
 
@@ -332,7 +332,7 @@ static float vec_dot_q4k_q8k(const block_q4_K* vx, const block_q8_K* vy, int nb)
 
 // ---------------------------------------------------------------------------
 // Q4_Kx8 panel layout and production GEMV kernel.
-// Uses SSE4.1 + AVX-FMA only — no sustained ZMM to avoid AVX-512 downclocking.
+// Uses SSE4.1 + AVX-FMA only: no sustained ZMM to avoid AVX-512 downclocking.
 // ---------------------------------------------------------------------------
 #include "ns_repack.h"
 
@@ -363,7 +363,7 @@ void ns_gemm_q6k(int n_cols, float* out, size_t out_row_stride,
 
 // Panel GEMV kernel: 8 rows of ns_q4_Kx8 × one block_q8_K activation vector.
 // Produces n_active float outputs in out[0..n_active-1].
-// Uses SSE4.1 + AVX-FMA only — no sustained ZMM to avoid AVX-512 downclocking.
+// Uses SSE4.1 + AVX-FMA only: no sustained ZMM to avoid AVX-512 downclocking.
 static inline void vec_dot_q4k_q8k_Rx1(
     const ns_q4_Kx8* __restrict__ vx,
     const block_q8_K* __restrict__ vy,
@@ -456,13 +456,13 @@ static inline __m128i get_scale_shuffle(int i) {
 }
 
 // (e) vec_dot_q6k_q8k -- fused integer dot: one block_q6_K weight row
-// (read directly from the mmap'd GGUF, already pre-quantized — same as
+// (read directly from the mmap'd GGUF, already pre-quantized: same as
 // block_q4_K) against one block_q8_K activation block. Ports
 // ggml_vec_dot_q6_K_q8_K's AVX2 logic (llama.cpp
 // ggml-cpu/arch/x86/quants.c:2426-2508) to AVX-512: the two pairs of
 // 32-byte maddubs (q4_0/q4_1 and q4_2/q4_3) are each combined into one
 // 64-byte _mm512_maddubs_epi16, then split back into 256-bit halves
-// before per-half scale application — same widening pattern as
+// before per-half scale application: same widening pattern as
 // dot64_both_nibbles (Change 1). The -32 offset correction via bsums
 // and q8sclsub is unchanged from the AVX2 reference.
 static inline float vec_dot_q6k_q8k(const block_q6_K* vx, const block_q8_K* vy, int nb) {

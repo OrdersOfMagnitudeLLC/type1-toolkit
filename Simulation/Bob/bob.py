@@ -15,7 +15,7 @@ import itertools
 
 import requests
 
-# Foam screener — first-principles phonon stability (T45+T2 derived)
+# Foam screener: first-principles phonon stability (T45+T2 derived)
 _BELLA_DIR = os.path.join(os.path.dirname(__file__), "..", "Bella")
 if _BELLA_DIR not in sys.path:
     sys.path.insert(0, _BELLA_DIR)
@@ -182,7 +182,7 @@ def _generative_screen(query, domain=None, limit=20):
     # Elements exempt from abundance filtering (chalcogens are always allowed)
     abundance_exempt = {"S", "Se", "N", "O", "P", "B", "C", "H", "F", "Cl"}
 
-    # Minimum stability score — below this the foam screener says likely imaginary phonons
+    # Minimum stability score: below this the foam screener says likely imaginary phonons
     min_stability_score = 0.30
 
     results = []
@@ -411,7 +411,7 @@ def _matproj_search(query, limit):
         return [{"error": str(e), "source": "MaterialsProject"}]
 
 def _gnome_search(query, limit):
-    # GNoME integration placeholder — keep as no-op fallback for now
+    # GNoME integration placeholder: keep as no-op fallback for now
     return [{"note": "GNoME search not implemented for general queries", "query": query}]
 
 CATALYSIS_HUB_URL = "https://api.catalysis-hub.org/graphql"

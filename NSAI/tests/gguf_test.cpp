@@ -271,7 +271,7 @@ int main(int argc, char* argv[]) {
         printf("\n=== %s ===\n", benchmark_name.c_str());
         printf("Prompt tokens: %d\n", prompt_len);
 
-        // Prefill — batched: every weight row is dequantized ONCE and reused
+        // Prefill: batched: every weight row is dequantized ONCE and reused
         // against all prompt_len positions, instead of once per token.
         auto t_prefill = now();
         InferenceState state;

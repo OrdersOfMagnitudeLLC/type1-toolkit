@@ -1,4 +1,4 @@
-NSKVCache Compression Pipeline — 1M tokens, 32 layers, 8 heads, 128 dim
+NSKVCache Compression Pipeline: 1M tokens, 32 layers, 8 heads, 128 dim
 
 Stage                    | Size (bytes)   | Size (MiB) | Compression
 -------------------------|----------------|------------|-------------

@@ -1,4 +1,4 @@
-NSComp vs LZ4 vs zstd 1.6.0 (native build, -O3 -march=native) — 1M records, 36 bytes each (34.3 MiB)
+NSComp vs LZ4 vs zstd 1.6.0 (native build, -O3 -march=native): 1M records, 36 bytes each (34.3 MiB)
 
 Compressor | Ratio   | Compress (ms) | Decompress (ms) | Lossless
 -----------|---------|---------------|-----------------|---------

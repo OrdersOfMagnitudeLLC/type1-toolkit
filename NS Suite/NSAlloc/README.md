@@ -22,7 +22,7 @@ cmake -B build && cmake --build build
 
 ## Results
 
-mimalloc 3.5.1 (latest HEAD) built from source with `-O3 -march=native`. Note: mimalloc 3.5.1 bulk-reset is slower than 2.1.2 — tested against latest HEAD.
+mimalloc 3.5.1 (latest HEAD) built from source with `-O3 -march=native`. Note: mimalloc 3.5.1 bulk-reset is slower than 2.1.2: tested against latest HEAD.
 
 | Pattern | NSAlloc (ns/op) | mimalloc (ns/op) | Speedup |
 |---------|----------------|-----------------|---------|
@@ -33,4 +33,4 @@ mimalloc 3.5.1 (latest HEAD) built from source with `-O3 -march=native`. Note: m
 
 ## Third-party
 
-- **mimalloc** — MIT License (built from source v3.5.1 with `-O3 -march=native`)
+- **mimalloc**: MIT License (built from source v3.5.1 with `-O3 -march=native`)

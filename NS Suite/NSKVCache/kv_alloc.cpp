@@ -2,7 +2,7 @@
 // Licensed under the OOM Commercial License v1.0
 // See LICENSE.md in the repository root or ofmagnitude.com
 
-// kv_alloc.cpp — Bare KV allocator with actual memory (no LLM, no inference)
+// kv_alloc.cpp: Bare KV allocator with actual memory (no LLM, no inference)
 //
 // Allocates the compressed KV budget, writes/reads KV pairs with INT4
 // quantization. Round-trip test validates accuracy.

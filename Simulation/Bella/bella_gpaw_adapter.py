@@ -79,7 +79,7 @@ class BellaDiagonalizer:
         # Step 4: Warm start from previous eigenvectors if available
         V_init = None
         if not np.all(C_nM == 0):
-            V_init = C_nM.T.copy()   # (N, k) — rows of C_nM are eigenvectors
+            V_init = C_nM.T.copy()   # (N, k): rows of C_nM are eigenvectors
         
         # Step 5: Run CheFSI v2 on standard problem (via LinearOperator)
         vals, Y, n_iters = chefsi(H_op, N, k)

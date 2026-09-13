@@ -797,7 +797,7 @@ def _check_chemistry_class(formula, elements, domain_profile, properties=None):
     excluded = domain_profile.get('excluded_chemistry', [])
     for rule in excluded:
         if _rule_applies(rule):
-            return False, f"excluded chemistry — {rule}"
+            return False, f"excluded chemistry : {rule}"
 
     required = domain_profile.get('required_chemistry', [])
     if not required:
@@ -807,7 +807,7 @@ def _check_chemistry_class(formula, elements, domain_profile, properties=None):
         if _rule_applies(rule):
             return True, ""
 
-    return False, f"chemistry mismatch — none of {len(required)} rules satisfied"
+    return False, f"chemistry mismatch : none of {len(required)} rules satisfied"
 
 def _bob_filter(results, domain, extra_exclude=None):
     """Filter Bob results by domain abundance/exclusion rules."""
@@ -864,7 +864,7 @@ def _bob_filter(results, domain, extra_exclude=None):
             props = r.get('properties', {})
             passes, reason = _check_chemistry_class(formula, elements, domain_profile, props)
             if not passes:
-                removed[formula] = f"filtered {formula}: chemistry mismatch — {reason}"
+                removed[formula] = f"filtered {formula}: chemistry mismatch : {reason}"
                 continue
 
         filtered.append(r)
@@ -3395,7 +3395,7 @@ def show_crystal_3d(cif_path: str, formula: str, confirmed: bool = False, phonon
 
     # Create or reuse PyVista plotter
     if pl is None:
-        pl = pv.Plotter(title=f"Bella — {formula}")
+        pl = pv.Plotter(title=f"Bella : {formula}")
     pl.set_background("#0a0a0a")
     try:
         pl.renderer.SetBackground(0.04, 0.04, 0.04)
@@ -3568,9 +3568,9 @@ def show_crystal_3d(cif_path: str, formula: str, confirmed: bool = False, phonon
 
     status_line = "✓ DFT Confirmed" if confirmed else "⊘ Screened only"
     energy_str = f"E = {energy:.3f} eV" if energy is not None else ""
-    density_str = f"ρ = {density_gcm3:.3f} g/cm³" if density_gcm3 is not None else "ρ = — g/cm³"
-    space_str = f"Space group: {space_group}" if space_group else "Space group: —"
-    bandgap_str = f"Bandgap: {bandgap:.2f} eV" if bandgap is not None else "Bandgap: —"
+    density_str = f"ρ = {density_gcm3:.3f} g/cm³" if density_gcm3 is not None else "ρ = ? g/cm³"
+    space_str = f"Space group: {space_group}" if space_group else "Space group: ?"
+    bandgap_str = f"Bandgap: {bandgap:.2f} eV" if bandgap is not None else "Bandgap: ?"
     if phonon_stable is True:
         phonon_str = "Phonon: ✓ stable"
     elif phonon_stable is False:
@@ -3758,7 +3758,7 @@ def show_protein_3d(pdb_path, protein_id, pl=None, show=True, text_position='upp
         return
 
     if pl is None:
-        pl = pv.Plotter(title=f"Bella — {protein_id}")
+        pl = pv.Plotter(title=f"Bella : {protein_id}")
     pl.set_background("#0a0a0a")
     try:
         pl.renderer.SetBackground(0.04, 0.04, 0.04)
@@ -3975,9 +3975,9 @@ def show_protein_3d(pdb_path, protein_id, pl=None, show=True, text_position='upp
 
     mw = atoms_obj.get_masses().sum() if atoms_obj is not None else None
     seq_len = len(atoms_obj) if atoms_obj is not None else n_ca
-    mw_str = f"MW: {mw:.1f} Da" if mw is not None else "MW: —"
+    mw_str = f"MW: {mw:.1f} Da" if mw is not None else "MW: ?"
     seq_str = f"Residues: {seq_len}"
-    pocket_str = f"Pocket: {pocket_volume:.1f} Å³" if pocket_volume is not None else "Pocket: —"
+    pocket_str = f"Pocket: {pocket_volume:.1f} Å³" if pocket_volume is not None else "Pocket: ?"
 
     info = [
         f"PDB: {protein_id}",
@@ -5515,7 +5515,7 @@ def cmd_phonons(args):
 
     supercell = getattr(args, 'supercell', None)
     if not suite and len(pressures) == 1:
-        # Single run — call bella_phonon.py directly
+        # Single run: call bella_phonon.py directly
         cmd = _build_phonon_cmd(cif, pressures[0], sparc_phonon,
                                 no_socket, np_ranks, max_ram,
                                 sparc_timeout, supercell)
@@ -5865,7 +5865,7 @@ def cmd_status_coverage(args):
         if command == 'math':
             return '✅' if (p.get('target') == 'math' or profile_name == 'riemann') else 'N/A'
 
-        # Foam mechanics commands — physics tools, available for all real domains
+        # Foam mechanics commands: physics tools, available for all real domains
         if command == 't50':
             if is_sim or is_math:
                 return 'N/A'
@@ -7030,7 +7030,7 @@ def cmd_discover(args):
                         resume_choice = 'n'
                     else:
                         try:
-                            resume_choice = input(f"Checkpoint found: {latest.name} — material {completed}/{total}. Resume? [y/N]: ").strip().lower()
+                            resume_choice = input(f"Checkpoint found: {latest.name} : material {completed}/{total}. Resume? [y/N]: ").strip().lower()
                         except EOFError:
                             resume_choice = 'n'
                     if resume_choice in ('y', 'yes'):
@@ -7181,7 +7181,7 @@ def cmd_discover(args):
         # Bella self-awareness: if Bob returns fewer than 3 chemistry-valid candidates, auto-generate
         auto_generative = len(deduplicated) < 3
         if auto_generative:
-            console.print(f"Bob: only {len(deduplicated)} candidates found — triggering generative mode.")
+            console.print(f"Bob: only {len(deduplicated)} candidates found : triggering generative mode.")
 
         # Split protein vs material candidates
         protein_candidates = [r for r in deduplicated if r.get('type') == 'protein']
@@ -7762,12 +7762,12 @@ def cmd_discover(args):
                 console.print(f"Lattice       : a={cellpar[0]:.4f} b={cellpar[1]:.4f} c={cellpar[2]:.4f} α={cellpar[3]:.2f} β={cellpar[4]:.2f} γ={cellpar[5]:.2f}")
                 console.print(f"Space group   : {space_group}")
             else:
-                console.print(f"Density       : — g/cm³")
-                console.print(f"Space group   : —")
+                console.print(f"Density       : ? g/cm³")
+                console.print(f"Space group   : ?")
         except Exception:
             console.print(f"Natoms        : {result.get('n_atoms', '—')}")
-            console.print(f"Density       : — g/cm³")
-            console.print(f"Space group   : —")
+            console.print(f"Density       : ? g/cm³")
+            console.print(f"Space group   : ?")
         console.print()
         n_atoms = _n_atoms(result['formula']) or result.get('n_atoms', 1)
         nsmace_unc = n_atoms * 0.1
@@ -7793,11 +7793,11 @@ def cmd_discover(args):
                         parts.append('COD (' + str(lit.get('cod_entries', 0)) + ' entries)')
                     if lit.get('mp_checked'):
                         parts.append('MP (' + str(lit.get('mp_entries', 0)) + ' entries)')
-                    console.print(f"Novel         : [yellow]⚠ KNOWN[/] — found in " + ', '.join(parts))
+                    console.print(f"Novel         : [yellow]⚠ KNOWN[/] : found in " + ', '.join(parts))
                 else:
-                    console.print(f"Novel         : [dim]— unchecked[/]")
+                    console.print(f"Novel         : [dim]: unchecked[/]")
         else:
-            console.print(f"SPARC energy  : — eV  (— Ha)")
+            console.print(f"SPARC energy  : ? eV  (: Ha)")
             console.print(f"SPARC status  : skipped")
         
         min_freq = result.get('min_freq')
@@ -7807,36 +7807,36 @@ def cmd_discover(args):
         if min_freq is not None:
             console.print(f"Phonon min    : {min_freq:.3f} ± 1.0 THz")
         else:
-            console.print(f"Phonon min    : — ± 1.0 THz")
+            console.print(f"Phonon min    : ? ± 1.0 THz")
         
         if max_freq is not None:
             console.print(f"Phonon max    : {max_freq:.3f} ± 1.0 THz")
         else:
-            console.print(f"Phonon max    : — ± 1.0 THz")
+            console.print(f"Phonon max    : ? ± 1.0 THz")
         
         if phonon_stable is True:
             console.print(f"Phonon stable : [green]✓ STABLE[/]")
         elif phonon_stable is False:
             console.print(f"Phonon stable : [red]✗ UNSTABLE[/]")
         elif phonon_stable is None:
-            console.print(f"Phonon stable : — parse failed")
+            console.print(f"Phonon stable : ? parse failed")
         
         conf = _confidence_score(result)
         conf_label = _confidence_label(conf)
-        console.print(f"Confidence    : {conf}/100 — {conf_label}")
+        console.print(f"Confidence    : {conf}/100 : {conf_label}")
 
         e_form = _formation_energy(result['formula'], result.get('nsmace_energy', float('nan')))
         bench = _mp_benchmark(result['formula'], e_form)
         if bench:
             d = bench['delta_e_per_atom']
             if d < 0:
-                console.print(f"MP benchmark  : Nearest known compound {bench['name']} ({bench['id']}) — novel candidate is {abs(d):.2f} eV/atom more stable")
+                console.print(f"MP benchmark  : Nearest known compound {bench['name']} ({bench['id']}) : novel candidate is {abs(d):.2f} eV/atom more stable")
             else:
                 console.print(f"MP benchmark  : Nearest known compound {bench['name']} ({bench['id']}), ΔE = +{d:.2f} eV/atom above known stable phase. Novel candidate is metastable.")
         else:
-            console.print(f"MP benchmark  : — (no MP API key or query failed)")
+            console.print(f"MP benchmark  : ? (no MP API key or query failed)")
 
-        console.print(f"Abundance     : —")
+        console.print(f"Abundance     : ?")
         console.print(f"Findings JSON : findings/discover_{query.replace(' ', '_')[:30]}_{time.strftime('%Y%m%d_%H%M%S')}.json")
         console.print("[bold cyan]────────────────────────────────────────[/]")
         console.print()
@@ -7881,7 +7881,7 @@ def cmd_discover(args):
             md_str = f"{md:.3f} Å" if md is not None else "—"
             console.print(f"Binding screen: {be_str} / {md_str} contact")
         else:
-            console.print(f"Binding screen : —")
+            console.print(f"Binding screen : ?")
 
         console.print(f"Findings JSON : findings/discover_{query.replace(' ', '_')[:30]}_{time.strftime('%Y%m%d_%H%M%S')}.json")
         console.print("[bold cyan]────────────────────────────────────────[/]")
@@ -8484,7 +8484,7 @@ def parse_nl(text):
     else:
         engine = 'both'
 
-    # file — explicit .xyz first, then bare word
+    # file: explicit .xyz first, then bare word
     m = re.search(r'(\w+\.xyz)', text)
     if m:
         file = m.group(1)
@@ -10148,7 +10148,7 @@ def cmd_screen(args):
         query_mol, 2, nBits=2048
     )
 
-    # Stage 1 — fast pre-filter (single loop, no Vina, no RAM spike)
+    # Stage 1: fast pre-filter (single loop, no Vina, no RAM spike)
     survivors = []
     total = 0
     t0 = time.time()
@@ -10213,7 +10213,7 @@ def cmd_screen(args):
         console.print(f"[cyan]Pocket center: {center[0]:.2f}, {center[1]:.2f}, {center[2]:.2f}[/]")
 
     if fast:
-        # Stage 2 — fast RDKit pharmacophore scoring
+        # Stage 2: fast RDKit pharmacophore scoring
         pharm_results = []
         pharm_t0 = time.time()
         n_pharm = 0
@@ -10241,7 +10241,7 @@ def cmd_screen(args):
             f"avg: {pharm_time/len(pharm_results)*1000:.1f} ms/compound[/]"
         )
 
-    # Stage 3 — Vina precision docking
+    # Stage 3: Vina precision docking
     receptor_pdbqt = denovo.to_pdbqt_receptor(parsed)
     rec_fd, rec_path = tempfile.mkstemp(suffix=".pdbqt")
     with os.fdopen(rec_fd, "w") as f:
@@ -10852,7 +10852,7 @@ def main():
     if COMPUTE_INFO['type'] == 'cpu':
         console.print(f"compute: {COMPUTE_INFO['name']} ({COMPUTE_INFO['vram_gb']:.0f}GB RAM)")
     else:
-        console.print(f"compute: {COMPUTE_INFO['name']} ({COMPUTE_INFO['vram_gb']:.0f}GB, {COMPUTE_INFO['type'].upper()}) — GPU dispatch enabled")
+        console.print(f"compute: {COMPUTE_INFO['name']} ({COMPUTE_INFO['vram_gb']:.0f}GB, {COMPUTE_INFO['type'].upper()}) : GPU dispatch enabled")
     if False:
         # No-argument flow is handled after argparse below
         pass

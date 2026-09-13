@@ -1,4 +1,4 @@
-// OOM Proprietary — All Rights Reserved, Orders of Magnitude LLC
+// OOM Proprietary: All Rights Reserved, Orders of Magnitude LLC
 
 #ifndef BELLA_CHEFSI_H
 #define BELLA_CHEFSI_H

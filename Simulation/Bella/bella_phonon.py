@@ -35,7 +35,7 @@ BOHR_PER_ANGSTROM = 1.8897259886
 EV_PER_HARTREE = 27.2114
 HA_BOHR_TO_EV_ANGSTROM = 51.4220
 
-# Environment defaults — overridable via --sparc-bin, --psps-dir, or env vars
+# Environment defaults: overridable via --sparc-bin, --psps-dir, or env vars
 SPARC_BIN_DEFAULT = os.environ.get(
     "BELLA_SPARC_BIN", str(Path(__file__).resolve().parent / "sparc-engine" / "lib" / "sparc")
 )

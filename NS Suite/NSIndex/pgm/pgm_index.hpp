@@ -29,8 +29,8 @@
 
 namespace pgm {
 
-#define PGM_SUB_EPS(x, epsilon) ((x) <= (epsilon) ? 0 : ((x) - (epsilon)))
-#define PGM_ADD_EPS(x, epsilon, size) ((x) + (epsilon) + 2 >= (size) ? (size) : (x) + (epsilon) + 2)
+#define PGM_SUB_EPS(x, epsilon) ((x) <= (epsilon) ? 0: ((x) - (epsilon)))
+#define PGM_ADD_EPS(x, epsilon, size) ((x) + (epsilon) + 2 >= (size) ? (size): (x) + (epsilon) + 2)
 
 /**
  * A struct that stores the result of a query to a @ref PGMIndex, that is, a range [@ref lo, @ref hi)

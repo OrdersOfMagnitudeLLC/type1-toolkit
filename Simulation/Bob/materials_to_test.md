@@ -5,7 +5,7 @@
 | PH(OF)2 | 6.098 eV | 1.632 g/cm³ | 950 ppm | Lighter than water, 6eV gap, 950ppm. Wins every wide-gap filter. |
 | K6Al2HF11 | 5.150 eV | 2.546 g/cm³ | 950 ppm | New find, K+Al+H+F, appeared in property-first battery search only. |
 
-# Materials to Test — Bob Discovery Session 2026-08-02
+# Materials to Test: Bob Discovery Session 2026-08-02
 
 ## PRIORITY 1: Superconductors
 | Material | Bandgap | Abundance | Crystal | Why |
@@ -36,14 +36,14 @@
 | NaAlZnF6 | 1.04 eV | 70 ppm | Grid/Industrial | Zn matches clay battery anode |
 
 ## Validation Pipeline (Next Session)
-1. NS CPU sim (MACE-MP-0 + NS sparse graph) — ionic conductivity for battery 4
-2. Same sim for KCa(FeP)4 — verify metallic character, estimate Tc proxy
+1. NS CPU sim (MACE-MP-0 + NS sparse graph): ionic conductivity for battery 4
+2. Same sim for KCa(FeP)4: verify metallic character, estimate Tc proxy
 3. Publish methodology paper: Bob + GNoME = materials discovery in hours
 
 ## Notes
 - All materials confirmed absent from Materials Project and literature
-- KCa(FeP)4 is the headline find — phosphide analog of confirmed 33K superconductor
-- Na4SiS4 family proven >1mS/cm with doping (2024 paper) — Ca/Mg variants untested
+- KCa(FeP)4 is the headline find: phosphide analog of confirmed 33K superconductor
+- Na4SiS4 family proven >1mS/cm with doping (2024 paper): Ca/Mg variants untested
 - BVSE numbers are 2-3x overestimates vs real DFT-NEB
 
 ## ADDITIONS FROM FINAL QUERIES
@@ -59,7 +59,7 @@
 
 **Note:** SiHF3 appeared #1 in independent UWBG query (8.71 eV), confirming its existing Priority 0 classification.
 
-## Structural Materials — Lightest/Strongest
+## Structural Materials: Lightest/Strongest
 | Material | Density | Bulk Modulus | Specific Modulus | Source | Why |
 |---|---|---|---|---|---|
 | Beryllium (mp-aaaaaaau) | 1.90 g/cm³ | 125.1 GPa | 65.5 GPa/(g/cm³) | MP API | Lightest structurally stiff metal known |

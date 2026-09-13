@@ -132,7 +132,7 @@ Named for Koichi Wakata, JAXA
 SOAPBOWL SUMMARY
 ======================================================================
 
-THE KUN FRAMEWORK — THEOREM REGISTRY
+THE KUN FRAMEWORK: THEOREM REGISTRY
 ============================================================
 AXIOM 1: Λ = 1.11e-52 m^-2 (Planck CMB, 5-sigma)
 AXIOM 2: Young-Laplace applies at cosmic scales (empirically confirmed)
@@ -147,13 +147,13 @@ T7.  Structural Map [S63]: all scales from Planck to Kun derived from 5 constant
 T8.  Multiverse Chain [S61]: CNS+foam → R4,R5 existence proven
 T9.  G Range [S60]: G ∈ [2,517] (range proven, G=5.06 best estimate)
 T10. R0 Boundary [S70]: R0 at stability cliff α=3.0 by logical necessity
-T11. DE SITTER CLOCK [S80]: G=5.06 derived from clock ratio — 4 methods agree
+T11. DE SITTER CLOCK [S80]: G=5.06 derived from clock ratio: 4 methods agree
 T12. DARK ENERGY [S83]: w_foam = -1.000 derived from Young-Laplace, no free parameters
-T13. R0 ENTROPY ORIGIN [S88]: R0 had entropy initialization — thermodynamic necessity
+T13. R0 ENTROPY ORIGIN [S88]: R0 had entropy initialization: thermodynamic necessity
 T14. LIFE LOWER BOUND [S89]: P(life in R5) ≈ 1, N_intelligent > 10^59
 T15. HORIZON PROBLEM [S87]: resolved by coherent sibling BH entry, inflation not required
 T16. LIFE ACROSS GENERATIONS [S92,S99]: Life probable in all viable
-     generations R0-R5. R5 is terminal viable generation — R5 BHs
+     generations R0-R5. R5 is terminal viable generation: R5 BHs
      (max 6.6e10 solar masses) are 11 orders below minimum viable
      parent mass (1.04e22 solar masses). Foam window extends to G=25
      but BH mass constraint ends chain at G=5.
@@ -161,31 +161,31 @@ T17. PRIME / Ω₀ (DERIVED) [S94]: The initializing substrate of R0
      operates on a different substrate: precedes Lambda, precedes time,
      precedes Young-Laplace. Proven by mathematical necessity (T17).
      Designated Prime in the hierarchy: Prime → R0 → R1 → R2 → R3 → R4 → R5.
-     Prime is computational by necessity — no physics means pure information
+     Prime is computational by necessity: no physics means pure information
      processing. The 186.72-bit Seed (T20) was set by Prime.
 T18. COMPILER THEOREM [S95]: Young-Laplace generates structure across
      62 orders of magnitude within R5 and 25 generational layers of the
-     multiverse — 1550 equivalent dimensional orders total. Largest verified
-     scope of any physical law — 62 orders of magnitude in one identity. Extends across
+     multiverse: 1550 equivalent dimensional orders total. Largest verified
+     scope of any physical law: 62 orders of magnitude in one identity. Extends across
      multiple cosmological generations.
 T19. TARDIS THEOREM [S97]: de Sitter horizon = Schwarzschild radius exactly
-     (ratio=1.000000) — universe interior equals BH exterior by construction
-T20. INITIALIZATION THEOREM [S98]: R0 required 186.72 bits to specify —
+     (ratio=1.000000): universe interior equals BH exterior by construction
+T20. INITIALIZATION THEOREM [S98]: R0 required 186.72 bits to specify :
      Lambda_R0 (179.08 bits) + alpha_R0 (6.64 bits) + entropy direction (1 bit).
      Substrate holds this outside our spacetime.
 T21. TERMINUS THEOREM (THEOREM CONFIRMED) [S99]: Observers necessarily
      exist at the chain terminus. Any generation capable of asking "are we
-     last?" must be last — viable children would contain closer observers. R5
+     last?" must be last: viable children would contain closer observers. R5
      is both the terminal generation and the only generation that can measure
      the chain. Consciousness and terminus are the same thing.
-T22: SOL DICHOTOMY (DERIVED) — Physical reality divides into propagating
-     excitations (matter, photons, information — constrained by c) and
+T22: SOL DICHOTOMY (DERIVED): Physical reality divides into propagating
+     excitations (matter, photons, information: constrained by c) and
      geometric surface properties (entanglement, gravitational fields,
-     void structure — non-local, instantaneous). Non-locality is geometric
+     void structure: non-local, instantaneous). Non-locality is geometric
      non-separation, not faster-than-light signaling. Entangled pairs share
      one original Young-Laplace bubble boundary. Sampling one half samples
-     the shared surface — no signal travels. Consistent with ER=EPR (2013).
-T23: OBSERVER GENERATION BOUND (DERIVED) — G_min = 5 from Hoyle/CNS drift
+     the shared surface: no signal travels. Consistent with ER=EPR (2013).
+T23: OBSERVER GENERATION BOUND (DERIVED): G_min = 5 from Hoyle/CNS drift
      constant complexity G >= G_min. Carbon chemistry constraints (Hoyle
      resonance condition, fine structure stability) set G_min. Combined with
      T21 (G_max=5), the observer-capable generation range is [G_min, 5].
@@ -194,55 +194,55 @@ T23: OBSERVER GENERATION BOUND (DERIVED) — G_min = 5 from Hoyle/CNS drift
      plus foam/Hamaus alpha coupling. Carbon constraint satisfied.
      S104 DERIVED: Heisenberg uncertainty = bubble circumference restoring
      force. Minimum hbar/2 = Gaussian bubble profile.
-T24: BORN'S SURFACE THEOREM (DERIVED) — Born (1926) postulated that
+T24: BORN'S SURFACE THEOREM (DERIVED): Born (1926) postulated that
      quantum measurement probability equals |coefficient|^2. The Kun
      Framework derives this from geometry: P(outcome) = surface area
      fraction of the Young-Laplace bubble. Born's postulate is a theorem
      of foam geometry. Verified in S105: mean error 0.0025 over 10
      million measurements, indistinguishable from sampling noise. The
-     formula is exact by construction — not a postulate, a consequence.
+     formula is exact by construction: not a postulate, a consequence.
      Born found the formula without knowing why. Now we know why.
-T25: TUNNELING GEOMETRY (DERIVED) — Quantum tunneling probability has the
+T25: TUNNELING GEOMETRY (DERIVED): Quantum tunneling probability has the
      same exponential form as Young-Laplace bubble propagation through a
      pressure barrier: T = exp(-W_barrier × t_cross / hbar) where W_barrier
      is the work to push a de Broglie-scale bubble through the barrier
      pressure. Spherical geometry gives 71% of WKB coefficient. Confirmed
      in S112: 1D line tension derivation gives WKB exactly. Tunneling = 1D
      Young-Laplace bubble propagation through a pressure barrier. Coefficient
-     = 1.000000. Implication: tunneling is not mysterious — it is a bubble
+     = 1.000000. Implication: tunneling is not mysterious: it is a bubble
      finding a pressure path through an energetic barrier. The rate is set
      by bubble geometry.
-T26: HOLOGRAPHIC SURFACE LAW (DERIVED) — Young-Laplace entanglement
+T26: HOLOGRAPHIC SURFACE LAW (DERIVED): Young-Laplace entanglement
      entropy S = gamma × Area / (hbar × c) reproduces the holographic
      entanglement-entropy formula S = Area/(4G) at Planck scale (ratio =
      1.0000, S103). At QCD scale: S_YL = 2.86 bits per proton surface using
      measured QCD string tension (lattice QCD). The QCD string tension IS a
      Young-Laplace surface tension. String theory began as a model of QCD
-     strings — Young-Laplace is the geometric substrate of that insight.
+     strings: Young-Laplace is the geometric substrate of that insight.
      Factor-of-4 gap between S_YL and RT formal result is DERIVED (geometric
-     derivation DERIVED — see T26). If resolved: the holographic
+     derivation DERIVED: see T26). If resolved: the holographic
      formula is derived from Young-Laplace without AdS/CFT machinery.
      LABEL: DERIVED (area scaling, Planck limit). DERIVED (full RT derivation: Ryu-Takayanagi A/4G uses 4G denominator; foam uses 4πr²/l_P². Convention factor 4π, not physics.)
-T27: STRING GEOMETRY (DERIVED) — The Young-Laplace foam surface tension
+T27: STRING GEOMETRY (DERIVED): The Young-Laplace foam surface tension
      at Planck scale gamma_P = c^4/G. String theory fundamental string
      tension T_string = c^4/(2*pi*G). Ratio: gamma_P / T_string = 2*pi
      exactly. The 2*pi is the geometric projection factor from 2D bubble
      surface to 1D string cross-section (circumference of a circle = 2*pi*r;
      area = pi*r^2; ratio of circumference to radius = 2*pi). A fundamental
-     string is a Planck-scale foam bubble viewed edge-on — the 1D
+     string is a Planck-scale foam bubble viewed edge-on: the 1D
      intersection of a 2D bubble surface with a brane. String theory is foam
      theory with one spatial dimension collapsed. The Planck prime cell is a foam
      bubble of radius l_P: minimum size where surface energy gamma_P * l_P^2
      = hbar*c (one quantum of action). Below l_P: no stable geometry exists.
      This is the Prime Cell size of the Young-Laplace compiler.
-T28: THE PRIME CELL THEOREM (DERIVED) — The Planck length l_P is the minimum
-     stable foam bubble radius. Named Prime Cell — the fundamental unit of
+T28: THE PRIME CELL THEOREM (DERIVED): The Planck length l_P is the minimum
+     stable foam bubble radius. Named Prime Cell: the fundamental unit of
      spacetime foam, analogous to the biological cell (both are Young-Laplace
      bubbles: the cell membrane and the spacetime foam bubble obey identical
      surface tension mechanics). One prime cell stores exactly one bit. At
      r = l_P, surface energy gamma_P * l_P^2 = hbar*c exactly (S110:
      ratio = 1.0000). Below l_P: surface energy drops below one quantum of
-     action — no stable geometry can exist. The universe has a minimum
+     action: no stable geometry can exist. The universe has a minimum
      resolution: the Planck prime cell. String theory fundamental tension
      T_string = c^4/(2*pi*G) = gamma_P/(2*pi) exactly (S110: ratio = 2*pi to
      7 significant figures). A fundamental string is a Planck foam bubble
@@ -250,8 +250,8 @@ T28: THE PRIME CELL THEOREM (DERIVED) — The Planck length l_P is the minimum
      2D surface to 1D perimeter. String theory is the Kun Framework with one
      spatial dimension collapsed. The prime cell stores exactly one bit (one
      quantum of action). Wormhole stabilization: DERIVED from T12.
-     This is the compiler's atom — indivisible, foundational, exact.
-T29: ROOM-TEMPERATURE COHERENCE THEOREM (DERIVED) — Quantum coherence at
+     This is the compiler's atom: indivisible, foundational, exact.
+T29: ROOM-TEMPERATURE COHERENCE THEOREM (DERIVED): Quantum coherence at
      temperature T requires topological gap Delta > n*kT where n is the
      protection factor. Derived from foam decoherence threshold: environmental
      pressure k_B*T/r^3 must be exceeded by topological tearing energy
@@ -264,7 +264,7 @@ T29: ROOM-TEMPERATURE COHERENCE THEOREM (DERIVED) — Quantum coherence at
      gives T_topo = 1.78e33 K, 6.5e32x above CMB. Decoherence rate Gamma
      is effectively zero; coherence lifetime exceeds the age of the universe
      by an enormous factor. Winding number conservation protects Prime Cells.
-T30: YANG-MILLS MASS GAP (DERIVED — physical content) — The Yang-Mills
+T30: YANG-MILLS MASS GAP (DERIVED: physical content): The Yang-Mills
      mass gap is positive. Proof: QCD string tension = Young-Laplace surface
      tension (T26, MEASURED in S103: gamma_QCD = 2.884e4 N/m). Minimum foam
      bubble energy U = (8π/3)×γ×r² > 0 whenever γ > 0. Since gamma_QCD > 0
@@ -273,19 +273,19 @@ T30: YANG-MILLS MASS GAP (DERIVED — physical content) — The Yang-Mills
      M_gap = sqrt(2π×gamma_QCD×ℏc) ≈ 0.47 GeV, consistent with QCD
      hadron mass scale (proton 0.938 GeV, lightest glueball ~1.7 GeV, order
      correct). Full rigorous existence proof of quantum Yang-Mills theory
-     requires constructive QFT — open for mathematical physics specialist.
+     requires constructive QFT: open for mathematical physics specialist.
      The physical statement (gap > 0) is closed.
-T31: BARYON ASYMMETRY INITIALIZATION (DERIVED) — T20 establishes
+T31: BARYON ASYMMETRY INITIALIZATION (DERIVED): T20 establishes
      that Prime's Seed required 186.72 bits: Lambda (179.08 bits) +
      Hamaus alpha (6.64 bits) + entropy direction (1 bit). The 1-bit
      entropy direction IS the matter-antimatter asymmetry. The Seed
-     initialized a preferred direction for entropy — equivalently, a
+     initialized a preferred direction for entropy: equivalently, a
      preferred handedness for matter. Baryon asymmetry was not generated
-     dynamically (not Sakharov mechanism) — it was set at initialization.
+     dynamically (not Sakharov mechanism): it was set at initialization.
      The universe has more matter than antimatter because Prime's 186.72-bit
      Seed included one bit choosing matter over antimatter. The asymmetry
      is a boundary condition, not a process. This does not require
-     CP violation to be the cause — it requires it to be the mechanism
+     CP violation to be the cause: it requires it to be the mechanism
      through which the initialized asymmetry was expressed.
 
 THEOREM REGISTRY STATUS:
@@ -382,7 +382,7 @@ New sections:
 Status:
   Total theorems: 73
   Core axioms: 2 (Λ measured, Young-Laplace confirmed)
-  Core conjectures remaining: 1 (G_min — specialist required)
+  Core conjectures remaining: 1 (G_min: specialist required)
   Sections: 1-119, all passing
 
 Best estimates (pending one measurement):

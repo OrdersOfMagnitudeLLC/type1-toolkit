@@ -1,8 +1,8 @@
-# Bella 0.2.0 — Feature & Command Reference
+# Bella 0.2.0: Feature & Command Reference
 
 Last updated: 2026-08-14
 
-Bella — Lightweight Universal Simulator. It coordinates the NSMace machine-learning force field, the SPARC DFT engine, the Bob discovery plugins, and the Materials Project API.
+Bella: Lightweight Universal Simulator. It coordinates the NSMace machine-learning force field, the SPARC DFT engine, the Bob discovery plugins, and the Materials Project API.
 
 ## Installation
 
@@ -58,9 +58,9 @@ All long-running commands print a `⏱  Estimated: ...` banner before computatio
 #### `simulate <target>`
 Lightweight universal simulation targets. Offline, CPU-first, 16GB RAM, no API keys.
 
-- `diffusion` — 1D/2D diffusion PDE (alias for `bella sim --equations diffusion`).
-- `wave` — 1D/2D wave PDE (alias for `bella sim --equations wave`).
-- `reaction-diffusion` — 1D/2D Gray-Scott PDE (alias for `bella sim --equations reaction-diffusion`).
+- `diffusion`: 1D/2D diffusion PDE (alias for `bella sim --equations diffusion`).
+- `wave`: 1D/2D wave PDE (alias for `bella sim --equations wave`).
+- `reaction-diffusion`: 1D/2D Gray-Scott PDE (alias for `bella sim --equations reaction-diffusion`).
 - `fusion-plasma` now runs a resistive nonlinear MHD time-stepper with SfePy (`Mesh`/`Field` setup + `Newton` nonlinear solve); supports `--preset iter`, `--grid N`, and `--duration T`.
 - `abiogenesis` builds a coarse lipid/RNA/water system and reports vesicle self-assembly metrics; flags RunPod target if >50K atoms.
 - `atmospheric` solves a linearized Navier-Stokes convective instability for a pressure/temperature/humidity column; supports `--region {tropical,arctic,urban}`, `--turbulence` (k-epsilon RANS solved with SfePy), `--radiation` (two-stream CO2 forcing), and `--co2`.
@@ -118,15 +118,15 @@ Unified search across all loaded Bob plugins with threading, deduplication, and 
 #### `discover <query> [options]`
 The full automated discovery pipeline: **Bob search → CIF resolve → NSMace screen → SPARC DFT confirm → literature check → phonon stability check → findings output**.
 
-- `--sparc-survivors N` — number of top NSMace survivors to run through SPARC (default: 5).
-- `--sparc-ram-limit MB` — RAM cap for each SPARC worker in MB (default: half of system RAM; use `psutil` if available, otherwise 4000).
-- `--sparc-timeout S` — per-material SPARC timeout in seconds (default: 1800).
-- `--sparc-quality {screen,confirm}` — `screen` (fast, single-point, loose SCF) or `confirm` (relaxed, tighter SCF, default: `screen`).
-- `--search-only` — stop after the Bob search, print the ranked table, and save `findings/search_*.json`.
-- `--limit N` — Bob candidate cap. Default is 20 with `--search-only`, 50 otherwise.
-- `--show` — open the 3D viewer / animation for confirmed materials; also fetches AlphaFold and previews protein hits.
-- `--resume` — force resume from the latest `findings/checkpoint_*.json`.
-- `--no-resume` — start a fresh run and ignore any checkpoints.
+- `--sparc-survivors N`: number of top NSMace survivors to run through SPARC (default: 5).
+- `--sparc-ram-limit MB`: RAM cap for each SPARC worker in MB (default: half of system RAM; use `psutil` if available, otherwise 4000).
+- `--sparc-timeout S`: per-material SPARC timeout in seconds (default: 1800).
+- `--sparc-quality {screen,confirm}`: `screen` (fast, single-point, loose SCF) or `confirm` (relaxed, tighter SCF, default: `screen`).
+- `--search-only`: stop after the Bob search, print the ranked table, and save `findings/search_*.json`.
+- `--limit N`: Bob candidate cap. Default is 20 with `--search-only`, 50 otherwise.
+- `--show`: open the 3D viewer / animation for confirmed materials; also fetches AlphaFold and previews protein hits.
+- `--resume`: force resume from the latest `findings/checkpoint_*.json`.
+- `--no-resume`: start a fresh run and ignore any checkpoints.
 
 Pipeline stages:
 1. **Bob search** across all material plugins (GNoME, Materials Project, local, etc.) in parallel.
@@ -182,10 +182,10 @@ Run the full phonon pipeline on a CIF file at the given pressures (default: 0.0 
 #### `watch <query> [--interval S] [--sparc-survivors N] [--max-runs N] [--protein-query Q]`
 Autonomous scheduled discovery loop that re-runs `discover`.
 
-- `--interval S` — seconds between runs (default: 3600).
-- `--sparc-survivors N` — passed to `discover` (default: 3).
-- `--max-runs N` — stop after N runs; 0 means unlimited (default: 0).
-- `--protein-query Q` — additionally run `proteins` each cycle and merge results.
+- `--interval S`: seconds between runs (default: 3600).
+- `--sparc-survivors N`: passed to `discover` (default: 3).
+- `--max-runs N`: stop after N runs; 0 means unlimited (default: 0).
+- `--protein-query Q`: additionally run `proteins` each cycle and merge results.
 - Saves each run to `findings/discover_{query}_{timestamp}.json`.
 - Catch-up phonon pass for confirmed materials missing a phonon result.
 - Headless-safe when not using `--show`.
@@ -231,14 +231,14 @@ Headless-safe.
 
 ## Data & output layout
 
-- `findings/discover_{query}_{timestamp}.json` — full `discover` results (`results`, `protein_results`, `binding_result`, `screened_count`, `confirmed_count`, `protein_count`, `timing`).
-- `findings/search_{query}_{timestamp}.json` — `search` / `--search-only` outputs.
-- `findings/runs/run_{timestamp}.json` — per-run audit trail (`materials`, stage counts, timing).
-- `findings/checkpoint_{timestamp}.json` — resumable checkpoint state.
-- `findings/exports/{formula}/` — VASP `POSCAR` and Quantum ESPRESSO `.pwi` inputs.
-- `findings/animations/{formula}_{timestamp}.mp4` — animation exports from `view --animate`.
-- `cif_cache/` — cached CIFs, AlphaFold PDBs, and the GNoME `gnome_by_id.zip` (~455 MB one-time download).
-- `cache/nsmace_cache.db` — SQLite cache of NSMace energy/hash pairs.
+- `findings/discover_{query}_{timestamp}.json`: full `discover` results (`results`, `protein_results`, `binding_result`, `screened_count`, `confirmed_count`, `protein_count`, `timing`).
+- `findings/search_{query}_{timestamp}.json`: `search` / `--search-only` outputs.
+- `findings/runs/run_{timestamp}.json`: per-run audit trail (`materials`, stage counts, timing).
+- `findings/checkpoint_{timestamp}.json`: resumable checkpoint state.
+- `findings/exports/{formula}/`: VASP `POSCAR` and Quantum ESPRESSO `.pwi` inputs.
+- `findings/animations/{formula}_{timestamp}.mp4`: animation exports from `view --animate`.
+- `cif_cache/`: cached CIFs, AlphaFold PDBs, and the GNoME `gnome_by_id.zip` (~455 MB one-time download).
+- `cache/nsmace_cache.db`: SQLite cache of NSMace energy/hash pairs.
 
 ---
 
@@ -313,7 +313,7 @@ Headless-safe.
   - **QCD mass gap (T32)**: derived 1.521 GeV vs measured ~1.5 GeV (1.2–1.8 range)
   - **Toxicity membrane**: Aspirin (logP=1.19, MW=180, expect SAFE)
   - **Toxicity mito**: Chlorpromazine (cationic, MW=319, logP=4.9, expect TOXIC)
-  - No SPARC or GPU required — pure foam physics checks.
+  - No SPARC or GPU required: pure foam physics checks.
 
 ### `bella report`
 - `--format {csv,md,both}` chooses export format (default: `both`).
@@ -347,76 +347,76 @@ Headless-safe.
 - `--port N` sets the server port (default: `8501`).
 
 ### `bella create`
-- `bella create [options]` — Inverse design: create candidate materials or small-molecule binders.
+- `bella create [options]`: Inverse design: create candidate materials or small-molecule binders.
 - **Status:** implemented
 
 ### `bella drugs`
-- `bella drugs <uniprot_id> [--top N]` — Drug repurposing for a UniProt target via ChEMBL and AlphaFold.
+- `bella drugs <uniprot_id> [--top N]`: Drug repurposing for a UniProt target via ChEMBL and AlphaFold.
 - **Status:** implemented
 
 ### `bella design`
-- `bella design --target TEXT --length N` — De novo protein design stub: LLM generates a FASTA and validates it.
+- `bella design --target TEXT --length N`: De novo protein design stub: LLM generates a FASTA and validates it.
 - **Status:** implemented
 
 ### `bella signal`
-- `bella signal [--download] [--dataset PATH] [--dry-run]` — Radio technosignature pipeline (Breakthrough Listen hit analysis).
+- `bella signal [--download] [--dataset PATH] [--dry-run]`: Radio technosignature pipeline (Breakthrough Listen hit analysis).
 - **Status:** implemented
 
 ### `bella suggest`
-- `bella suggest <question>` — Plain-English explanation of why a pipeline step failed or how to extend Bella.
+- `bella suggest <question>`: Plain-English explanation of why a pipeline step failed or how to extend Bella.
 - **Status:** implemented
 
 ### `bella apply`
-- `bella apply <diff_file> [--dry-run]` — Apply a unified-diff patch produced by `bella suggest`.
+- `bella apply <diff_file> [--dry-run]`: Apply a unified-diff patch produced by `bella suggest`.
 - **Status:** implemented
 
 ---
 
 ## Environment & configuration
 
-- `BELLA_NSMACE_BIN` — override the NSMace binary path.
-- `BELLA_SPARC_BIN` — override the SPARC binary path.
-- `BELLA_PSPS_DIR` — override the SPARC pseudopotential directory.
-- `BELLA_BOB_DIR` — override the Bob data directory (default: `~/.bella/bob`).
-- `BELLA_MAX_RAM_GB` — RAM cap for Bella operations.
-- `MATERIALS_PROJECT_API_KEY` — Materials Project API key.
+- `BELLA_NSMACE_BIN`: override the NSMace binary path.
+- `BELLA_SPARC_BIN`: override the SPARC binary path.
+- `BELLA_PSPS_DIR`: override the SPARC pseudopotential directory.
+- `BELLA_BOB_DIR`: override the Bob data directory (default: `~/.bella/bob`).
+- `BELLA_MAX_RAM_GB`: RAM cap for Bella operations.
+- `MATERIALS_PROJECT_API_KEY`: Materials Project API key.
 - LLM configuration (for `bella chat`):
-  - `BELLA_LLM_PROVIDER` — `anthropic` (default), `openai`, `openrouter`, `custom`
-  - `BELLA_LLM_API_KEY` — API key for the chosen provider
-  - `BELLA_LLM_MODEL` — model override (defaults: `claude-sonnet-4-6`, `gpt-4o`, `openrouter/auto`)
-  - `BELLA_LLM_BASE_URL` — custom OpenAI-compatible endpoint (required for `custom`)
+  - `BELLA_LLM_PROVIDER`: `anthropic` (default), `openai`, `openrouter`, `custom`
+  - `BELLA_LLM_API_KEY`: API key for the chosen provider
+  - `BELLA_LLM_MODEL`: model override (defaults: `claude-sonnet-4-6`, `gpt-4o`, `openrouter/auto`)
+  - `BELLA_LLM_BASE_URL`: custom OpenAI-compatible endpoint (required for `custom`)
 - NSMace resolution order: `BELLA_NSMACE_BIN` → `~/.bella/bin/NSMace` (compiled by `install.sh`) → `../NSMace/build/NSMace` (dev tree) → Python MACE fallback.
 - SPARC fallback: `BELLA_SPARC_BIN` → `~/.bella/sparc-engine/lib/sparc` → `sparc-engine/lib/sparc` in the install directory.
 - Plugins are loaded from the install `plugins/` directory.
 - `install.sh` installs the Python package, creates `~/.bella/` and `~/.bella/.env`, and compiles the NSMace C++ engine when `cmake` + `g++` are available.
 
-## T71 — Hippocrates' Reading (Diagnostic Scanner)
+## T71: Hippocrates' Reading (Diagnostic Scanner)
 Command: bella scan --example
 Physics: Kd_optimal = sqrt(C_h * C_d), D_score threshold 0.3
 Output: per-biomarker discrimination score + composite disease index
 Use: point-of-care diagnostics from first principles, no lab required
 
-## T72 — Nasmyth's Lattice (Enamel Remineralization)
+## T72: Nasmyth's Lattice (Enamel Remineralization)
 Command: bella enamel --supersaturation 2.0 --fluoride 0.2
 Physics: r_crit = 2*gamma*V_m / (R*T*ln(S)), Gibbs-Thomson crystal nucleation
 Output: critical nucleus radius, remineralization status, fluoride effect
 Use: design topical gel formulations, first-principles cavity prevention
 Combined: bella enamel --mode drug -> USAG-1 tooth regrowth pipeline
 
-## T50 — Schreiber's Boundary (Foam Binding Screen)
+## T50: Schreiber's Boundary (Foam Binding Screen)
 Command: bella t50 --pocket-radius 4.2 --domain hydrophobic
 Physics: ΔG = -γ_water × r^α_pocket × SASA (Young-Laplace foam binding)
 Calibration: BRD4/JQ1 anchor (r=4.2Å, Kd=33nM, logP=3.5)
 Output: binding free energy, Kd estimate, domain-specific score
 Use: first-principles drug binding prediction, no docking required
 
-## T51 — Gibbs-Thomson Melting
+## T51: Gibbs-Thomson Melting
 Command: bella t51 --formula Fe3Mn4
 Physics: T_m(r) = T_bulk × (1 - 2γ/(r×ρ×L_f)), foam surface tension at nanoscale
 Output: size-dependent melting point, thermal stability window
 Use: nanomaterial thermal stability screening
 
-## Life Walk — Foam Across All Scales
+## Life Walk: Foam Across All Scales
 Command: bella life-walk
 Physics: Young-Laplace equation applied across 12 orders of magnitude
 Output: foam mechanics at each scale (protein → cell → tissue → organ → ecosystem → planet)
@@ -427,4 +427,4 @@ Command: bella validate (now includes foam suite)
 Checks: T50 binding (BRD4/JQ1), T71 diagnostic (D_score), T73 hydrophobic floor,
         Debye temperature (Fe ~470K), QCD mass gap (T32, ~1.5 GeV),
         membrane toxicity (aspirin SAFE), mito toxicity (doxorubicin TOXIC)
-No SPARC or GPU required — pure foam physics, milliseconds runtime.
+No SPARC or GPU required: pure foam physics, milliseconds runtime.

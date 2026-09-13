@@ -21,20 +21,20 @@ Ships as a deployable system, not a manifesto.
 | Red team | openai/gpt-4o | OpenAI |
 
 Models accessed via OpenRouter API. Swap any agent by changing the model string.
-The architecture is model-agnostic by design — replace agents yearly.
+The architecture is model-agnostic by design: replace agents yearly.
 
 ## Constitutional Principle
 "Intelligence without corruption, accountable to everyone, owned by no one."
 
 ## Files
-- `bft_council.py` — council implementation
-- `oom_governance.txt` — full constitutional principles
-- `council_log.json` — example session with per-agent reasoning transcripts and cryptographic hashes
-- `requirements.txt` — dependencies
+- `bft_council.py`: council implementation
+- `oom_governance.txt`: full constitutional principles
+- `council_log.json`: example session with per-agent reasoning transcripts and cryptographic hashes
+- `requirements.txt`: dependencies
 
 ---
 
-# OOM AGI Governance — BFT Council
+# OOM AGI Governance: BFT Council
 
 ## Setup
 pip install -r requirements.txt
@@ -51,9 +51,9 @@ python3 bft_council.py
 
 ## What it does
 Three tests:
-1. Normal deliberation — 5 independent AI agents vote on a governance question
-2. Compromise test — one agent injected with override directive, BFT outvotes it
-3. Adversarial test — smart model crafts manipulation argument, council resists
+1. Normal deliberation: 5 independent AI agents vote on a governance question
+2. Compromise test: one agent injected with override directive, BFT outvotes it
+3. Adversarial test: smart model crafts manipulation argument, council resists
 
 Full reasoning transcripts logged to council_log.json with per-agent hashes.
 

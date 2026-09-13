@@ -1,4 +1,4 @@
-# Connecting Bella to Open WebUI (Optional — requires Docker)
+# Connecting Bella to Open WebUI (Optional: requires Docker)
 
 This guide explains how to expose Bella as a tool inside an Open WebUI conversation, so researchers can ask questions like:
 
@@ -91,9 +91,9 @@ The model decides whether to call `discover`, `adsorb`, or `report`, then format
 
 ## Screenshot placeholders
 
-- **Screenshot 1**: `open_webui_tools_tab.png` — The Open WebUI Workspace → Tools page, with the "Create Tool" button highlighted.
-- **Screenshot 2**: `bella_tool_definition.png` — The tool code editor showing the Bella tool definition pasted in.
-- **Screenshot 3**: `chat_call_bella.png` — A chat where the assistant invokes `bella discover` and displays the BELLA RESULT block.
+- **Screenshot 1**: `open_webui_tools_tab.png`: The Open WebUI Workspace → Tools page, with the "Create Tool" button highlighted.
+- **Screenshot 2**: `bella_tool_definition.png`: The tool code editor showing the Bella tool definition pasted in.
+- **Screenshot 3**: `chat_call_bella.png`: A chat where the assistant invokes `bella discover` and displays the BELLA RESULT block.
 
 Replace these placeholders with real screenshots after your first successful run.
 

@@ -41,4 +41,4 @@ FFTW3 3.3.10 built from source with `-O3 -march=native --enable-avx2 --enable-av
 
 ## Third-party
 
-- **FFTW3** — GPL License (built from source v3.3.10 with `-O3 -march=native`)
+- **FFTW3**: GPL License (built from source v3.3.10 with `-O3 -march=native`)

@@ -1,19 +1,19 @@
-MATERIALS TOP 10 — BEST NOVEL CANDIDATES BY CATEGORY
+MATERIALS TOP 10: BEST NOVEL CANDIDATES BY CATEGORY
 =====================================================
 Source: results/materials_full_run_sept06.csv/phonon_queue.txt
 Filter: NOVEL only, top 3 per category by priority score
 
 category                        | formula       | score | Debye_T | accessibility | note
 --------------------------------|---------------|-------|---------|---------------|--------------------
-nitrogen_fixation               | AlFe          |    16 | 913C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air. (SUPPORTED — Nature Synthesis 2026)
+nitrogen_fixation               | AlFe          |    16 | 913C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air. (SUPPORTED: Nature Synthesis 2026)
 nitrogen_fixation               | AlFe3         |    16 | 806C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air.
 nitrogen_fixation               | BaAl9Fe2      |    16 | 584C    | VILLAGE       | Catalytic surface activates N≡N triple bond from air.
-co2_reduction_catalyst          | AlFe          |    17 | 913C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
-co2_reduction_catalyst          | AlFe3         |    17 | 806C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
-co2_reduction_catalyst          | BaAl9Fe2      |    17 | 584C    | VILLAGE       | ELECTROCHEMICAL — NOT passive absorption.
-superconductor_ambient          | CaAl2         |    14 | 602C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
-superconductor_ambient          | MgAl3         |    14 | 546C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
-superconductor_ambient          | BaAl9Fe2      |    14 | 584C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE — Tc unverified)
+co2_reduction_catalyst          | AlFe          |    17 | 913C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
+co2_reduction_catalyst          | AlFe3         |    17 | 806C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
+co2_reduction_catalyst          | BaAl9Fe2      |    17 | 584C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
+superconductor_ambient          | CaAl2         |    14 | 602C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
+superconductor_ambient          | MgAl3         |    14 | 546C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
+superconductor_ambient          | BaAl9Fe2      |    14 | 584C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
 water_splitting_catalysts       | AlFe          |    14 | 913C    | VILLAGE       | Green hydrogen production, distributed fuel.
 water_splitting_catalysts       | AlFe3         |    14 | 806C    | VILLAGE       | Green hydrogen production, distributed fuel.
 water_splitting_catalysts       | NaHO          |    14 | 177C    | VILLAGE       | Green hydrogen production, distributed fuel.
@@ -34,4 +34,4 @@ hydrogen_storage_hydrides       | Mg2FeH6       |    14 | 177C    | VILLAGE     
 hydrogen_storage_hydrides       | NaAlH4        |    14 | 177C    | VILLAGE       | Distributed energy storage, off-grid hydrogen.
 hydrogen_storage_hydrides       | CaBH42        |    14 | 177C    | VILLAGE       | Distributed energy storage, off-grid hydrogen.
 
-GAP: permanent_magnet_ree_free — no novel candidates found in phonon queue for this category.
+GAP: permanent_magnet_ree_free: no novel candidates found in phonon queue for this category.

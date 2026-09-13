@@ -1,4 +1,4 @@
-// OOM Proprietary — All Rights Reserved, Orders of Magnitude LLC
+// OOM Proprietary: All Rights Reserved, Orders of Magnitude LLC
 
 #include "BellaCheFSI.h"
 #include <iostream>

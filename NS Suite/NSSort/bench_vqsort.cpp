@@ -3,7 +3,7 @@
 // See LICENSE.md in the repository root or ofmagnitude.com
 
 /*
- * bench_vqsort.cpp — Highway VQSort benchmark
+ * bench_vqsort.cpp: Highway VQSort benchmark
  *
  * Same methodology as nssort_bench.cpp:
  *   - Element type: int64_t
@@ -33,7 +33,7 @@ using namespace std::chrono;
 constexpr size_t N = 100'000'000;  // 100M
 
 // ---------------------------------------------------------------------------
-// Distribution generators — identical to nssort_bench.cpp
+// Distribution generators: identical to nssort_bench.cpp
 // ---------------------------------------------------------------------------
 
 void gen_zero(int64_t* data, size_t n) {
@@ -136,7 +136,7 @@ bool is_sorted_check(int64_t* data, size_t n) {
 }
 
 // ---------------------------------------------------------------------------
-// Benchmark harness — matches nssort_bench.cpp methodology
+// Benchmark harness: matches nssort_bench.cpp methodology
 // ---------------------------------------------------------------------------
 
 array<double, 3> benchmark_vqsort(int64_t* data, size_t n, int warm_runs) {

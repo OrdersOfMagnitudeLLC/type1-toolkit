@@ -18,7 +18,7 @@ cmake -B build && cmake --build build
 
 ## Weights
 
-Example weights (66MB TinyLlama-scale) are included. For production use, load your own weights from HuggingFace — see `nsinfer_bench.cpp` for the load path.
+Example weights (66MB TinyLlama-scale) are included. For production use, load your own weights from HuggingFace: see `nsinfer_bench.cpp` for the load path.
 
 ## Parameters
 

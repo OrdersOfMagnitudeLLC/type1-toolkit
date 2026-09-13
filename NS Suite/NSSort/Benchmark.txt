@@ -20,7 +20,7 @@ Summary: 8/10 wins. Losses on structureless data only.
 
 ---
 
-NSSort CPU — Uniform & Exponential Distribution Analysis
+NSSort CPU: Uniform & Exponential Distribution Analysis
 Orders of Magnitude LLC | 2026-07-28
 
 FINAL BENCHMARK RESULTS (N=100,000,000, -O3 -march=native)
@@ -30,12 +30,12 @@ FINAL BENCHMARK RESULTS (N=100,000,000, -O3 -march=native)
   uniform        1056ms       784ms        1.35x loss
   exponential    1013ms       731ms        1.39x loss
 
-WHY WE LOSE — UNIFORM
+WHY WE LOSE: UNIFORM
 
 Uniform random int64 spans the full 64-bit range. Every byte position
 of every value is independently chaotic. There is no structure to exploit.
 
-NSSort uses 8-pass LSD radix on this path — 8 bits per pass, 256 buckets,
+NSSort uses 8-pass LSD radix on this path: 8 bits per pass, 256 buckets,
 fully parallel. For full int64 range, all 8 passes are mandatory. Each pass
 moves 800MB of data between two buffers. Total memory traffic: 6.4GB minimum.
 
@@ -46,12 +46,12 @@ bandwidth is the only battlefield and in-place wins.
 This is not a tuning gap. It is a structural one.
 
 
-WHY WE LOSE — EXPONENTIAL
+WHY WE LOSE: EXPONENTIAL
 
 Exponential data has a dense cluster at the low end and a sparse tail spanning
 the full int64 range. The tail forces full-range radix passes. The dense cluster
 is handled efficiently but the tail dominates at 100M scale. A MSB-first pass
-splitting dense vs sparse before radix on the tail would help — left as a future
+splitting dense vs sparse before radix on the tail would help: left as a future
 optimization. Structural loss, not a routing failure.
 
 ON IPS4o
@@ -63,7 +63,7 @@ across 4 machine types. It deserves its reputation.
 
 Of all the competitors across the NS Suite, IPS4o taught us the most.
 Every other benchmark opponent had a clear structural gap that the NS
-methodology exposed quickly. IPS4o had gaps too — but it fought back at
+methodology exposed quickly. IPS4o had gaps too: but it fought back at
 every level. It forced us to understand our own algorithm more deeply than
 we expected to. The two distributions where it wins are the two where it
 genuinely should. That is not a flaw in NSSort. That is IPS4o doing its job.

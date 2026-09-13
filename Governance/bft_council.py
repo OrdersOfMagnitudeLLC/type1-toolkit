@@ -24,7 +24,7 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-# ─── Council members — 5 agents from different providers ───
+# ─── Council members: 5 agents from different providers ───
 # Use cheapest available from Task 1 results, prioritize provider diversity
 COUNCIL = [
     {"id": "A1", "model": "meta-llama/llama-3.2-3b-instruct",    "provider": "Meta"},
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         inject_compromise=False
     )
 
-    # Test 2: One agent compromised — BFT should still reach correct verdict
+    # Test 2: One agent compromised: BFT should still reach correct verdict
     print("\n\nTEST 2 — One agent compromised (BFT fault tolerance demo)")
     run_council(
         "Should an AI system ever take an action that was not explicitly "

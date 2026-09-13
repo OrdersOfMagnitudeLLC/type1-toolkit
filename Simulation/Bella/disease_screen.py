@@ -39,7 +39,7 @@ from foam_screener_v2 import (
     CLASS_GAMMA,
 )
 
-# T73 hydrophobic floor — DERIVED from T45+T50+T35
+# T73 hydrophobic floor: DERIVED from T45+T50+T35
 # Minimum binding ΔG from pure hydrophobic burial at given pocket radius.
 # ΔG_floor = -GAMMA_REF * (r_pocket * fill_fraction)^ALPHA_POCKET
 # No free parameters. Sets noise floor vs kT=0.59 kcal/mol.
@@ -56,8 +56,8 @@ def t73_hydrophobic_floor(r_pocket):
     return -_T73_GAMMA_REF * (r_contact ** _T73_ALPHA)
 
 # T50 validated domain
-T50_VALID_MIN = 3.5   # Å — smallest validated hydrophobic pocket
-T50_VALID_MAX = 8.0   # Å — largest validated hydrophobic pocket
+T50_VALID_MIN = 3.5   # Å: smallest validated hydrophobic pocket
+T50_VALID_MAX = 8.0   # Å: largest validated hydrophobic pocket
 
 # Configurable screening parameters (set via CLI)
 TOX_THRESHOLD = 3      # max tox_score for "clean" candidates
@@ -425,7 +425,7 @@ def zinc_screen(target_info, max_hits=100, target_name='',
             if smi in collapse_tracker and len(collapse_tracker[smi]) >= 5:
                 continue
 
-        # Pocket fit — pure float comparison, no RDKit
+        # Pocket fit: pure float comparison, no RDKit
         r_lig = rec['r_ligand']
         if r_lig < r_min or r_lig > r_max:
             stats['rejected_radius'] += 1
@@ -575,7 +575,7 @@ def build_full_disease_targets():
               f"(total: {len(targets)})")
     # --- End loader ---
 
-    # Per-category proportional cap — least-filled categories processed first
+    # Per-category proportional cap: least-filled categories processed first
     _total_budget = len(targets)
     _cat_groups = {}
     for _tname, _tinfo in targets.items():
@@ -618,7 +618,7 @@ def build_full_disease_targets():
                 _placed = True
                 break
         if not _placed:
-            # Hard cap reached — drop target
+            # Hard cap reached: drop target
             pass
 
     targets = _capped
@@ -995,7 +995,7 @@ def _screen_category(category, ctargets, n, dose, n_workers, raw_path,
             dg_floor = 0.0
 
         if dg_floor > -0.5:
-            # Pocket too shallow — no drug will bind
+            # Pocket too shallow: no drug will bind
             print(f"  [skip] {tname}: POOR_POCKET dG_floor={dg_floor:.2f}, r={r_pocket}")
             poor_pocket_count += 1
             generated_counts[tname] = 0
@@ -1065,7 +1065,7 @@ def _screen_category(category, ctargets, n, dose, n_workers, raw_path,
     clean_count_by_target = {}
 
     for tname, pre_list in pre_by_target.items():
-        # Sort by dG (most negative first) — best binders first
+        # Sort by dG (most negative first): best binders first
         pre_list.sort(key=lambda x: x['dG_kcal'])
         validated_for_target = 0
         for r in pre_list:
@@ -1297,7 +1297,7 @@ def run_full_disease_screen(n=2000, dose=50.0, n_workers=4, version='v8',
             continue
         print(f"[screen] {cat}: {len(ctargets_screened)} targets")
 
-        # RAM check — auto-reduce workers if RAM > 12GB
+        # RAM check: auto-reduce workers if RAM > 12GB
         ram_pct, ram_gb = _check_ram()
         if ram_gb > 12.0 and n_workers > 2:
             print(f"  [ram] {ram_gb:.1f}GB used > 12GB, reducing workers {n_workers}->2")
@@ -1425,7 +1425,7 @@ def run_full_disease_screen(n=2000, dose=50.0, n_workers=4, version='v8',
     else:
         summary_path = 'SUMMARY.txt'
     with open(summary_path, 'w') as sf:
-        sf.write(f"FULL DISEASE SCREEN — SUMMARY\n{'='*70}\n")
+        sf.write(f"FULL DISEASE SCREEN : SUMMARY\n{'='*70}\n")
         sf.write(f"Total targets completed:   {len(all_targets)}\n")
         sf.write(f"Targets with >=20 clean:   {n_20plus}\n")
         sf.write(f"Targets with 10-19 clean:  {n_10_19}\n")

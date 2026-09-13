@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Two readout heads: linear (interaction 0) + nonlinear (interaction 1)
 // Both use e3nn o3.Linear (no bias, path_weight = 1/sqrt(fan_in)).
 #pragma once

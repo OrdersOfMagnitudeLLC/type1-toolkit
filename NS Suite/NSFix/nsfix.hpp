@@ -236,7 +236,7 @@ public:
         }
 #endif
 
-        // PASS 2: Process fields — zero searching, pure computation
+        // PASS 2: Process fields: zero searching, pure computation
         Message msg;
         msg.reset();
 
@@ -258,7 +258,7 @@ public:
             uint8_t  tag_len   = eq - field_start;
             const char* tp     = buf + field_start;
 
-            // Branchless tag atoi — dynamic, handles ANY tag number
+            // Branchless tag atoi: dynamic, handles ANY tag number
             uint32_t tag = 0;
             switch (tag_len) {
                 case 1: tag = tp[0]-'0'; break;
@@ -374,7 +374,7 @@ public:
                 }
 
                 if (tag == 10) {
-                    // End of message — dispatch and reset
+                    // End of message: dispatch and reset
                     handle_message(msg);
                     msg_count++;
                     msg.reset();

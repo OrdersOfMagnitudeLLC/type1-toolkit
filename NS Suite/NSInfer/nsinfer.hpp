@@ -5,7 +5,7 @@
 #ifndef NSINFER_HPP
 #define NSINFER_HPP
 
-// NSInfer — Dynamic MLP Sparsity for CPU Inference
+// NSInfer: Dynamic MLP Sparsity for CPU Inference
 // King: dense BLAS (llama.cpp baseline)
 // Headline: 2.35x median MLP throughput, 62% fewer bytes loaded
 // Accuracy: 0.9516 cosine similarity (real TinyLlama weights, layer 0)

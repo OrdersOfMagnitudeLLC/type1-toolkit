@@ -1,5 +1,5 @@
 name: technosignatures
-description: Technosignatures — IR excess, light curve dimming, industrial atmospheric
+description: Technosignatures : IR excess, light curve dimming, industrial atmospheric
   pollutants
 query_inject: nearby star photometry infrared excess light curve anomaly
 protein_query: null

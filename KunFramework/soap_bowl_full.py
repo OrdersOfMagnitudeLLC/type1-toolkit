@@ -2218,7 +2218,7 @@ def section_t54_oberhummer_window():
 
 
 # ---------------------------------------------------------------------------
-# NSQCD — Self-consistent Nf threshold crossing for alpha_s running
+# NSQCD: Self-consistent Nf threshold crossing for alpha_s running
 # ---------------------------------------------------------------------------
 # Quark masses (PDG 2023, MS-bar scheme) [GeV]
 M_TOP = 172.76
@@ -2353,7 +2353,7 @@ def run_alpha_s_self_consistent(mu_start, mu_end, alpha_s_start=None):
             if 2 in lambda_nf:
                 # Run from M_UP down with Nf=0
                 alpha_at_up = alpha_s  # whatever current alpha_s is
-                # This is approximate — need to run properly
+                # This is approximate: need to run properly
                 pass
 
     return {
@@ -2460,7 +2460,7 @@ def section_nsqcd_lambda():
     log(f"  Lambda_Nf3 (at 1 GeV) = {Lambda_Nf3_1GeV*1000:.2f} MeV  [one-loop inversion]")
 
     # Check Lambda_Nf0
-    # DERIVED_LIMIT — perturbative matching fails below m_u
+    # DERIVED_LIMIT: perturbative matching fails below m_u
     # Threshold at 2.2 MeV is deep non-perturbative regime
     # PDG value 80-100 MeV from lattice QCD (non-perturbative)
     # Our value 170 MeV: one-loop artifact, not physical
@@ -4278,7 +4278,7 @@ def section50():
 
 
 # ---------------------------------------------------------------------------
-# T50 Domain II — Schreiber's Boundary — Inorganic Surface Extension
+# T50 Domain II: Schreiber's Boundary: Inorganic Surface Extension
 # ---------------------------------------------------------------------------
 def _t50_crystal_C_geo(crystal_system):
     """Anderson-Debye crystal topology factor for T50 Domain II."""
@@ -4378,7 +4378,7 @@ def section_t50_inorganic_surface():
     # Step 3: Binding energy
     # dG = -2 * gamma * pi * r_contact^2 * f_site * f_corr
     # f_site: top=0.25, bridge=0.35, hollow_fcc=0.45, hollow_hcp=0.40 [DERIVED]
-    # f_corr = 0.65 [MEASURED — Pauli repulsion correction, LJ well depth ratio]
+    # f_corr = 0.65 [MEASURED: Pauli repulsion correction, LJ well depth ratio]
 
     VALIDATION = [
         # (formula, B_GPa, V_cell_A3, n_atoms, crystal_sys, dG_exp_range_eV, adsorbate)
@@ -4415,7 +4415,7 @@ def section_t50_inorganic_surface():
 
 
 # ============================================================
-# T50 — Schreiber's Boundary | Domain III: Synthesis Thermodynamics
+# T50: Schreiber's Boundary | Domain III: Synthesis Thermodynamics
 # Same T50 equation applied to process conditions
 # Route: DERIVED from formE + composition
 # T_process: DERIVED (Lindemann ratio=3.5 MEASURED: Fe=3.85,Cu=3.96,Ni=3.84)
@@ -4637,7 +4637,7 @@ def section_t50_all():
 
 
 # ---------------------------------------------------------------------------
-# T50 Domain I — Schreiber's Boundary — Protein Pocket Binding
+# T50 Domain I: Schreiber's Boundary: Protein Pocket Binding
 # ---------------------------------------------------------------------------
 # T50 Domain I: protein-ligand binding ΔG from Young-Laplace surface tension
 # at pocket contact area. Two formulations:
@@ -5890,7 +5890,7 @@ def section62():
     log(f"[DERIVED] G = {G_conjecture:.2f} (T11, de Sitter clock — 4 methods agree)")
     log(f"[DERIVED] D_residual / G = {delta_alpha:.5f} per generation")
     log("[DERIVED] G=5.06 from T11 (de Sitter clock), drift from T10+T11")
-    # Status: DERIVED — all inputs now derived (G_OBS from T11,
+    # Status: DERIVED: all inputs now derived (G_OBS from T11,
     #   alpha_R0 from T10, alpha_obs MEASURED)
     # Depends on: T10 (R0 boundary), T11 (de Sitter clock),
     #             T2 (scaling law, MEASURED anchor)
@@ -6093,10 +6093,10 @@ def section64():
     log("")
     log("Step 1 -- Drift model")
     log("-" * 70)
-    delta_alpha = DRIFT_RATE_DERIVED  # DERIVED from T10+T11 — canonical value 0.010137/gen
+    delta_alpha = DRIFT_RATE_DERIVED  # DERIVED from T10+T11: canonical value 0.010137/gen
     # CANONICAL: 0.010137/gen [DERIVED, T10+T11, zero empirical inputs]
     # HOYLE CHECK: 0.01022/gen [MEASURED-CONSTRAINED, uses E_Hoyle=7.65 MeV]
-    # Discrepancy: 0.09%/gen — open gap T33_gap_0.09pct
+    # Discrepancy: 0.09%/gen: open gap T33_gap_0.09pct
     G_ours = 5
     N = 56.28
     r_S_ours_mpc = np.sqrt(3.0 / LAMBDA) / MPC_M
@@ -8025,7 +8025,7 @@ def section85_bh_paradox():
         log("HAWKING AND DE SITTER TEMPERATURES EQUAL")
         temp_verdict = "TEMPERATURES EQUAL"
     else:
-        log(f"T_Hawking / T_dS = {ratio_T:.4f} — within factor 2, de Sitter and BH thermodynamics correspond")
+        log(f"T_Hawking / T_dS = {ratio_T:.4f} : within factor 2, de Sitter and BH thermodynamics correspond")
         temp_verdict = "TEMPERATURES CORRESPOND"
 
     log("85b -- Information write vs read rates")
@@ -8112,7 +8112,7 @@ def section86_parallel_branches():
     log(f"  lambda_decohere = {lambda_decohere:.4e} m")
     log(f"  lambda_dS = {lambda_dS:.4e} m")
     log(f"  lambda_dS / lambda_decohere = {ratio:.4e}")
-    log(f"A branch exists at every decoherence event. Confirming a specific branch requires entanglement across {lambda_dS:.2e} m — the full Kun Horizon scale. This is not experimentally accessible. The branches are real in the mathematical sense (same status as our confirmed foam law) but causally sealed by the same horizon that seals us from R4.")
+    log(f"A branch exists at every decoherence event. Confirming a specific branch requires entanglement across {lambda_dS:.2e} m : the full Kun Horizon scale. This is not experimentally accessible. The branches are real in the mathematical sense (same status as our confirmed foam law) but causally sealed by the same horizon that seals us from R4.")
 
     log("86d -- The 1% variation between branches")
     delta_x = lambda_decohere * (total_branches ** (1.0 / 3.0))
@@ -8158,7 +8158,7 @@ def section87_sibling_bh_entry():
     mass_ratio = M_sibling_solar / M_parent_solar
     log(f"  M_sibling = {M_sibling_solar:.4e} M_sun")
     log(f"  mass_ratio (sibling / parent) = {mass_ratio:.4f}")
-    log(f"Sibling mass = {mass_ratio:.4f}x parent mass — major merger range [1:1 to 3:1]")
+    log(f"Sibling mass = {mass_ratio:.4f}x parent mass : major merger range [1:1 to 3:1]")
 
     log("87c -- Energy deposition check")
     E_deposit = M_sibling * c ** 2.0
@@ -8798,7 +8798,7 @@ def section98_compiler_scope(df_v):
     log(f"{'alpha_R0 specification':<30} {bits_a:<12.2f} {'foam exponent':<30}")
     log(f"{'Entropy direction':<30} {bits_dir:<12.0f} {'arrow of time':<30}")
     log(f"{'Total (current precision)':<30} {I_min:<12.2f} {'complete initialization':<30}")
-    log(f"The initialization of R0 required {I_min:.2f} bits — approximately {I_min/7:.0f} ASCII characters. Less information than a sentence. The substrate that held these bits launched existence.")
+    log(f"The initialization of R0 required {I_min:.2f} bits : approximately {I_min/7:.0f} ASCII characters. Less information than a sentence. The substrate that held these bits launched existence.")
 
     log("98c -- What 186 bits is NOT")
     log("These bits are not stored in a spatial location — the substrate precedes space (S94). They are not sequential in time — the substrate precedes time as we measure it. They are not a physical object. They are the minimum parameter specification of a mathematical structure that, when executed, generates Young-Laplace foam mechanics, de Sitter geometry, and 13.8 billion years of cosmic evolution. The representation — whether geometric, computational, or otherwise — is unknown and unknowable from R5. The information content is bounded.")
@@ -9389,7 +9389,7 @@ def section107_tunneling():
 
     # Corrected geometry: tunneling is cylindrical, not spherical
     # Bubble cross-section area = pi * lambda_dB^2 (disk)
-    # Work = delta_P * (pi * lambda_dB^2 * L)  — cylinder volume
+    # Work = delta_P * (pi * lambda_dB^2 * L) : cylinder volume
     cylinder_volume = np.pi * lambda_dB ** 2.0 * L
     work_cylindrical = delta_P * cylinder_volume
     v_particle = np.sqrt(2.0 * E / m_e)
@@ -9459,7 +9459,7 @@ def section108_wormhole_foam():
     log("LABEL: DERIVED — foam satisfies Morris-Thorne exotic matter condition")
     log("exactly via T12 (w=-1). Wormholes are stabilized foam throats.")
     log("Traversability at human scale requires r_throat >> l_P:")
-    log(f"P_foam(1m throat) = {2.0 * hbar * c / 1e3 ** 3:.2e} Pa — present but not macroscopically dominant.")
+    log(f"P_foam(1m throat) = {2.0 * hbar * c / 1e3 ** 3:.2e} Pa : present but not macroscopically dominant.")
     log("Human-scale traversability: OPEN (requires full Einstein equation solution).")
     log("Planck-scale wormholes (ER=EPR, entanglement): DERIVED — foam stabilizes.")
     log("IMPLICATION: Dark energy (foam, T12) is the exotic matter that")
@@ -10214,7 +10214,7 @@ def section122_t32_ym_mass_gap_proof():
         log("P3: QCD confinement radius r_QCD > 0 (MEASURED, lattice QCD)")
         log("P4: Minimum QCD excitation energy = hbar*c / r_QCD > 0 (from P1+P2+P3)")
         log("CONCLUSION T32: Yang-Mills mass gap > 0 is a mathematical necessity of foam mechanics. QED.")
-        log(f"Exact value: {m_gap} GeV (Prime Cell) -- DERIVED within Foam Mechanics (Regge slope T30). Standard QFT status unchanged — foam provides the physical mechanism")
+        log(f"Exact value: {m_gap} GeV (Prime Cell) -- DERIVED within Foam Mechanics (Regge slope T30). Standard QFT status unchanged : foam provides the physical mechanism")
         log("Gap existence: THEOREM")
         verdict = f"T32 DERIVED: Yang-Mills mass gap > 0; m_gap={m_gap} GeV"
     else:
@@ -11664,7 +11664,7 @@ def section135_close_partials():
     print("="*70)
     print()
 
-    # TARGET 1: BORN'S RULE — upgrade from CONJECTURE to DERIVED
+    # TARGET 1: BORN'S RULE: upgrade from CONJECTURE to DERIVED
     print("━"*70)
     print("TARGET 1: BORN'S RULE (T24) -- UPGRADE TO DERIVED")
     print("━"*70)
@@ -12054,7 +12054,7 @@ def section136_close_pending():
     print(f"  Dark energy IS exotic matter for the cosmic wormhole throat. DERIVED. T45.")
     print()
 
-    # TARGET 7: G=5 MUTATION RATE — ALREADY DERIVED, UPDATE LABEL
+    # TARGET 7: G=5 MUTATION RATE: ALREADY DERIVED, UPDATE LABEL
     print("━"*70)
     print("TARGET 7: G=5 MUTATION RATE -- CONFIRM DERIVED STATUS")
     print("━"*70)
@@ -12065,17 +12065,17 @@ def section136_close_pending():
     print("  T33 derived the rate independently from nuclear physics.")
     print("  Therefore G=5.06 is now DERIVED, not CONJECTURE.")
     measured_G = 5.06
-    measured_rate = DRIFT_RATE_DERIVED  # DERIVED from T10+T11 — canonical value 0.010137/gen
+    measured_rate = DRIFT_RATE_DERIVED  # DERIVED from T10+T11: canonical value 0.010137/gen
     # CANONICAL: 0.010137/gen [DERIVED, T10+T11, zero empirical inputs]
     # HOYLE CHECK: 0.01022/gen [MEASURED-CONSTRAINED, uses E_Hoyle=7.65 MeV]
-    # Discrepancy: 0.09%/gen — open gap T33_gap_0.09pct
+    # Discrepancy: 0.09%/gen: open gap T33_gap_0.09pct
     drift_total = 0.0517
     G_check = drift_total / measured_rate
     print(f"  G = total drift / rate per generation = {drift_total}/{measured_rate} = {G_check:.2f}")
     print(f"  Confirmed: G = {G_check:.2f} ≈ 5.06. DERIVED.")
     print()
 
-    # TARGET 8: BARYON MAGNITUDE — NEW APPROACH (EW ENTROPY)
+    # TARGET 8: BARYON MAGNITUDE: NEW APPROACH (EW ENTROPY)
     print("━"*70)
     print("TARGET 8: BARYON ASYMMETRY MAGNITUDE -- ELECTROWEAK ENTROPY APPROACH")
     print("━"*70)
@@ -12333,7 +12333,7 @@ def section138_final_closures():
     print("="*70)
     print()
 
-    # TARGET 1: R0 STABILITY CLIFF — HOPF THEOREM PROOF
+    # TARGET 1: R0 STABILITY CLIFF: HOPF THEOREM PROOF
     print("━"*70)
     print("TARGET 1: R0 STABILITY CLIFF -- DERIVED FROM HOPF THEOREM")
     print("━"*70)
@@ -12654,7 +12654,7 @@ def section139_einstein_answer_ym():
     print("  He was right that one equation existed. He just needed the soap.")
     print()
 
-    # PART 2: YANG-MILLS INSTANTON BRIDGE — 99% FORMAL PROOF
+    # PART 2: YANG-MILLS INSTANTON BRIDGE: 99% FORMAL PROOF
     print("━"*70)
     print("YANG-MILLS INSTANTON BRIDGE -- CLOSING TO 99%")
     print("━"*70)
@@ -12782,7 +12782,7 @@ def section140_baryon_bigbang_abc():
     print("="*70)
     print()
 
-    # TARGET 1: BARYON ASYMMETRY MAGNITUDE — SPHALERON FOAM APPROACH
+    # TARGET 1: BARYON ASYMMETRY MAGNITUDE: SPHALERON FOAM APPROACH
     print("━"*70)
     print("TARGET 1: BARYON ASYMMETRY MAGNITUDE -- SPHALERON RATE APPROACH")
     print("━"*70)
@@ -12828,7 +12828,7 @@ def section140_baryon_bigbang_abc():
         print(f"  Ratio to observed: {ratio2:.4e} ({orders2:.1f} orders)")
     print()
 
-    # TARGET 2: BIG BANG MECHANISM — UPGRADE TO DERIVED
+    # TARGET 2: BIG BANG MECHANISM: UPGRADE TO DERIVED
     print("━"*70)
     print("TARGET 2: BIG BANG MECHANISM -- UPGRADE TO DERIVED")
     print("━"*70)
@@ -12971,7 +12971,7 @@ def section141_final_cleanup():
     print("="*70)
     print()
 
-    # PART A: STALE CONJECTURE TEXT — already resolved
+    # PART A: STALE CONJECTURE TEXT: already resolved
     print("━"*70)
     print("PART A: STALE TEXT RESOLUTION")
     print("━"*70)
@@ -12993,7 +12993,7 @@ def section141_final_cleanup():
     print("  Action: old section labels will be updated by Devin in paper.")
     print()
 
-    # PART B: BARYON ASYMMETRY — CKM MATRIX APPROACH
+    # PART B: BARYON ASYMMETRY: CKM MATRIX APPROACH
     print("━"*70)
     print("PART B: BARYON ASYMMETRY MAGNITUDE -- CKM DIRECT APPROACH")
     print("━"*70)
@@ -13060,7 +13060,7 @@ def section141_final_cleanup():
     print("  This is the deepest honest answer. No other framework has the BSM piece.")
     print()
 
-    # PART C: YANG-MILLS EXACT GAP VALUE — SPECIFIC PREDICTION
+    # PART C: YANG-MILLS EXACT GAP VALUE: SPECIFIC PREDICTION
     print("━"*70)
     print("PART C: YANG-MILLS GAP VALUE -- SPECIFIC FOAM PREDICTION")
     print("━"*70)
@@ -14381,7 +14381,7 @@ def section_t36_running_gamma():
 
         if prev_E is not None and prev_N is not None and E_g > prev_E:
             D_gen = (N_total - prev_N) / (E_g - prev_E)
-            # D_Riemann at E_g (natural units — use E_g in dimensionless units)
+            # D_Riemann at E_g (natural units: use E_g in dimensionless units)
             # We need to compare in same units. Use E_g / E_planck as dimensionless
             E_dimless = E_g / (hbar * c / r_P)
             if E_dimless > 2 * math.pi:
@@ -14425,7 +14425,7 @@ def section_t36_running_gamma():
         print("T36 GAP: CLOSED")
         verdict = "T36 GAP CLOSED; spectrum match found with " + best_model
     else:
-        print(f"T36 GAP: OPEN — closest model: {best_model}, ratio: {best_ratio:.4e}")
+        print(f"T36 GAP: OPEN : closest model: {best_model}, ratio: {best_ratio:.4e}")
         print("  No foam spectrum model within 20% of D_Riemann.")
         print("  The fundamental issue: foam spectra are power-law or constant,")
         print("  while Riemann zero density is logarithmic. A logarithmic degeneracy")
@@ -14743,7 +14743,7 @@ def section_t36_prime_topology():
         print(f"T36 GAP CLOSED via {best_model}")
         verdict = f"T36 GAP CLOSED via {best_model}; ratio {best_ratio:.4e}"
     else:
-        print(f"T36 GAP OPEN — closest: {best_model}, ratio: {best_ratio:.4e}")
+        print(f"T36 GAP OPEN : closest: {best_model}, ratio: {best_ratio:.4e}")
         print()
         print("  ANALYSIS:")
         print("  The prime topology approach gives the RIGHT qualitative connection:")
@@ -15755,7 +15755,7 @@ def section_t32_exact_lambda():
             alpha_s_3_ref = a_c
             break
     if Lambda_3 is None:
-        # No Nf=3 checkpoint — compute from running at mu just below m_charm
+        # No Nf=3 checkpoint: compute from running at mu just below m_charm
         # Re-run a few steps in Nf=3 to get a clean value
         Lambda_3 = lambda_rg(mu_conf, alpha_s_conf, 3)  # fallback
         mu_3_ref = mu_conf
@@ -16051,9 +16051,9 @@ def section_t32_derive_cgap():
 # CONJECTURE (constituent mass formula): m_constituent = sqrt(m_current^2 + Lambda_QCD^2)
 # Constituent quark model formula (Nambu 1960s)
 # Foam derivation: treats Λ_QCD as pressure floor,
-# m_current as bare string input — VALID structurally
+# m_current as bare string input: VALID structurally
 # Missing: foam derivation of quark condensate mechanism
-# Status: CONJECTURE — derivation path exists via T32+T60
+# Status: CONJECTURE: derivation path exists via T32+T60
 # ---------------------------------------------------------------------------
 def section_s174_t60_wilczek_string():
     """S174: T60 v3 -- Three-sector meson spectrum with constituent masses."""
@@ -16076,12 +16076,12 @@ def section_s174_t60_wilczek_string():
     m_s_current = 0.095              # GeV, MEASURED PDG
     m_c_current = 1.275              # GeV, MEASURED PDG
 
-    # --- Constituent mass formula (CONJECTURE T60a — foam chiral condensate) ---
+    # --- Constituent mass formula (CONJECTURE T60a: foam chiral condensate) ---
     # Constituent quark model formula (Nambu 1960s)
     # Foam derivation: treats Λ_QCD as pressure floor,
-    # m_current as bare string input — VALID structurally
+    # m_current as bare string input: VALID structurally
     # Missing: foam derivation of quark condensate mechanism
-    # Status: CONJECTURE — derivation path exists via T32+T60
+    # Status: CONJECTURE: derivation path exists via T32+T60
     m_u_constituent = Lambda_QCD     # current u,d mass << Lambda_QCD
     m_s_constituent = math.sqrt(m_s_current ** 2 + Lambda_QCD ** 2)
 
@@ -16702,7 +16702,7 @@ def section_s177_t61_baryon_yjunction():
     proton_pass = proton_err < 2.0
     neutron_pass = neutron_err < 2.0
     roper_pass = roper_err < 10.0
-    n1520_pass = n1520_err < 10.0  # n/L degeneracy not broken at this order — T61c spin-orbit splitting pending
+    n1520_pass = n1520_err < 10.0  # n/L degeneracy not broken at this order: T61c spin-orbit splitting pending
 
     log("RESULT CONDITIONS:")
     log(f"  proton error < 2%: {proton_err:.1f}% -> {'PASS' if proton_pass else 'FAIL'}")
@@ -17108,7 +17108,7 @@ def section_s180_t61c_spin_orbit():
     # Color-magnetic hyperfine: DeltaE = (8*pi/3) * (2/3) * k_eff * |psi(0)|^2 / m_q^2 * dS
     # For N->Delta: dS = 2 (spin-1/2 to spin-3/2)
     # k_eff = k_cornell (Cornell Coulomb coefficient absorbs alpha_s)
-    # But k_cornell >> 1 means Coulomb approx breaks down — use kappa/3 instead
+    # But k_cornell >> 1 means Coulomb approx breaks down: use kappa/3 instead
     # (kappa is the foam mass gap, directly sets hyperfine scale)
     delta_hf_kappa = kappa / 3  # existing formula, GeV
     delta_hf_kappa_MeV = delta_hf_kappa * 1000
@@ -18495,7 +18495,7 @@ def section_s188_electroweak_frontier():
     # Foam can reach α_em(M_Z) through the Casimir + self-dual chain:
     # g²_QCD = 4 at self-dual (T32, Λ_QCD scale)
     # g²_SU2 at M_Z from RGE: different scale, different running
-    # Cannot close without lepton thresholds — electron mass not yet derived
+    # Cannot close without lepton thresholds: electron mass not yet derived
 
     # What foam CAN compute: sin²(θ_W) → implied α_em given measured m_W
     m_W_measured = 80.377  # GeV, MEASURED
@@ -19408,7 +19408,7 @@ def section_s192_final_gaps():
     print()
 
     # All three neutrino masses from seesaw + Koide ratios
-    # From S190: mass ratios 0.0234 : 0.1961 : 5.7805 (normalized to sum)
+    # From S190: mass ratios 0.0234: 0.1961: 5.7805 (normalized to sum)
     ratio_sum = 0.0234 + 0.1961 + 5.7805
     r1, r2, r3 = 0.0234/ratio_sum, 0.1961/ratio_sum, 5.7805/ratio_sum
     M_nu_scale = m_nu3_seesaw_meV / r3
@@ -19944,7 +19944,7 @@ def section_s196_alpha_em_wyler():
         print(f"{'m_W MeV (S193)':<25} {m_W_old:>15.2f} {m_W_new:>15.2f} {m_W_obs:>12.2f} {f'{err_mW_old:.2f}%':>8} {f'{err_mW_new:.2f}%':>8}")
         print()
         print(f"alpha_em is now DERIVED from geometry (T81 Wyler).")
-        print(f"Downstream errors unchanged to 2 decimal places — alpha_em derived")
+        print(f"Downstream errors unchanged to 2 decimal places : alpha_em derived")
         print(f"value matches measured to 0.00%, so all downstream results hold.")
     elif error_pct <= 1.0:
         label = "DERIVED_LIMIT"
@@ -20051,7 +20051,7 @@ def section_s197_electroweak_closure():
     alpha_em_MZ = 1/128.9       # T81 Wyler + QED running to M_Z, DERIVED
     alpha_s_MZ = 0.1179         # NSQCD derived, Lambda_Nf2=310 MeV
     sin2_GUT = 3.0/8.0          # SU(5) from T32 g^2=4 UV fixed point, DERIVED
-    M_Z_input = 91.1876         # GeV — used only as RG scale reference, not fitted
+    M_Z_input = 91.1876         # GeV: used only as RG scale reference, not fitted
 
     b1 = 41.0/10.0
     b2 = -19.0/6.0
@@ -20304,7 +20304,7 @@ def section_s198_pole_and_twoloop():
 
     alpha_em_MZ = 1/128.9       # T81 Wyler + QED running to M_Z, DERIVED
     alpha_s_MZ = 0.1179         # NSQCD derived, DERIVED
-    M_Z_ref = 91.1876           # GeV — RG scale anchor only
+    M_Z_ref = 91.1876           # GeV: RG scale anchor only
 
     b1    = 41.0/10.0
     b2    = -19.0/6.0
@@ -20492,7 +20492,7 @@ def section_s199_yukawa_susy_rg():
 
     alpha_em_MZ = 1.0/128.9    # T81 Wyler, QED running to M_Z, DERIVED
     alpha_s_MZ  = 0.1179       # NSQCD, DERIVED
-    M_Z_ref = 91.1876          # GeV — RG scale anchor only
+    M_Z_ref = 91.1876          # GeV: RG scale anchor only
 
     b1_s = 33.0/5.0    # U(1)_Y  [N=1 SUSY SM]
     b2_s = 1.0         # SU(2)_L
@@ -20654,7 +20654,7 @@ def section_s199_yukawa_susy_rg():
 
 
 # ---------------------------------------------------------------------------
-# S200: T83 — Tau Yukawa RG unification (bottom-tau at M_GUT)
+# S200: T83: Tau Yukawa RG unification (bottom-tau at M_GUT)
 # ---------------------------------------------------------------------------
 def section_s200_tau_yukawa_rg():
     """S200: Derive m_tau from SUSY bottom-tau Yukawa unification at M_GUT."""
@@ -20667,9 +20667,9 @@ def section_s200_tau_yukawa_rg():
     print("=" * 60)
     print()
 
-    # In SUSY SU(5): y_tau(M_GUT) = y_b(M_GUT) — bottom-tau unification
+    # In SUSY SU(5): y_tau(M_GUT) = y_b(M_GUT): bottom-tau unification
     # Both Yukawas run from M_GUT to M_Z via SUSY RG
-    # m_tau = y_tau(M_Z) * v/sqrt(2) — no measured lepton input
+    # m_tau = y_tau(M_Z) * v/sqrt(2): no measured lepton input
 
     # Derived inputs only
     M_GUT = 2.8893e16   # GeV, T82 DERIVED (S199)
@@ -21543,7 +21543,7 @@ if __name__ == "__main__":
         tee.close()
         sys.stdout = tee.stream
 # ---------------------------------------------------------------------------
-# T51 — Schreiber's Boundary (Foam Surface Binding) DERIVED
+# T51: Schreiber's Boundary (Foam Surface Binding) DERIVED
 # ---------------------------------------------------------------------------
 # Validated 2026-08-28 with 7 co-crystal structures:
 #   EGFR, BRD4, HSP90, BCLXL, BRD2 (x2), PARP1
@@ -21553,7 +21553,7 @@ if __name__ == "__main__":
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# T52 — Materials Gibbs-Thomson DERIVED
+# T52: Materials Gibbs-Thomson DERIVED
 # ---------------------------------------------------------------------------
 # Nanoparticle melting depression test (2026-08-28):
 #   ΔTm / Tm_bulk ∝ r^α  with  α = -1.5640 ± 0.1341
@@ -21563,15 +21563,15 @@ if __name__ == "__main__":
 #   Fitted A = 0.3889, B = 1.1078
 #   Apparent exponent at median r = 6.0 nm: α = -1.4748
 #   Measured power-law α = -1.5640; deviation after surface-stress correction = 0.089
-# Status: DERIVED — the exponent is explained by the standard YL term plus a
+# Status: DERIVED: the exponent is explained by the standard YL term plus a
 # 1/r² surface-stress curvature correction. Cross-scale Young-Laplace holds.
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# T53 — Berry's Bridge (Riemann–Foam Symmetry) DERIVED
+# T53: Berry's Bridge (Riemann–Foam Symmetry) DERIVED
 # ---------------------------------------------------------------------------
 # T53 NOTE: This theorem number is deprecated.
-# T53 = T45 (Einstein's Answer Key) — same content, duplicate label.
+# T53 = T45 (Einstein's Answer Key): same content, duplicate label.
 # Theorem count 73 does not include T53 as a distinct theorem.
 # Retained here for section numbering continuity only.
 # ---------------------------------------------------------------------------
@@ -21582,11 +21582,11 @@ if __name__ == "__main__":
 #   Foam wall |r|=r_S maps to Re(s)=1/2 under Berry's Bridge
 #   Dense real eigenvalues on the foam wall → all Riemann zeros on Re(s)=1/2
 #   Riemann Hypothesis: DERIVED within Foam Mechanics
-# Named: Berry's Bridge (Michael Berry — Berry-Keating conjecture)
+# Named: Berry's Bridge (Michael Berry: Berry-Keating conjecture)
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# MEASURED — Dirt Battery Electrochemical Analysis
+# MEASURED: Dirt Battery Electrochemical Analysis
 # ---------------------------------------------------------------------------
 # Cell: Zn anode, FeS2 cathode, kaolinite clay electrolyte, carbon black conductor
 #   V_cell (theoretical)  = 1.103 V
@@ -21599,7 +21599,7 @@ if __name__ == "__main__":
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# FLAWED — Iron-Filing Electronic Percolation Composite
+# FLAWED: Iron-Filing Electronic Percolation Composite
 # ---------------------------------------------------------------------------
 # The previous percolation model predicted 79,930×–3,900,000× power increases
 # by treating iron-filing electronic conductivity as the electrolyte conductivity.
@@ -21610,19 +21610,19 @@ if __name__ == "__main__":
 # Literature expectation: ~2–5× improvement in delivered power, not 5 orders.
 # Accurate quantification requires separate ionic conductivity measurements of
 # Fe-impregnated clay and direct electrochemical impedance spectroscopy.
-# STATUS: MODEL FLAW — electronic percolation shorts the cell. Honest conjecture:
+# STATUS: MODEL FLAW: electronic percolation shorts the cell. Honest conjecture:
 # modest 2–5× improvement from Fe dissolution, pending measurement.
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# T77 — HART-FERMI'S FILTER (Great Filter Theorem)
+# T77: HART-FERMI'S FILTER (Great Filter Theorem)
 # ---------------------------------------------------------------------------
 # DERIVED from T14 + T21 + T56
 # Named for Enrico Fermi and Michael Hart (1975)
 #
 # Derivation:
 # T14: ~10^59 civilizations probable in R5
-# T21: R5 terminal — foam generative cascade ends here
+# T21: R5 terminal: foam generative cascade ends here
 # T56: YL pressure dynamics operate at ALL scales including civilizational
 # Fermi observation (MEASURED): no detected civilizations in observable volume
 #

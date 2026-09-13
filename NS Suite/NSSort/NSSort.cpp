@@ -3,7 +3,7 @@
 // See LICENSE.md in the repository root or ofmagnitude.com
 
 /*
- * NSSort v10 — v9 + persistent thread pool for try_cluster_sort_2pass
+ * NSSort v10: v9 + persistent thread pool for try_cluster_sort_2pass
  *
  * v10 change: replace sequential per-cluster counting sort with three
  *   parallel phases using ClusterSortPool (8 pre-created threads, CV-based).
@@ -15,14 +15,14 @@
  * v9 base: v7 base + 256-sample nearly-sorted path + Regime A/B
  *
  * New (v9): 256-element sample detection with desc_violations/asc_violations
- *   ordering.  Regime A — fused single-pass insertion repair within WINDOW.
- *   Regime B — extract-merge with std::inplace_merge.
+ *   ordering.  Regime A: fused single-pass insertion repair within WINDOW.
+ *   Regime B: extract-merge with std::inplace_merge.
  *
  * Inherited from v7 (unchanged):
- *   Change 1 — two-level L1-buffered scatter at depth > 0
- *   Change 2 — consecutive-pair nearly-sorted + run-merge (fallback after v9 path)
- *   Change A — small-n fast path in nssort_arithmetic (n < 1024)
- *   Change B — 32-sample clustered pre-pass (10 K ≤ n ≤ 2 M)
+ *   Change 1: two-level L1-buffered scatter at depth > 0
+ *   Change 2: consecutive-pair nearly-sorted + run-merge (fallback after v9 path)
+ *   Change A: small-n fast path in nssort_arithmetic (n < 1024)
+ *   Change B: 32-sample clustered pre-pass (10 K ≤ n ≤ 2 M)
  *   V5 depth-0 imbalance subdivision, AVX2 sort16, OMP parallelism
  */
 
@@ -132,7 +132,7 @@ constexpr int WINDOW   = 4096;
 static bool parallel_is_sorted_check(int* arr, int n);
 
 // ---------------------------------------------------------------------------
-// Insertion sort — leaf-level (n ≲ 11)
+// Insertion sort: leaf-level (n ≲ 11)
 // ---------------------------------------------------------------------------
 static void insertion_sort(int* arr, int n) {
     for (int i = 1; i < n; i++) {
@@ -168,7 +168,7 @@ static bool counting_sort_checked(int* arr, int n, int min_val, long long range)
                 for (long long v = 0; v <= range; v++) cnt[v] += local_cnt[v];
             }
         }
-        if (!ok.load()) return false;     // arr untouched — safe bail
+        if (!ok.load()) return false;     // arr untouched: safe bail
         int pos = 0;
         for (long long v = 0; v <= range; v++)
             for (int k = 0; k < cnt[v]; k++)
@@ -183,7 +183,7 @@ static bool counting_sort_checked(int* arr, int n, int min_val, long long range)
         int v = arr[i], j = 0;
         while (j < nu && uvals[j] != v) j++;
         if (j == nu) {
-            if (nu == MAXU) return false;         // too many uniques — bail
+            if (nu == MAXU) return false;         // too many uniques: bail
             uvals[nu++] = v;
         }
     }
@@ -232,14 +232,14 @@ static bool counting_sort_checked(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// v9 Regime A — fused single-pass insertion repair (dense-fallback)
+// v9 Regime A: fused single-pass insertion repair (dense-fallback)
 // Single forward pass.  When arr[i] > arr[i+1]: store val=arr[i+1],
 // shift arr[i] into arr[i+1], walk backward while arr[j-1] > val AND
 // j > i-WINDOW, place val.  Continue forward.  No OpenMP.
 // ---------------------------------------------------------------------------
 static void regime_a_insertion_repair(int* arr, int n) {
     fprintf(stderr, "[INSTRUMENTATION] Regime A insertion repair called (n=%d)\n", n);
-    // Full-array insertion repair — no window partitioning.
+    // Full-array insertion repair: no window partitioning.
     // Window partitioning blocked cross-boundary element movement.
     // Called only when dirty_count/num_windows > 0.30 threshold,
     // meaning data is dense-nearly-sorted: O(n*k) where k is small.
@@ -258,7 +258,7 @@ static void regime_a_insertion_repair(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// v9 Regime A — dirty-window repair (sparse path)
+// v9 Regime A: dirty-window repair (sparse path)
 // Only sorts overlapping windows that contain violations (dirty flag).
 // Even/odd pass ordering ensures no adjacent window interference.
 // Falls back to insertion repair when >30% of windows are dirty (15% at >500M).
@@ -309,7 +309,7 @@ static void regime_a_window_repair(int* arr, int n, int disp_est) {
 static void parallel_merge_regime_b(int* arr, int w, int n);
 
 // ---------------------------------------------------------------------------
-// v9 Regime B — run-based extract-merge
+// v9 Regime B: run-based extract-merge
 // Marking: arr[i] > arr[i+1] only (not both neighbours).
 // Chains consecutive violations into runs (one run per reversed block).
 // Coalesce overlapping runs, extract, sort, then parallel merge.
@@ -366,7 +366,7 @@ static void regime_b_extract_merge(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// Change 2 helper: merge sorted runs bottom-up  (FAST PATH — DO NOT MODIFY)
+// Change 2 helper: merge sorted runs bottom-up  (FAST PATH: DO NOT MODIFY)
 // Scans arr once to collect run-start positions, then merges pairwise until
 // one run remains.  O(n) scan + O(n log R) merges; fast when R is small.
 // ---------------------------------------------------------------------------
@@ -398,7 +398,7 @@ static void merge_runs(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// Batcher's sorting network — 16 elements, scalar fallback
+// Batcher's sorting network: 16 elements, scalar fallback
 // ---------------------------------------------------------------------------
 static void sort16(int* a) {
 #define CS(x,y) { int lo=a[x]<a[y]?a[x]:a[y], hi=a[x]>a[y]?a[x]:a[y]; a[x]=lo; a[y]=hi; }
@@ -417,7 +417,7 @@ static void sort16(int* a) {
 
 #ifdef __AVX2__
 // ---------------------------------------------------------------------------
-// AVX2 sort16 — djbsort-derived 10-stage bitonic network  (FAST PATH — DO NOT MODIFY)
+// AVX2 sort16: djbsort-derived 10-stage bitonic network  (FAST PATH: DO NOT MODIFY)
 // ---------------------------------------------------------------------------
 #define V_MINMAX(a, b) do { \
     __m256i _t = _mm256_min_epi32(a, b); \
@@ -502,7 +502,7 @@ static const bool g_avx2_ok = false;
 #endif
 
 // ---------------------------------------------------------------------------
-// Unified OMP team size — computed once at program start (PRE-U-3 baseline)
+// Unified OMP team size: computed once at program start (PRE-U-3 baseline)
 // ---------------------------------------------------------------------------
 static int g_team_size = []() {
     int sz = get_physical_core_count();
@@ -511,7 +511,7 @@ static int g_team_size = []() {
 }();
 
 // ---------------------------------------------------------------------------
-// Static OMP warmup — ensures hot team is pre-spawned with g_team_size
+// Static OMP warmup: ensures hot team is pre-spawned with g_team_size
 // ---------------------------------------------------------------------------
 static const bool g_omp_warmed_up = []() {
     #pragma omp parallel num_threads(g_team_size)
@@ -575,7 +575,7 @@ void nssort_arithmetic(int* arr, int n, int depth, int forced_ns,
                        bool rescale = false, int rescale_min = 0, int rescale_max = 0);
 
 // ---------------------------------------------------------------------------
-// ClusterSortPool — persistent thread pool for try_cluster_sort_2pass
+// ClusterSortPool: persistent thread pool for try_cluster_sort_2pass
 // Dynamic thread count based on g_team_size.
 // Workers sleep on cv_work; caller sleeps on cv_done until pending == 0.
 // No OMP (avoids TBB oversubscription). No per-call std::thread creation.
@@ -667,7 +667,7 @@ static int co_rank(int k, const int* A, int m, const int* B, int n) {
 // ---------------------------------------------------------------------------
 // Parallel merge of arr[0..w) and arr[w..n), both individually sorted,
 // into arr[0..n) fully sorted. Replaces std::inplace_merge. No stability
-// requirement — plain ints, equal elements are interchangeable.
+// requirement: plain ints, equal elements are interchangeable.
 // ---------------------------------------------------------------------------
 static void parallel_merge_regime_b(int* arr, int w, int n) {
     const int* A = arr;
@@ -738,7 +738,7 @@ static void parallel_reverse(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// nssort_scatter_into — one-level out-of-place scatter helper
+// nssort_scatter_into: one-level out-of-place scatter helper
 // ---------------------------------------------------------------------------
 static void nssort_scatter_into(int* src, int* dst, int n, int depth,
                                 int forced_ns, bool skip_two_level,
@@ -823,8 +823,8 @@ static void nssort_scatter_into(int* src, int* dst, int n, int depth,
 }
 
 // ---------------------------------------------------------------------------
-// FAST PATH — DO NOT MODIFY
-// nssort_arithmetic — core recursive arithmetic-sector sort
+// FAST PATH: DO NOT MODIFY
+// nssort_arithmetic: core recursive arithmetic-sector sort
 // ---------------------------------------------------------------------------
 void nssort_arithmetic(int* arr, int n, int depth, int forced_ns,
                        bool skip_two_level /* = false */,
@@ -1119,15 +1119,15 @@ void nssort_arithmetic(int* arr, int n, int depth, int forced_ns,
 }
 
 // ---------------------------------------------------------------------------
-// try_cluster_sort_2pass — parallel O(2n) cluster partition + per-cluster sort
+// try_cluster_sort_2pass: parallel O(2n) cluster partition + per-cluster sort
 //
 // Two array passes (fusion impossible: Phase 2 cursors require all of Phase 1):
-//   Phase 1 — T=8 threads each count a strip into private local_sizes[t][c]
+//   Phase 1: T=8 threads each count a strip into private local_sizes[t][c]
 //             → barrier → reduce to global sizes[], compute offsets[] and
 //             per-thread write cursors[t][c] (prefix sum across threads)
-//   Phase 2 — T=8 threads scatter their strips into out_buf via disjoint
+//   Phase 2: T=8 threads scatter their strips into out_buf via disjoint
 //             cursors (no atomics, no races by construction)
-//   Phase 3 — N≤8 independent cluster sorts submitted as parallel tasks
+//   Phase 3: N≤8 independent cluster sorts submitted as parallel tasks
 // ---------------------------------------------------------------------------
 static bool try_cluster_sort_2pass(int* arr, int n,
                                    const std::vector<std::pair<int,int>>& clusters) {
@@ -1175,7 +1175,7 @@ static bool try_cluster_sort_2pass(int* arr, int n,
 
     // ---- Barrier: reduce histograms, compute offsets and per-thread cursors ----
     // cursors[t][c] = start position in out_buf where thread t writes cluster c.
-    // Derived from prefix sum of local_sizes across threads — mirrors GPU §3.4
+    // Derived from prefix sum of local_sizes across threads: mirrors GPU §3.4
     // per-thread g_cursor init from g_base + thread-local histogram prefix.
     int sizes[8]   = {};
     for (int c = 0; c < N; c++)
@@ -1254,7 +1254,7 @@ static bool try_cluster_sort_2pass(int* arr, int n,
 }
 
 // ---------------------------------------------------------------------------
-// Compressed counting sort — large-range sparse data fast path
+// Compressed counting sort: large-range sparse data fast path
 // O(n) scan into unordered_map, sort distinct keys, REGENERATE output.
 // Bails early if >100k distinct values (avoids memory blowup on random data).
 // ---------------------------------------------------------------------------
@@ -1278,7 +1278,7 @@ static bool compressed_counting_sort(int* arr, int n) {
 }
 
 // ---------------------------------------------------------------------------
-// nssort — public entry point
+// nssort: public entry point
 //
 // v9 detection order via 256-element sample:
 //   1. desc_violations == 0 → reverse (with O(n) verify)
@@ -1291,7 +1291,7 @@ void nssort(int* arr, int n) {
     fprintf(stderr, "[INSTRUMENTATION] nssort ENTRY: n=%d\n", n);
     if (n <= 1) return;
 
-    // FAST PATH — DO NOT MODIFY: tiny arrays
+    // FAST PATH: DO NOT MODIFY: tiny arrays
     if (n < 32) { insertion_sort(arr, n); return; }
     
     bool use_rescale = false;
@@ -1352,7 +1352,7 @@ void nssort(int* arr, int n) {
             if (distinct <= 20) {
                 if (counting_sort_checked(arr, n, sample_min, (long long)sample_max - sample_min))
                     return;
-                // else: sample lied — fall through to Step 3
+                // else: sample lied: fall through to Step 3
             }
         }
 
@@ -1395,7 +1395,7 @@ void nssort(int* arr, int n) {
         // Step 4: sample_range < n/10 → fast counting sort (REGENERATE)
         if (sample_range < n / 10) {
             if (counting_sort_checked(arr, n)) return;
-            // else: too many uniques for the table path — fall through
+            // else: too many uniques for the table path: fall through
         }
 
         // Step 4.5: Collision detection in sorted sample → compressed counting sort
@@ -1412,7 +1412,7 @@ void nssort(int* arr, int n) {
             }
         }
 
-        // Step 4.6: Cluster detection — per-cluster counting sort
+        // Step 4.6: Cluster detection: per-cluster counting sort
         // Costs O(K×n) where K is number of tight clusters.
         // For 5 tight clusters spread across a large range, K=5 full scans
         // beats the general sort at 1M.  Falls through if clusters too wide.
@@ -1465,7 +1465,7 @@ void nssort(int* arr, int n) {
     }
     // Fall through to existing v7 fast paths + general sort
 
-    // FAST PATH — reverse-sorted check (3 reads)
+    // FAST PATH: reverse-sorted check (3 reads)
     bool skip_v7_detection = false;
     if (arr[0] > arr[n / 2] && arr[n / 2] > arr[n - 1]) {
         parallel_reverse(arr, n);
@@ -1477,7 +1477,7 @@ void nssort(int* arr, int n) {
         skip_v7_detection = true;
     }
 
-    // FAST PATH — DO NOT MODIFY: nearly-sorted detection (v7 Change 2)
+    // FAST PATH: DO NOT MODIFY: nearly-sorted detection (v7 Change 2)
     if (!skip_v7_detection && n >= 1000) {
         int ordered = 0;
         int step = max(1, n / 32);
@@ -1495,7 +1495,7 @@ void nssort(int* arr, int n) {
         }
     }
 
-    // FAST PATH — DO NOT MODIFY: heavy-duplicate detection (100-sample)
+    // FAST PATH: DO NOT MODIFY: heavy-duplicate detection (100-sample)
     {
         int step = max(1, n / 100);
         int sample[128], sc = 0;
@@ -1910,7 +1910,7 @@ int main() {
     run_correctness_tests();
     // run_perf_tests();
     
-    // double sectors_per_call = g_depth0_calls > 0 ? (double)g_total_sectors / g_depth0_calls : 0.0;
+    // double sectors_per_call = g_depth0_calls > 0 ? (double)g_total_sectors / g_depth0_calls: 0.0;
     // printf("NS scaling instrumentation: depth>0 calls=%lld, total sectors=%lld, sectors/call=%.2f\n",
     //        g_depth0_calls, g_total_sectors, sectors_per_call);
     

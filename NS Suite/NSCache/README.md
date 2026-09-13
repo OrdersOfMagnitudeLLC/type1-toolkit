@@ -1,6 +1,6 @@
 # NSCache
 
-Optimised for Random and Zipf workloads. Sequential access pays a hashing overhead (1.05–2.0x LRU) — inherent trade-off for correct hash distribution.
+Optimised for Random and Zipf workloads. Sequential access pays a hashing overhead (1.05–2.0x LRU): inherent trade-off for correct hash distribution.
 
 Fixed-capacity frequency-boosted CLOCK cache with open-addressing hash table, comparing against std::list-based LRU and CLOCK approximation.
 

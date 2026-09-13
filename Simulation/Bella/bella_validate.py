@@ -707,7 +707,7 @@ def _run_pde_validation(console, quick=False) -> bool:
         status = "PASS" if pattern_var > threshold else "FAIL"
         if status == "FAIL":
             all_pass = False
-        table.add_row("Gray-Scott", f"pattern variance {pattern_var:.4f}", "—", f"> {threshold}", status)
+        table.add_row("Gray-Scott", f"pattern variance {pattern_var:.4f}", "-", f"> {threshold}", status)
     except Exception as e:
         console.print(f"[red]Gray-Scott PDE check failed: {e}[/]")
         all_pass = False

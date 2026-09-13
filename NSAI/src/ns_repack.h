@@ -206,7 +206,7 @@ static inline void repack_q4_K_row_panel(const block_q4_K* src, int n_rows,
 // the EXACT byte-interleave scheme from llama.cpp's make_block_q4_Kx8()
 // (blck_size_interleave = 8), as required by the ggml_gemv_q4_K_8x8_q8_K
 // AVX2 kernel (ns_llama_gemv.cpp). This is a raw 8-byte block copy from each
-// row's qs array — NOT the same byte layout as repack_q4_K_row_panel() above
+// row's qs array: NOT the same byte layout as repack_q4_K_row_panel() above
 // (which reconstructs nibble values and is only compatible with the
 // generic/reference kernels, vec_dot_q4k_q8k_Rx1 / vec_dot_q4k_q8k_Rx1_ref).
 static inline void repack_q4_K_row_panel_llama(const block_q4_K* src, int n_rows,

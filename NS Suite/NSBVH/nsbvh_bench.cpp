@@ -27,7 +27,7 @@ struct BVHNode {
 };
 
 struct alignas(32) BVH8Node {
-    // SOA layout for cache efficiency — 8 children bounds
+    // SOA layout for cache efficiency: 8 children bounds
     alignas(32) float min_x[8];
     alignas(32) float min_y[8];
     alignas(32) float min_z[8];
@@ -865,7 +865,7 @@ int main() {
     std::cout << std::endl;
 
     // --- Scene 1: Dense Uniform (random, no clustering) ---
-    // Every grid cell occupied — NSBVH loss case (no empty space to skip)
+    // Every grid cell occupied: NSBVH loss case (no empty space to skip)
     {
         std::vector<AABB3> objects;
         std::uniform_real_distribution<float> x_dist(10, 2490), y_dist(10, 1990), z_dist(-10, 10);
@@ -879,7 +879,7 @@ int main() {
     }
 
     // --- Scene 2: Sparse Clustered (20 tight clusters at cell centers, empty space between) ---
-    // 20/80 occupied cells — NSBVH win case (grid skips 75% of cells)
+    // 20/80 occupied cells: NSBVH win case (grid skips 75% of cells)
     // Targeted rays: 70% aimed at clusters from fixed origin, 30% random
     {
         std::vector<AABB3> objects;

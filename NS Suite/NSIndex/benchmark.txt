@@ -1,4 +1,4 @@
-NSIndex Benchmark — 10M keys, 1M queries per test
+NSIndex Benchmark: 10M keys, 1M queries per test
 AVX2: YES, AVX-512: YES
 
 === POINT LOOKUPS (sequential dataset) ===

@@ -1,5 +1,5 @@
 name: aqueous-nitrogen-fixation
-description: Nitrogenase mimics — ambient aqueous N2 fixation, no heating, soil-deployable
+description: Nitrogenase mimics : ambient aqueous N2 fixation, no heating, soil-deployable
   powder
 required_elements_preferred:
 - Fe

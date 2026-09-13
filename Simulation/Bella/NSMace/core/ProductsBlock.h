@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Session 4: symmetric-contraction "products" block (EquivariantProductBasisBlock).
 // Implements MACE paper Eq. 10-11 for correlation=3, scalar (0e) output only,
 // using precomputed Clebsch-Gordan-derived U-tensors (weights/cg_tensors.json)
@@ -62,7 +62,7 @@ struct ProductsBlock {
         for (int c = 0; c < 128; c++) {
             const Real* feat_c = feat + c * ELL_DIM;  // [16]
 
-            // Precompute per-channel weight slices — eliminates k*128 stride
+            // Precompute per-channel weight slices: eliminates k*128 stride
             // (was: 94K scattered 1KB-stride accesses per atom; now: 28 contiguous reads)
             Real wc_max[NU3_PARAMS], wc_nu2[NU2_PARAMS], wc_nu1[NU1_PARAMS];
             for (int k = 0; k < NU3_PARAMS; k++) wc_max[k] = Wmax_e[k * 128 + c];

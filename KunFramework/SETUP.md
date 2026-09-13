@@ -1,4 +1,4 @@
-# SoapBowl — Setup
+# SoapBowl: Setup
 
 ## Install dependencies
 pip install -r requirements.txt

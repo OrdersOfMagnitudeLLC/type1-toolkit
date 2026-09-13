@@ -1,4 +1,4 @@
-// Orders of Magnitude LLC — OOM Commercial License v1.0
+// Orders of Magnitude LLC: OOM Commercial License v1.0
 // https://ofmagnitude.com/license
 // Copyright 2026 Orders of Magnitude LLC. All rights reserved.
 

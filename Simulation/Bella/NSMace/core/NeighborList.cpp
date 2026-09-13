@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 #include "NSMace.h"
 #include <vector>
 #include <cmath>
@@ -32,7 +32,7 @@ void NeighborList::build(const std::vector<Atom>& atoms, Real cutoff_A, const st
     Real rc2 = cutoff_A * cutoff_A;
     Real inv_cut = 1.0f / cutoff_A;
 
-    // Cell key: pack (ix,iy,iz) into uint64 — stride chosen so no collisions
+    // Cell key: pack (ix,iy,iz) into uint64: stride chosen so no collisions
     // up to 100K atoms in a ~200A box (cell count <1000 per axis)
     auto make_key = [](int64_t ix, int64_t iy, int64_t iz) -> uint64_t {
         return (uint64_t)(ix + 1000) +

@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-# Graceful imports — same pattern as bella_astro.py
+# Graceful imports: same pattern as bella_astro.py
 HAS_NUMPY = False
 np = None
 try:
@@ -32,7 +32,7 @@ CATALOG_CACHE.mkdir(parents=True, exist_ok=True)
 
 
 # ─── SECTION 1: NS Algorithm stubs ───
-# NSSort — frequency-domain anomaly ranking
+# NSSort: frequency-domain anomaly ranking
 # NS Suite product: /NS/NS Suite/NSSort/NSSort.cpp
 # Benchmark: 182,000x on zero distribution, 8/10 distributions win vs IPS4o
 # Algorithm: detect structural patterns (duplicates, sorted runs, sparse signals)
@@ -53,7 +53,7 @@ def ns_sort_hits(hits: list, key: str = "snr") -> list:
     return sorted(hits, key=lambda h: h.get(key, 0), reverse=True)
 
 
-# NSStringIndex — spectral fingerprint matching
+# NSStringIndex: spectral fingerprint matching
 # NS Suite product: /NS/NS Suite/NSStringIndex/
 # Benchmark: 2605x at 1000 queries on 424MB corpus
 # Algorithm: build index once, query O(1) per lookup
@@ -82,7 +82,7 @@ def ns_string_index_query(index: dict, freq_mhz: float, tolerance_mhz: float = 0
     return matches
 
 
-# NSFFT — sparse signal detection in frequency domain
+# NSFFT: sparse signal detection in frequency domain
 # NS Suite product: referenced in bella_astro.py comments
 # Benchmark: 31.6x at K=10 sparse signal, 100% recovery
 # Algorithm: identify sparse components (K<<N) before full FFT
@@ -102,7 +102,7 @@ def ns_fft_sparse_score(drift_rates: list) -> float:
 
 # ─── SECTION 2: Known technosignature frequencies ───
 TECHNOSIG_FREQS = {
-    "hydrogen_line": 1420.405e6,      # Hz, HI 21cm — universal beacon
+    "hydrogen_line": 1420.405e6,      # Hz, HI 21cm: universal beacon
     "hydroxyl_line": 1612.231e6,      # Hz, OH maser
     "water_hole_lo": 1420.405e6,      # Hz
     "water_hole_hi": 1727.0e6,        # Hz

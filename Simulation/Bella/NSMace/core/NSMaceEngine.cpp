@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Session 4: full correct forward pass (conv_tp + symmetric-contraction
 // products + skip_tp residual + atomic energies + scale/shift).
 // Water reference = -14.047703873269672 eV.
@@ -221,7 +221,7 @@ Real forward_energy(const Model& m, const std::vector<Atom>& atoms, NeighborList
         const ProductsBlock&    pb = *pbs[layer];
         const RadialMLP&        rmlp = *rmlps[layer];
 
-        // sc = skip_tp(node_feats_pre, node_attrs) — uses PRE-update h
+        // sc = skip_tp(node_feats_pre, node_attrs): uses PRE-update h
         std::vector<Real> sc(N * 128, 0.0);
         #pragma omp parallel for if(N > 4) schedule(static)
         for (int i = 0; i < N; i++)

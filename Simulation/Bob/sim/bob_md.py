@@ -35,9 +35,9 @@ FORCE_TO_ACC = 1.0 / 103.6   # (eV/Å) / amu → Å/fs²
 KB_EV = 8.617333e-5           # eV/K
 
 # Grid precompute constants
-MACE_CUTOFF  = 5.5   # Å — MACE-small neighbor cutoff
-CLUSTER_PAD  = 0.5   # Å — extra buffer for cluster extraction
-MIN_ION_DIST = 1.8   # Å — skip grid points inside framework atoms
+MACE_CUTOFF  = 5.5   # Å: MACE-small neighbor cutoff
+CLUSTER_PAD  = 0.5   # Å: extra buffer for cluster extraction
+MIN_ION_DIST = 1.8   # Å: skip grid points inside framework atoms
 
 def precompute_grid(atoms, calc, mobile_species_set, grid_spacing=2.0, batch_size=16, out_path=None, material_name="material"):
     """
@@ -66,7 +66,7 @@ def precompute_grid(atoms, calc, mobile_species_set, grid_spacing=2.0, batch_siz
     zs = np.linspace(0, cell_len[2], nz, endpoint=False)
     print(f"  Grid: {nx}×{ny}×{nz} = {nx*ny*nz} points at {grid_spacing}Å spacing (batch_size={batch_size})")
 
-    # Output arrays — forces (3 components) per grid point
+    # Output arrays: forces (3 components) per grid point
     Fx = np.zeros((nx, ny, nz), dtype=np.float32)
     Fy = np.zeros((nx, ny, nz), dtype=np.float32)
     Fz = np.zeros((nx, ny, nz), dtype=np.float32)
@@ -269,9 +269,9 @@ def load_grid_interpolators(grid_path):
     """Load saved grid and build 3 interpolators (one per force component)."""
     g = np.load(grid_path)
     xs, ys, zs = g['xs'], g['ys'], g['zs']
-    # Where valid=False, force was inside framework — set to large repulsion
+    # Where valid=False, force was inside framework: set to large repulsion
     # so ions never enter those regions
-    REPULSION = 50.0   # eV/Å — strong push away from overlap
+    REPULSION = 50.0   # eV/Å: strong push away from overlap
 
     def make_interp(F_component):
         F = F_component.copy()
@@ -298,7 +298,7 @@ def grid_forces(interps, pos_mobile):
     ifx, ify, ifz, cell_len = interps
     # Wrap to grid bounds
     pos = pos_mobile % cell_len
-    pts = pos   # (N, 3) — RegularGridInterpolator takes (N, ndim)
+    pts = pos   # (N, 3): RegularGridInterpolator takes (N, ndim)
     fx = ifx(pts)
     fy = ify(pts)
     fz = ifz(pts)
@@ -336,7 +336,7 @@ def get_mobile_indices(atoms):
 def run_md(atoms_input, calc, temp_K, n_steps, dt_fs, traj_interval, label, grid_interps=None, out_dir=os.path.join(os.path.expanduser('~'), "NS/Bob/results")):
     atoms = atoms_input.copy()
 
-    # NO FixAtoms constraint — handle framework exclusion manually
+    # NO FixAtoms constraint: handle framework exclusion manually
     atoms.calc = calc
 
     mobile_idx  = get_mobile_indices(atoms)
@@ -374,8 +374,8 @@ def run_md(atoms_input, calc, temp_K, n_steps, dt_fs, traj_interval, label, grid
     traj.append(pos_unwrapped.copy())  # frame 0 - initial positions
 
     # --- Neighbor list refresh tracking ---
-    NL_SKIN = 0.5          # Å — extra buffer beyond MACE cutoff
-    NL_THRESHOLD = 0.25    # Å — rebuild if any mobile ion moves this far
+    NL_SKIN = 0.5          # Å: extra buffer beyond MACE cutoff
+    NL_THRESHOLD = 0.25    # Å: rebuild if any mobile ion moves this far
     pos_at_last_nl = pos[mobile_idx].copy()
     nl_rebuild_count = 0
 
@@ -492,7 +492,7 @@ def run_md(atoms_input, calc, temp_K, n_steps, dt_fs, traj_interval, label, grid
     }
 
 def compute_msd(traj):
-    # traj already unwrapped — shape (nframes, n_mob, 3)
+    # traj already unwrapped: shape (nframes, n_mob, 3)
     disp = traj - traj[0]
     return np.mean(np.sum(disp**2, axis=2), axis=1)   # (nframes,) Å²
 

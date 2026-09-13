@@ -1,4 +1,4 @@
-NSFix Full Feature Benchmark — 100K NewOrderSingle messages, 10 timed runs
+NSFix Full Feature Benchmark: 100K NewOrderSingle messages, 10 timed runs
 Features: mmap persistence + NSHash session manager + recovery
 
 === NSFix Full Feature Benchmark ===

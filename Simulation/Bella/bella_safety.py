@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Copyright (C) 2026 Orders of Magnitude LLC — ofmagnitude.com
+# Copyright (C) 2026 Orders of Magnitude LLC: ofmagnitude.com
 
 import json, hashlib, os
 from pathlib import Path

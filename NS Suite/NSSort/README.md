@@ -1,6 +1,6 @@
 # NSSort
 
-**NSSort beats ips4o on 8/10 distributions and vqsort on 9/10 — including 193,000x on zero distribution. Losses on structureless data documented.**
+**NSSort beats ips4o on 8/10 distributions and vqsort on 9/10: including 193,000x on zero distribution. Losses on structureless data documented.**
 
 SIMD-accelerated radix sort with cluster pre-pass, nearly-sorted detection, and parallel counting sort.
 
@@ -34,12 +34,12 @@ IPS4o: parallel mode, 8 threads. VQSort: Highway 1.0.7, single-threaded.
 | exponential | 2120 | 1107 | 875.5 | 0.47x (loss) | 0.41x (loss) |
 | uniform | 1232 | 808 | 1491.9 | 0.65x (loss) | 1.21x |
 
-**Losses:** IPS4o wins on exponential and uniform — structureless data where comparison-based
+**Losses:** IPS4o wins on exponential and uniform: structureless data where comparison-based
 parallel sort benefits from 8-thread parallelism. VQSort wins on exponential only (single-threaded
 comparison sort with AVX-512 partition). Both losses are documented and expected: NSSort's radix
 approach requires exploitable structure (low entropy, sortedness, or bounded key range).
 
 ## Third-party
 
-- **IPS4o** — MIT License (vendored, parallel mode)
-- **Highway VQSort** — Apache 2.0 License (system library, v1.0.7)
+- **IPS4o**: MIT License (vendored, parallel mode)
+- **Highway VQSort**: Apache 2.0 License (system library, v1.0.7)

@@ -26,7 +26,7 @@ uint32_t community_size = 10000;
 vector<uint32_t> id_map;
 vector<uint32_t> inverse_map;
 
-// Graph A — Community graph (NS home turf) - SCRAMBLED
+// Graph A: Community graph (NS home turf) - SCRAMBLED
 // 1,000,000 nodes, 10,000 communities of 100 nodes each
 // Intra-community edges: each node connects to all others in its community (99 edges)
 // Inter-community edges: each node connects to 2 random nodes outside community
@@ -82,7 +82,7 @@ vector<pair<uint32_t,uint32_t>> generate_community_graph() {
     return edges;
 }
 
-// Graph B — Random graph (NS away turf)
+// Graph B: Random graph (NS away turf)
 // 1,000,000 nodes, each node connects to 20 random nodes
 vector<pair<uint32_t,uint32_t>> generate_random_graph() {
     vector<pair<uint32_t,uint32_t>> edges;
@@ -154,7 +154,7 @@ int main() {
     NSGraph graph_a;
     graph_a.build(num_nodes, edges_a);
     
-    // Benchmark Graph A — standard BFS only, BEFORE any reorder
+    // Benchmark Graph A: standard BFS only, BEFORE any reorder
     cout << "Benchmarking Graph A (scrambled)..." << endl;
     double time_a = benchmark_bfs_standard(graph_a, "Graph A - Scrambled Community", 0, out);
     
@@ -163,7 +163,7 @@ int main() {
     NSGraph graph_c = graph_a;  // copy
     graph_c.reorder(community_size);
     
-    // Benchmark Graph C — standard BFS on reordered graph
+    // Benchmark Graph C: standard BFS on reordered graph
     cout << "Benchmarking Graph C (reordered)..." << endl;
     double time_c = benchmark_bfs_standard(graph_c, "Graph C - Reordered Community", 0, out);
     

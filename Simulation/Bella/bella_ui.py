@@ -140,7 +140,7 @@ def main():
 
     # Discover
     st.header('1. Discover')
-    st.markdown(f"Selected domain: **{selected}** — {profile.get('description', '')}")
+    st.markdown(f"Selected domain: **{selected}** : {profile.get('description', '')}")
     with st.form('discover_form'):
         sparc_quality = st.selectbox('SPARC quality', ['screen', 'confirm'], index=0)
         generative = st.checkbox('Generative mode', value=True)

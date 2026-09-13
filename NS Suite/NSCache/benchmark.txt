@@ -1,4 +1,4 @@
-NSCache vs LRU vs CLOCK — ns/op, lower is better
+NSCache vs LRU vs CLOCK: ns/op, lower is better
 
 Competitor      Workload    Capacity  ns/op          vs LRU         vs CLOCK       
 -----------------------------------------------------------------------------------

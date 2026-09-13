@@ -1,4 +1,4 @@
-NSMesh vs Draco (native build, -O3 -march=native) — 3D mesh compression (100K vertices, cl 10)
+NSMesh vs Draco (native build, -O3 -march=native): 3D mesh compression (100K vertices, cl 10)
 
 Method                           | Size (bytes) | Time (ms) | Ratio   | vs Draco size | vs Draco time
 ---------------------------------|--------------|-----------|---------|---------------|--------------

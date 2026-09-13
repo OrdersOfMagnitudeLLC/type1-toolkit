@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(lacuna C)
 
-# Lacuna ships as prebuilt stripped binaries — no source compilation.
+# Lacuna ships as prebuilt stripped binaries: no source compilation.
 # Link your binary against the prebuilt liblacuna.a.
 
 find_package(PkgConfig REQUIRED)

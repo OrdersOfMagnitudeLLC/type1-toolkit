@@ -398,7 +398,7 @@ bool Transformer::load(const GGUFParser& parser, int context_len) {
     buf_scores_.resize((size_t)params_.n_heads * params_.max_seq_len);
     buf_v_cache_.resize((size_t)params_.max_seq_len * params_.head_dim);
 
-    // Cache all norm weights — dequantize once at load time instead of every token.
+    // Cache all norm weights: dequantize once at load time instead of every token.
     cached_norm_weights_.resize(params_.n_layers);
     for (int l = 0; l < params_.n_layers; ++l) {
         std::vector<float> buf;
@@ -1244,7 +1244,7 @@ bool Transformer::forward_batch(const std::vector<int32_t>& token_ids, int start
             });
         }
 
-        // a. attn RMS norm (per token — cheap, O(batch * n_embd))
+        // a. attn RMS norm (per token: cheap, O(batch * n_embd))
         const float* attn_norm_w = cached_norm_weights_[l].attn_norm_w.data();
         for (int b = 0; b < batch_size; b++) {
             rms_norm(x_norm_batch.data() + (size_t)b * n_embd,
@@ -1425,7 +1425,7 @@ bool Transformer::forward_batch(const std::vector<int32_t>& token_ids, int start
                      ffn_norm_w, n_embd);
         }
 
-        // k. FFN (SwiGLU) — same batched dequant-once-per-row treatment.
+        // k. FFN (SwiGLU): same batched dequant-once-per-row treatment.
         std::string gate_name = "blk." + std::to_string(l) + ".ffn_gate.weight";
         const GGUFTensor* t_gate = find_tensor(gate_name);
         if (!t_gate) { std::cerr << "weight_matmul_batch: tensor not found: " << gate_name << std::endl; return false; }
@@ -1475,7 +1475,7 @@ bool Transformer::forward_batch(const std::vector<int32_t>& token_ids, int start
 
     }
 
-    // Final RMS norm + logits — only the last token's logits are needed by
+    // Final RMS norm + logits: only the last token's logits are needed by
     // the caller (the prompt tokens' logits are never sampled from).
     const float* output_norm_w = cached_output_norm_w_.data();
 
@@ -1677,7 +1677,7 @@ float Transformer::vec_dot_q8_0(const uint8_t* data,
         float d = f16_to_f32(*(const uint16_t*)(data + b*34));
         const int8_t* qs = (const int8_t*)(data + b*34 + 2);
 
-        // Load 32 int8 quants — no scalar loop
+        // Load 32 int8 quants: no scalar loop
         __m128i q_lo = _mm_loadu_si128((__m128i*)(qs));
         __m128i q_hi = _mm_loadu_si128((__m128i*)(qs + 16));
 
@@ -1761,7 +1761,7 @@ void Transformer::compute_logits(const float* hidden, InferenceState& state) con
     }
 
     // Per-thread local max, merged under mutex after each thread's range.
-    // Mutex acquired once per thread, not per row — contention is negligible.
+    // Mutex acquired once per thread, not per row: contention is negligible.
     std::mutex best_mutex;
     float best_val = -INFINITY;
     int32_t best_idx = -1;
@@ -1939,7 +1939,7 @@ void Transformer::grow_kv_cache(int new_capacity) {
 
 void Transformer::add_bias(float* out, const std::string& bias_name, int n) const {
     const GGUFTensor* t = find_tensor(bias_name);
-    if (!t) return;  // no bias for this layer — skip silently
+    if (!t) return;  // no bias for this layer: skip silently
     if (t->type != GGMLType::F32) {
         fprintf(stderr, "Warning: bias %s is not F32\n", bias_name.c_str());
         return;

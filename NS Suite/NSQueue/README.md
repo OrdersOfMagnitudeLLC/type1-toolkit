@@ -29,4 +29,4 @@ None. 10M items, batch size 32.
 
 ## Third-party
 
-- **rigtorp/SPSCQueue** — MIT License (vendored header, used as competitor)
+- **rigtorp/SPSCQueue**: MIT License (vendored header, used as competitor)

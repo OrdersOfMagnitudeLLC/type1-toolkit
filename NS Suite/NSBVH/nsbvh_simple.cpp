@@ -64,7 +64,7 @@ struct QBVH16Internal {
     uint8_t qmin_z[16], qmax_z[16];       // 96 bytes total
     int children[16];                      // 64 bytes
     int child_count;                       // 4 bytes
-};                                         // ~188 bytes vs 456 — 2.4x smaller
+};                                         // ~188 bytes vs 456: 2.4x smaller
 
 struct BVH16Leaf {
     int obj_indices[4];

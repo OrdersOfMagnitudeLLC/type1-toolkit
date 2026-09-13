@@ -1166,7 +1166,7 @@ def _build_manual_hits(cat):
             "application_note": CATEGORY_NOTES.get(cat, ""),
             "dG_ads": "N/A [MANUAL — literature values]",
             "score": score,
-            "note": f"CONJECTURE — {note}{ref_str}",
+            "note": f"CONJECTURE : {note}{ref_str}",
         })
     out.sort(key=lambda x: x["rank_score"], reverse=True)
     return out
@@ -1291,15 +1291,15 @@ def process_docs(docs, by_id):
         if doc.material_id in by_id:
             continue
         if not is_valid_formula(doc.formula_pretty):
-            print(f"MALFORMED formula {doc.formula_pretty} — skipped")
+            print(f"MALFORMED formula {doc.formula_pretty} : skipped")
             continue
         try:
             counts, _ = parse_formula_counts(doc.formula_pretty)
             if any(c > 50 for c in counts.values()) or counts.get('H', 0) > 20:
-                print(f"MALFORMED formula {doc.formula_pretty} — skipped")
+                print(f"MALFORMED formula {doc.formula_pretty} : skipped")
                 continue
         except Exception:
-            print(f"MALFORMED formula {doc.formula_pretty} — skipped")
+            print(f"MALFORMED formula {doc.formula_pretty} : skipped")
             continue
         B = get_value(doc.bulk_modulus)
         G = get_value(doc.shear_modulus)
@@ -1825,7 +1825,7 @@ def main(args=None):
             print(f"REMOVED {out['formula']} from high_entropy_aerospace: contains {out['worst_element']} ({out['tier']})")
     status["high_entropy_aerospace"] = ("PASS", 3, 0)
 
-    print(f"CIVILIZATION MATERIALS SCREEN v{VERSION_LABEL} — MP + Anderson Debye + T50 Domains II/III + literature + manual + scarcity + application notes + compatibility + dedup\n")
+    print(f"CIVILIZATION MATERIALS SCREEN v{VERSION_LABEL} : MP + Anderson Debye + T50 Domains II/III + literature + manual + scarcity + application notes + compatibility + dedup\n")
     for cat, hits in results.items():
         print(f"\n=== {cat.upper()} ===")
         if cat in MANUAL_CANDIDATES:

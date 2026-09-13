@@ -1,4 +1,4 @@
-NSHash vs competitors — 1M ops, ns/op (lower is better)
+NSHash vs competitors: 1M ops, ns/op (lower is better)
 All competitors built with -O3 -march=native
 Ratios measured under concurrent system load
 

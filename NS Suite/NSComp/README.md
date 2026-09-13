@@ -30,7 +30,7 @@ zstd 1.6.0 built from source with `-O3 -march=native`.
 
 ## Third-party
 
-- **LZ4** — BSD License (vendored header)
-- **zstd** — BSD License (built from source v1.6.0 with `-O3 -march=native`)
-- **nlohmann/json** — MIT License (vendored header, used by server only)
-- **OpenSSL** — Apache 2.0 License (system-installed, used by server only)
+- **LZ4**: BSD License (vendored header)
+- **zstd**: BSD License (built from source v1.6.0 with `-O3 -march=native`)
+- **nlohmann/json**: MIT License (vendored header, used by server only)
+- **OpenSSL**: Apache 2.0 License (system-installed, used by server only)

@@ -32,5 +32,5 @@ Draco built from source with `-O3 -march=native`. 100K vertices, compression lev
 
 ## Third-party
 
-- **Draco** — Apache 2.0 License (built from source with `-O3 -march=native`, CLI `draco_encoder`)
-- **zlib** — zlib License (system-installed)
+- **Draco**: Apache 2.0 License (built from source with `-O3 -march=native`, CLI `draco_encoder`)
+- **zlib**: zlib License (system-installed)

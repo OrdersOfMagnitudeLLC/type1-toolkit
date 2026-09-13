@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Node embedding: element one-hot -> 128 scalar features via e3nn Linear
 // Radial MLP: e3nn FullyConnectedNet [10 -> 64 -> 64 -> 64 -> 512]
 #pragma once
@@ -125,7 +125,7 @@ struct RadialMLP {
 
     // x: [10] bessel features -> out: [512] radial weights
     void forward(const Real* x, Real* out, Real threshold = 0.0, bool* pruned_stats = nullptr) const {
-        // Ping-pong buffers — max layer size is 512, now on the stack
+        // Ping-pong buffers: max layer size is 512, now on the stack
         Real buf0[512], buf1[512];
         std::memcpy(buf0, x, 10 * sizeof(Real));
         Real *src = buf0, *dst = buf1;

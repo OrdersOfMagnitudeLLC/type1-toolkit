@@ -94,8 +94,28 @@ Simulation/Bella/*.v4-now
 NSAI/nsrun_test
 NSAI/NSQuant/nsquant
 Simulation/Bob/battery_query
-Simulation/Bob/data/
+Simulation/Bob/bob_bench
+Simulation/Bob/test_k
+Simulation/Bob/bob
 Simulation/Bella/cif_cache/
+
+# Build native directories (compiled binaries)
+NS Suite/NSAlloc/build_native/
+NS Suite/NSBVH/build_native/
+NS Suite/NSComp/build_native/
+NS Suite/NSFFT/build_native/
+NS Suite/NSFix/build_native/
+NS Suite/NSFix/build_full/
+NS Suite/NSHash/build_native/
+NS Suite/NSMesh/build_native/
+
+# Model/tokenizer files
+*.model
+NSAI/NSQuant/tokenizer.json
+NS Suite/NSQuant/tokenizer.json
+
+# Data files
+*.xlsx
 # Large data files — never commit
 *.fits
 *.zip

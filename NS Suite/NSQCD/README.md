@@ -1,4 +1,4 @@
-# NSQCD — Analytic QCD Calculator
+# NSQCD: Analytic QCD Calculator
 **Orders of Magnitude LLC**
 
 Analytic QCD from first principles. No lattice. No GPU. No free parameters.
@@ -12,7 +12,7 @@ Computes QCD observables from the foam IR fixed point (g²=4):
 ## Why it matters
 Lattice QCD takes months on supercomputers. NSQCD takes 2ms on a laptop.
 1.4% error on glueball mass gap. Better than lattice QCD uncertainty (~10%).
-C_gap fully derived — no borrowed lattice constants.
+C_gap fully derived: no borrowed lattice constants.
 
 ## Physics
 The mass gap is literally the gap:
@@ -45,7 +45,7 @@ Excluded from benchmark:
 - alpha_s(<2 GeV): Below non-perturbative cutoff.
 
 ## Files
-- `nsqcd.py` — Core library (NSQCD class)
-- `nsqcd_cli.py` — CLI interface
-- `benchmarks/benchmark_vs_lattice.py` — Benchmark suite
-- `tests/` — Test directory
+- `nsqcd.py`: Core library (NSQCD class)
+- `nsqcd_cli.py`: CLI interface
+- `benchmarks/benchmark_vs_lattice.py`: Benchmark suite
+- `tests/`: Test directory

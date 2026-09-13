@@ -84,7 +84,7 @@ static MsgBuf build_contiguous(int count) {
 static volatile int g_sink = 0;
 
 // ---------------------------------------------------------------------------
-// Layer 0: Raw memory scan — AVX2 SOH count.
+// Layer 0: Raw memory scan: AVX2 SOH count.
 //          Shannon limit: pure memory bandwidth, zero parsing.
 // ---------------------------------------------------------------------------
 static int bench_raw_scan(const MsgBuf& mb, int iters) {
@@ -117,7 +117,7 @@ static int bench_raw_scan(const MsgBuf& mb, int iters) {
     return count;
 }
 // ---------------------------------------------------------------------------
-// Layer 0a: AVX-512 raw memory scan — 64 bytes/cycle.
+// Layer 0a: AVX-512 raw memory scan: 64 bytes/cycle.
 //           Same as Layer 0 but with AVX-512 for 2x wider SIMD.
 // ---------------------------------------------------------------------------
 static int bench_raw_scan_avx512(const MsgBuf& mb, int iters) {
@@ -152,7 +152,7 @@ static int bench_raw_scan_avx512(const MsgBuf& mb, int iters) {
 
 
 // ---------------------------------------------------------------------------
-// Layer 1: AVX2 message boundary detection — scan for SOH+"10=" to count
+// Layer 1: AVX2 message boundary detection: scan for SOH+"10=" to count
 //          complete messages. No field extraction.
 // ---------------------------------------------------------------------------
 static int bench_msg_count_avx(const MsgBuf& mb, int iters) {
@@ -197,14 +197,14 @@ static int bench_msg_count_avx(const MsgBuf& mb, int iters) {
 }
 
 // ---------------------------------------------------------------------------
-// Layer 2: Bare-bones parser — AVX2 scan + minimal field extraction.
+// Layer 2: Bare-bones parser: AVX2 scan + minimal field extraction.
 //          No Message struct (520 bytes), no Session, no handle_message,
 //          no dispatch array. Compact 56-byte output struct (1 cache line).
 //          Extracts only: MsgType, Symbol, Side, OrderQty, Price, SeqNum.
 //          This is what a maximally optimized FIX parser hot path looks like.
 // ---------------------------------------------------------------------------
 
-// Compact parsed message — 7 string_views = 56 bytes, fits in 1 cache line
+// Compact parsed message: 7 string_views = 56 bytes, fits in 1 cache line
 struct BareMsg {
     std::string_view msg_type;
     std::string_view symbol;
@@ -368,7 +368,7 @@ static int bench_bare_parse(const MsgBuf& mb, int iters) {
 //          Phase 1: AVX-512 scan 64 bytes/cycle, collect SOH+EQ positions
 //                   into L1-resident arrays (8K entries = 16KB). No branching.
 //          Phase 2: Scalar field extraction from position arrays. No SIMD
-//                   interleaving — pure scalar at full throughput.
+//                   interleaving: pure scalar at full throughput.
 //          Processing in 64KB chunks keeps position arrays in L1.
 // ---------------------------------------------------------------------------
 static int g_avx512_count = 0;
@@ -435,7 +435,7 @@ static int bench_avx512_twophase(const MsgBuf& mb, int iters) {
         while (base < total_len) {
             size_t wend = std::min(base + CHUNK, total_len);
 
-            // Phase 1: AVX-512 scan — 64 bytes/cycle, zero branching
+            // Phase 1: AVX-512 scan: 64 bytes/cycle, zero branching
             const __m512i soh_v = _mm512_set1_epi8(SOH);
             const __m512i eq_v  = _mm512_set1_epi8('=');
             int sc = 0, ec = 0;
@@ -467,12 +467,12 @@ static int bench_avx512_twophase(const MsgBuf& mb, int iters) {
                 // Find EQ for this field
                 size_t eq_abs;
                 if (fs < base) {
-                    // Field started in previous chunk — scan for EQ
+                    // Field started in previous chunk: scan for EQ
                     eq_abs = fs;
                     while (eq_abs < soh_abs && buf[eq_abs] != '=') eq_abs++;
                     if (eq_abs >= soh_abs) { fs = soh_abs + 1; continue; }
                 } else {
-                    // Field starts in this chunk — use eq_pos array
+                    // Field starts in this chunk: use eq_pos array
                     while (ei < ec && (base + eq_pos[ei]) < fs) ei++;
                     if (ei >= ec) { fs = soh_abs + 1; continue; }
                     eq_abs = base + eq_pos[ei];
@@ -522,7 +522,7 @@ static int bench_avx512_twophase(const MsgBuf& mb, int iters) {
 //            8=, 9=, 35=, 49=, 56=, 34=, 52=, 11=, 55=, 54=, 38=, 44=, 40=, 10=
 //          We skip tag parsing entirely and extract values by field INDEX.
 //          Field 3 (0-indexed) = MsgType, field 9 = Symbol, etc.
-//          This eliminates the tag decode + switch — just direct extraction.
+//          This eliminates the tag decode + switch: just direct extraction.
 // ---------------------------------------------------------------------------
 static int g_schema_count = 0;
 static int g_schema_sink = 0;
@@ -759,7 +759,7 @@ static int bench_avx512_hardcoded(const MsgBuf& mb, int iters) {
 }
 
 // ---------------------------------------------------------------------------
-// Layer 3: feed_batch() on contiguous buffer — real AVX2 parsing via
+// Layer 3: feed_batch() on contiguous buffer: real AVX2 parsing via
 //          Session::feed_batch(). Minimal callback (just count).
 // ---------------------------------------------------------------------------
 static int g_batch_count = 0;

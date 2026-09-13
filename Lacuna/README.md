@@ -9,7 +9,7 @@ Encryption and binary hardening layer for NS Suite deployments.
 Lacuna protects compiled NS Suite binaries for commercial distribution:
 - AES-256-GCM encryption of binary sections at rest
 - License key generation and validation (offline, cryptographic)
-- Binary checkpoint patching — inject license checks without recompilation
+- Binary checkpoint patching: inject license checks without recompilation
 - Symbol stripping and section hardening
 
 Ships as: `liblacuna.a` + `lacuna.h` + `keygen` binary + `patcher` binary.

@@ -1,4 +1,4 @@
-PROTEINS TOP 10 — BEST CANDIDATES BY DISEASE CATEGORY
+PROTEINS TOP 10: BEST CANDIDATES BY DISEASE CATEGORY
 ====================================================
 Source: proteins_priority1000_calibrated_53k.csv (v3 calibrated, 53,349 clean)
 Filter: tox_score <= 3, top 3 by D_score closest to 0
@@ -44,7 +44,7 @@ rank  category               target          D_score  protein_class  SMILES
    3  rare_disease           GPR31            -8.895  gpcr           CC[C@H](NC(C)=O)C(=O)N1CC[C@](C)(NC(=O)c2nnn(C)n2)C1
 
 GAPS:
-  antibiotic_resistance — no DHFR, GyrA, GyrB, or MurA targets exist in the
+  antibiotic_resistance: no DHFR, GyrA, GyrB, or MurA targets exist in the
   v3 target set. The 1,000-priority target list is disease-focused (human
   proteins) and does not include bacterial enzyme targets. A dedicated
   antibiotic screen with bacterial target entries would be required.

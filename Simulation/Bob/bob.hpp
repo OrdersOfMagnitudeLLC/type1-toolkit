@@ -135,7 +135,7 @@ public:
             ranges[prop] = {pos, end};
         }
         
-        // Sort ranges by size — process smallest first
+        // Sort ranges by size: process smallest first
         std::vector<size_t> prop_order(k_);
         for (size_t i = 0; i < k_; ++i) prop_order[i] = i;
         std::sort(prop_order.begin(), prop_order.end(),
@@ -405,7 +405,7 @@ std::vector<size_t> bob_query(const Query& q, double& query_time) {
 #endif
     ranges[4] = {pos4, end4};
     
-    // Sort ranges by size — process smallest first
+    // Sort ranges by size: process smallest first
     std::vector<int> prop_order(NUM_PROPERTIES);
     for (int i = 0; i < NUM_PROPERTIES; ++i) prop_order[i] = i;
     std::sort(prop_order.begin(), prop_order.end(),

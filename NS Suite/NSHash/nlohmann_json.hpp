@@ -1582,7 +1582,7 @@ NLOHMANN_JSON_NAMESPACE_END
 #endif
 #if !defined(JSON_HEDLEY_ASSUME)
     #if defined(JSON_HEDLEY_UNREACHABLE)
-        #define JSON_HEDLEY_ASSUME(expr) JSON_HEDLEY_STATIC_CAST(void, ((expr) ? 1 : (JSON_HEDLEY_UNREACHABLE(), 1)))
+        #define JSON_HEDLEY_ASSUME(expr) JSON_HEDLEY_STATIC_CAST(void, ((expr) ? 1: (JSON_HEDLEY_UNREACHABLE(), 1)))
     #else
         #define JSON_HEDLEY_ASSUME(expr) JSON_HEDLEY_STATIC_CAST(void, expr)
     #endif
@@ -2118,10 +2118,10 @@ JSON_HEDLEY_DIAGNOSTIC_POP
        JSON_HEDLEY_ARM_VERSION_CHECK(5,4,0) || \
        JSON_HEDLEY_TINYC_VERSION_CHECK(0,9,24)
 #if defined(__INTPTR_TYPE__)
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0)), int*)
+    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)): (int*) 0)), int*)
 #else
     #include <stdint.h>
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((intptr_t) ((expr) * 0)) : (int*) 0)), int*)
+    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) __builtin_types_compatible_p(__typeof__((1 ? (void*) ((intptr_t) ((expr) * 0)): (int*) 0)), int*)
 #endif
 #  elif \
        ( \
@@ -2135,10 +2135,10 @@ JSON_HEDLEY_DIAGNOSTIC_POP
        JSON_HEDLEY_IBM_VERSION_CHECK(12,1,0) || \
        JSON_HEDLEY_ARM_VERSION_CHECK(5,3,0)
 #if defined(__INTPTR_TYPE__)
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)) : (int*) 0), int*: 1, void*: 0)
+    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((__INTPTR_TYPE__) ((expr) * 0)): (int*) 0), int*: 1, void*: 0)
 #else
     #include <stdint.h>
-    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((intptr_t) * 0) : (int*) 0), int*: 1, void*: 0)
+    #define JSON_HEDLEY_IS_CONSTEXPR_(expr) _Generic((1 ? (void*) ((intptr_t) * 0): (int*) 0), int*: 1, void*: 0)
 #endif
 #  elif \
        defined(JSON_HEDLEY_GCC_VERSION) || \
@@ -2166,7 +2166,7 @@ JSON_HEDLEY_DIAGNOSTIC_POP
     #if !defined(JSON_HEDLEY_IS_CONSTANT)
         #define JSON_HEDLEY_IS_CONSTANT(expr) JSON_HEDLEY_IS_CONSTEXPR_(expr)
     #endif
-    #define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (JSON_HEDLEY_IS_CONSTEXPR_(expr) ? (expr) : (-1))
+    #define JSON_HEDLEY_REQUIRE_CONSTEXPR(expr) (JSON_HEDLEY_IS_CONSTEXPR_(expr) ? (expr): (-1))
 #else
     #if !defined(JSON_HEDLEY_IS_CONSTANT)
         #define JSON_HEDLEY_IS_CONSTANT(expr) (0)
@@ -2954,11 +2954,11 @@ void templated_json_throw(ExceptionType exception)
 
 #define NLOHMANN_JSON_TO(v1) nlohmann_json_j[#v1] = nlohmann_json_t.v1;
 #define NLOHMANN_JSON_FROM(v1) nlohmann_json_j.at(#v1).get_to(nlohmann_json_t.v1);
-#define NLOHMANN_JSON_FROM_WITH_DEFAULT(v1) nlohmann_json_t.v1 = !nlohmann_json_j.is_null() ? nlohmann_json_j.value(#v1, nlohmann_json_default_obj.v1) : nlohmann_json_default_obj.v1;
+#define NLOHMANN_JSON_FROM_WITH_DEFAULT(v1) nlohmann_json_t.v1 = !nlohmann_json_j.is_null() ? nlohmann_json_j.value(#v1, nlohmann_json_default_obj.v1): nlohmann_json_default_obj.v1;
 
 #define NLOHMANN_JSON_TO_WITH_NAME(v1, v2) nlohmann_json_j[v1] = nlohmann_json_t.v2;
 #define NLOHMANN_JSON_FROM_WITH_NAME(v1, v2) nlohmann_json_j.at(v1).get_to(nlohmann_json_t.v2);
-#define NLOHMANN_JSON_FROM_WITH_DEFAULT_WITH_NAME(v1, v2) nlohmann_json_t.v2 = !nlohmann_json_j.is_null() ? nlohmann_json_j.value(v1, nlohmann_json_default_obj.v2) : nlohmann_json_default_obj.v2;
+#define NLOHMANN_JSON_FROM_WITH_DEFAULT_WITH_NAME(v1, v2) nlohmann_json_t.v2 = !nlohmann_json_j.is_null() ? nlohmann_json_j.value(v1, nlohmann_json_default_obj.v2): nlohmann_json_default_obj.v2;
 
 #define NLOHMANN_JSON_BASIC_TYPE_TEMPLATE(...) template<typename BasicJsonType, nlohmann::detail::enable_if_t<nlohmann::detail::is_basic_json<BasicJsonType>::value, int> = 0> __VA_ARGS__
 
@@ -4245,7 +4245,7 @@ template<typename T> struct is_range_view_optional_type : std::false_type {};
 // std::ranges::view<T> is evaluated on GCC 12 / libstdc++ 12:
 //   - iteration_proxy / iteration_proxy_value directly
 //   - views wrapping the above (e.g. owning_view<iteration_proxy<...>>)
-//   - views wrapping basic_json (e.g. ref_view<json>) — same circularity
+//   - views wrapping basic_json (e.g. ref_view<json>): same circularity
 //     via json's constructors → is_compatible_array_type → here
 // nlohmann's plain range_value_t (iterator_traits-based) is safe to call
 // before any std::ranges concept is touched, so we use it for the checks.
@@ -13069,7 +13069,7 @@ class binary_reader
         }
 
         // if bit-8 of size_and_type.second is set to 1, encode bjdata ndarray as an object in JData annotated array format (https://github.com/NeuroJSON/jdata):
-        // {"_ArrayType_" : "typeid", "_ArraySize_" : [n1, n2, ...], "_ArrayData_" : [v1, v2, ...]}
+        // {"_ArrayType_": "typeid", "_ArraySize_": [n1, n2, ...], "_ArrayData_": [v1, v2, ...]}
 
         if (input_format == input_format_t::bjdata && size_and_type.first != npos && (size_and_type.second & (1 << 8)) != 0)
         {
@@ -21871,7 +21871,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         // been invalidated; see https://github.com/nlohmann/json/issues/2962
 #ifdef JSON_HEDLEY_MSVC_VERSION
 #pragma warning(push )
-#pragma warning(disable : 4127) // ignore warning to replace if with if constexpr
+#pragma warning(disable: 4127) // ignore warning to replace if with if constexpr
 #endif
         if (detail::is_ordered_map<object_t>::value)
         {

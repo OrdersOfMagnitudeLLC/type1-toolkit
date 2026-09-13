@@ -344,7 +344,7 @@ float ns_vec_dot_q6k_q8k(const block_q6_K* vx, const block_q8_K* vy, int nb) {
 //
 // panel_data: array of ns_q6_Kx8 panels, (n_rows/8) panels * nb blocks each,
 // panel-major (matches ns_gemv_q4k's layout convention). n_rows MUST be a
-// multiple of 8 — the caller is responsible for routing any tail rows
+// multiple of 8: the caller is responsible for routing any tail rows
 // (n_rows % 8 != 0) through the per-row ns_vec_dot_q6k_q8k/vec_dot_q6k_q8k
 // path instead.
 //

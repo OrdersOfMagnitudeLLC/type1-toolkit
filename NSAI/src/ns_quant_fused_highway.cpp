@@ -45,7 +45,7 @@ static inline void DecodeRowQuartet(
 
   const __m256i lo = _mm256_and_si256(raw, mask0F);
   // Standard ggml/llama nibble-extract trick: shift as u16 lanes, then
-  // mask each byte to 0x0F — the top-nibble contamination from the
+  // mask each byte to 0x0F: the top-nibble contamination from the
   // neighboring byte lands exactly in the bits the mask discards.
   const __m256i hi = _mm256_and_si256(_mm256_srli_epi16(raw, 4), mask0F);
 
@@ -117,7 +117,7 @@ static inline void AccumulateChunkPair(
 
 // Panel GEMV kernel: 8 rows of ns_q4_Kx8 x one block_q8_K activation vector.
 // Produces n_active float outputs in out[0..n_active-1].
-// AVX2-pinned via compilation flags — no sustained ZMM.
+// AVX2-pinned via compilation flags: no sustained ZMM.
 void vec_dot_q4k_q8k_Rx1_highway(
     const ns_q4_Kx8* __restrict__ vx,
     const block_q8_K* __restrict__ vy,

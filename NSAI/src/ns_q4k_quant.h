@@ -12,10 +12,10 @@
 #define GGML_RESTRICT
 
 #ifndef MIN
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a): (b))
 #endif
 #ifndef MAX
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a): (b))
 #endif
 
 #define GGML_FP32_TO_FP16(x) f32_to_fp16(x)

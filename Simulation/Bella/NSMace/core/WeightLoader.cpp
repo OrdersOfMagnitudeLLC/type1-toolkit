@@ -1,11 +1,11 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // Loads MACE-MP weights from JSON export
 #include "WeightLoader.h"
 #include <iostream>
 #include <functional>
 #include <cstdlib>
 
-// Minimal JSON parser — only handles what our export produces
+// Minimal JSON parser: only handles what our export produces
 // Format: {"name": [[...]], "name2": [...]}
 namespace NSMace {
 

@@ -30,7 +30,7 @@ Embree 4.4.1 built from source with `-O3 -march=native`.
 | Sparse Clustered (20 clusters, 20/80 cells) | 70% targeted + 30% random | 9.4M | 6.0M | 10.69 | 16.53 | **1.55x faster** |
 | Mixed (10 clusters + 5K random, 80/80 cells) | 70% targeted + 30% random | 7.5M | 4.6M | 13.33 | 21.62 | **1.62x faster** |
 
-**Win condition:** Sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.55–1.62x speedup over Embree 4.4.1. Dense uniform narrowed to 1.18x — Embree's SAH-optimized BVH2 still wins on build quality for uniform distributions.
+**Win condition:** Sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.55–1.62x speedup over Embree 4.4.1. Dense uniform narrowed to 1.18x: Embree's SAH-optimized BVH2 still wins on build quality for uniform distributions.
 
 ## Secondary Ray Benchmark (10M rays, dense scene)
 
@@ -49,5 +49,5 @@ Secondary rays with origins at object centers, random directions. Sorted by join
 
 ## Third-party
 
-- **Embree 4** — Apache 2.0 License (built from source v4.4.1 with `-O3 -march=native`)
-- **Highway VQSort** — Apache 2.0 License (v1.2.0, fetched via CMake FetchContent)
+- **Embree 4**: Apache 2.0 License (built from source v4.4.1 with `-O3 -march=native`)
+- **Highway VQSort**: Apache 2.0 License (v1.2.0, fetched via CMake FetchContent)

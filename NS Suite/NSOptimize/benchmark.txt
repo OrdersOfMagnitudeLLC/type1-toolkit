@@ -1,4 +1,4 @@
-NSOptimize vs Greedy vs 2-opt — 20K cities, 200 clusters
+NSOptimize vs Greedy vs 2-opt: 20K cities, 200 clusters
 
 Method            | Distance (units) | Time (μs)   | vs 2-opt distance | vs 2-opt time
 ------------------|-------------------|-------------|-------------------|---------------

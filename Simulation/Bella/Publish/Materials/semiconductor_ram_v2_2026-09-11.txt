@@ -1,9 +1,9 @@
 ================================================================================
-SEMICONDUCTOR & MRAM CANDIDATES — FOAM-DERIVED PHONON STABILITY SCREEN (v2)
+SEMICONDUCTOR & MRAM CANDIDATES: FOAM-DERIVED PHONON STABILITY SCREEN (v2)
 ================================================================================
 Date: 2026-09-11
 Method: Bob --generative + foam_screener_v2 phonon_stability() (Anderson-Debye)
-Theorem: T45+T2 (Answer Key + Foam Scaling) — DERIVED, zero free parameters
+Theorem: T45+T2 (Answer Key + Foam Scaling): DERIVED, zero free parameters
 Elastic mixing: Vegard's law on elemental B/G from ELASTIC_DB
 Validation: 4.09% MAE on 22-material Anderson set, 90.5% within 10%
 Screening cost: microseconds per candidate, no DFT
@@ -19,27 +19,27 @@ Every candidate was synthesized in silico from element pools, then screened
 using Vegard's-law-mixed elastic constants. No DFT was run.
 
 The v2 screen fixes three problems from v1:
-  1. All Heusler scores were identical (0.658) — now Anderson-Debye gives
+  1. All Heusler scores were identical (0.658): now Anderson-Debye gives
      real theta_D variation (720-814K) via per-formula B/G/rho from Vegard mixing
-  2. Binary compounds (FeS2, NiS2, etc.) dominated — now bimetallic M1M2X2 only
-  3. Sort was by theta_D, putting weak-stability high-Debye candidates first —
+  2. Binary compounds (FeS2, NiS2, etc.) dominated: now bimetallic M1M2X2 only
+  3. Sort was by theta_D, putting weak-stability high-Debye candidates first :
      now sorted by stability score (primary), theta_D (tiebreaker)
 
 Key findings:
-  - SEMICONDUCTOR: MnFeSe2 leads at score 0.593 (theta_D=458K) — the highest
+  - SEMICONDUCTOR: MnFeSe2 leads at score 0.593 (theta_D=458K): the highest
     stability score in the set, all elements >900ppm. MnFeS2 (0.590, 590K)
     and TiFeS2 (0.589, 581K) follow in the same tier. Te variants were
     filtered out (Te at 0.001 ppm crustal abundance is not earth-abundant).
     S variants have higher theta_D; Se variants have slightly higher scores.
 
-  - MRAM: Fe2TiSi leads at theta_D=814K, score 0.658 — ultra-abundant
+  - MRAM: Fe2TiSi leads at theta_D=814K, score 0.658: ultra-abundant
     (Ti:6200ppm). The Ti/Mn-Y Heusler subfamily (score 0.658) dominates
     the Cr/V subfamily (score 0.508). Within each subfamily, theta_D is
     the ranking signal: 814K down to 720K within the 0.658 tier.
 
   - NOVELTY: 15 of 30 candidates are NOVEL, 15 are KNOWN (Materials Project
     cross-reference with normalized formula matching). The MP lookup was
-    initially buggy — MP returns formula_pretty with alphabetically sorted
+    initially buggy: MP returns formula_pretty with alphabetically sorted
     elements (Co2MnSi → MnCo2Si), so exact string matching missed known
     compounds. Fixed with canonical normalization. Phonon validity is from
     the foam screener; novelty tracking is a separate question for
@@ -51,7 +51,7 @@ RANKING METHODOLOGY
 
 Between subfamilies: ranked by stability score (foam mechanical criterion).
   - Score = isotropy x atom_count - d_penalty - EN_penalty - magnetic_penalty
-  - Ti/Mn-Y Heuslers: 0.658 (no d-electron penalty — Ti d0, Mn d5 half-fill)
+  - Ti/Mn-Y Heuslers: 0.658 (no d-electron penalty: Ti d0, Mn d5 half-fill)
   - Cr/V-Y Heuslers:  0.508 (d-electron penalty 0.15 for partially filled d1-d4)
 
 Within subfamilies: ranked by theta_D (Anderson-Debye acoustic phonon cutoff).
@@ -120,21 +120,21 @@ MRAM CANDIDATES (Heusler X2YZ, cubic L21, Anderson-Debye)
 SCORE DISCRIMINATION NOTES
 ================================================================================
 
-Between subfamilies — ranked by stability score:
+Between subfamilies: ranked by stability score:
   The foam screener's mechanical score (isotropy x atom_count - d_penalty -
   EN_penalty - magnetic_penalty) is chemistry-driven and correctly identifies
   two magnetic-competition subfamilies in Heuslers:
-    - 0.658: Y = Ti or Mn (no d-electron penalty — Ti d0, Mn d5 half-fill)
+    - 0.658: Y = Ti or Mn (no d-electron penalty: Ti d0, Mn d5 half-fill)
     - 0.508: Y = Cr or V (d-electron penalty 0.15 for partially filled d1-d4)
   All 15 MRAM candidates above are in the 0.658 tier (Ti/Mn-Y). The Cr/V-Y
   subfamily (Fe2CrSi, Co2CrSi, etc., score 0.508) was pushed below the top 15
   by the score sort. They remain valid candidates at lower confidence.
 
-Within subfamilies — ranked by theta_D:
+Within subfamilies: ranked by theta_D:
   Anderson-Debye captures per-formula B/G/rho from Vegard mixing, giving
   30-80K theta_D spread within a score tier. This is the ranking signal
   within a subfamily. Fe2TiSi (B=137, G=69, theta_D=814K) vs Ni2MnAl
-  (B=136, G=56, theta_D=720K) — same score, 94K theta_D difference from
+  (B=136, G=56, theta_D=720K): same score, 94K theta_D difference from
   different elastic constants.
 
 ================================================================================

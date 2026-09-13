@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-# Graceful imports — same pattern as bella_phonon.py
+# Graceful imports: same pattern as bella_phonon.py
 HAS_NUMPY = False
 HAS_YAML = False
 HAS_ASTROPY = False

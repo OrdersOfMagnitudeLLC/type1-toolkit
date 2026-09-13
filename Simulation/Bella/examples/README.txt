@@ -1,4 +1,4 @@
-Bella — Flagship Results & How To Reproduce Them
+Bella: Flagship Results & How To Reproduce Them
 =================================================
 Run all commands from the Bella/ root directory.
 Install first: pip install -r requirements.txt
@@ -26,7 +26,7 @@ Significance: Earth-abundant Haber-Bosch replacement candidate (theoretical)
 Status: SPARC DFT phonon on P1 polymorph pending
 Requires: mpirun + compiled sparc-engine (included)
 
-RESULT 3: Civilization Materials Screen — 133 Phonon Candidates
+RESULT 3: Civilization Materials Screen: 2,944 Materials Candidates
 ---------------------------------------------------------------
 Script: materials_civilization_screen.py
 Command that produced it:
@@ -35,7 +35,7 @@ Command that produced it:
 Results in: Publish/Materials/materials_top10.txt (top 10)
             Publish/Materials/materials_full.csv (full ranked list)
 Highlights: Fe3Mn4, Mo2FeN2, MgMoN2, Shifu (SiHF3), Mn2VSi
-Categories: 101 civilization-scale material categories
+Categories: 96 civilization-scale material categories
 
 HONEST WALLS
 ------------
@@ -46,7 +46,7 @@ HONEST WALLS
 WHAT BELLA IS
 -------------
 Fastest physics-grounded materials and protein screener on earth.
-Built on Young-Laplace foam mechanics — same equation as soap bubbles.
+Built on Young-Laplace foam mechanics: same equation as soap bubbles.
 No GPU required for screening. SPARC DFT optional for phonon confirmation.
 An AI agent driving it gets research-grade results in minutes.
 

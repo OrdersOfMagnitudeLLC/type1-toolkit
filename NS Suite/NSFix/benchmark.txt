@@ -1,4 +1,4 @@
-NSFix vs hffix vs QuickFIX (native build, -O3 -march=native) — 100K NewOrderSingle messages
+NSFix vs hffix vs QuickFIX (native build, -O3 -march=native): 100K NewOrderSingle messages
 
 Parser                                          | Throughput (msg/sec)
 ------------------------------------------------|---------------------

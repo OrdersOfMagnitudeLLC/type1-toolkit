@@ -1,4 +1,4 @@
-// NSMace — OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
+// NSMace: OOM Proprietary, All Rights Reserved, Orders of Magnitude LLC
 // ML force field engine: C++ rewrite of MACE-MP-0 architecture
 // Target: 10,000x MACE-Python on CPU via AVX-512 + structural gap exploitation
 

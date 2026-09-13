@@ -218,8 +218,8 @@ SparseResult sparse_swiglu_blas(
         max_energy = std::max(max_energy, contributions[j]);
     }
     
-    // Step 3: NS histogram partial sort — O(n) vs O(n log n)
-    // Stack allocated — no heap
+    // Step 3: NS histogram partial sort: O(n) vs O(n log n)
+    // Stack allocated: no heap
     int bucket_counts[256] = {};
     int bucket_starts[256] = {};
     int* flat_indices = active_indices + d_ff;  // reuse active_indices buffer

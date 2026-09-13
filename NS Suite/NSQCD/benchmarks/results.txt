@@ -10,5 +10,5 @@ PASS: 3/3, Mean error: 2.5%
 Runtime: 3.3 ms
 
 Thresholds: m_gap <5%, Lambda_Nf3 <6% (3-loop perturbative uncertainty), alpha_s(m_Z) <1%
-Excluded: Lambda_Nf0 (perturbative vs lattice — different theories), alpha_s(<2 GeV) (non-perturbative)
+Excluded: Lambda_Nf0 (perturbative vs lattice: different theories), alpha_s(<2 GeV) (non-perturbative)
 No GPU. No lattice. No free parameters.

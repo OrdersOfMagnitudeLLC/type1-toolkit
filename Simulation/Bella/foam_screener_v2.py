@@ -63,7 +63,7 @@ B_SURF       = 0.072     # T51 second-order correction (ΔR²=+0.072)
 ALPHA_FOAM   = 3.0517    # T2 MEASURED: cosmic foam scaling exponent
 
 # ─── T50/T73/T71 inline foam theorem functions (embedded from soap_bowl_full.py) ─
-# DERIVED — T50 Schreiber's Boundary
+# DERIVED: T50 Schreiber's Boundary
 # |ΔG| = γ_water × r^0.704 × SASA_correction
 # Domain: hydrophobic burial pockets 3.5-8.0 Å
 # γ_water = 0.0718 N/m (MEASURED)
@@ -71,7 +71,7 @@ ALPHA_FOAM   = 3.0517    # T2 MEASURED: cosmic foam scaling exponent
 # Excluded: ATP-competitive kinases, charged S1 proteases
 GAMMA_WATER = 0.0718        # N/m, MEASURED
 
-# DERIVED — T73 Hydrophobic Floor
+# DERIVED: T73 Hydrophobic Floor
 # ΔG_floor = γ_water/4 × SASA(r)
 # γ_eff = γ_water/4 = 0.01795 N/m
 # 4.8% accuracy, DERIVED from T69/T70 foam mechanics
@@ -144,7 +144,7 @@ T71_CALIBRATION_FACTOR = 33.0 / 182.679  # DERIVED from BRD4/JQ1 anchor
 
 # ─── T50 molecule-specific dG (logP hydrophobic burial scaling) ──────
 # DERIVED from T50 + T73: logP measures hydrophobic transfer free energy
-# T50 models hydrophobic burial — same phenomenon
+# T50 models hydrophobic burial: same phenomenon
 # dG scales with molecule's hydrophobicity relative to calibration anchor
 # JQ1 (BRD4 anchor): logP = 3.5, Kd = 33nM
 LOGP_REF = 3.5   # JQ1, BRD4 calibration anchor, MEASURED
@@ -158,7 +158,7 @@ def t50_binding_dG_molecule(r_pocket, logp_molecule):
     Molecules with higher logP score better in hydrophobic pockets.
     """
     if logp_molecule < LOGP_MIN:
-        return 0.0  # T50 excluded — too hydrophilic
+        return 0.0  # T50 excluded: too hydrophilic
     logp_clamped = min(logp_molecule, LOGP_MAX)
     dG_pocket = -GAMMA_REF_MNM * (r_pocket ** ALPHA_POCKET)
     dG_molecule = dG_pocket * (logp_clamped / LOGP_REF)
@@ -618,15 +618,15 @@ MEMBRANE_DB = {
     'enterocyte':     {'gamma_rest': 0.5,  'gamma_lysis': 4.5,  'r_um': 5.0,  'delta_nm': 4.0},
     'generic':        {'gamma_rest': 0.5,  'gamma_lysis': 4.0,  'r_um': 10.0, 'delta_nm': 4.0},
     'mitochondria_inner': {
-        'gamma_rest': 0.08,   # mN/m — much softer than plasma membrane
-        'gamma_lysis': 0.35,  # mN/m — uncoupling threshold, not lysis
-        'r_um': 0.5,          # μm — mitochondrial radius
-        'delta_nm': 4.0,      # nm — inner membrane bilayer
+        'gamma_rest': 0.08,   # mN/m: much softer than plasma membrane
+        'gamma_lysis': 0.35,  # mN/m: uncoupling threshold, not lysis
+        'r_um': 0.5,          # μm: mitochondrial radius
+        'delta_nm': 4.0,      # nm: inner membrane bilayer
     },
 }
 
 
-# DILIrank validation set — FDA drug-induced liver injury classification
+# DILIrank validation set: FDA drug-induced liver injury classification
 # (Most-DILI-concern=2, Less-DILI-concern=1, No-DILI-concern=0)
 # logP values from PubChem/ChEMBL, therapeutic_uM from published Cmax
 DILI_VALIDATION = [
@@ -658,7 +658,7 @@ DILI_VALIDATION = [
     {'name': 'Metoprolol',       'logP': 1.88,  'MW': 267.4,  'charge': 0,  'Cmax_uM': 1.5,  'DILI': 0},
     {'name': 'Lisinopril',       'logP': -1.54, 'MW': 405.5,  'charge': 0,  'Cmax_uM': 0.1,  'DILI': 0},
 
-    # Our leads (unlabeled — predict only)
+    # Our leads (unlabeled: predict only)
     {'name': 'SIRT6_inhibitor',  'logP': 3.20,  'MW': 350,    'charge': 0,  'Cmax_uM': 10,   'DILI': -1},
     {'name': 'NAMPT_inhibitor',  'logP': 2.80,  'MW': 380,    'charge': 0,  'Cmax_uM': 10,   'DILI': -1},
 ]
@@ -762,15 +762,15 @@ def t50_binding(pocket_radius_A: float,
     
     r_contact = pocket_radius_A * fill_fraction
     
-    # Term 1 — hydrophobic burial
+    # Term 1: hydrophobic burial
     delta_G_hyd = -GAMMA_REF * (r_contact ** ALPHA_POCKET)
     
-    # Term 2 — polar surface penalty
+    # Term 2: polar surface penalty
     f_mismatch = abs(f_polar_pocket - f_polar_ligand)
     n_polar = (4 * math.pi * (r_contact ** 2)) / 25.0
     delta_G_polar = f_mismatch * n_polar * 0.5
     
-    # Term 3 — conformational entropy penalty
+    # Term 3: conformational entropy penalty
     if n_rotatable is None:
         if ligand_radius_A is not None:
             n_rotatable = max(1, int(round(ligand_radius_A / 1.5)))
@@ -852,13 +852,13 @@ def t50_delta_g(pocket_radius_A: float, r_ligand_A: float = None,
 
 # ─── T73: Hydrophobic Floor (DERIVED) ──────────────────────────
 # Derivation chain:
-#   T45 (Young-Laplace): ΔP = 2γ/r  — pressure across curved interface
+#   T45 (Young-Laplace): ΔP = 2γ/r : pressure across curved interface
 #   T50 (Schreiber):     ΔG = -γ_eff * r^α,  α = 0.704 (DERIVED from T45+T2)
 #   T35 (Planck floor):  r_min = foam cell size at molecular scale
 #
 # The hydrophobic floor is the minimum binding energy achievable from
 # pure hydrophobic burial. It occurs at the smallest physically meaningful
-# pocket radius — the van der Waals contact radius r_vdw ~ 1.5 Å.
+# pocket radius: the van der Waals contact radius r_vdw ~ 1.5 Å.
 #
 # Below this radius, the foam cell cannot sustain a separate interface
 # (T35: the foam ruptures), so no additional hydrophobic binding is possible.
@@ -927,7 +927,7 @@ def t73_hydrophobic_floor() -> dict:
     }
 
 
-HOT_SPOT_FRACTION = 0.25  # Clackson & Wells 1995 — ~25% of interface = binding energy
+HOT_SPOT_FRACTION = 0.25  # Clackson & Wells 1995: ~25% of interface = binding energy
 
 AGING_TARGETS = {
     "SIRT1":    {"r_pocket": 4.8, "gamma_pocket": 45.0, "mechanism": "NAD_deacetylase"},
@@ -1139,7 +1139,7 @@ def phonon_stability(
     # Physical phonon screen: isotropy × atom-count, minus chemical penalties
     score = isotropy_score * n_factor - d_penalty - en_penalty
 
-    # Debye temperature — T_DEBYE
+    # Debye temperature: T_DEBYE
     elements = re.findall(r'[A-Z][a-z]?', formula)
     masses   = [ATOMIC_MASS.get(el, 50) for el in elements]
     M_reduced = len(masses) / sum(1.0/m for m in masses) if masses else 50.0
@@ -1696,7 +1696,7 @@ def gsh_defense_foam(smiles, mito_toxic, etc_level, reactive_flag, Cmax_free_uM)
     net_depletion = depletion - GSH_synthesis_mM_per_hr
 
     if net_depletion <= 0:
-        # Recovery outpaces attack — cell survives
+        # Recovery outpaces attack: cell survives
         return {"gsh": "SAFE", "gsh_net_mM_per_hr": net_depletion}
 
     # Time to drop below 30% threshold
@@ -1792,7 +1792,7 @@ def pgp_efflux_foam(smiles, Cmax_free_uM):
         return {"pgp": "NOT_SUBSTRATE", "efflux_ratio": 1.0,
                 "effective_Cmax_uM": Cmax_free_uM}
 
-    # Efflux ratio scales with logP — more lipophilic = better P-gp substrate
+    # Efflux ratio scales with logP: more lipophilic = better P-gp substrate
     efflux_ratio = 1.0 + (logP - 2.0) * 0.8  # ranges 1x to ~5x
     efflux_ratio = min(efflux_ratio, 6.0)
     effective_Cmax = Cmax_free_uM / efflux_ratio
@@ -1829,7 +1829,7 @@ def mito_accumulation_foam(smiles, Cmax_uM):
     is_cationic = (formal_charge > 0) or (basic_N >= 1 and logD > 1.0)
     aromatic_rings = rdMolDescriptors.CalcNumAromaticRings(mol)
 
-    # PATHWAY 1: Nernst accumulation — cationic only
+    # PATHWAY 1: Nernst accumulation: cationic only
     # Amitriptyline (277) and perhexiline (277) are known mito accumulators
     if is_cationic and logD > 1.0 and MW > 250:
         nernst_fold = 10 ** (180 / 59.2)  # ~1000x
@@ -1944,7 +1944,7 @@ def toxicity_screen_full(
     Three independent physical mechanisms. Positive on any = flag.
     C_multiples: test concentration = Cmax_uM * C_multiples for all compartments.
     """
-    # Normalize SMILES: strip isotope labels — foam physics is isotope-blind
+    # Normalize SMILES: strip isotope labels: foam physics is isotope-blind
     if SMILES is not None:
         SMILES = normalize_smiles(SMILES)
 
@@ -1960,13 +1960,13 @@ def toxicity_screen_full(
     fu = estimate_fu(SMILES) if SMILES is not None else 1.0
     Cmax_free_uM = fu * Cmax_uM
 
-    # Active hepatic uptake (OATP1B1/1B3) — T50 YL transporter boundary
+    # Active hepatic uptake (OATP1B1/1B3): T50 YL transporter boundary
     if SMILES is not None:
         oatp = oatp_transport_foam(SMILES, Cmax_free_uM)
     else:
         oatp = {"oatp": "UNKNOWN", "intracellular_Cmax_uM": Cmax_free_uM}
 
-    # P-gp efflux (ABCB1) — reduces intracellular concentration for lipophilic drugs
+    # P-gp efflux (ABCB1): reduces intracellular concentration for lipophilic drugs
     if SMILES is not None:
         pgp = pgp_efflux_foam(SMILES, Cmax_free_uM)
     else:
@@ -1983,10 +1983,10 @@ def toxicity_screen_full(
     # 1. Plasma membrane screen (existing)
     membrane = toxicity_screen_foam(logP, MW, charge, Cmax_effective_uM, C_multiples=C_multiples, smiles=SMILES)
 
-    # 2. Mitochondrial toxicity — Nernst accumulation + direct Complex I/III binding
+    # 2. Mitochondrial toxicity: Nernst accumulation + direct Complex I/III binding
     mito = mito_accumulation_foam(SMILES, Cmax_effective_uM)
 
-    # 3. CYP450 reactive metabolite — T50 binding to CYP3A4 hydrophobic pocket
+    # 3. CYP450 reactive metabolite: T50 binding to CYP3A4 hydrophobic pocket
     cyp450 = cyp450_substrate_foam(SMILES) if SMILES is not None else {
         'cyp450_verdict': 'UNKNOWN', 'cyp450_substrate': False,
         'delta_G_kcal': None, 'label': 'DERIVED from T50 Domain I'
@@ -2005,7 +2005,7 @@ def toxicity_screen_full(
     else:
         etc = {'etc_inhibitor': False, 'severity': 'LOW', 'IC50_est_uM': 999.0}
 
-    # 6. Glutathione defense — T56 damage-repair equilibrium
+    # 6. Glutathione defense: T56 damage-repair equilibrium
     gsh = gsh_defense_foam(SMILES, mito['verdict'] == 'TOXIC', etc['severity'],
                            reactive_flag, Cmax_effective_uM)
 
@@ -2030,7 +2030,7 @@ def toxicity_screen_full(
     # Absence of GSH crisis ≠ absence of damage.
     # GSH only adds confidence when TOXIC or BORDERLINE.
 
-    # 7. Membrane Maintenance — T57 Hayflick's Pressure
+    # 7. Membrane Maintenance: T57 Hayflick's Pressure
     mechanism7 = membrane_maintenance_t57(logP, MW, SMILES)
     if mechanism7['verdict'] == 'MEMBRANE_DISRUPTOR':
         nonoxidative_score = 0
@@ -2145,7 +2145,7 @@ def bsep_inhibition_foam(
     import math
 
     # Combined lipophilicity-size score (Pedersen 2013, Morgan 2013)
-    # BSEP inhibition requires BOTH logP AND MW — neither alone sufficient
+    # BSEP inhibition requires BOTH logP AND MW: neither alone sufficient
     # Calibrated: score > 4.0 = IC50 < 25 μM (FDA threshold)
     if MW <= 0 or logP <= 0:
         bsep_score = 0.0
@@ -2416,7 +2416,7 @@ def main():
 
 
 
-# NSQCD — three-loop QCD calculator (T32)
+# NSQCD: three-loop QCD calculator (T32)
 import sys as _sys, os as _os
 _nsqcd_path = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
     '..', '..', 'NS_Suite', 'NSQCD')

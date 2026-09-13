@@ -1,4 +1,4 @@
-NSSort vs IPS4o vs VQSort — 100M int64_t elements
+NSSort vs IPS4o vs VQSort: 100M int64_t elements
 Methodology: 3 warmup + 3 timed runs, 64MB cache flush, median reported
 IPS4o: parallel mode, 8 threads. VQSort: Highway 1.0.7, single-threaded.
 

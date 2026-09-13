@@ -1,7 +1,7 @@
 #ifndef NSINDEX_HPP
 #define NSINDEX_HPP
 
-// NSIndex — Learned Index with AVX-512 Range Query Acceleration
+// NSIndex: Learned Index with AVX-512 Range Query Acceleration
 // License: AGPL-3.0
 // Description: Cache-optimized learned index for sorted key arrays with hybrid prediction/BitBlock dispatch
 
@@ -161,7 +161,7 @@ public:
     }
 
     bool in_delta(Key k) const {
-        // Binary search — delta_buffer_ is kept sorted
+        // Binary search: delta_buffer_ is kept sorted
         return std::binary_search(delta_buffer_.begin(), delta_buffer_.end(), k);
     }
 

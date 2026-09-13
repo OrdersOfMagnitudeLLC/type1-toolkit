@@ -2,7 +2,7 @@
 // Licensed under the OOM Commercial License v1.0
 // See LICENSE.md in the repository root or ofmagnitude.com
 
-// LGPL v2.1 — integration shim only, no OOM algorithm logic
+// LGPL v2.1: integration shim only, no OOM algorithm logic
 
 #ifndef BELLA_SUBSPACE_SOLVER_H
 #define BELLA_SUBSPACE_SOLVER_H

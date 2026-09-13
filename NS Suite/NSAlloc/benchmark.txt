@@ -1,4 +1,4 @@
-NSAlloc vs mimalloc 3.5.1 (native build, -O3 -march=native) — 100K ops, mean ns/op
+NSAlloc vs mimalloc 3.5.1 (native build, -O3 -march=native): 100K ops, mean ns/op
 
 Pattern                          | NSAlloc (ns/op) | mimalloc (ns/op) | Speedup
 ---------------------------------|-----------------|------------------|--------

@@ -51,7 +51,7 @@ struct NSGraph {
         }
     }
 
-    // Standard BFS — returns visited order
+    // Standard BFS: returns visited order
     std::vector<uint32_t> bfs_standard(uint32_t source) {
         std::vector<uint32_t> visited_order;
         std::vector<bool> visited(num_nodes, false);

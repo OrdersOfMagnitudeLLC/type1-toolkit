@@ -27,9 +27,9 @@ None. 10M keys, 1M queries per benchmark. Datasets: sequential (uniform), expone
 | Method | ns/lookup | vs std::lower_bound | vs PGM-Index |
 |--------|----------|---------------------|--------------|
 | NSIndex (random) | 60.2 | 5.3x | 2.1x |
-| NSIndex (hits only) | 12.6 | — | 10.1x |
-| NSIndex (clustered) | 21.5 | 17.5x | — |
-| std::lower_bound | 321.4 | 1.0x | — |
+| NSIndex (hits only) | 12.6 |  | 10.1x |
+| NSIndex (clustered) | 21.5 | 17.5x |  |
+| std::lower_bound | 321.4 | 1.0x |  |
 | PGM-Index | 127.7 | 2.5x | 1.0x |
 
 ### Miss (point lookup, key not in dataset)
@@ -37,7 +37,7 @@ None. 10M keys, 1M queries per benchmark. Datasets: sequential (uniform), expone
 | Method | ns/miss | vs std::lower_bound | vs PGM-Index |
 |--------|--------|---------------------|--------------|
 | NSIndex | 8.0 | 7.3x | 1.5x |
-| std::lower_bound | 58.0 | 1.0x | — |
+| std::lower_bound | 58.0 | 1.0x |  |
 | PGM-Index | 11.8 | 4.9x | 1.0x |
 
 ### Predecessor / Successor
@@ -54,24 +54,24 @@ None. 10M keys, 1M queries per benchmark. Datasets: sequential (uniform), expone
 | NSIndex (with auto-flush) | 28.4 | 8.6x |
 | std::map | 243.1 | 1.0x |
 
-### Range Queries — Exponential Distribution
+### Range Queries: Exponential Distribution
 
 | Method | 5 results | 50 results | 100 results | 1000 results |
 |--------|-----------|------------|-------------|-------------|
 | NSIndex | 368 ns | 397 ns | 377 ns | 387 ns |
 | BitBlock | 349 ns | 376 ns | 381 ns | 403 ns |
 | ALEX | 8792 ns | 15718 ns | 16960 ns | 17262 ns |
-| std::lower_bound | 720 ns | — | — | — |
+| std::lower_bound | 720 ns |  |  |  |
 | **NSIndex vs ALEX** | **25.2x** | **39.6x** | **44.9x** | **44.5x** |
 
-### Range Queries — Clustered Distribution
+### Range Queries: Clustered Distribution
 
 | Method | 5 results | 50 results | 100 results | 1000 results |
 |--------|-----------|------------|-------------|-------------|
 | NSIndex | 405 ns | 414 ns | 430 ns | 417 ns |
 | BitBlock | 408 ns | 399 ns | 489 ns | 427 ns |
 | ALEX | 2594 ns | 7804 ns | 10732 ns | 16308 ns |
-| std::lower_bound | 110 ns | — | — | — |
+| std::lower_bound | 110 ns |  |  |  |
 | **NSIndex vs ALEX** | **6.4x** | **19.0x** | **25.0x** | **39.1x** |
 
 ### BitBlock Hybrid Dispatch
@@ -90,6 +90,6 @@ NSIndex wins on:
 
 ## Third-party
 
-- **PGM Index** — MIT License (vendored in pgm/ directory)
-- **ALEX** — MIT License (vendored in third_party/alex/, Copyright (c) Microsoft Corporation)
-- **nlohmann/json** — MIT License (vendored header, used by server only)
+- **PGM Index**: MIT License (vendored in pgm/ directory)
+- **ALEX**: MIT License (vendored in third_party/alex/, Copyright (c) Microsoft Corporation)
+- **nlohmann/json**: MIT License (vendored header, used by server only)

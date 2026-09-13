@@ -2,10 +2,10 @@
 // Licensed under the OOM Commercial License v1.0
 // See LICENSE.md in the repository root or ofmagnitude.com
 
-// kv_box.cpp — Bare KV allocator math validation (no inference, no LLM)
+// kv_box.cpp: Bare KV allocator math validation (no inference, no LLM)
 //
 // Computes raw KV cache size for Qwen3-4B at 1M tokens, then applies
-// compression steps in sequence and prints a table. Pure math — no
+// compression steps in sequence and prints a table. Pure math: no
 // memory is allocated.
 //
 // Build:  g++ -std=c++17 -O2 -o kv_box kv_box.cpp
@@ -68,17 +68,17 @@ int main() {
     const double int4_ratio = static_cast<double>(INT4_FACTOR); // 4×
     const uint64_t after_int4 = static_cast<uint64_t>(after_clg / int4_ratio);
 
-    // Step 3: Eviction — keep top 40% by information contribution
+    // Step 3: Eviction: keep top 40% by information contribution
     // Compression = 1 / keep_fraction = 1 / 0.4 = 2.5×
     const double evict_ratio = 1.0 / EVICT_KEEP_FRAC; // 2.5×
     const uint64_t after_evict = static_cast<uint64_t>(after_int4 / evict_ratio);
 
-    // Step 4: Filler elimination — keep 60% of remaining tokens (drop 40%)
+    // Step 4: Filler elimination: keep 60% of remaining tokens (drop 40%)
     // Compression = 1 / keep_fraction = 1 / 0.60 ≈ 1.67×
     const double filler_ratio = 1.0 / FILLER_KEEP_FRAC; // 1.67×
     const uint64_t after_filler = static_cast<uint64_t>(after_evict / filler_ratio);
 
-    // Step 5: Semantic dedup — merge near-duplicate KV entries
+    // Step 5: Semantic dedup: merge near-duplicate KV entries
     const double dedup_ratio = SEMANTIC_DEDUP_FACTOR; // 2.0×
     const uint64_t after_dedup = static_cast<uint64_t>(after_filler / dedup_ratio);
 

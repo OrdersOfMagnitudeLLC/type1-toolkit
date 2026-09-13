@@ -121,7 +121,7 @@ HeadType detect_head_type(const float* scores, int seq_len, int head_dim, int sa
         }
         
         // Early-exit: after 2+ samples, if no spatial structure and no global
-        // signal, skip remaining samples — this is UNIFORM
+        // signal, skip remaining samples: this is UNIFORM
         if (s >= 1 && total_correlation < 0.2f && global_signal_count == 0) {
             return UNIFORM;
         }

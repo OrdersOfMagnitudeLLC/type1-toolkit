@@ -22,9 +22,9 @@ None.
 
 | Graph | BFS Standard (ms) | Speedup |
 |-------|-------------------|---------|
-| Graph A — Scrambled Community (1M nodes, 20M edges) | 266.0 | — |
-| Graph C — Reordered Community (reorder() applied) | 107.4 | 2.48x |
-| Graph B — Random (1M nodes, 40M edges) | (reference) | — |
+| Graph A: Scrambled Community (1M nodes, 20M edges) | 266.0 |  |
+| Graph C: Reordered Community (reorder() applied) | 107.4 | 2.48x |
+| Graph B: Random (1M nodes, 40M edges) | (reference) |  |
 
 **Win condition:** Community-structured graphs with 400KB+ working set per community. Reordering assigns contiguous IDs to community members, converting L2 misses into L1 hits. BFS on the reordered graph is 2.48x faster than on the scrambled version (median of 3 runs).
 

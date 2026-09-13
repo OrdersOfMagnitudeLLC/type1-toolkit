@@ -27,10 +27,10 @@ Requires CUDA hardware. No benchmark data available on this machine.
 ## AMD / HIP
 
 A HIP-compatible port ships alongside the CUDA source (NSSort_GPU.hip).
-Compile with hipcc on ROCm for AMD GPUs, or nvcc on NVIDIA — same source,
+Compile with hipcc on ROCm for AMD GPUs, or nvcc on NVIDIA: same source,
 same win/loss profile confirmed on RTX 2000 Ada (CUDA 12.8).
 
 ## Third-party
 
-- **CUB** — NVIDIA License (ships with CUDA toolkit)
-- **Thrust** — Apache 2.0 License (ships with CUDA toolkit)
+- **CUB**: NVIDIA License (ships with CUDA toolkit)
+- **Thrust**: Apache 2.0 License (ships with CUDA toolkit)

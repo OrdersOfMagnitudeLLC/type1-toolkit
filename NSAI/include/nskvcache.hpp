@@ -8,7 +8,7 @@
 #include <vector>
 #include "../../NSComp/nscomp.hpp"
 
-// NSKVCache — Structured KV Cache Eviction + Quantization for LLM Inference
+// NSKVCache: Structured KV Cache Eviction + Quantization for LLM Inference
 // King: llama.cpp --cache-type-k q8_0 --cache-type-v q8_0
 // Headline: 3.32x vs llama.cpp q8_0 | 13.29x vs full float32
 // Quality: 85%+ attention mass preserved across all 22 TinyLlama layers
@@ -128,7 +128,7 @@ public:
             size_t kv_size = cfg_.n_heads * cfg_.head_dim;
             
             if (slab_used_ + kv_size * 2 > slab_.size()) {
-                // Find oldest cold slot and reuse its slab pointers — do NOT advance slab_used_
+                // Find oldest cold slot and reuse its slab pointers: do NOT advance slab_used_
                 uint32_t oldest_seq = UINT32_MAX;
                 int32_t oldest_idx = -1;
                 for (size_t i = 0; i < cfg_.max_tokens; ++i) {
@@ -145,7 +145,7 @@ public:
                 }
                 // Reuse this slot's existing slab region
                 entry_idx = oldest_idx;
-                // k_quant and v_quant already point into slab — overwrite in place below
+                // k_quant and v_quant already point into slab: overwrite in place below
                 // skip the slab_used_ advance
             } else {
                 // Normal allocation
