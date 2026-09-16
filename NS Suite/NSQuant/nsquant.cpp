@@ -29,7 +29,9 @@
 #include <cassert>
 
 static const size_t CLUSTER_SIZE = 256;
-static const float HOT_THR = 0.8f;
+// activation_freq stores a mean-|y| percentile rank (0..1), not a fire
+// frequency: hot = top 65% (rank > 0.35), warm = next 25%, cold = bottom 10%.
+static const float HOT_THR = 0.35f;
 static const float COLD_THR = 0.1f;
 
 // --dequant-input: treat Q4_K/Q6_K/Q8_0 input tensors as dequantizable to float
@@ -209,19 +211,22 @@ static size_t quantize_to_type(const std::vector<float>& w, GGMLType ty, std::ve
     }
 }
 
+// Profiles each row by mean |y| across prompts (y_r = dot(w_row, x)), then
+// stores the row's percentile rank into each cluster's activation_freq.
+// activation_freq is now a mean-|y| percentile rank, not a fire frequency.
 static void profile_tensor(const float* w, int n_rows, int n_cols,
                            const std::vector<std::vector<float>>& xs,
-                           std::vector<int>& activations) {
+                           std::vector<float>& cluster_rank) {
     size_t total = (size_t)n_rows * (size_t)n_cols;
     size_t n_clusters = (total + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-    activations.assign(n_clusters, 0);
+    cluster_rank.assign(n_clusters, 0.5f);
     if (n_rows <= 0 || n_cols <= 0 || xs.empty()) return;
 
+    // Accumulate |y_r| per row across all prompts (parallel over prompts).
+    std::vector<float> row_sum(n_rows, 0.0f);
     #pragma omp parallel
     {
-        std::vector<int> la(n_clusters, 0);
-        std::vector<float> y(n_rows);
-        std::vector<float> absy(n_rows);
+        std::vector<float> local(n_rows, 0.0f);
         #pragma omp for nowait
         for (size_t pi = 0; pi < xs.size(); ++pi) {
             const std::vector<float>& x = xs[pi];
@@ -229,29 +234,38 @@ static void profile_tensor(const float* w, int n_rows, int n_cols,
                 float s = 0.0f;
                 const float* wr = w + (size_t)r * n_cols;
                 for (int c = 0; c < n_cols; ++c) s += wr[c] * x[c];
-                y[r] = s;
-            }
-            // Per-prompt threshold: 80th percentile of |y| for THIS prompt
-            for (int r = 0; r < n_rows; ++r) absy[r] = std::fabs(y[r]);
-            std::nth_element(absy.begin(), absy.begin() + (size_t)(absy.size() * 0.8f), absy.end());
-            float thr = absy[(size_t)(absy.size() * 0.8f)];
-            if (thr <= 0.0f) thr = 1e-6f;
-            for (int r = 0; r < n_rows; ++r) {
-                if (std::fabs(y[r]) > thr) {
-                    size_t f0 = (size_t)r * n_cols;
-                    size_t f1 = f0 + n_cols - 1;
-                    size_t c0 = f0 / CLUSTER_SIZE;
-                    size_t c1 = f1 / CLUSTER_SIZE;
-                    for (size_t ci = c0; ci <= c1; ++ci) {
-                        if (ci < n_clusters) la[ci]++;
-                    }
-                }
+                local[r] += std::fabs(s);
             }
         }
         #pragma omp critical
         {
-            for (size_t i = 0; i < n_clusters; ++i) activations[i] += la[i];
+            for (int r = 0; r < n_rows; ++r) row_sum[r] += local[r];
         }
+    }
+
+    // mean_activation[r] = mean |y_r| across prompts
+    std::vector<float> mean_act(n_rows);
+    float inv = 1.0f / (float)xs.size();
+    for (int r = 0; r < n_rows; ++r) mean_act[r] = row_sum[r] * inv;
+
+    // Percentile rank of each row's mean_activation (0 = smallest, 1 = largest)
+    std::vector<int> order(n_rows);
+    std::iota(order.begin(), order.end(), 0);
+    std::sort(order.begin(), order.end(),
+              [&](int a, int b) { return mean_act[a] < mean_act[b]; });
+    std::vector<float> row_rank(n_rows);
+    float denom = (n_rows > 1) ? (float)(n_rows - 1) : 1.0f;
+    for (int i = 0; i < n_rows; ++i) row_rank[order[i]] = (float)i / denom;
+
+    // Each cluster takes the mean rank of the row(s) it overlaps.
+    for (size_t ci = 0; ci < n_clusters; ++ci) {
+        size_t f0 = ci * CLUSTER_SIZE;
+        size_t f1 = std::min(f0 + CLUSTER_SIZE - 1, total - 1);
+        int r0 = (int)(f0 / (size_t)n_cols);
+        int r1 = (int)(f1 / (size_t)n_cols);
+        float acc = 0.0f;
+        for (int r = r0; r <= r1; ++r) acc += row_rank[r];
+        cluster_rank[ci] = acc / (float)(r1 - r0 + 1);
     }
 }
 
@@ -515,10 +529,10 @@ int main(int argc, char** argv) {
                 }
 
                 if (do_profile) {
-                    std::vector<int> acts;
-                    profile_tensor(w.data(), chunk_n_rows, n_cols, xs, acts);
-                    for (size_t i = 0; i < acts.size(); ++i) {
-                        to.clusters[cluster_offset + i].activation_freq = (float)acts[i] / (float)n_prompts;
+                    std::vector<float> rank;
+                    profile_tensor(w.data(), chunk_n_rows, n_cols, xs, rank);
+                    for (size_t i = 0; i < rank.size(); ++i) {
+                        to.clusters[cluster_offset + i].activation_freq = rank[i];
                     }
                 } else {
                     for (size_t i = 0; i < chunk_nc; ++i) {
