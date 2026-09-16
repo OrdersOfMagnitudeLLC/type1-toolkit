@@ -2,11 +2,10 @@
 // Licensed under the OOM Commercial License v1.0
 // See LICENSE.md in the repository root or ofmagnitude.com
 
-#include "nsm.h"
 #include "gguf_parser.h"
 #include "tokenizer.h"
 #include "ns_q4k_quant.h"
-#include "ns_repack.h"
+#include "ns_gguf_quant.h"
 
 #include <cstdio>
 #include <cstdint>
@@ -26,14 +25,12 @@
 #include <chrono>
 #include <regex>
 #include <numeric>
-#include <atomic>
 
-#include <zlib.h>
 #include <cassert>
 
 static const size_t CLUSTER_SIZE = 256;
-static const float HOT_THR = 0.0f;
-static const float COLD_THR = 0.0f;
+static const float HOT_THR = 0.8f;
+static const float COLD_THR = 0.1f;
 
 // --dequant-input: treat Q4_K/Q6_K/Q8_0 input tensors as dequantizable to float
 static bool g_dequant_input = false;
@@ -53,26 +50,18 @@ static uint64_t elem_offset_bytes(GGMLType ty, size_t elems) {
         default:             return (uint64_t)elems * sizeof(float);
     }
 }
-std::atomic<uint64_t> n_d_zero(0);
-
 struct ClusterOut {
     float activation_freq;
     uint8_t quant_bits;
-    uint32_t data_offset;
-    uint32_t data_bytes;
-    float scale;
-    uint8_t compressed;
-    std::vector<uint8_t> packed;
 };
 
 struct TensorOut {
     char name[64];
     uint32_t n_clusters;
-    uint32_t quant_type;
-    uint64_t data_offset;
+    uint32_t quant_type;   // GGMLType value written to the GGUF tensor descriptor
+    uint64_t data_offset;  // offset within the temp data stream
     uint64_t data_bytes;
     std::vector<ClusterOut> clusters;
-    std::vector<uint8_t> blob;
 };
 
 static size_t file_size(const std::string& path) {
@@ -166,92 +155,58 @@ static bool read_tensor_floats(const GGUFParser& parser, const GGUFTensor& t, st
     return false;
 }
 
-static void pack_q2(const std::vector<float>& w, const std::vector<int8_t>& q, std::vector<uint8_t>& out) {
-    out.assign((w.size() + 3) / 4, 0);
-    for (size_t i = 0; i < w.size(); ++i) {
-        uint8_t n = (uint8_t)(q[i] + 1); // q in [-1,1], n in [0,2]
-        size_t b = i / 4;
-        size_t s = (i % 4) * 2;
-        out[b] |= (n & 0x3) << s;
-    }
-}
-
-static void pack_q4(const std::vector<float>& w, const std::vector<int8_t>& q, std::vector<uint8_t>& out) {
-    out.assign((w.size() + 1) / 2, 0);
-    for (size_t i = 0; i < w.size(); ++i) {
-        uint8_t n = (uint8_t)(q[i] + 7); // q in [-7,7], n in [0,14]
-        size_t b = i / 2;
-        if (i % 2 == 0) out[b] |= (n & 0xF);
-        else out[b] |= (n & 0xF) << 4;
-    }
-}
-
-static void pack_q8(const std::vector<float>& w, const std::vector<int8_t>& q, std::vector<uint8_t>& out) {
-    out.assign(w.size(), 0);
-    for (size_t i = 0; i < w.size(); ++i) out[i] = (uint8_t)q[i];
-}
-
-static std::vector<uint8_t> zlib_compress(const std::vector<uint8_t>& in) {
-    std::vector<uint8_t> out;
-    if (in.empty()) return out;
-    z_stream s;
-    memset(&s, 0, sizeof(s));
-    deflateInit(&s, Z_DEFAULT_COMPRESSION);
-    s.avail_in = (uInt)in.size();
-    s.next_in = (Bytef*)in.data();
-    out.resize(deflateBound(&s, (uLong)in.size()));
-    s.avail_out = (uInt)out.size();
-    s.next_out = out.data();
-    int r = deflate(&s, Z_FINISH);
-    (void)r;
-    deflateEnd(&s);
-    out.resize(s.total_out);
-    return out;
-}
-
-static std::vector<int8_t> quant_floats(const std::vector<float>& w, int bits, float& scale) {
-    float maxabs = 0.0f;
-    for (float v : w) maxabs = std::max(maxabs, std::fabs(v));
-    int max_q = 1;
-    if (bits == 8) max_q = 127;
-    else if (bits == 4) max_q = 7;
-    scale = (maxabs > 0.0f) ? (maxabs / (float)max_q) : 1.0f;
-    std::vector<int8_t> q(w.size());
-    for (size_t i = 0; i < w.size(); ++i) {
-        float v = w[i] / scale;
-        v = std::round(v);
-        v = std::max(-(float)max_q, std::min((float)max_q, v));
-        q[i] = (int8_t)v;
-    }
-    return q;
-}
-
-static bool parse_layer_base(const std::string& name, std::string& base, int& layer) {
-    std::regex re("^blk\\.(\\d+)\\.(.+)$");
-    std::smatch m;
-    if (std::regex_match(name, m, re)) {
-        layer = std::stoi(m[1].str());
-        base = "blk." + m[2].str();
-        return true;
-    }
-    base = name;
-    layer = 0;
-    return false;
-}
-
-static std::string prev_name(const std::string& name) {
-    std::regex re("^blk\\.(\\d+)\\.(.+)$");
-    std::smatch m;
-    if (std::regex_match(name, m, re)) {
-        int l = std::stoi(m[1].str());
-        if (l > 0) return "blk." + std::to_string(l - 1) + "." + m[2].str();
-    }
-    return "";
-}
-
 static bool is_preserve(const std::string& name) {
     std::regex re_preserve("^(blk\\.\\d+\\.attn_(q|k|v)\\.(bias))$");
     return std::regex_match(name, re_preserve);
+}
+
+// Tensors that must stay F32 in GGUF output: norms and biases are 1D and
+// llama.cpp expects them unquantized.
+static bool is_f32_tensor(const std::string& name) {
+    if (is_preserve(name)) return false;
+    static const char* suffixes[] = {
+        "attn_norm.weight", "ffn_norm.weight", "output_norm.weight", ".bias"
+    };
+    for (const char* s : suffixes) {
+        size_t sl = strlen(s);
+        if (name.size() >= sl && name.compare(name.size() - sl, sl, s) == 0)
+            return true;
+    }
+    return false;
+}
+
+// Quantize a float buffer to a GGUF-standard block type. Returns bytes written.
+static size_t quantize_to_type(const std::vector<float>& w, GGMLType ty, std::vector<uint8_t>& out) {
+    size_t n = w.size();
+    switch (ty) {
+        case GGMLType::F32:
+            out.resize(n * sizeof(float));
+            std::memcpy(out.data(), w.data(), n * sizeof(float));
+            return out.size();
+        case GGMLType::F16: {
+            out.resize(n * sizeof(uint16_t));
+            uint16_t* h = (uint16_t*)out.data();
+            for (size_t i = 0; i < n; ++i) h[i] = f32_to_fp16(w[i]);
+            return out.size();
+        }
+        case GGMLType::Q8_0: {
+            out.resize((n / QK8_0) * sizeof(block_q8_0));
+            quantize_row_q8_0(w.data(), (block_q8_0*)out.data(), (int64_t)n);
+            return out.size();
+        }
+        case GGMLType::Q4_K: {
+            out.resize((n / QK_K) * sizeof(block_q4_K));
+            quantize_row_q4_K(w.data(), (block_q4_K*)out.data(), (int64_t)n);
+            return out.size();
+        }
+        case GGMLType::Q2_K: {
+            out.resize((n / QK_K) * sizeof(block_q2_K));
+            quantize_row_q2_K(w.data(), (block_q2_K*)out.data(), (int64_t)n);
+            return out.size();
+        }
+        default:
+            return 0;
+    }
 }
 
 static void profile_tensor(const float* w, int n_rows, int n_cols,
@@ -262,45 +217,27 @@ static void profile_tensor(const float* w, int n_rows, int n_cols,
     activations.assign(n_clusters, 0);
     if (n_rows <= 0 || n_cols <= 0 || xs.empty()) return;
 
-    std::vector<float> y(n_rows);
-    // Threshold from first prompt (80th percentile of |y|)
-    const std::vector<float>& x0 = xs[0];
-    for (int r = 0; r < n_rows; ++r) {
-        float s = 0.0f;
-        const float* wr = w + (size_t)r * n_cols;
-        for (int c = 0; c < n_cols; ++c) s += wr[c] * x0[c];
-        y[r] = s;
-    }
-    std::vector<float> absy = y;
-    for (float& v : absy) v = std::fabs(v);
-    std::nth_element(absy.begin(), absy.begin() + (size_t)(absy.size() * 0.8f), absy.end());
-    float thr = absy[(size_t)(absy.size() * 0.8f)];
-    if (thr <= 0.0f) thr = 1e-6f;
-
-    // Count x0 directly, then parallelize the remaining prompts
-    for (int r = 0; r < n_rows; ++r) {
-        if (std::fabs(y[r]) > thr) {
-            size_t f0 = (size_t)r * n_cols;
-            size_t f1 = f0 + n_cols - 1;
-            size_t c0 = f0 / CLUSTER_SIZE;
-            size_t c1 = f1 / CLUSTER_SIZE;
-            for (size_t ci = c0; ci <= c1; ++ci) {
-                if (ci < n_clusters) activations[ci]++;
-            }
-        }
-    }
-
     #pragma omp parallel
     {
         std::vector<int> la(n_clusters, 0);
+        std::vector<float> y(n_rows);
+        std::vector<float> absy(n_rows);
         #pragma omp for nowait
-        for (size_t pi = 1; pi < xs.size(); ++pi) {
+        for (size_t pi = 0; pi < xs.size(); ++pi) {
             const std::vector<float>& x = xs[pi];
             for (int r = 0; r < n_rows; ++r) {
                 float s = 0.0f;
                 const float* wr = w + (size_t)r * n_cols;
                 for (int c = 0; c < n_cols; ++c) s += wr[c] * x[c];
-                if (std::fabs(s) > thr) {
+                y[r] = s;
+            }
+            // Per-prompt threshold: 80th percentile of |y| for THIS prompt
+            for (int r = 0; r < n_rows; ++r) absy[r] = std::fabs(y[r]);
+            std::nth_element(absy.begin(), absy.begin() + (size_t)(absy.size() * 0.8f), absy.end());
+            float thr = absy[(size_t)(absy.size() * 0.8f)];
+            if (thr <= 0.0f) thr = 1e-6f;
+            for (int r = 0; r < n_rows; ++r) {
+                if (std::fabs(y[r]) > thr) {
                     size_t f0 = (size_t)r * n_cols;
                     size_t f1 = f0 + n_cols - 1;
                     size_t c0 = f0 / CLUSTER_SIZE;
@@ -366,7 +303,7 @@ int main(int argc, char** argv) {
         else pos.push_back(a);
     }
     if (pos.size() < 2) {
-        std::cerr << "Usage: " << argv[0] << " [--dequant-input] <input.gguf> <output.nsm> [n_prompts [prompts.txt]]" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " [--dequant-input] <input.gguf> <output.gguf> [n_prompts [prompts.txt]]" << std::endl;
         return 1;
     }
     const char* in_path = pos[0].c_str();
@@ -451,13 +388,7 @@ int main(int argc, char** argv) {
     assert(chunk_floats >= 256);
     std::cout << "RAM budget: " << (working_budget / (1024 * 1024)) << " MB" << std::endl;
 
-    // Map tensor names to their parser index for previous-layer lookups
-    std::map<std::string, int> name_to_parser_idx;
-    for (int i = 0; i < (int)parser.tensors().size(); ++i) {
-        name_to_parser_idx[parser.tensors()[i].name] = i;
-    }
-
-    // Stream packed tensor data to a temporary file; only one tensor is held in RAM
+    // Stream quantized tensor data to a temporary file; only one tensor is held in RAM
     std::string data_tmp_path = std::string(out_path) + ".data.tmp";
     FILE* data_tmp = fopen(data_tmp_path.c_str(), "w+b");
     if (!data_tmp) {
@@ -487,7 +418,7 @@ int main(int argc, char** argv) {
 
         bool float_path = (t.type == GGMLType::F32 || t.type == GGMLType::F16) ||
                           (g_dequant_input && is_dequant_type(t.type));
-        if (float_path && t.name != "token_embd.weight") {
+        if (float_path) {
             size_t n_full = numel(t);
             size_t nc = (n_full + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
 
@@ -503,17 +434,19 @@ int main(int argc, char** argv) {
             }
 
             bool preserve = is_preserve(t.name);
-            bool no_panel = (t.name == "token_embd.weight");
-            bool panel_mode = (t.shape.size() >= 2 && !preserve && !no_panel);
-            size_t n_blocks_per_row = (n_cols + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-            size_t n_row_groups = (n_rows + 7) / 8;
-            size_t n_panels_total = n_row_groups * n_blocks_per_row;
-            to.n_clusters = panel_mode ? (uint32_t)n_panels_total : (uint32_t)nc;
+            bool f32_tensor = is_f32_tensor(t.name);
+            bool is2d = (t.shape.size() >= 2);
+            // K-quants need ne[0] % 256; Q8_0 needs ne[0] % 32
+            bool kquant_ok = is2d && (n_cols % (int)QK_K == 0);
+            bool q8_ok = is2d && (n_cols % (int)QK8_0 == 0);
+            bool quantizable = is2d && !preserve && !f32_tensor && (kquant_ok || q8_ok);
+
+            to.n_clusters = (uint32_t)nc;
             to.clusters.resize(to.n_clusters);
 
             // Build prompt inputs projected to n_cols once per tensor
             std::vector<std::vector<float>> xs;
-            bool do_profile = (n_prompts > 0 && (int)prompt_inputs.size() == n_prompts && n_rows > 1 && n_cols > 1);
+            bool do_profile = quantizable && n_prompts > 0 && (int)prompt_inputs.size() == n_prompts && n_rows > 1 && n_cols > 1;
             if (do_profile) {
                 for (const auto& p : prompt_inputs) {
                     int dim = p.size();
@@ -536,18 +469,10 @@ int main(int argc, char** argv) {
                 size_t rows_per_chunk = chunk_floats / (size_t)n_cols;
                 size_t rc = (rows_per_chunk / col_step) * col_step;
                 if (rc == 0) rc = col_step;
-                if (panel_mode) rc = (rc / 8) * 8;
-                if (rc == 0 && panel_mode) rc = 8;
                 row_chunk = rc;
                 std::cout << "  chunking " << t.name << " rows " << n_rows
                           << " by " << row_chunk << " (cols " << n_cols << ")" << std::endl;
             }
-
-            std::string base;
-            int layer = 0;
-            parse_layer_base(t.name, base, layer);
-            std::string pn = prev_name(t.name);
-            bool has_prev = !pn.empty() && name_to_parser_idx.count(pn);
 
             // Precision floor: attention and lm_head must never be Q2, and Q8 is
             // wasted because the loader requantizes to Q4_K, so keep them at Q4.
@@ -570,24 +495,14 @@ int main(int argc, char** argv) {
                 max_bits = 4;
             }
 
-            std::vector<float> prev_w;
-            size_t prev_n = 0;
-            uint64_t tensor_bytes = 0;
-
+            // Pass A: dequantize each chunk and profile per-cluster activations
             for (int row_start = 0; row_start < n_rows; row_start += (int)row_chunk) {
                 int row_end = std::min(row_start + (int)row_chunk, n_rows);
                 int chunk_n_rows = row_end - row_start;
                 size_t chunk_n = (size_t)chunk_n_rows * (size_t)n_cols;
                 size_t chunk_offset_elems = (size_t)row_start * (size_t)n_cols;
-                size_t cluster_offset;
-                size_t chunk_nc;
-                if (panel_mode) {
-                    cluster_offset = ((size_t)row_start / 8) * n_blocks_per_row;
-                    chunk_nc = ((chunk_n_rows + 7) / 8) * n_blocks_per_row;
-                } else {
-                    cluster_offset = chunk_offset_elems / CLUSTER_SIZE;
-                    chunk_nc = (chunk_n + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-                }
+                size_t cluster_offset = chunk_offset_elems / CLUSTER_SIZE;
+                size_t chunk_nc = (chunk_n + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
 
                 GGUFTensor t_chunk = t;
                 t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
@@ -598,204 +513,88 @@ int main(int argc, char** argv) {
                     std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
                     return 1;
                 }
-                const float* w_ptr = w.data();
 
-                // Profile for weight matrices only
                 if (do_profile) {
                     std::vector<int> acts;
-                    profile_tensor(w_ptr, chunk_n_rows, n_cols, xs, acts);
-                    if (panel_mode) {
-                        std::vector<int> panel_acts(chunk_nc, 0);
-                        for (size_t i = 0; i < acts.size(); ++i) {
-                            size_t r = i / n_blocks_per_row;
-                            size_t b = i % n_blocks_per_row;
-                            size_t p = (r / 8) * n_blocks_per_row + b;
-                            panel_acts[p] = std::max(panel_acts[p], acts[i]);
-                        }
-                        for (size_t i = 0; i < chunk_nc; ++i) {
-                            to.clusters[cluster_offset + i].activation_freq = (float)panel_acts[i] / (float)n_prompts;
-                        }
-                    } else {
-                        for (size_t i = 0; i < acts.size(); ++i) {
-                            to.clusters[cluster_offset + i].activation_freq = (float)acts[i] / (float)n_prompts;
-                        }
+                    profile_tensor(w.data(), chunk_n_rows, n_cols, xs, acts);
+                    for (size_t i = 0; i < acts.size(); ++i) {
+                        to.clusters[cluster_offset + i].activation_freq = (float)acts[i] / (float)n_prompts;
                     }
                 } else {
                     for (size_t i = 0; i < chunk_nc; ++i) {
                         to.clusters[cluster_offset + i].activation_freq = 0.5f;
                     }
                 }
+            }
 
-                // Decide per-cluster bit width using activation frequencies
-                bool any_q2 = false;
-                for (size_t c = 0; c < chunk_nc; ++c) {
-                    size_t c_global = cluster_offset + c;
-                    float f = to.clusters[c_global].activation_freq;
+            // Per-cluster bit widths (distribution report) + dominant class → tensor type
+            int n_cold = 0, n_warm = 0, n_hot = 0;
+            if (quantizable) {
+                for (size_t c = 0; c < nc; ++c) {
+                    float f = to.clusters[c].activation_freq;
                     int bits;
                     if (f < COLD_THR) bits = 2;
                     else if (f > HOT_THR) bits = 8;
                     else bits = 4;
                     if (bits < min_bits) bits = min_bits;
                     if (bits > max_bits) bits = max_bits;
-                    to.clusters[c_global].quant_bits = (uint8_t)bits;
-                    if (bits == 2) total_cold++;
-                    else if (bits == 8) total_hot++;
-                    else total_warm++;
-                    if (bits == 2) any_q2 = true;
+                    to.clusters[c].quant_bits = (uint8_t)bits;
+                    if (bits == 2) { n_cold++; total_cold++; }
+                    else if (bits == 8) { n_hot++; total_hot++; }
+                    else { n_warm++; total_warm++; }
                 }
+            }
 
-                // Load the previous layer's weights only if this chunk uses Q2 residuals
-                if (any_q2 && has_prev && prev_w.empty()) {
-                    int prev_pi = name_to_parser_idx[pn];
-                    const GGUFTensor& prev_t = parser.tensors()[prev_pi];
-                    if (!read_tensor_floats(parser, prev_t, prev_w)) {
-                        std::cerr << "Failed to read prev " << prev_t.name << std::endl;
-                        return 1;
-                    }
-                    prev_n = prev_w.size();
+            GGMLType out_type;
+            if (!quantizable) {
+                // Keep F32 source tensors (biases, norms) as F32 — llama.cpp's
+                // element-wise add path requires matching operand types/shapes.
+                out_type = (t.type == GGMLType::F32 || f32_tensor) ? GGMLType::F32 : GGMLType::F16;
+            } else {
+                int bits = 4; // warm default
+                if (n_hot >= n_warm && n_hot >= n_cold) bits = 8;
+                else if (n_cold > n_warm && n_cold > n_hot) bits = 2;
+                if (bits < min_bits) bits = min_bits;
+                if (bits > max_bits) bits = max_bits;
+                out_type = (bits == 8) ? GGMLType::Q8_0 : (bits == 2) ? GGMLType::Q2_K : GGMLType::Q4_K;
+                if (out_type == GGMLType::Q8_0 && !q8_ok) out_type = GGMLType::F16;
+                if ((out_type == GGMLType::Q4_K || out_type == GGMLType::Q2_K) && !kquant_ok)
+                    out_type = q8_ok ? GGMLType::Q8_0 : GGMLType::F16;
+            }
+            to.quant_type = (uint32_t)out_type;
+
+            // Pass B: dequantize each chunk again and quantize to the decided GGUF type
+            to.data_offset = (uint64_t)ftell(data_tmp);
+            uint64_t tensor_bytes = 0;
+            for (int row_start = 0; row_start < n_rows; row_start += (int)row_chunk) {
+                int row_end = std::min(row_start + (int)row_chunk, n_rows);
+                int chunk_n_rows = row_end - row_start;
+                size_t chunk_offset_elems = (size_t)row_start * (size_t)n_cols;
+
+                GGUFTensor t_chunk = t;
+                t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
+                t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)n_cols };
+
+                std::vector<float> w;
+                if (!read_tensor_floats(parser, t_chunk, w)) {
+                    std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
+                    return 1;
                 }
-
-                // Pack this chunk's clusters; store the compressed blob temporarily in the
-                // ClusterOut, then flush it to the data stream and free the RAM
-                #pragma omp parallel for schedule(dynamic)
-                for (size_t c = 0; c < chunk_nc; ++c) {
-                    size_t c_global = cluster_offset + c;
-                    int bits = to.clusters[c_global].quant_bits;
-
-                    std::vector<uint8_t> packed;
-
-                    if (panel_mode) {
-                        size_t panel_b = c % n_blocks_per_row;
-                        size_t panel_g = c / n_blocks_per_row;
-                        size_t row0 = panel_g * 8;
-                        size_t rows_in_panel = std::min<size_t>(8, (size_t)chunk_n_rows - row0);
-                        size_t col_off = (size_t)panel_b * CLUSTER_SIZE;
-
-                        if (bits == 2) {
-                            size_t panel_len = rows_in_panel * CLUSTER_SIZE;
-                            std::vector<float> residual(panel_len, 0.0f);
-                            for (size_t r = 0; r < rows_in_panel; ++r) {
-                                size_t prev_pos = (size_t)c_global * (8 * CLUSTER_SIZE) + r * CLUSTER_SIZE;
-                                float prev_f32[CLUSTER_SIZE];
-                                std::memset(prev_f32, 0, sizeof(prev_f32));
-                                if (has_prev && !prev_w.empty() && prev_pos < prev_n) {
-                                    size_t block_len = std::min<size_t>(CLUSTER_SIZE, prev_n - prev_pos);
-                                    block_q4_K prev_q4k;
-                                    quantize_block_q4_K(prev_w.data() + prev_pos, &prev_q4k, block_len);
-                                    if (*(const uint16_t*)&prev_q4k.d != 0) {
-                                        dequantize_row_q4_K(&prev_q4k, prev_f32, (int64_t)CLUSTER_SIZE);
-                                    }
-                                }
-                                for (size_t k = 0; k < CLUSTER_SIZE; ++k) {
-                                    size_t cur_pos = (row0 + r) * (size_t)n_cols + col_off + k;
-                                    float cur = (cur_pos < chunk_n) ? w_ptr[cur_pos] : 0.0f;
-                                    residual[r * CLUSTER_SIZE + k] = cur - prev_f32[k];
-                                }
-                            }
-                            float scale = 0.0f;
-                            std::vector<int8_t> q = quant_floats(residual, bits, scale);
-                            to.clusters[c_global].scale = scale;
-                            pack_q2(residual, q, packed);
-                        } else {
-                            block_q4_K in[8];
-                            std::memset(in, 0, sizeof(in));
-                            for (size_t r = 0; r < rows_in_panel; ++r) {
-                                size_t col_len = std::min<size_t>(CLUSTER_SIZE, (size_t)n_cols - col_off);
-                                float v256[CLUSTER_SIZE];
-                                std::memset(v256, 0, sizeof(v256));
-                                for (size_t k = 0; k < col_len; ++k) {
-                                    v256[k] = w_ptr[(row0 + r) * (size_t)n_cols + col_off + k];
-                                }
-                                quantize_row_q4_K_ref(v256, &in[r], (int64_t)CLUSTER_SIZE);
-                                if (in[r].d == 0) std::memset(&in[r], 0, sizeof(in[r]));
-                            }
-
-                            ns_q4_Kx8 panel;
-                            repack_q4_K_row_panel_llama(in, (int)rows_in_panel, 1, &panel, 8);
-                            packed.resize(sizeof(panel));
-                            std::memcpy(packed.data(), &panel, sizeof(panel));
-                            to.clusters[c_global].scale = 1.0f;
-                        }
-                    } else {
-                        size_t c_start = c * CLUSTER_SIZE;
-                        size_t c_end = std::min((c + 1) * CLUSTER_SIZE, chunk_n);
-                        std::vector<float> values(w_ptr + c_start, w_ptr + c_end);
-
-                        if (bits == 2 && has_prev && !prev_w.empty()) {
-                            size_t prev_nc = (prev_n + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-                            if (c_global < prev_nc) {
-                                size_t off = c_global * CLUSTER_SIZE;
-                                const float* prev_w_ptr = prev_w.data();
-                                std::vector<float> prev_values(prev_w_ptr + off,
-                                                               prev_w_ptr + std::min(off + CLUSTER_SIZE, prev_n));
-                                if (prev_values.size() == values.size()) {
-                                    block_q4_K prev_q4k;
-                                    quantize_block_q4_K(prev_values.data(), &prev_q4k, prev_values.size());
-                                    if (*(const uint16_t*)&prev_q4k.d != 0) {
-                                        float prev_q4k_f32[CLUSTER_SIZE];
-                                        dequantize_row_q4_K(&prev_q4k, prev_q4k_f32, (int64_t)CLUSTER_SIZE);
-                                        for (size_t i = 0; i < values.size(); ++i)
-                                            values[i] = values[i] - prev_q4k_f32[i];
-                                    }
-                                }
-                            }
-                        }
-
-                        if (bits == 4 || bits == 8) {
-                            block_q4_K b;
-                            float v256[CLUSTER_SIZE];
-                            std::memset(v256, 0, sizeof(v256));
-                            std::memcpy(v256, values.data(), values.size() * sizeof(float));
-                            quantize_row_q4_K_ref(v256, &b, (int64_t)CLUSTER_SIZE);
-                            if (b.d == 0) {
-                                std::memset(&b, 0, sizeof(b));
-                                n_d_zero.fetch_add(1, std::memory_order_relaxed);
-                            }
-                            packed.resize(sizeof(b));
-                            std::memcpy(packed.data(), &b, sizeof(b));
-                            to.clusters[c_global].scale = 1.0f;
-                        } else {
-                            float scale = 0.0f;
-                            std::vector<int8_t> q = quant_floats(values, bits, scale);
-                            to.clusters[c_global].scale = scale;
-                            pack_q2(values, q, packed);
-                        }
-                    }
-
-                    to.clusters[c_global].packed = zlib_compress(packed);
-                    to.clusters[c_global].compressed = 1;
+                std::vector<uint8_t> qbuf;
+                size_t wrote = quantize_to_type(w, out_type, qbuf);
+                if (wrote == 0 && !w.empty()) {
+                    std::cerr << "Failed to quantize " << t.name << std::endl;
+                    return 1;
                 }
-
-                for (size_t c = 0; c < chunk_nc; ++c) {
-                    size_t c_global = cluster_offset + c;
-                    to.clusters[c_global].data_offset = (uint32_t)tensor_bytes;
-                    to.clusters[c_global].data_bytes = (uint32_t)to.clusters[c_global].packed.size();
-                    if (to.clusters[c_global].data_bytes > 0) {
-                        fwrite(to.clusters[c_global].packed.data(), 1, to.clusters[c_global].data_bytes, data_tmp);
-                    }
-                    tensor_bytes += to.clusters[c_global].data_bytes;
-                    to.clusters[c_global].packed.clear();
-                    to.clusters[c_global].packed.shrink_to_fit();
-                }
+                if (wrote > 0) fwrite(qbuf.data(), 1, wrote, data_tmp);
+                tensor_bytes += wrote;
             }
             to.data_bytes = tensor_bytes;
-            to.quant_type = (uint32_t)GGMLType::Q4_K;
-            if (std::string(to.name) == "blk.1.ffn_gate.weight") {
-                size_t sum_cluster_data_bytes = 0;
-                for (const auto& c : to.clusters) sum_cluster_data_bytes += c.data_bytes;
-                std::cout << "[NSQ CHECK] " << to.name
-                          << " n_clusters=" << to.n_clusters
-                          << " sum_cluster_data_bytes=" << sum_cluster_data_bytes
-                          << " tensor_data_bytes=" << to.data_bytes
-                          << " expected_raw_q4k=" << (to.n_clusters * sizeof(block_q4_K))
-                          << std::endl;
-            }
 
         } else {
-            // Already-quantized tensor: one raw passthrough cluster, no re-quantization
-            to.n_clusters = 1;
-            to.clusters.resize(1);
-            to.clusters[0].activation_freq = 0.5f;
+            // Passthrough: copy raw tensor bytes, keep original GGUF type
+            to.quant_type = (uint32_t)t.type;
+            to.data_offset = (uint64_t)ftell(data_tmp);
 
             size_t data_len = 0;
             if (ti + 1 < parser.tensors().size()) {
@@ -805,150 +604,150 @@ int main(int argc, char** argv) {
                 data_len = parser.full_file_size() - parser.data_offset() - t.offset;
             }
 
-            int bits = 8;
-            switch (t.type) {
-                case GGMLType::Q2_K: bits = 2; break;
-                case GGMLType::Q3_K: bits = 3; break;
-                case GGMLType::Q4_0:
-                case GGMLType::Q4_1:
-                case GGMLType::Q4_K: bits = 4; break;
-                case GGMLType::Q5_0:
-                case GGMLType::Q5_1:
-                case GGMLType::Q5_K: bits = 5; break;
-                case GGMLType::Q6_K: bits = 6; break;
-                case GGMLType::Q8_0:
-                case GGMLType::Q8_1: bits = 8; break;
-                default: bits = 8; break;
-            }
-            to.clusters[0].quant_bits = (uint8_t)bits;
-            to.clusters[0].scale = 0.0f;
-            to.clusters[0].compressed = 0;
-
             std::vector<uint8_t> block(data_len);
             if (data_len > 0) {
                 if (!parser.read_tensor(t, block.data(), data_len)) {
                     std::cerr << "Failed to read " << t.name << std::endl;
                     return 1;
                 }
-            }
-
-            to.clusters[0].data_offset = 0;
-            to.clusters[0].data_bytes = (uint32_t)data_len;
-            to.data_bytes = data_len;
-            to.quant_type = (uint32_t)t.type;
-
-            if (data_len > 0) {
                 fwrite(block.data(), 1, data_len, data_tmp);
             }
+            to.data_bytes = data_len;
         }
 
         outs.push_back(std::move(to));
     }
 
-    fclose(data_tmp);
+    // Assemble GGUF: KV section copied verbatim from source, new tensor
+    // descriptors, then tensor data already in final block layout in the
+    // temp stream.
+    fflush(data_tmp);
+    fseek(data_tmp, 0, SEEK_SET);
 
-    // Write final .nsm file: header, tensor table, cluster table, then packed data
+    const auto& src_buf = parser.head_buffer();
+
+    // Walk source GGUF header to find where the KV section ends
+    size_t off = 0;
+    off += 4; // magic
+    off += 4; // version
+    off += 8; // tensor_count
+    uint64_t src_kv = *(const uint64_t*)(src_buf.data() + off); off += 8;
+    for (uint64_t i = 0; i < src_kv; ++i) {
+        uint64_t klen = *(const uint64_t*)(src_buf.data() + off); off += 8 + klen;
+        uint32_t vt = *(const uint32_t*)(src_buf.data() + off); off += 4;
+        switch (vt) {
+            case 0: case 1: case 7: off += 1; break;
+            case 2: case 3: off += 2; break;
+            case 4: case 5: case 6: off += 4; break;
+            case 10: case 11: case 12: off += 8; break;
+            case 8: { uint64_t sl = *(const uint64_t*)(src_buf.data() + off); off += 8 + sl; } break;
+            case 9: {
+                uint32_t at = *(const uint32_t*)(src_buf.data() + off); off += 4;
+                uint64_t al = *(const uint64_t*)(src_buf.data() + off); off += 8;
+                if (at == 8) {
+                    for (uint64_t j = 0; j < al; ++j) {
+                        uint64_t sl = *(const uint64_t*)(src_buf.data() + off); off += 8 + sl;
+                    }
+                } else {
+                    size_t es = (at <= 1 || at == 7) ? 1 : (at <= 3) ? 2 : (at <= 6) ? 4 : 8;
+                    off += al * es;
+                }
+            } break;
+            default: break;
+        }
+    }
+    size_t kv_end = off;
+
+    // Tensor descriptor section size
+    size_t desc_size = 0;
+    for (size_t i = 0; i < outs.size(); ++i) {
+        const GGUFTensor& st = parser.tensors()[i];
+        desc_size += 8 + st.name.size() + 4 + st.shape.size() * 8 + 4 + 8;
+    }
+    size_t header_size = kv_end + desc_size;
+    size_t data_start = (header_size + 31) & ~size_t(31);
+
+    // Per-tensor data offsets relative to data section start, 32-aligned
+    std::vector<uint64_t> data_offs(outs.size());
+    uint64_t cur = 0;
+    for (size_t i = 0; i < outs.size(); ++i) {
+        data_offs[i] = cur;
+        cur += outs[i].data_bytes;
+        cur = (cur + 31) & ~uint64_t(31);
+    }
+
     FILE* f = fopen(out_path, "wb");
     if (!f) {
         std::cerr << "Failed to open output " << out_path << std::endl;
+        fclose(data_tmp);
         std::remove(data_tmp_path.c_str());
         return 1;
     }
 
-    NSMHeader hdr;
-    hdr.magic = NSM_MAGIC;
-    hdr.version = 1;
-    hdr.n_layers = mp.n_layers;
-    hdr.n_tensors = (uint32_t)outs.size();
-    hdr.data_offset = 0;
-    fwrite(&hdr, sizeof(hdr), 1, f);
+    // KV section verbatim from source (magic, version, tensor_count, kv_count, KVs)
+    fwrite(src_buf.data(), 1, kv_end, f);
 
-    size_t cluster_map_start = sizeof(hdr) + outs.size() * sizeof(NSMTensor);
-    uint64_t data_start = cluster_map_start;
-    for (const auto& to : outs) data_start += to.n_clusters * sizeof(NSMCluster);
-
-    uint64_t cursor = data_start;
-    for (auto& to : outs) {
-        to.data_offset = cursor;
-        cursor += to.data_bytes;
+    // Tensor descriptors
+    for (size_t i = 0; i < outs.size(); ++i) {
+        const GGUFTensor& st = parser.tensors()[i];
+        uint64_t nl = st.name.size();
+        fwrite(&nl, 8, 1, f);
+        fwrite(st.name.data(), 1, nl, f);
+        uint32_t nd = (uint32_t)st.shape.size();
+        fwrite(&nd, 4, 1, f);
+        for (auto dd : st.shape) { fwrite(&dd, 8, 1, f); }
+        fwrite(&outs[i].quant_type, 4, 1, f);
+        fwrite(&data_offs[i], 8, 1, f);
     }
 
-    hdr.data_offset = data_start;
-    fseek(f, 0, SEEK_SET);
-    fwrite(&hdr, sizeof(hdr), 1, f);
-
-    for (const auto& to : outs) {
-        NSMTensor nt;
-        std::memset(&nt, 0, sizeof(nt));
-        std::memcpy(nt.name, to.name, sizeof(nt.name));
-        nt.n_clusters = to.n_clusters;
-        nt.quant_type = to.quant_type;
-        nt.data_offset = to.data_offset;
-        nt.data_bytes = to.data_bytes;
-        fwrite(&nt, sizeof(nt), 1, f);
-    }
-
-    for (const auto& to : outs) {
-        for (const auto& c : to.clusters) {
-            NSMCluster cl;
-            cl.activation_freq = c.activation_freq;
-            cl.quant_bits = c.quant_bits;
-            cl.data_offset = c.data_offset;
-            cl.data_bytes = c.data_bytes;
-            cl.scale = c.scale;
-            cl.compressed = c.compressed;
-            fwrite(&cl, sizeof(cl), 1, f);
+    // Pad to data_start
+    {
+        long pos = ftell(f);
+        long pad = (long)data_start - pos;
+        if (pad > 0) {
+            std::vector<uint8_t> zeros(pad, 0);
+            fwrite(zeros.data(), 1, pad, f);
         }
     }
 
-    FILE* d = fopen(data_tmp_path.c_str(), "rb");
-    if (!d) {
-        std::cerr << "Failed to reopen temporary data file " << data_tmp_path << std::endl;
-        fclose(f);
-        std::remove(data_tmp_path.c_str());
-        return 1;
-    }
-
+    // Tensor data: stream each tensor's span from temp, pad to 32
     const size_t COPY_BUF = 8 * 1024 * 1024;
     std::vector<uint8_t> copy_buf(COPY_BUF);
-    size_t got;
-    while ((got = fread(copy_buf.data(), 1, COPY_BUF, d)) > 0) {
-        if (fwrite(copy_buf.data(), 1, got, f) != got) {
-            std::cerr << "Failed to write output data" << std::endl;
-            break;
+    for (size_t i = 0; i < outs.size(); ++i) {
+        fseek(data_tmp, (long)outs[i].data_offset, SEEK_SET);
+        uint64_t remaining = outs[i].data_bytes;
+        while (remaining > 0) {
+            size_t want = remaining < COPY_BUF ? (size_t)remaining : COPY_BUF;
+            size_t got = fread(copy_buf.data(), 1, want, data_tmp);
+            if (got == 0) break;
+            fwrite(copy_buf.data(), 1, got, f);
+            remaining -= got;
+        }
+        long p = ftell(f);
+        long npad = (32 - (p % 32)) % 32;
+        if (npad > 0) {
+            std::vector<uint8_t> zeros(npad, 0);
+            fwrite(zeros.data(), 1, npad, f);
         }
     }
-    fclose(d);
-    std::remove(data_tmp_path.c_str());
-    fclose(f);
 
-    // Validation pass
+    fclose(data_tmp);
+    fclose(f);
+    std::remove(data_tmp_path.c_str());
+
+    std::cout << "GGUF output written: " << out_path << std::endl;
+
+    // Validation: check GGUF magic
     FILE* v = fopen(out_path, "rb");
     if (v) {
-        NSMHeader vh;
-        if (fread(&vh, sizeof(vh), 1, v) == 1 && vh.magic == NSM_MAGIC) {
-            uint64_t total = 0;
-            fseek(v, sizeof(NSMHeader), SEEK_SET);
-            for (uint32_t i = 0; i < vh.n_tensors; ++i) {
-                NSMTensor vt;
-                if (fread(&vt, sizeof(vt), 1, v) != 1) break;
-                total += vt.n_clusters;
-            }
-            std::cout << "Validation: magic OK, tensors=" << vh.n_tensors
-                      << ", layers=" << vh.n_layers
-                      << ", clusters=" << total << std::endl;
+        char magic[4] = {0};
+        if (fread(magic, 1, 4, v) == 4 && std::memcmp(magic, "GGUF", 4) == 0) {
+            std::cout << "Validation: GGUF magic OK, tensors=" << outs.size() << std::endl;
         } else {
-            std::cerr << "Validation failed: bad header" << std::endl;
+            std::cerr << "Validation failed: bad GGUF magic" << std::endl;
         }
         fclose(v);
     }
-
-    uint64_t total_clusters_val = 0;
-    for (const auto& to : outs) total_clusters_val += to.n_clusters;
-
-    std::cout << "[NSQuant] d=0 clusters: " << n_d_zero.load()
-              << " / " << total_clusters_val
-              << " (" << (100.0 * (double)n_d_zero.load() / (double)total_clusters_val) << "%)" << std::endl;
 
     auto t1 = std::chrono::steady_clock::now();
     double sec = std::chrono::duration<double>(t1 - t0).count();
