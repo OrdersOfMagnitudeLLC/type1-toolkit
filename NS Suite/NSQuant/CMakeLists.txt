@@ -7,19 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Threads REQUIRED)
 find_package(OpenMP REQUIRED)
 
-set(NSRUN_SRC ${CMAKE_CURRENT_SOURCE_DIR}/../../deprecated/NSRun/src)
-set(NSRUN_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/../../deprecated/NSRun/include)
-
 add_executable(nsquant
     nsquant.cpp
-    ${NSRUN_SRC}/gguf_parser.cpp
-    ${NSRUN_SRC}/tokenizer.cpp
-    ${NSRUN_SRC}/nsm_loader.cpp
+    gguf_parser.cpp
+    tokenizer.cpp
+    nsm_loader.cpp
 )
 target_include_directories(nsquant PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${NSRUN_SRC}
-    ${NSRUN_INCLUDE}
 )
 find_library(Z_LIB NAMES z libz zlib)
 if(Z_LIB)

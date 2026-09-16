@@ -11,11 +11,13 @@
 
 typedef struct {
     uint32_t magic;
-    uint32_t version;       // 1
+    uint32_t version;       // 2
     uint32_t n_layers;
     uint32_t n_tensors;
     uint64_t data_offset;   // byte offset to first tensor data
     uint64_t layer_table_offset; // byte offset to per-layer packed-data index
+    uint64_t gguf_metadata_offset; // v2: offset to embedded GGUF header
+    uint64_t gguf_metadata_bytes;  // v2: length of embedded GGUF header
 } NSMHeader;
 
 typedef struct {
