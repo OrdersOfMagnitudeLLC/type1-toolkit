@@ -34,6 +34,25 @@
 static const size_t CLUSTER_SIZE = 256;
 static const float HOT_THR = 0.0f;
 static const float COLD_THR = 0.0f;
+
+// --dequant-input: treat Q4_K/Q6_K/Q8_0 input tensors as dequantizable to float
+static bool g_dequant_input = false;
+
+static bool is_dequant_type(GGMLType ty) {
+    return ty == GGMLType::Q4_K || ty == GGMLType::Q6_K || ty == GGMLType::Q8_0;
+}
+
+// Byte offset for a given number of elements, per on-disk type.
+// Quantized types are block-packed: caller must keep element offsets block-aligned.
+static uint64_t elem_offset_bytes(GGMLType ty, size_t elems) {
+    switch (ty) {
+        case GGMLType::F16:  return (uint64_t)elems * sizeof(uint16_t);
+        case GGMLType::Q4_K: return (uint64_t)(elems / QK_K) * sizeof(block_q4_K);
+        case GGMLType::Q6_K: return (uint64_t)(elems / QK_K) * sizeof(block_q6_K);
+        case GGMLType::Q8_0: return (uint64_t)(elems / QK8_0) * sizeof(block_q8_0);
+        default:             return (uint64_t)elems * sizeof(float);
+    }
+}
 std::atomic<uint64_t> n_d_zero(0);
 
 struct ClusterOut {
@@ -114,6 +133,33 @@ static bool read_tensor_floats(const GGUFParser& parser, const GGUFTensor& t, st
         std::vector<uint16_t> raw(n);
         if (!parser.read_tensor(t, (uint8_t*)raw.data(), n * sizeof(uint16_t))) return false;
         for (size_t i = 0; i < n; ++i) out[i] = f16_to_f32(raw[i]);
+        return true;
+    } else if (g_dequant_input && t.type == GGMLType::Q4_K) {
+        if (n % QK_K != 0) {
+            std::cerr << "read_tensor_floats: " << t.name << " Q4_K not block-aligned (n=" << n << ")" << std::endl;
+            return false;
+        }
+        std::vector<uint8_t> raw((n / QK_K) * sizeof(block_q4_K));
+        if (!parser.read_tensor(t, raw.data(), raw.size())) return false;
+        dequantize_row_q4_K((const block_q4_K*)raw.data(), out.data(), (int64_t)n);
+        return true;
+    } else if (g_dequant_input && t.type == GGMLType::Q6_K) {
+        if (n % QK_K != 0) {
+            std::cerr << "read_tensor_floats: " << t.name << " Q6_K not block-aligned (n=" << n << ")" << std::endl;
+            return false;
+        }
+        std::vector<uint8_t> raw((n / QK_K) * sizeof(block_q6_K));
+        if (!parser.read_tensor(t, raw.data(), raw.size())) return false;
+        dequantize_row_q6_K((const block_q6_K*)raw.data(), out.data(), (int64_t)n);
+        return true;
+    } else if (g_dequant_input && t.type == GGMLType::Q8_0) {
+        if (n % QK8_0 != 0) {
+            std::cerr << "read_tensor_floats: " << t.name << " Q8_0 not block-aligned (n=" << n << ")" << std::endl;
+            return false;
+        }
+        std::vector<uint8_t> raw((n / QK8_0) * sizeof(block_q8_0));
+        if (!parser.read_tensor(t, raw.data(), raw.size())) return false;
+        dequantize_row_q8_0((const block_q8_0*)raw.data(), out.data(), (int64_t)n);
         return true;
     }
     std::cerr << "read_tensor_floats: unsupported type for " << t.name << std::endl;
@@ -313,15 +359,21 @@ static std::vector<std::vector<float>> build_prompt_inputs(const BPETokenizer& t
 }
 
 int main(int argc, char** argv) {
-    if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <input.gguf> <output.nsm> [n_prompts [prompts.txt]]" << std::endl;
+    std::vector<std::string> pos;
+    for (int i = 1; i < argc; ++i) {
+        std::string a = argv[i];
+        if (a == "--dequant-input") g_dequant_input = true;
+        else pos.push_back(a);
+    }
+    if (pos.size() < 2) {
+        std::cerr << "Usage: " << argv[0] << " [--dequant-input] <input.gguf> <output.nsm> [n_prompts [prompts.txt]]" << std::endl;
         return 1;
     }
-    const char* in_path = argv[1];
-    const char* out_path = argv[2];
-    int n_prompts = (argc >= 4) ? std::atoi(argv[3]) : 500;
+    const char* in_path = pos[0].c_str();
+    const char* out_path = pos[1].c_str();
+    int n_prompts = (pos.size() >= 3) ? std::atoi(pos[2].c_str()) : 500;
     if (n_prompts < 0) n_prompts = 0;
-    std::string prompts_path = (argc >= 5) ? argv[4] : "prompts.txt";
+    std::string prompts_path = (pos.size() >= 4) ? pos[3] : "prompts.txt";
 
     auto t0 = std::chrono::steady_clock::now();
 
@@ -338,9 +390,22 @@ int main(int argc, char** argv) {
     int n_embd = (int)mp.n_embd;
     if (n_embd == 0) n_embd = 64;
 
+    // --dequant-input: reject tensor types we cannot dequantize (Q2_K, Q1/IQ*, etc.)
+    if (g_dequant_input) {
+        for (const auto& t : parser.tensors()) {
+            if (t.type == GGMLType::F32 || t.type == GGMLType::F16 || is_dequant_type(t.type)) continue;
+            std::cerr << "Error: --dequant-input cannot dequantize tensor '" << t.name
+                      << "' (type " << (uint32_t)t.type << "). Supported input types: F32, F16, Q4_K, Q6_K, Q8_0."
+                      << std::endl;
+            return 1;
+        }
+        std::cout << "--dequant-input: dequantizing Q4_K/Q6_K/Q8_0 tensors to float before profiling" << std::endl;
+    }
+
     bool any_float = false;
     for (const auto& t : parser.tensors()) {
-        if (t.type == GGMLType::F32 || t.type == GGMLType::F16) { any_float = true; break; }
+        if (t.type == GGMLType::F32 || t.type == GGMLType::F16 ||
+            (g_dequant_input && is_dequant_type(t.type))) { any_float = true; break; }
     }
     bool structural_q4 = !any_float;
 
@@ -348,7 +413,8 @@ int main(int argc, char** argv) {
     // before the per-tensor loop so only one tensor is in RAM at a time.
     const GGUFTensor* et = nullptr;
     for (const auto& t : parser.tensors()) {
-        if (t.name == "token_embd.weight" && (t.type == GGMLType::F32 || t.type == GGMLType::F16)) { et = &t; break; }
+        if (t.name == "token_embd.weight" && (t.type == GGMLType::F32 || t.type == GGMLType::F16 ||
+            (g_dequant_input && is_dequant_type(t.type)))) { et = &t; break; }
     }
     std::vector<float> token_embd;
     int n_vocab = 0;
@@ -419,7 +485,9 @@ int main(int argc, char** argv) {
         to.data_offset = 0;
         to.data_bytes = 0;
 
-        if ((t.type == GGMLType::F32 || t.type == GGMLType::F16) && t.name != "token_embd.weight") {
+        bool float_path = (t.type == GGMLType::F32 || t.type == GGMLType::F16) ||
+                          (g_dequant_input && is_dequant_type(t.type));
+        if (float_path && t.name != "token_embd.weight") {
             size_t n_full = numel(t);
             size_t nc = (n_full + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
 
@@ -522,7 +590,7 @@ int main(int argc, char** argv) {
                 }
 
                 GGUFTensor t_chunk = t;
-                t_chunk.offset += chunk_offset_elems * (t.type == GGMLType::F16 ? sizeof(uint16_t) : sizeof(float));
+                t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
                 t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)n_cols };
 
                 std::vector<float> w;
