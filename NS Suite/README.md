@@ -34,7 +34,7 @@ losses on structureless data.
 
 ## License
 
-OOM Commercial License v1.0 (see ./LICENSE.md)
+OOM Commercial License v1.0 — see LICENSE.md
 https://ofmagnitude.com/license
 
 ## Build

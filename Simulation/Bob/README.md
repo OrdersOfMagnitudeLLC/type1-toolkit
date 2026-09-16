@@ -18,4 +18,4 @@ import bob
 results = bob.query(materials, constraints)
 ```
 
-**License:** OOM Commercial License v1.0 (see ./LICENSE.md)
+**License:** OOM Commercial License v1.0 — see LICENSE.md
