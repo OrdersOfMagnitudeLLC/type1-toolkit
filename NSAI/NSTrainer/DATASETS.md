@@ -15,5 +15,5 @@ Training and evaluation used the following publicly available datasets. None are
 
 ## Dependencies
 ```bash
-pip install datasets transformers torch
+pip install -r requirements.txt
 ```

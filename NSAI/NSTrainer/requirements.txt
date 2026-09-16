@@ -1,0 +1,10 @@
+torch
+numpy
+tiktoken
+matplotlib
+datasets
+transformers
+requests
+bitsandbytes
+peft
+llama-cpp-python
