@@ -15,3 +15,11 @@ __pycache__/
 *.gguf
 *.pt
 *.pth
+c4_sample.txt
+tinyshakespeare.txt
+loss_comparison.png
+*_results.txt
+*_results_*.txt
+*.log
+results_*.txt
+run_*.txt

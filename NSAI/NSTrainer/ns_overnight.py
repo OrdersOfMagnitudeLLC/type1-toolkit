@@ -12,8 +12,8 @@ from torch.utils.checkpoint import checkpoint
 import tiktoken
 import ns_train
 
-NST_DIR = "/mnt/HIVE/NSTrainer"
-MODELS_DIR = "/mnt/HIVE/models"
+NST_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(NST_DIR, "models")
 C4_PATH = os.path.join(NST_DIR, ns_train.C4_PATH)
 BATCH_SIZE = 1
 BLOCK_SIZE = 128

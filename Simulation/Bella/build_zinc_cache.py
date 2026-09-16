@@ -7,12 +7,13 @@
 
 import pickle
 import math
+import os
 import time
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdMolDescriptors
 
 import sys
-ZINC_SMI = sys.argv[1] if len(sys.argv) > 1 else '/mnt/Storage/zinc/zinc_EAAE.smi'
+ZINC_SMI = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'zinc_EAAE.smi')
 OUT_CACHE = sys.argv[2] if len(sys.argv) > 2 else 'zinc_property_cache.pkl'
 
 records = []

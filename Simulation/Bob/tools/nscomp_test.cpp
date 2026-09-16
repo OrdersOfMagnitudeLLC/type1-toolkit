@@ -8,7 +8,7 @@
 #include <chrono>
 #include <iomanip>
 #include <cstring>
-#include "/home/lumiere/NS/NSComp/nscomp.hpp"
+#include "nscomp.hpp"
 #include <zstd.h>
 
 int main() {

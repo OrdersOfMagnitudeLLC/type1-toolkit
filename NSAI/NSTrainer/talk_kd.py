@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 from train_student_kd import StudentGPT
 
-CKPT_PATH = "/mnt/HIVE/models/ns_500m_kd.pt"
+CKPT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "ns_500m_kd.pt")
 DEVICE = torch.device("cpu")
 DTYPE = torch.bfloat16
 

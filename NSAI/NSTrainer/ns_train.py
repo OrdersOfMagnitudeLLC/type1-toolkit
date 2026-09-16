@@ -17,7 +17,7 @@ import torch.nn.functional as F
 DATA_URL = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
 DATA_PATH = "tinyshakespeare.txt"
 C4_PATH = "c4_sample.txt"
-OUT_DIR = "/mnt/HIVE/NSTrainer"
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 BLOCK_SIZE = 128
 BATCH_SIZE = 4

@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 *.log
 *.egg-info/
+query/battery_query

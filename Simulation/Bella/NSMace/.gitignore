@@ -1,0 +1,4 @@
+NSMace
+NSMace_fp64
+NSMace_no_omp
+*.o

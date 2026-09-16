@@ -5,7 +5,7 @@ import os
 import requests
 
 TARGET_BYTES = 50 * 1024 * 1024
-OUT_DIR = "/mnt/HIVE/NSTrainer"
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUT_PATH = os.path.join(OUT_DIR, "c4_sample.txt")
 URL = "https://huggingface.co/datasets/allenai/c4/resolve/main/en/c4-validation.00000-of-00008.json.gz"
 

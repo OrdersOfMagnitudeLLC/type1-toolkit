@@ -102,9 +102,10 @@ def main():
         "The most important thing in life is",
     ]
     
+    _models_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
     for ckpt_path, name in [
-        ("/mnt/HIVE/NSTrainer/models/ns_252m.pt", "252M"),
-        ("/mnt/HIVE/NSTrainer/models/ns_300m.pt", "300M"),
+        (os.path.join(_models_dir, "ns_252m.pt"), "252M"),
+        (os.path.join(_models_dir, "ns_300m.pt"), "300M"),
     ]:
         print(f"\n{'='*60}")
         print(f"  Loading {name} from {ckpt_path}...")

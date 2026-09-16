@@ -24,7 +24,7 @@ FT_STEPS = 150
 RAM_LIMIT_MB = 2000
 VOCAB_SIZE = 50257
 
-NST_DIR = "/mnt/HIVE/NSTrainer"
+NST_DIR = os.path.dirname(os.path.abspath(__file__))
 CKPT_PATH = os.path.join(NST_DIR, "ns_chat_v2.pt")
 TEACHER_CKPT = os.path.join(NST_DIR, "teacher_v2.pt")
 ACTS_DIR = os.path.join(NST_DIR, "teacher_acts_v2")
