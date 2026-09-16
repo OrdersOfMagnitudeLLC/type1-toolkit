@@ -4,7 +4,8 @@
 
 // NSMesh - Schema-aware mesh compression beating Draco
 // Product: NSMesh
-// License: AGPL-3.0
+// OOM Commercial License v1.0
+// Copyright 2026 Orders of Magnitude LLC
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published

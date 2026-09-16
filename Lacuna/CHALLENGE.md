@@ -38,6 +38,11 @@ meaningful in isolation. All strings are runtime-encoded. No symbols.
 - Binary only. No source code will be provided.
 - The crack must generalize: binary patching this specific binary does not
   count. A valid key that the unmodified binary accepts does.
+- OOM reserves the right to release updated versions of Lacuna after a
+  successful crack. The prize applies to the version cracked. Future
+  versions are separate challenges.
+- A crack must be submitted to orders@ofmagnitude.com with a reproducible
+  key generation method before the prize is claimed.
 - Submit to: orders@ofmagnitude.com
 
 ## Prize

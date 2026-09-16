@@ -34,7 +34,7 @@ losses on structureless data.
 
 ## License
 
-AGPLv3 free tier · OOM Commercial License for commercial use
+OOM Commercial License v1.0 (see /NS/LICENSE.md)
 https://ofmagnitude.com/license
 
 ## Build

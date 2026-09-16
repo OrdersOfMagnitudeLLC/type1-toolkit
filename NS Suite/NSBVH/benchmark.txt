@@ -1,11 +1,14 @@
 NSBVH8 vs Embree 4.4.1 (native build, -O3 -march=native): 100K rays, 10K AABBs, 25x20x1 grid (250-unit cells)
+Confirmed 2026-09-13 on i7-1165G7.
 
 Scene                              | Ray Type                  | NS rays/sec | Embree rays/sec | NS BVH8 (ms) | Embree (ms) | Ratio
 -----------------------------------|--------------------------|-------------|-----------------|-------------|-------------|-----------
-Dense Uniform (10K random, 80/80)  | random                   | 13,561,260  | 15,982,659      | 7.37        | 6.26        | 1.18x slower
-Sparse Clustered (20 clusters, 20/80)| 70% targeted + 30% random| 9,358,008   | 6,049,015       | 10.69       | 16.53       | 1.55x faster
-Mixed (10 clusters + 5K random, 80/80)| 70% targeted + 30% random| 7,501,795  | 4,625,682       | 13.33       | 21.62       | 1.62x faster
+Dense Uniform (10K random, 500/500)| random                   | 14,372,553  | 22,837,823      | 6.96        | 4.38        | 1.59x slower
+Sparse Clustered (20 clusters, 20/500)| 70% targeted + 30% random| 13,968,010 | 10,178,868      | 7.16        | 9.82        | 1.37x faster
+Mixed (10 clusters + 5K random, 500/500)| 70% targeted + 30% random| 10,960,110 | 7,629,760      | 9.12        | 13.11       | 1.44x faster
 
-Win condition: Sparse clustered and mixed scenes with targeted rays.
-NS-BVH grid skips empty cells (96% in sparse scene), delivering 1.55-1.62x speedup.
-Dense uniform narrowed to 1.18x: Embree SAH-optimized BVH2 wins on build quality for uniform distributions.
+Win condition: Clustered geometry — sparse clustered and mixed scenes with
+targeted rays. NS-BVH grid skips empty cells (96% in sparse scene),
+delivering 1.37-1.44x over Embree 4.4.1.
+Dense uniform is a documented loss (1.59x slower): no structure to exploit,
+Embree's SAH-optimized BVH2 wins on build quality for uniform distributions.

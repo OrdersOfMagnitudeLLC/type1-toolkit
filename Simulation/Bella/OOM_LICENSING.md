@@ -13,7 +13,7 @@
 - bella_pyscf_adapter.py = proprietary
 - Bob integration layer = proprietary
 - Vacuum mask generation logic = proprietary
-- License: AGPL3 + OOM commercial addendum
+- License: OOM Commercial License v1.0
 - RULE: These files never go inside engine/ directory
 
 ### Integration Layer (LGPL: clean boundary)

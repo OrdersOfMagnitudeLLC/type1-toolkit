@@ -1,0 +1,97 @@
+LOCAL MODE: pipeline 1 only, RAM limit 2.5GB
+Loading C4 data...
+C4: 11593843 tokens, vocab=50257
+Computing unigram NS filter...
+NS-data: 3459287 / 11593716 windows above threshold (29.8% retention)
+RSS after data prep: 392 MB
+
+============================================================
+Pipeline 50M: d_model=512, teacher=3L, student=8L, d_ff=2048
+============================================================
+
+  Training teacher (3 layers, 400 steps)...
+  Teacher: 35,254,272 params, RSS=481 MB
+  [50M-teacher] step 100: loss 8.3937  time 55.5s  RSS 809 MB
+  [50M-teacher] step 200: loss 9.5566  time 110.6s  RSS 809 MB
+  [50M-teacher] step 300: loss 8.2645  time 168.2s  RSS 809 MB
+  [50M-teacher] step 400: loss 8.0155  time 225.3s  RSS 865 MB
+  Time: 226.3s, Final loss: 8.0155
+  Eval loss: 7.7884
+  Saved teacher to /mnt/HIVE/models/teacher_512.pt
+
+  Saving teacher activations (50 sequences)...
+  Teacher deleted, RSS=538 MB
+
+  Building student (8 layers) and solving...
+  Student: 51,016,192 params, RSS=693 MB
+    Solved q_0 -> q_0  lambda=0.989885  RSS=627 MB
+    Solved k_0 -> k_0  lambda=0.989885  RSS=628 MB
+    Solved v_0 -> v_0  lambda=0.989885  RSS=628 MB
+    Solved c_0 -> c_0  lambda=0.129221  RSS=669 MB
+    Solved f1_0 -> f1_0  lambda=0.999579  RSS=730 MB
+    Solved f2_0 -> f2_0  lambda=0.092055  RSS=800 MB
+    Solved q_1 -> q_1  lambda=0.997623  RSS=760 MB
+    Solved k_1 -> k_1  lambda=0.997623  RSS=761 MB
+    Solved v_1 -> v_1  lambda=0.997623  RSS=761 MB
+    Solved c_1 -> c_1  lambda=0.186141  RSS=801 MB
+    Solved f1_1 -> f1_1  lambda=1.000028  RSS=859 MB
+    Solved f2_1 -> f2_1  lambda=0.035670  RSS=920 MB
+    Solved q_2 -> q_2  lambda=0.996941  RSS=880 MB
+    Solved k_2 -> k_2  lambda=0.996941  RSS=881 MB
+    Solved v_2 -> v_2  lambda=0.996941  RSS=881 MB
+    Solved c_2 -> c_2  lambda=0.202724  RSS=921 MB
+    Solved f1_2 -> f1_2  lambda=1.000620  RSS=979 MB
+    Solved f2_2 -> f2_2  lambda=0.036777  RSS=1040 MB
+    Solved q_3 -> q_2  lambda=0.997634  RSS=1000 MB
+    Solved k_3 -> k_2  lambda=0.997634  RSS=1001 MB
+    Solved v_3 -> v_2  lambda=0.997634  RSS=1001 MB
+    Solved c_3 -> c_2  lambda=0.203158  RSS=1041 MB
+    Solved f1_3 -> f1_2  lambda=0.999747  RSS=1098 MB
+    Solved f2_3 -> f2_2  lambda=0.036780  RSS=1160 MB
+    Solved q_4 -> q_2  lambda=0.998207  RSS=1120 MB
+    Solved k_4 -> k_2  lambda=0.998207  RSS=1120 MB
+    Solved v_4 -> v_2  lambda=0.998207  RSS=1121 MB
+    Solved c_4 -> c_2  lambda=0.203118  RSS=1161 MB
+    Solved f1_4 -> f1_2  lambda=0.999226  RSS=1218 MB
+    Solved f2_4 -> f2_2  lambda=0.036758  RSS=1279 MB
+    Solved q_5 -> q_2  lambda=0.998597  RSS=1240 MB
+    Solved k_5 -> k_2  lambda=0.998597  RSS=1240 MB
+    Solved v_5 -> v_2  lambda=0.998597  RSS=1241 MB
+    Solved c_5 -> c_2  lambda=0.203001  RSS=1281 MB
+    Solved f1_5 -> f1_2  lambda=0.998904  RSS=1338 MB
+    Solved f2_5 -> f2_2  lambda=0.036741  RSS=1399 MB
+    Solved q_6 -> q_2  lambda=0.998870  RSS=1360 MB
+    Solved k_6 -> k_2  lambda=0.998870  RSS=1360 MB
+    Solved v_6 -> v_2  lambda=0.998870  RSS=1360 MB
+    Solved c_6 -> c_2  lambda=0.202760  RSS=1401 MB
+    Solved f1_6 -> f1_2  lambda=0.998703  RSS=1458 MB
+    Solved f2_6 -> f2_2  lambda=0.036715  RSS=1519 MB
+    Solved q_7 -> q_2  lambda=0.999061  RSS=1480 MB
+    Solved k_7 -> k_2  lambda=0.999061  RSS=1480 MB
+    Solved v_7 -> v_2  lambda=0.999061  RSS=1480 MB
+    Solved c_7 -> c_2  lambda=0.202653  RSS=1521 MB
+    Solved f1_7 -> f1_2  lambda=0.998562  RSS=1578 MB
+    Solved f2_7 -> f2_2  lambda=0.036694  RSS=1639 MB
+  Solve time: 589.0s
+  Analytical init loss: 11.0491
+  Saved analytical checkpoint to /mnt/HIVE/models/ns_50m_analytical.pt
+
+  Fine-tuning (500 steps)...
+  [50M-ft] step 100: loss 7.9633  time 88.0s  RSS 2070 MB
+  [50M-ft] step 200: loss 8.7363  time 175.9s  RSS 2070 MB
+  [50M-ft] step 300: loss 7.6785  time 262.1s  RSS 2070 MB
+  [50M-ft] step 400: loss 8.1065  time 349.3s  RSS 2071 MB
+  [50M-ft] step 500: loss 8.5395  time 435.4s  RSS 2071 MB
+  Post fine-tune loss: 7.4953
+
+  Saving final checkpoint to /mnt/HIVE/models/ns_50m.pt...
+  Saved. RSS=1997 MB
+
+  Pipeline 50M COMPLETE: ft_loss=7.4953
+
+============================================================
+OVERNIGHT PIPELINE SUMMARY
+============================================================
+  50M: teacher_loss=7.7884  analytical=11.0491  ft=7.4953  params=51,016,192  solve=589s
+
+Summary saved to /mnt/HIVE/models/ns_overnight_summary.txt

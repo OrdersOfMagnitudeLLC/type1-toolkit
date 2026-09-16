@@ -1,0 +1,34 @@
+Building standard model...
+  Standard params: 3,225,153
+Building dynamic FFN model...
+  Dynamic FFN params: 3,093,313
+
+Training standard model (1000 steps)...
+
+Training dynamic FFN model (1000 steps)...
+  step 100: loss 2.6135
+  step 200: loss 2.4958
+  step 300: loss 2.3910
+  step 400: loss 2.3658
+  step 500: loss 2.4141
+  step 600: loss 2.3002
+  step 700: loss 2.2687
+  step 800: loss 2.1286
+  step 900: loss 2.0834
+  step 1000: loss 2.1813
+
+=== Dynamic FFN Experiment Results ===
+
+Standard model params: 3,225,153
+Dynamic FFN model params: 3,093,313
+Param difference: -131,840 (-4.1%)
+
+Step | Standard Loss | Dynamic FFN Loss
+ 100 | 2.6570 | 2.6135
+ 200 | 2.4940 | 2.4958
+ 500 | 2.4173 | 2.4141
+1000 | 2.0729 | 2.1813
+
+Final loss gap (dynamic - standard): 0.1084
+
+Results saved to /mnt/HIVE/NSTrainer/dynamic_ffn_results.txt

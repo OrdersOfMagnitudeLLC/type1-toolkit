@@ -1,4 +1,6 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# OOM Commercial License v1.0
+# Copyright 2026 Orders of Magnitude LLC
+# See /NS/LICENSE.md for terms.
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 """
 Density restart cache for SPARC phonon calculations.

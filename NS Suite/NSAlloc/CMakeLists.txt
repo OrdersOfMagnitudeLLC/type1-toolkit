@@ -6,7 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(nsalloc alloc_bench.cpp)
 target_include_directories(nsalloc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(nsalloc PRIVATE mimalloc)
+find_library(MIMALLOC_LIB NAMES mimalloc libmimalloc)
+if(MIMALLOC_LIB)
+    target_link_libraries(nsalloc PRIVATE ${MIMALLOC_LIB})
+else()
+    message(WARNING "mimalloc not found")
+endif()
 target_compile_options(nsalloc PRIVATE -O3 -march=native)
 
 option(NS_ALLOC_NEW "Build alloc_bench_new variant" OFF)

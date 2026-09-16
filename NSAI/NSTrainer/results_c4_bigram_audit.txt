@@ -1,0 +1,10 @@
+Total windows in dataset: 11593606
+Windows retained: 2945
+Retention percentage: 0.0254%
+
+First 5 retained window token sequences (decoded):
+  Window 1 (idx=47629): ' Yanderes are most commonly characterized by their crazy side, be it in love'
+  Window 2 (idx=47630): 'anderes are most commonly characterized by their crazy side, be it in love or'
+  Window 3 (idx=71095): ' The Occlu-Tray is a reusable stainless steel rigid tray that will not'
+  Window 4 (idx=77360): ' Dreams is a slot machine you can play for free online or play slots for real'
+  Window 5 (idx=77361): ' is a slot machine you can play for free online or play slots for real money'

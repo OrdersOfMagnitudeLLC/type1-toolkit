@@ -32,5 +32,5 @@ The following populate automatically on first use: not included in repo:
 
 ## License
 
-AGPLv3 · OOM Commercial License for commercial use
+OOM Commercial License v1.0 (see /NS/LICENSE.md)
 https://ofmagnitude.com/license

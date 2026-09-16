@@ -10,7 +10,7 @@ Command that produced it:
   python3 disease_screen.py --version v1 --targets 1000 --workers 8 --output-dir results/full_screen/
 
 Results in: Publish/Proteins/priority1000_calibrated_53k.csv
-Coverage: 866 protein targets, 50 disease categories
+Coverage: 995 protein targets, 50 disease categories
 Physics: T50 pocket geometry + T71 Kd_opt + T73 hydrophobic floor + 7-mechanism toxicity
 
 RESULT 2: Fe3Mn4 Nitrogen Fixation Discovery (-1.134 eV)

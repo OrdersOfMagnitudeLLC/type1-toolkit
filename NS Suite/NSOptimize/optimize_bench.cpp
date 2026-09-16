@@ -4,7 +4,8 @@
 
 // NSOptimize - Hierarchical Cluster-Aware TSP Solver
 // Product: NSOptimize
-// License: AGPL-3.0
+// OOM Commercial License v1.0
+// Copyright 2026 Orders of Magnitude LLC
 // Description: Hierarchical cluster-aware TSP, 387x faster than 2-opt at 20K cities
 // 
 // Copyright (C) 2026 NSOptimize Contributors

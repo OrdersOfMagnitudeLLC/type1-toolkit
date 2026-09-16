@@ -30,7 +30,7 @@ This License is free of charge if you are:
 
 (c) A government of a country classified as low-income or lower-middle-income by the World Bank at the time of use;
 
-(d) A Commercial Entity with Combined Annual Gross Revenue below USD $500,000.
+(d) A Commercial Entity with Combined Annual Gross Revenue below USD $1,000,000.
 
 All other Commercial Entities must obtain a paid license from ofmagnitude.com prior to using Licensed Materials in production. Current pricing is published at ofmagnitude.com. Licenses are per product, non-transferable, and either annual or perpetual as selected at purchase. No maintenance, support, or updates are implied or promised.
 

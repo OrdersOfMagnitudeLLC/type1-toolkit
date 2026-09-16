@@ -21,5 +21,10 @@ target_include_directories(nsquant PRIVATE
     ${NSRUN_SRC}
     ${NSRUN_INCLUDE}
 )
-target_link_libraries(nsquant PRIVATE z Threads::Threads OpenMP::OpenMP_CXX)
+find_library(Z_LIB NAMES z libz zlib)
+if(Z_LIB)
+    target_link_libraries(nsquant PRIVATE ${Z_LIB} Threads::Threads OpenMP::OpenMP_CXX)
+else()
+    target_link_libraries(nsquant PRIVATE Threads::Threads OpenMP::OpenMP_CXX)
+endif()
 target_compile_options(nsquant PRIVATE -O3 -march=native -fopenmp)

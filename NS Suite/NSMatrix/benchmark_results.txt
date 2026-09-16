@@ -1,0 +1,15 @@
+NSMatrix Benchmark Results
+Hardware: i7-1165G7, AVX-512 | Compiler: g++ -O3 -march=native -DUSE_EIGEN
+Date: 2026-09-13
+
+Block-diagonal matmul, 16x16 float blocks, vs Eigen fixed-size Map:
+
+Blocks    | NSMatrix (ns/block) | Eigen (ns/block) | Speedup
+----------|---------------------|------------------|--------
+B=1,000   | 80.64               | 266.32           | 3.30x
+B=10,000  | 157.64              | 363.51           | 2.30x
+B=100,000 | 171.70              | 353.10           | 2.06x
+
+Correctness: PASSED | AVX-512: YES
+Win condition: caller declares block-diagonal structure — Eigen has no
+native mechanism for this.

@@ -16,8 +16,8 @@ project(NSMace LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Spectre-class CPU: AVX-512 base; OpenMP for Fix I.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -mavx512f -fopenmp")
+# Highway compiles to best available SIMD on the build machine.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native -fopenmp")
 
 # FP64 reference build option.
 option(NSMACE_FP64 "Use double precision for reference build" OFF)

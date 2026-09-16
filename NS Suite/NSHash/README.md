@@ -20,14 +20,30 @@ None.
 
 ## Results
 
-Competitors (Abseil, ankerl::unordered_dense, robin_hood, fph::unordered_map, boost::unordered_flat_map, std::unordered_map) all built with `-O3 -march=native`. Ratios measured under concurrent system load: bounded/timestamp wins are stable, sequential/random compress under load.
+Competitors (Abseil, ankerl::unordered_dense, robin_hood, fph::unordered_map, boost::unordered_flat_map, std::unordered_map) all built with `-O3 -march=native`. Cold-run medians, 3 runs, 1M keys.
 
-| Workload | NSHash (ns) | absl (ns) | ankerl (ns) | robinhood (ns) | std (ns) | fph (ns) | boost (ns) | vs absl |
-|----------|------------|-----------|-------------|----------------|----------|----------|-----------|---------|
-| Sequential | 15,314 | 49,449 | 40,589 | 26,074 | 25,764 | 20,684 | 26,205 | 3.2x |
-| Random | 19,086 | 46,413 | 28,381 | 25,662 | 53,623 | 24,577 | 23,858 | 2.4x |
-| Bounded | 2,602 | 47,403 | 18,237 | 13,661 | 3,456 | 7,110 | 18,650 | 18.2x |
-| Timestamp | 2,737 | 42,611 | 22,450 | 23,285 | 4,180 | 18,321 | 28,456 | 15.6x |
+Lookup (ns/op):
+
+| Workload | NSHash | absl | ankerl | robinhood | std | fph | boost | vs absl |
+|----------|--------|------|--------|-----------|-----|-----|-------|---------|
+| Sequential | 8.52 | 19.38 | 24.09 | 21.88 | 27.44 | 14.23 | 20.52 | 2.28x |
+| Random | 12.96 | 18.75 | 17.29 | 22.08 | 33.28 | 14.36 | 19.78 | 1.45x |
+| Bounded | 1.19 | 10.14 | 11.01 | 8.29 | 2.59 | 2.96 | 14.39 | 8.53x |
+| Timestamp | 1.62 | 19.09 | 14.41 | 22.20 | 3.53 | 15.19 | 21.74 | 11.76x |
+
+Sequential insert (1M keys):
+
+| Map | Time (ms) | ops/sec | vs NSHash |
+|-----|-----------|---------|-----------|
+| NSHash | 7.04 | 142.0M | — |
+| boost | 16.1 | 62.2M | 2.28x |
+| ankerl | 21.1 | 47.3M | 3.00x |
+| std | 22.1 | 45.3M | 3.1x |
+| robin_hood | 24.9 | 40.2M | 3.54x |
+| absl | 30.0 | 33.3M | 4.26x |
+| fph | 712.9 | 1.4M | 101x |
+
+Headline: **11.76x vs absl::flat_hash_map** on timestamp lookup. Sequential insert: **4.26x absl / 101x fph / 3.1x std**.
 
 ## Third-party
 

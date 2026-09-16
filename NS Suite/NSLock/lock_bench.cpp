@@ -2,6 +2,7 @@
 // Licensed under the OOM Commercial License v1.0
 // See LICENSE.md in the repository root or ofmagnitude.com
 
+#include <cstdlib>
 #include <iostream>
 #include <thread>
 #include <atomic>
@@ -12,7 +13,7 @@
 #include <immintrin.h>
 #endif
 
-const int NUM_THREADS = 256;
+int NUM_THREADS = 256; // runtime-set via argv[1]
 const int NUM_OPERATIONS = 100000000;
 double READER_RATIO = 0.95; // 95% readers
 
@@ -234,19 +235,50 @@ void benchmark_ns() {
     std::cout << "Writer ops: " << writer_ops << std::endl;
 }
 
-int main() {
+int main(int argc, char** argv) {
     std::cout << "=== NSLock Benchmark ===" << std::endl;
-    std::cout << "Threads: " << NUM_THREADS << ", Operations: " << NUM_OPERATIONS << std::endl;
-    std::cout << "Reader ratio: " << (READER_RATIO * 100) << "%" << std::endl;
-    
-    std::cout << "\nBenchmarking StdRWLock..." << std::endl;
-    benchmark_std();
-    
-    std::cout << "\nBenchmarking NSRWLock..." << std::endl;
-    benchmark_ns();
-    
+
+    if (argc > 1) {
+        // Custom single-scenario run: ./nslock <threads> [reader_ratio]
+        NUM_THREADS = std::atoi(argv[1]);
+        if (NUM_THREADS < 2 || NUM_THREADS > 256) {
+            std::cerr << "Thread count must be 2-256 (reader_slots array size)\n";
+            return 1;
+        }
+        if (argc > 2) READER_RATIO = std::atof(argv[2]);
+        std::cout << "Threads: " << NUM_THREADS << ", Operations: " << NUM_OPERATIONS << std::endl;
+        std::cout << "Reader ratio: " << (READER_RATIO * 100) << "%" << std::endl;
+        std::cout << "\nBenchmarking StdRWLock..." << std::endl;
+        benchmark_std();
+        std::cout << "\nBenchmarking NSRWLock..." << std::endl;
+        benchmark_ns();
+    } else {
+        // Scenario 1: pure-read throughput — 256 threads, 100% readers.
+        // Matches the design claim: zero reader-reader cache contention.
+        NUM_THREADS = 256;
+        READER_RATIO = 1.0;
+        std::cout << "\n--- Scenario 1: pure read (256 threads, 100% readers) ---" << std::endl;
+        std::cout << "Operations: " << NUM_OPERATIONS << std::endl;
+        std::cout << "\nBenchmarking StdRWLock..." << std::endl;
+        benchmark_std();
+        std::cout << "\nBenchmarking NSRWLock..." << std::endl;
+        benchmark_ns();
+
+        // Scenario 2: mixed workload — 8 threads, 95% read / 5% write.
+        NUM_THREADS = 8;
+        READER_RATIO = 0.95;
+        std::cout << "\n--- Scenario 2: mixed (8 threads, 95% read / 5% write) ---" << std::endl;
+        std::cout << "Operations: " << NUM_OPERATIONS << std::endl;
+        std::cout << "\nBenchmarking StdRWLock..." << std::endl;
+        benchmark_std();
+        std::cout << "\nBenchmarking NSRWLock..." << std::endl;
+        benchmark_ns();
+    }
+
     // Stress test: 8 writers + 248 readers
     std::cout << "\n=== Stress Test: 8 writers + 248 readers ===" << std::endl;
+    const int STRESS_WRITERS = 8;
+    const int STRESS_READERS = 248;
     const int STRESS_ITERATIONS = 1000000;
     std::atomic<int> shared_counter{0};
     std::atomic<bool> stress_done{false};
@@ -271,13 +303,13 @@ int main() {
     NSRWLock stress_lock;
     std::vector<std::thread> stress_threads;
     
-    // Launch 8 writers
-    for (int i = 0; i < 8; i++) {
+    // Launch writers
+    for (int i = 0; i < STRESS_WRITERS; i++) {
         stress_threads.emplace_back(stress_writer, std::ref(stress_lock));
     }
     
-    // Launch 248 readers
-    for (int i = 0; i < 248; i++) {
+    // Launch readers
+    for (int i = 0; i < STRESS_READERS; i++) {
         stress_threads.emplace_back(stress_reader, i, std::ref(stress_lock));
     }
     

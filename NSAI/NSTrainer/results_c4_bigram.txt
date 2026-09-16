@@ -1,0 +1,15 @@
+NS-data: 2945 / 11593606 windows above threshold (0.0% retention)
+Run A: standard (c4, full data)
+Run C: bigram NS-data (c4)
+
+Results:
+Step | Standard (full) | NS-data (filtered)
+ 100 | 7.6045 | 8.2042
+ 200 | 7.8200 | 7.8025
+ 500 | 7.7698 | 6.7284
+1000 | 8.6294 | 4.9343
+
+Total gradient updates — Standard: 16099248167, NS-data: 16097929845
+NS-data matches standard quality at step 14 out of 1000 (98.6% compute reduction)
+
+Plot saved: /mnt/HIVE/NSTrainer/loss_comparison.png

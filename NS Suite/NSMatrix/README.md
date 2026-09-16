@@ -20,10 +20,17 @@ None.
 
 ## Results
 
-| Operation | Time (ms) |
-|-----------|----------|
-| Block matmul (AVX-512) | 700.4 |
+Baseline: Eigen (fixed-size blocks). 16x16 float blocks, AVX-512.
+
+| Blocks | NSMatrix (ns/block) | Eigen (ns/block) | Speedup |
+|--------|---------------------|------------------|---------|
+| B=1,000 | 80.64 | 266.32 | **3.30x** |
+| B=10,000 | 157.64 | 363.51 | **2.30x** |
+| B=100,000 | 171.70 | 353.10 | **2.06x** |
+
+Headline: **3.3x Eigen at B=1,000 blocks.** Win condition: caller declares
+block-diagonal structure — Eigen has no native mechanism for this.
 
 ## Third-party
 
-None.
+- **Eigen**: MPL2 License (system headers, /usr/include/eigen3)

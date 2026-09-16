@@ -1,0 +1,52 @@
+Building standard model...
+  Standard params: 3,225,153
+
+Training standard model (1000 steps)...
+
+Building dynamic FFN model (A: all layers, 512 nodes, k=32)...
+  Dynamic FFN params: 2,697,793
+
+Training dynamic FFN model (A: all layers, 512 nodes, k=32, 1000 steps)...
+  step 100: loss 2.6213
+  step 200: loss 2.4816
+  step 300: loss 2.3412
+  step 400: loss 2.4116
+  step 500: loss 2.4330
+  step 600: loss 2.3387
+  step 700: loss 2.2525
+  step 800: loss 2.1433
+  step 900: loss 2.1076
+  step 1000: loss 2.1916
+
+Building dynamic FFN model (B: layers 0+3, 512 nodes, k=32)...
+  Dynamic FFN params: 2,961,473
+
+Training dynamic FFN model (B: layers 0+3, 512 nodes, k=32, 1000 steps)...
+  step 100: loss 2.6358
+  step 200: loss 2.4847
+  step 300: loss 2.3628
+  step 400: loss 2.4081
+  step 500: loss 2.4377
+  step 600: loss 2.3955
+  step 700: loss 2.3011
+  step 800: loss 2.1609
+  step 900: loss 2.1057
+  step 1000: loss 2.1607
+
+=== Dynamic FFN Experiment Results v5 ===
+
+Standard model params: 3,225,153
+Dynamic FFN params (A: all layers, 512 nodes, k=32): 2,697,793 (-16.4%)
+Dynamic FFN params (B: layers 0+3, 512 nodes, k=32): 2,961,473 (-8.2%)
+
+Standard final loss (1000): 2.0834
+A: all layers, 512 nodes, k=32 final loss (1000): 2.1916  gap: +0.1082
+B: layers 0+3, 512 nodes, k=32 final loss (1000): 2.1607  gap: +0.0772
+
+Step | Standard | A: all layers, 512 nodes, k=32 | B: layers 0+3, 512 nodes, k=32
+ 100 | 2.6570 | 2.6213 | 2.6358
+ 200 | 2.4940 | 2.4816 | 2.4847
+ 500 | 2.4178 | 2.4330 | 2.4377
+1000 | 2.0834 | 2.1916 | 2.1607
+
+Results saved to /mnt/HIVE/NSTrainer/dynamic_ffn_results_v5.txt

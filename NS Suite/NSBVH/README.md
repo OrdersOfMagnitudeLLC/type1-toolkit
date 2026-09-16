@@ -1,6 +1,6 @@
 # NSBVH
 
-Wins on sparse and mixed scenes. Dense uniform within 1.18x of Embree 4.4.1.
+1.37x–1.44x Embree 4.4.1 on clustered/mixed scenes. Dense uniform is a documented loss (1.59x slower).
 
 Bounding Volume Hierarchy (BVH) ray tracer with 8-wide SIMD traversal and spatial grid partitioning.
 
@@ -22,15 +22,15 @@ None.
 
 ## Results
 
-Embree 4.4.1 built from source with `-O3 -march=native`.
+Baseline: Intel Embree 4.4.1, built from source with `-O3 -march=native`. Confirmed 2026-09-13.
 
 | Scene | Ray Type | NS rays/sec | Embree rays/sec | NS (ms) | Embree (ms) | Ratio |
 |-------|----------|-------------|-----------------|---------|-------------|-------|
-| Dense Uniform (10K random, 80/80 cells) | random | 13.6M | 16.0M | 7.37 | 6.26 | 1.18x slower |
-| Sparse Clustered (20 clusters, 20/80 cells) | 70% targeted + 30% random | 9.4M | 6.0M | 10.69 | 16.53 | **1.55x faster** |
-| Mixed (10 clusters + 5K random, 80/80 cells) | 70% targeted + 30% random | 7.5M | 4.6M | 13.33 | 21.62 | **1.62x faster** |
+| Dense Uniform (10K random, 500/500 cells) | random | 14.4M | 22.8M | 6.96 | 4.38 | 1.59x slower |
+| Sparse Clustered (20 clusters, 20/500 cells) | 70% targeted + 30% random | 14.0M | 10.2M | 7.16 | 9.82 | **1.37x faster** |
+| Mixed (10 clusters + 5K random, 500/500 cells) | 70% targeted + 30% random | 11.0M | 7.6M | 9.12 | 13.11 | **1.44x faster** |
 
-**Win condition:** Sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.55–1.62x speedup over Embree 4.4.1. Dense uniform narrowed to 1.18x: Embree's SAH-optimized BVH2 still wins on build quality for uniform distributions.
+**Win condition:** Clustered geometry — sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.37–1.44x over Embree 4.4.1. No win on structureless random distribution: dense uniform is a documented loss (1.59x slower) — Embree's SAH-optimized BVH2 wins on build quality.
 
 ## Secondary Ray Benchmark (10M rays, dense scene)
 

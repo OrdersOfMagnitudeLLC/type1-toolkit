@@ -14,8 +14,8 @@ It is not the cleanest software ever written. It gets the job done.
 
 WHAT IT FOUND
 -------------
-53,349 calibrated protein drug candidates across 866 targets, 50 disease categories.
-133 phonon-stable materials candidates across 101 civilization categories.
+53,349 calibrated protein drug candidates across 995 targets, 50 disease categories.
+2,944 phonon-stable materials candidates across 96 civilization categories.
 Fe3Mn4: N2 adsorption -1.134 eV: earth-abundant Haber-Bosch replacement candidate.
 Mo2FeN2: phonon stable, NEB barrier 1.193 eV: nitrogen fixation candidate 2.
 Shifu (SiHF3): solid-state battery electrolyte, 20-35x cheaper per kWh-cycle (theoretical).
@@ -34,6 +34,19 @@ DATA SOURCES (download separately, free):
 
 We do not ship gnome.csv or zinc pkl files in any public release: users provide their own.
 
+## Compatibility
+
+| Component | Linux | macOS | Windows |
+|-----------|-------|-------|---------|
+| Bella (Python) | yes | yes | yes (WSL) |
+| NSMace (C++) | yes | yes | yes (WSL) |
+| SPARC (DFT) | yes | untested | no |
+
+CPU: AVX2 minimum (Intel Haswell 2013+ or AMD Zen 2020+).
+NSMace compiles to the best available SIMD on your build machine via Google Highway. AVX-512 used automatically when present.
+
+SPARC is optional. Foam mechanics handles 99% of screening without it. Install SPARC only for final DFT confirmation on shortlisted candidates.
+
 STRUCTURE
 ---------
 bella.py                     : main orchestrator, all bella commands
@@ -42,7 +55,7 @@ bella_phonon.py              : SPARC phonon pipeline, pressure sweeps
 bella_validate.py            : validation suite + feature matrix
 foam_screener_v2.py          : foam mechanics engine (THE core)
 disease_screen.py            : protein/drug candidate screener
-materials_civilization_screen.py: materials screener, 101 categories
+materials_civilization_screen.py: materials screener, 96 categories
 bob.py                       : materials search (GNoME, Materials Project)
 sparc-engine/                : SPARC DFT solver (upstream GPL, unmodified)
 NSMace/                      : NS force field calculator (compiled C++)

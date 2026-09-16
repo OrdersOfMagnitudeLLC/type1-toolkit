@@ -10,7 +10,7 @@ Header-only C++17 library for multi-property materials search with learned indic
 - Batch x1000: 101x vs brute force
 - Index build: 0.64s (one-time)
 
-**Requirements:** AVX-512 capable CPU (Intel Tiger Lake gen11+ or AMD Zen 4+), g++ -O3 -march=native -std=c++17 -fopenmp -DUSE_NSINDEX
+**Requirements:** AVX2 capable CPU (Intel Haswell 2013+ or AMD Zen 2020+), g++ -O3 -march=native -std=c++17 -fopenmp -DUSE_NSINDEX
 
 **Python integration (placeholder):**
 ```python
@@ -18,4 +18,4 @@ import bob
 results = bob.query(materials, constraints)
 ```
 
-**License:** AGPL-3.0 - NS products use AGPL for copyleft compliance
+**License:** OOM Commercial License v1.0 (see /NS/LICENSE.md)

@@ -30,7 +30,7 @@ Ranks candidates by abundance, synthesizability, and property match.
 
 ### NS Suite: `NS Suite/` 
 22 performance products exploiting Negative Space.
-NSHash (55x absl), NSSort (182,000x structured data), NSAttend (30.9x attention).
+NSHash (11.76x absl), NSSort (182,000x structured data), NSAttend (30.9x attention).
 
 ### NS Suite: `NSTrainer/`
 Full-stack AI inference engine. NSKVCache (300x KV compression, 1M context at 468MB), NSAttend (30.9x attention on local patterns), NSInfer (100x training compute reduction via NS-filtered LoRA), NSQuant (input-aware variable-rate quantization, hot weights at Q8/cold at Q2). Runs on CPU. No data center required.
