@@ -32,5 +32,5 @@ The following populate automatically on first use: not included in repo:
 
 ## License
 
-OOM Commercial License v1.0 (see /NS/LICENSE.md)
+OOM Commercial License v1.0 (see ./LICENSE.md)
 https://ofmagnitude.com/license

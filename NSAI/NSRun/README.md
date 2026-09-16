@@ -6,4 +6,4 @@ NSRun is a fork of ik_llama.cpp with four NS components:
 - NSInfer — 2.35x MLP throughput via sparse activation
 - NSQuant — Activation-aware variable-rate quantization
 
-See /NS/LICENSING.md for license details.
+See ./LICENSE.md for license details.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # OOM Commercial License v1.0
 # Copyright 2026 Orders of Magnitude LLC
-# See /NS/LICENSE.md for terms.
+# See ./LICENSE.md for terms.
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 """Riemann-Siegel Z(t) zero finder and GUE spacing analysis.
 
