@@ -29,10 +29,9 @@
 #include <cassert>
 
 static const size_t CLUSTER_SIZE = 256;
-// activation_freq stores a mean-|y| percentile rank (0..1), not a fire
-// frequency: hot = top 35% (rank > 0.65), warm = next 55%, cold = bottom 10%.
-static const float HOT_THR = 0.65f;
-static const float COLD_THR = 0.1f;
+// activation_freq stores each cluster's absolute mean-|y| score. Clusters are
+// ranked globally across all tensors; the top hot_budget elements -> Q8_0,
+// bottom cold_budget -> Q2_K, rest -> Q4_K (see --hot-budget/--cold-budget).
 
 // --dequant-input: treat Q4_K/Q6_K/Q8_0 input tensors as dequantizable to float
 static bool g_dequant_input = false;
@@ -64,6 +63,20 @@ struct TensorOut {
     uint64_t data_offset;  // offset within the temp data stream
     uint64_t data_bytes;
     std::vector<ClusterOut> clusters;
+};
+
+// Per-tensor metadata computed in the profiling pass and reused in the
+// quantize pass (the global budget sort sits between the two passes).
+struct TensorJob {
+    int n_rows = 1, n_cols = 1;
+    size_t nc = 0;
+    size_t row_chunk = 0;
+    bool float_path = false;
+    bool quantizable = false;
+    bool kquant_ok = false, q8_ok = false;
+    bool f32_tensor = false;
+    bool profiled = false;
+    int min_bits = 2, max_bits = 8;
 };
 
 static size_t file_size(const std::string& path) {
@@ -212,14 +225,16 @@ static size_t quantize_to_type(const std::vector<float>& w, GGMLType ty, std::ve
 }
 
 // Profiles each row by mean |y| across prompts (y_r = dot(w_row, x)), then
-// stores the row's percentile rank into each cluster's activation_freq.
-// activation_freq is now a mean-|y| percentile rank, not a fire frequency.
+// stores each cluster's mean |y| PERCENTILE RANK (0..1 within this tensor) into
+// cluster_score. The rank is normalized per-tensor so a global sort distributes
+// the hot/warm/cold budget within every tensor — a raw |y| score would instead
+// be dominated by tensor scale and push whole low-magnitude tensors to Q2_K.
 static void profile_tensor(const float* w, int n_rows, int n_cols,
                            const std::vector<std::vector<float>>& xs,
-                           std::vector<float>& cluster_rank) {
+                           std::vector<float>& cluster_score) {
     size_t total = (size_t)n_rows * (size_t)n_cols;
     size_t n_clusters = (total + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-    cluster_rank.assign(n_clusters, 0.5f);
+    cluster_score.assign(n_clusters, 0.5f);
     if (n_rows <= 0 || n_cols <= 0 || xs.empty()) return;
 
     // Accumulate |y_r| per row across all prompts (parallel over prompts).
@@ -257,15 +272,22 @@ static void profile_tensor(const float* w, int n_rows, int n_cols,
     float denom = (n_rows > 1) ? (float)(n_rows - 1) : 1.0f;
     for (int i = 0; i < n_rows; ++i) row_rank[order[i]] = (float)i / denom;
 
-    // Each cluster takes the mean rank of the row(s) it overlaps.
+    // Each cluster's score = element-weighted mean rank of the rows it overlaps.
     for (size_t ci = 0; ci < n_clusters; ++ci) {
         size_t f0 = ci * CLUSTER_SIZE;
         size_t f1 = std::min(f0 + CLUSTER_SIZE - 1, total - 1);
         int r0 = (int)(f0 / (size_t)n_cols);
         int r1 = (int)(f1 / (size_t)n_cols);
-        float acc = 0.0f;
-        for (int r = r0; r <= r1; ++r) acc += row_rank[r];
-        cluster_rank[ci] = acc / (float)(r1 - r0 + 1);
+        double acc = 0.0;
+        size_t cnt = 0;
+        for (int r = r0; r <= r1; ++r) {
+            size_t e0 = std::max(f0, (size_t)r * (size_t)n_cols);
+            size_t e1 = std::min(f1, (size_t)r * (size_t)n_cols + (size_t)n_cols - 1);
+            size_t nn = (e1 >= e0) ? (e1 - e0 + 1) : 0;
+            acc += (double)row_rank[r] * (double)nn;
+            cnt += nn;
+        }
+        cluster_score[ci] = cnt ? (float)(acc / (double)cnt) : 0.5f;
     }
 }
 
@@ -310,14 +332,18 @@ static std::vector<std::vector<float>> build_prompt_inputs(const BPETokenizer& t
 }
 
 int main(int argc, char** argv) {
+    long long cli_hot_budget = 500000000;
+    long long cli_cold_budget = 100000000;
     std::vector<std::string> pos;
     for (int i = 1; i < argc; ++i) {
         std::string a = argv[i];
         if (a == "--dequant-input") g_dequant_input = true;
+        else if (a == "--hot-budget" && i + 1 < argc) cli_hot_budget = std::atoll(argv[++i]);
+        else if (a == "--cold-budget" && i + 1 < argc) cli_cold_budget = std::atoll(argv[++i]);
         else pos.push_back(a);
     }
     if (pos.size() < 2) {
-        std::cerr << "Usage: " << argv[0] << " [--dequant-input] <input.gguf> <output.gguf> [n_prompts [prompts.txt]]" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " [--dequant-input] [--hot-budget N] [--cold-budget N] <input.gguf> <output.gguf> [n_prompts [prompts.txt]]" << std::endl;
         return 1;
     }
     const char* in_path = pos[0].c_str();
@@ -410,19 +436,23 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    std::vector<TensorOut> outs;
-    outs.reserve(parser.tensors().size());
-
     size_t total_hot = 0, total_warm = 0, total_cold = 0;
     size_t n_tensors = parser.tensors().size();
 
+    std::vector<TensorOut> outs(n_tensors);
+    std::vector<TensorJob> jobs(n_tensors);
+
+    // PASS 1: per-tensor metadata + mean-|y| profiling per cluster. The score is
+    // stored in activation_freq; quantization is deferred until after the
+    // global budget sort decides every cluster's bit width.
     for (size_t ti = 0; ti < n_tensors; ++ti) {
         const GGUFTensor& t = parser.tensors()[ti];
         if ((ti % 10) == 0) {
-            std::cout << "Processing [" << (ti + 1) << "/" << n_tensors << "] " << t.name << std::endl;
+            std::cout << "Profiling [" << (ti + 1) << "/" << n_tensors << "] " << t.name << std::endl;
         }
 
-        TensorOut to;
+        TensorJob& J = jobs[ti];
+        TensorOut& to = outs[ti];
         std::memset(to.name, 0, sizeof(to.name));
         std::strncpy(to.name, t.name.c_str(), sizeof(to.name) - 1);
         to.n_clusters = 0;
@@ -430,188 +460,209 @@ int main(int argc, char** argv) {
         to.data_offset = 0;
         to.data_bytes = 0;
 
-        bool float_path = (t.type == GGMLType::F32 || t.type == GGMLType::F16) ||
-                          (g_dequant_input && is_dequant_type(t.type));
-        if (float_path) {
-            size_t n_full = numel(t);
-            size_t nc = (n_full + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
+        J.float_path = (t.type == GGMLType::F32 || t.type == GGMLType::F16) ||
+                       (g_dequant_input && is_dequant_type(t.type));
+        if (!J.float_path) continue;  // passthrough handled in pass 2
 
-            // Flatten shape; treat shape[0] as input columns and shape[1] as
-            // output rows, matching the GGUF layout and the NSRun kernels.
-            int n_rows = 1, n_cols = 1;
-            if (t.shape.size() >= 2) {
-                n_cols = (int)t.shape[0];
-                n_rows = (int)t.shape[1];
-            } else if (!t.shape.empty()) {
-                n_rows = (int)t.shape[0];
-                n_cols = 1;
+        size_t n_full = numel(t);
+        J.nc = (n_full + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
+
+        // Flatten shape; treat shape[0] as input columns and shape[1] as
+        // output rows, matching the GGUF layout and the NSRun kernels.
+        if (t.shape.size() >= 2) {
+            J.n_cols = (int)t.shape[0];
+            J.n_rows = (int)t.shape[1];
+        } else if (!t.shape.empty()) {
+            J.n_rows = (int)t.shape[0];
+            J.n_cols = 1;
+        }
+
+        bool preserve = is_preserve(t.name);
+        J.f32_tensor = is_f32_tensor(t.name);
+        bool is2d = (t.shape.size() >= 2);
+        // K-quants need ne[0] % 256; Q8_0 needs ne[0] % 32
+        J.kquant_ok = is2d && (J.n_cols % (int)QK_K == 0);
+        J.q8_ok = is2d && (J.n_cols % (int)QK8_0 == 0);
+        J.quantizable = is2d && !preserve && !J.f32_tensor && (J.kquant_ok || J.q8_ok);
+
+        to.n_clusters = (uint32_t)J.nc;
+        to.clusters.resize(J.nc);
+
+        // Precision floor: attention and lm_head must never be Q2, and Q8 is
+        // wasted because the loader requantizes to Q4_K, so keep them at Q4.
+        if (t.name.find("token_embd") != std::string::npos ||
+            t.name.find("blk.0.") != std::string::npos ||
+            t.name.find(".attn_q.") != std::string::npos ||
+            t.name.find(".attn_k.") != std::string::npos ||
+            t.name.find(".attn_v.") != std::string::npos ||
+            t.name.find(".attn_output.") != std::string::npos) {
+            J.min_bits = 8;
+            J.max_bits = 8;
+        } else if (t.name.find("attn_q") != std::string::npos ||
+                   t.name.find("attn_k") != std::string::npos ||
+                   t.name.find("attn_v") != std::string::npos ||
+                   t.name.find("attn_output") != std::string::npos ||
+                   t.name.find("output.weight") != std::string::npos) {
+            J.min_bits = 4;
+            J.max_bits = 4;
+        }
+
+        // Build prompt inputs projected to n_cols once per tensor
+        std::vector<std::vector<float>> xs;
+        bool do_profile = J.quantizable && n_prompts > 0 && (int)prompt_inputs.size() == n_prompts && J.n_rows > 1 && J.n_cols > 1;
+        if (do_profile) {
+            for (const auto& p : prompt_inputs) {
+                int dim = p.size();
+                std::vector<float> x(J.n_cols, 0.0f);
+                if (dim == J.n_cols) x = p;
+                else {
+                    std::mt19937 rng((unsigned)(dim + J.n_cols));
+                    std::normal_distribution<float> dist(0.0f, 0.02f);
+                    for (float& v : x) v = dist(rng);
+                }
+                xs.push_back(std::move(x));
+            }
+        }
+        J.profiled = do_profile;
+
+        // Decide chunking along rows to stay within the RAM budget
+        J.row_chunk = (size_t)J.n_rows;
+        if (n_full > chunk_floats) {
+            size_t g = std::gcd((size_t)J.n_cols, (size_t)CLUSTER_SIZE);
+            size_t col_step = CLUSTER_SIZE / g;
+            size_t rows_per_chunk = chunk_floats / (size_t)J.n_cols;
+            size_t rc = (rows_per_chunk / col_step) * col_step;
+            if (rc == 0) rc = col_step;
+            J.row_chunk = rc;
+            std::cout << "  chunking " << t.name << " rows " << J.n_rows
+                      << " by " << J.row_chunk << " (cols " << J.n_cols << ")" << std::endl;
+        }
+
+        // Profile each chunk: per-cluster mean-|y| score
+        for (int row_start = 0; row_start < J.n_rows; row_start += (int)J.row_chunk) {
+            int row_end = std::min(row_start + (int)J.row_chunk, J.n_rows);
+            int chunk_n_rows = row_end - row_start;
+            size_t chunk_n = (size_t)chunk_n_rows * (size_t)J.n_cols;
+            size_t chunk_offset_elems = (size_t)row_start * (size_t)J.n_cols;
+            size_t cluster_offset = chunk_offset_elems / CLUSTER_SIZE;
+            size_t chunk_nc = (chunk_n + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
+
+            GGUFTensor t_chunk = t;
+            t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
+            t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)J.n_cols };
+
+            std::vector<float> w;
+            if (!read_tensor_floats(parser, t_chunk, w)) {
+                std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
+                return 1;
             }
 
-            bool preserve = is_preserve(t.name);
-            bool f32_tensor = is_f32_tensor(t.name);
-            bool is2d = (t.shape.size() >= 2);
-            // K-quants need ne[0] % 256; Q8_0 needs ne[0] % 32
-            bool kquant_ok = is2d && (n_cols % (int)QK_K == 0);
-            bool q8_ok = is2d && (n_cols % (int)QK8_0 == 0);
-            bool quantizable = is2d && !preserve && !f32_tensor && (kquant_ok || q8_ok);
-
-            to.n_clusters = (uint32_t)nc;
-            to.clusters.resize(to.n_clusters);
-
-            // Build prompt inputs projected to n_cols once per tensor
-            std::vector<std::vector<float>> xs;
-            bool do_profile = quantizable && n_prompts > 0 && (int)prompt_inputs.size() == n_prompts && n_rows > 1 && n_cols > 1;
             if (do_profile) {
-                for (const auto& p : prompt_inputs) {
-                    int dim = p.size();
-                    std::vector<float> x(n_cols, 0.0f);
-                    if (dim == n_cols) x = p;
-                    else {
-                        std::mt19937 rng((unsigned)(dim + n_cols));
-                        std::normal_distribution<float> dist(0.0f, 0.02f);
-                        for (float& v : x) v = dist(rng);
-                    }
-                    xs.push_back(std::move(x));
+                std::vector<float> score;
+                profile_tensor(w.data(), chunk_n_rows, J.n_cols, xs, score);
+                for (size_t i = 0; i < score.size(); ++i) {
+                    to.clusters[cluster_offset + i].activation_freq = score[i];
                 }
-            }
-
-            // Decide chunking along rows to stay within the RAM budget
-            size_t row_chunk = (size_t)n_rows;
-            if (n_full > chunk_floats) {
-                size_t g = std::gcd((size_t)n_cols, (size_t)CLUSTER_SIZE);
-                size_t col_step = CLUSTER_SIZE / g;
-                size_t rows_per_chunk = chunk_floats / (size_t)n_cols;
-                size_t rc = (rows_per_chunk / col_step) * col_step;
-                if (rc == 0) rc = col_step;
-                row_chunk = rc;
-                std::cout << "  chunking " << t.name << " rows " << n_rows
-                          << " by " << row_chunk << " (cols " << n_cols << ")" << std::endl;
-            }
-
-            // Precision floor: attention and lm_head must never be Q2, and Q8 is
-            // wasted because the loader requantizes to Q4_K, so keep them at Q4.
-            int min_bits = 2;
-            int max_bits = 8;
-            if (t.name.find("token_embd") != std::string::npos ||
-                t.name.find("blk.0.") != std::string::npos ||
-                t.name.find(".attn_q.") != std::string::npos ||
-                t.name.find(".attn_k.") != std::string::npos ||
-                t.name.find(".attn_v.") != std::string::npos ||
-                t.name.find(".attn_output.") != std::string::npos) {
-                min_bits = 8;
-                max_bits = 8;
-            } else if (t.name.find("attn_q") != std::string::npos ||
-                       t.name.find("attn_k") != std::string::npos ||
-                       t.name.find("attn_v") != std::string::npos ||
-                       t.name.find("attn_output") != std::string::npos ||
-                       t.name.find("output.weight") != std::string::npos) {
-                min_bits = 4;
-                max_bits = 4;
-            }
-
-            // Pass A: dequantize each chunk and profile per-cluster activations
-            for (int row_start = 0; row_start < n_rows; row_start += (int)row_chunk) {
-                int row_end = std::min(row_start + (int)row_chunk, n_rows);
-                int chunk_n_rows = row_end - row_start;
-                size_t chunk_n = (size_t)chunk_n_rows * (size_t)n_cols;
-                size_t chunk_offset_elems = (size_t)row_start * (size_t)n_cols;
-                size_t cluster_offset = chunk_offset_elems / CLUSTER_SIZE;
-                size_t chunk_nc = (chunk_n + CLUSTER_SIZE - 1) / CLUSTER_SIZE;
-
-                GGUFTensor t_chunk = t;
-                t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
-                t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)n_cols };
-
-                std::vector<float> w;
-                if (!read_tensor_floats(parser, t_chunk, w)) {
-                    std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
-                    return 1;
-                }
-
-                if (do_profile) {
-                    std::vector<float> rank;
-                    profile_tensor(w.data(), chunk_n_rows, n_cols, xs, rank);
-                    for (size_t i = 0; i < rank.size(); ++i) {
-                        to.clusters[cluster_offset + i].activation_freq = rank[i];
-                    }
-                } else {
-                    for (size_t i = 0; i < chunk_nc; ++i) {
-                        to.clusters[cluster_offset + i].activation_freq = 0.5f;
-                    }
-                }
-            }
-
-            // Per-cluster bit widths (distribution report) + dominant class → tensor type
-            int n_cold = 0, n_warm = 0, n_hot = 0;
-            if (quantizable) {
-                for (size_t c = 0; c < nc; ++c) {
-                    float f = to.clusters[c].activation_freq;
-                    int bits;
-                    if (f < COLD_THR) bits = 2;
-                    else if (f > HOT_THR) bits = 8;
-                    else bits = 4;
-                    if (bits < min_bits) bits = min_bits;
-                    if (bits > max_bits) bits = max_bits;
-                    to.clusters[c].quant_bits = (uint8_t)bits;
-                    if (bits == 2) { n_cold++; total_cold++; }
-                    else if (bits == 8) { n_hot++; total_hot++; }
-                    else { n_warm++; total_warm++; }
-                }
-            }
-
-            GGMLType out_type;
-            if (!quantizable) {
-                // Keep F32 source tensors (biases, norms) as F32 — llama.cpp's
-                // element-wise add path requires matching operand types/shapes.
-                out_type = (t.type == GGMLType::F32 || f32_tensor) ? GGMLType::F32 : GGMLType::F16;
             } else {
-                int bits = 4; // warm default
-                if (n_hot >= n_warm && n_hot >= n_cold) bits = 8;
-                else if (n_cold > n_warm && n_cold > n_hot) bits = 2;
-                if (bits < min_bits) bits = min_bits;
-                if (bits > max_bits) bits = max_bits;
-                out_type = (bits == 8) ? GGMLType::Q8_0 : (bits == 2) ? GGMLType::Q2_K : GGMLType::Q4_K;
-                if (out_type == GGMLType::Q8_0 && !q8_ok) out_type = GGMLType::F16;
-                if ((out_type == GGMLType::Q4_K || out_type == GGMLType::Q2_K) && !kquant_ok)
-                    out_type = q8_ok ? GGMLType::Q8_0 : GGMLType::F16;
-            }
-            to.quant_type = (uint32_t)out_type;
-
-            // Pass B: dequantize each chunk again and quantize to the decided GGUF type
-            to.data_offset = (uint64_t)ftell(data_tmp);
-            uint64_t tensor_bytes = 0;
-            for (int row_start = 0; row_start < n_rows; row_start += (int)row_chunk) {
-                int row_end = std::min(row_start + (int)row_chunk, n_rows);
-                int chunk_n_rows = row_end - row_start;
-                size_t chunk_offset_elems = (size_t)row_start * (size_t)n_cols;
-
-                GGUFTensor t_chunk = t;
-                t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
-                t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)n_cols };
-
-                std::vector<float> w;
-                if (!read_tensor_floats(parser, t_chunk, w)) {
-                    std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
-                    return 1;
+                for (size_t i = 0; i < chunk_nc; ++i) {
+                    to.clusters[cluster_offset + i].activation_freq = 0.0f;
                 }
-                std::vector<uint8_t> qbuf;
-                size_t wrote = quantize_to_type(w, out_type, qbuf);
-                if (wrote == 0 && !w.empty()) {
-                    std::cerr << "Failed to quantize " << t.name << std::endl;
-                    return 1;
-                }
-                if (wrote > 0) fwrite(qbuf.data(), 1, wrote, data_tmp);
-                tensor_bytes += wrote;
             }
-            to.data_bytes = tensor_bytes;
+        }
+    }
 
-        } else {
+    // GLOBAL BUDGET: sort all profiled, non-forced clusters by mean-|y| score.
+    // Top hot_budget elements -> Q8_0, bottom cold_budget -> Q2_K, rest -> Q4_K.
+    size_t total_params = 0;
+    for (size_t ti = 0; ti < n_tensors; ++ti) {
+        if (jobs[ti].quantizable) total_params += numel(parser.tensors()[ti]);
+    }
+    size_t hot_budget = std::min((size_t)(total_params * 0.20), (size_t)cli_hot_budget);
+    size_t cold_budget = std::min((size_t)(total_params * 0.05), (size_t)cli_cold_budget);
+
+    struct ScoreEnt { float score; size_t ti, ci, elems; };
+    std::vector<ScoreEnt> ent;
+    for (size_t ti = 0; ti < n_tensors; ++ti) {
+        const TensorJob& J = jobs[ti];
+        if (!J.quantizable || !J.profiled) continue;
+        if (J.min_bits == J.max_bits) continue;  // forced override, not budgeted
+        size_t n = numel(parser.tensors()[ti]);
+        for (size_t ci = 0; ci < J.nc; ++ci) {
+            size_t e0 = ci * CLUSTER_SIZE;
+            size_t elems = std::min((size_t)CLUSTER_SIZE, n - e0);
+            ent.push_back({outs[ti].clusters[ci].activation_freq, ti, ci, elems});
+        }
+    }
+    std::sort(ent.begin(), ent.end(), [](const ScoreEnt& a, const ScoreEnt& b) { return a.score > b.score; });
+    for (auto& e : ent) outs[e.ti].clusters[e.ci].quant_bits = 4;  // warm default
+    size_t acc = 0, top = 0;
+    for (; top < ent.size() && acc < hot_budget; ++top) {
+        acc += ent[top].elems;
+        outs[ent[top].ti].clusters[ent[top].ci].quant_bits = 8;
+    }
+    size_t bacc = 0;
+    for (size_t j = ent.size(); j > top && bacc < cold_budget; ) {
+        --j;
+        bacc += ent[j].elems;
+        outs[ent[j].ti].clusters[ent[j].ci].quant_bits = 2;
+    }
+    std::cout << "Budget: total_params=" << total_params
+              << " hot_budget=" << hot_budget << " cold_budget=" << cold_budget
+              << " sorted_clusters=" << ent.size() << std::endl;
+
+    // Per-tensor dominant class -> output type (forced overrides via min/max_bits)
+    for (size_t ti = 0; ti < n_tensors; ++ti) {
+        const GGUFTensor& t = parser.tensors()[ti];
+        TensorJob& J = jobs[ti];
+        TensorOut& to = outs[ti];
+        if (!J.float_path) continue;  // passthrough type set in pass 2
+        if (!J.quantizable) {
+            // Keep F32 source tensors (biases, norms) as F32 — llama.cpp's
+            // element-wise add path requires matching operand types/shapes.
+            to.quant_type = (t.type == GGMLType::F32 || J.f32_tensor) ? (uint32_t)GGMLType::F32 : (uint32_t)GGMLType::F16;
+            continue;
+        }
+        int n_cold = 0, n_warm = 0, n_hot = 0;
+        size_t nfull = numel(t);
+        for (size_t c = 0; c < J.nc; ++c) {
+            int bits = to.clusters[c].quant_bits;
+            if (bits < J.min_bits) bits = J.min_bits;
+            if (bits > J.max_bits) bits = J.max_bits;
+            to.clusters[c].quant_bits = (uint8_t)bits;
+            size_t e0 = c * CLUSTER_SIZE;
+            size_t el = std::min((size_t)CLUSTER_SIZE, nfull - e0);
+            if (bits == 2) { n_cold++; total_cold += el; }
+            else if (bits == 8) { n_hot++; total_hot += el; }
+            else { n_warm++; total_warm += el; }
+        }
+        int bits = 4; // warm default
+        if (n_hot >= n_warm && n_hot >= n_cold) bits = 8;
+        else if (n_cold > n_warm && n_cold > n_hot) bits = 2;
+        if (bits < J.min_bits) bits = J.min_bits;
+        if (bits > J.max_bits) bits = J.max_bits;
+        GGMLType out_type = (bits == 8) ? GGMLType::Q8_0 : (bits == 2) ? GGMLType::Q2_K : GGMLType::Q4_K;
+        if (out_type == GGMLType::Q8_0 && !J.q8_ok) out_type = GGMLType::F16;
+        if ((out_type == GGMLType::Q4_K || out_type == GGMLType::Q2_K) && !J.kquant_ok)
+            out_type = J.q8_ok ? GGMLType::Q8_0 : GGMLType::F16;
+        to.quant_type = (uint32_t)out_type;
+    }
+
+    // PASS 2: quantize each tensor to its decided type, stream to temp file
+    for (size_t ti = 0; ti < n_tensors; ++ti) {
+        const GGUFTensor& t = parser.tensors()[ti];
+        TensorJob& J = jobs[ti];
+        TensorOut& to = outs[ti];
+        if ((ti % 10) == 0) {
+            std::cout << "Quantizing [" << (ti + 1) << "/" << n_tensors << "] " << t.name << std::endl;
+        }
+
+        if (!J.float_path) {
             // Passthrough: copy raw tensor bytes, keep original GGUF type
             to.quant_type = (uint32_t)t.type;
             to.data_offset = (uint64_t)ftell(data_tmp);
 
             size_t data_len = 0;
-            if (ti + 1 < parser.tensors().size()) {
+            if (ti + 1 < n_tensors) {
                 const GGUFTensor& next_t = parser.tensors()[ti + 1];
                 data_len = (size_t)(next_t.offset - t.offset);
             } else {
@@ -627,9 +678,36 @@ int main(int argc, char** argv) {
                 fwrite(block.data(), 1, data_len, data_tmp);
             }
             to.data_bytes = data_len;
+            continue;
         }
 
-        outs.push_back(std::move(to));
+        GGMLType out_type = (GGMLType)to.quant_type;
+        to.data_offset = (uint64_t)ftell(data_tmp);
+        uint64_t tensor_bytes = 0;
+        for (int row_start = 0; row_start < J.n_rows; row_start += (int)J.row_chunk) {
+            int row_end = std::min(row_start + (int)J.row_chunk, J.n_rows);
+            int chunk_n_rows = row_end - row_start;
+            size_t chunk_offset_elems = (size_t)row_start * (size_t)J.n_cols;
+
+            GGUFTensor t_chunk = t;
+            t_chunk.offset += elem_offset_bytes(t.type, chunk_offset_elems);
+            t_chunk.shape = { (uint64_t)chunk_n_rows, (uint64_t)J.n_cols };
+
+            std::vector<float> w;
+            if (!read_tensor_floats(parser, t_chunk, w)) {
+                std::cerr << "Failed to read " << t.name << " chunk at row " << row_start << std::endl;
+                return 1;
+            }
+            std::vector<uint8_t> qbuf;
+            size_t wrote = quantize_to_type(w, out_type, qbuf);
+            if (wrote == 0 && !w.empty()) {
+                std::cerr << "Failed to quantize " << t.name << std::endl;
+                return 1;
+            }
+            if (wrote > 0) fwrite(qbuf.data(), 1, wrote, data_tmp);
+            tensor_bytes += wrote;
+        }
+        to.data_bytes = tensor_bytes;
     }
 
     // Assemble GGUF: KV section copied verbatim from source, new tensor
