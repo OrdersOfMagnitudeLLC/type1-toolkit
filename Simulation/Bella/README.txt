@@ -18,7 +18,7 @@ WHAT IT FOUND
 2,944 phonon-stable materials candidates across 96 civilization categories.
 Fe3Mn4: N2 adsorption -1.134 eV: earth-abundant Haber-Bosch replacement candidate.
 Mo2FeN2: phonon stable, NEB barrier 1.193 eV: nitrogen fixation candidate 2.
-Shifu (SiHF3): solid-state battery electrolyte, 20-35x cheaper per kWh-cycle (theoretical).
+Shifu (SiHF3, silicon hydrogen trifluoride): solid-state battery electrolyte candidate pending validation, 20-35x cheaper per kWh-cycle (theoretical).
 All results in Publish/.
 
 INSTALL

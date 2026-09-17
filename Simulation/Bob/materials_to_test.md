@@ -1,8 +1,8 @@
 ## PRIORITY 0: Universal Candidates (Appear Across ALL Categories)
 | Material | Bandgap | Density | Abundance | Why Priority 0 |
 |---|---|---|---|---|
-| SiHF3 | 8.713 eV | 1.811 g/cm³ | 950 ppm | Wins battery + power electronics + structural + ultralight simultaneously. Lighter than Al, harder than diamond by gap. Possible plasma lens material. |
-| PH(OF)2 | 6.098 eV | 1.632 g/cm³ | 950 ppm | Lighter than water, 6eV gap, 950ppm. Wins every wide-gap filter. |
+| SiHF3 ("Shifu") | 8.713 eV | 1.811 g/cm³ | 950 ppm | Candidate pending validation. Screens well for battery + power electronics + structural + ultralight simultaneously. Lighter than Al, harder than diamond by gap. Possible plasma lens material. |
+| PH(OF)2 ("Pho") | 6.098 eV | 1.632 g/cm³ | 950 ppm | Candidate pending validation. Lighter than water, 6eV gap, 950ppm. Screens well on every wide-gap filter. |
 | K6Al2HF11 | 5.150 eV | 2.546 g/cm³ | 950 ppm | New find, K+Al+H+F, appeared in property-first battery search only. |
 
 # Materials to Test: Bob Discovery Session 2026-08-02
@@ -16,7 +16,7 @@
 ## PRIORITY 2: Extreme Bandgap (Power Electronics)
 | Material | Bandgap | Abundance | Crystal | Why |
 |---|---|---|---|---|
-| SiHF3 | 8.713 eV | 950 ppm | Trigonal | Above diamond, verify solid phase |
+| SiHF3 ("Shifu") | 8.713 eV | 950 ppm | Trigonal | Above diamond, verify solid phase (candidate pending validation) |
 | K3Ca2MgAl6F27 | 7.008 eV | 950 ppm | Triclinic | All abundant, 7eV solid insulator |
 | SrP2F12 | 7.228 eV | 370 ppm | Tetragonal | Wide gap, layered |
 
@@ -57,7 +57,7 @@
 | LiHfF5 | 7.45 eV | -3.92 eV/atom | Hf-fluoride with Li, ultra-wide gap, thermodynamically stable |
 | KHf2F9 | 7.40 eV | -4.01 eV/atom | K-Hf fluoride, highest stability among UWBG candidates |
 
-**Note:** SiHF3 appeared #1 in independent UWBG query (8.71 eV), confirming its existing Priority 0 classification.
+**Note:** SiHF3 ("Shifu") appeared #1 in independent UWBG query (8.71 eV), consistent with its existing Priority 0 classification (candidate pending validation).
 
 ## Structural Materials: Lightest/Strongest
 | Material | Density | Bulk Modulus | Specific Modulus | Source | Why |

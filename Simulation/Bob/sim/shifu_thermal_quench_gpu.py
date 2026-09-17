@@ -277,7 +277,7 @@ def main():
         if high_temp_phase != 'crystal' and low_temp_phase == 'crystal':
             f.write(f"\nConclusion: SiHF3 crystallizes during thermal quench ({high_temp_phase} → {low_temp_phase})\n")
         elif low_temp_phase == 'crystal':
-            f.write(f"\nConclusion: SiHF3 remains crystalline throughout (stable crystal)\n")
+            f.write(f"\nConclusion: SiHF3 remains crystalline throughout (stable crystal in simulation; validation pending)\n")
         else:
             f.write(f"\nConclusion: SiHF3 does not crystallize in this simulation ({high_temp_phase} → {low_temp_phase})\n")
     
