@@ -30,8 +30,8 @@
 
 static const size_t CLUSTER_SIZE = 256;
 // activation_freq stores a mean-|y| percentile rank (0..1), not a fire
-// frequency: hot = top 65% (rank > 0.35), warm = next 25%, cold = bottom 10%.
-static const float HOT_THR = 0.35f;
+// frequency: hot = top 35% (rank > 0.65), warm = next 55%, cold = bottom 10%.
+static const float HOT_THR = 0.65f;
 static const float COLD_THR = 0.1f;
 
 // --dequant-input: treat Q4_K/Q6_K/Q8_0 input tensors as dequantizable to float
