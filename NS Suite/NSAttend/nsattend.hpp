@@ -90,7 +90,6 @@ float compute_spearman_correlation(const float* attention, int seq_len, int row_
 
 // MECHANISM 1: Head type detector
 HeadType detect_head_type(const float* scores, int seq_len, int head_dim, int sample_rows = 8) {
-    assert(seq_len <= 8192 && "seq_len must be <= 8192");
     int actual_sample = std::min(sample_rows, seq_len);
     
     float total_correlation = 0.0f;
@@ -101,14 +100,14 @@ HeadType detect_head_type(const float* scores, int seq_len, int head_dim, int sa
         int i = std::min(s * seq_len / actual_sample, seq_len - 1);
         
         // Compute attention weights for this row
-        float attention[8192];
+        std::vector<float> attention(seq_len);
         for (int j = 0; j < seq_len; ++j) {
             attention[j] = scores[s * seq_len + j];
         }
-        softmax_row(attention, seq_len);
+        softmax_row(attention.data(), seq_len);
         
         // Compute Spearman correlation (using actual row position i)
-        float correlation = compute_spearman_correlation(attention, seq_len, i);
+        float correlation = compute_spearman_correlation(attention.data(), seq_len, i);
         total_correlation += std::abs(correlation);
         
         // Check for global signal (top-1 token > 40% weight)
@@ -224,7 +223,6 @@ void dense_attention(float* output,
 void block_sparse_attention(float* output,
                            const float* queries, const float* keys, const float* values,
                            int seq_len, int head_dim, float scale, int block_size = 32, int fixed_window = -1) {
-    assert(seq_len <= 8192 && "seq_len must be <= 8192");
     int num_blocks = (seq_len + block_size - 1) / block_size;
     int local_window = (fixed_window > 0) ? fixed_window : seq_len / 4;
     
@@ -232,8 +230,8 @@ void block_sparse_attention(float* output,
         const float* query = &queries[i * head_dim];
         
         // Initialize all scores to -inf (inactive positions never computed)
-        static thread_local float scores[8192];
-        std::fill(scores, scores + seq_len, -1e30f);
+        static thread_local std::vector<float> scores;
+        scores.assign(seq_len, -1e30f);
         
         // Compute active block range inline (no mask array)
         int bj_start = std::max(0, (i - local_window) / block_size);
@@ -271,10 +269,11 @@ void block_sparse_attention(float* output,
         }
         
         // Compact softmax over active positions only
-        softmax_row_range(scores + active_start, active_end - active_start);
+        softmax_row_range(scores.data() + active_start, active_end - active_start);
         
         // Local accumulator for value accumulation (eliminates scattered write cache thrash)
-        float acc[64] = {0.0f};
+        static thread_local std::vector<float> acc;
+        acc.assign(head_dim, 0.0f);
         
         for (int bj = bj_start; bj < bj_end; ++bj) {
             int j_start = std::max(bj * block_size, i - local_window);
