@@ -6,7 +6,7 @@ import safetensors
 import numpy as np
 from pathlib import Path
 
-WEIGHTS_DIR = Path.home() / "NS" / "NSInfer" / "weights"
+WEIGHTS_DIR = Path(__file__).parent / "weights"
 
 def load_layer():
     # Load the TinyLlama model from safetensors

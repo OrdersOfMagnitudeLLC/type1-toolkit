@@ -5,7 +5,7 @@
 import numpy as np
 from pathlib import Path
 
-WEIGHTS_DIR = Path.home() / "NS" / "NSInfer" / "weights"
+WEIGHTS_DIR = Path(__file__).parent / "weights"
 
 def build_clusters():
     # Load gate_proj matrix [d_model x d_ff] = [2048 x 5632]
