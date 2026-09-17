@@ -615,16 +615,17 @@ NSBVH build_nsbvh(const std::vector<AABB>& objects) {
 
 inline __attribute__((always_inline)) bool traverse_bvh16_unquantized(const std::vector<BVH16Internal>& internal, const std::vector<BVH16Leaf>& leaves,
                                 const std::vector<AABB>& objects, const std::vector<AABB>& clipped_objects, int root, const Ray& r, int& visits, int& obj_tests) {
-    int stack[64];
-    int stack_top = 0;
-    stack[stack_top++] = root;
+    static thread_local std::vector<int> stack;
+    stack.clear();
+    stack.push_back(root);
 
     __m512 ox  = _mm512_set1_ps(r.orig[0]), oy  = _mm512_set1_ps(r.orig[1]), oz  = _mm512_set1_ps(r.orig[2]);
     __m512 idx = _mm512_set1_ps(r.inv_dir[0]), idy = _mm512_set1_ps(r.inv_dir[1]), idz = _mm512_set1_ps(r.inv_dir[2]);
     __m512 zero = _mm512_setzero_ps();
 
-    while (stack_top > 0) {
-        int node_idx = stack[--stack_top];
+    while (!stack.empty()) {
+        int node_idx = stack.back();
+        stack.pop_back();
         visits++;
         const BVH16Internal& node = internal[node_idx];
 
@@ -658,7 +659,7 @@ inline __attribute__((always_inline)) bool traverse_bvh16_unquantized(const std:
                     if (ray_aabb_intersect(r, obj)) return true;
                 }
             } else {
-                stack[stack_top++] = child_idx;
+                stack.push_back(child_idx);
             }
         }
     }
@@ -668,16 +669,17 @@ inline __attribute__((always_inline)) bool traverse_bvh16_unquantized(const std:
 #ifdef __AVX512F__
 inline __attribute__((always_inline)) bool traverse_bvh16_quantized(const std::vector<QBVH16Internal>& internal, const std::vector<BVH16Leaf>& leaves,
                               const std::vector<AABB>& objects, const std::vector<AABB>& clipped_objects, int root, const Ray& r, int& visits, int& obj_tests) {
-    int stack[64];
-    int stack_top = 0;
-    stack[stack_top++] = root;
+    static thread_local std::vector<int> stack;
+    stack.clear();
+    stack.push_back(root);
 
     __m512 ox  = _mm512_set1_ps(r.orig[0]), oy  = _mm512_set1_ps(r.orig[1]), oz  = _mm512_set1_ps(r.orig[2]);
     __m512 idx = _mm512_set1_ps(r.inv_dir[0]), idy = _mm512_set1_ps(r.inv_dir[1]), idz = _mm512_set1_ps(r.inv_dir[2]);
     __m512 zero = _mm512_setzero_ps();
 
-    while (stack_top > 0) {
-        int node_idx = stack[--stack_top];
+    while (!stack.empty()) {
+        int node_idx = stack.back();
+        stack.pop_back();
         visits++;
         const QBVH16Internal& node = internal[node_idx];
 
@@ -748,7 +750,7 @@ inline __attribute__((always_inline)) bool traverse_bvh16_quantized(const std::v
                     if (ray_aabb_intersect(r, obj)) return true;
                 }
             } else {
-                stack[stack_top++] = child_idx;
+                stack.push_back(child_idx);
             }
         }
     }
