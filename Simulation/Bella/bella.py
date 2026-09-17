@@ -2575,8 +2575,21 @@ def cmd_proteins(args):
         table.add_row(*row)
         
         if show and source == 'uniprot' and af_path:
+            # T56 Debye stability from foam screener (screening-level estimate;
+            # folded-globular defaults B=2.5/G=1.0 GPa, MW ~ 110 Da/residue).
+            # Falls back to None on any failure — display only, never fatal.
+            phonon_stable = None
+            try:
+                import foam_screener_v2 as foam
+                if seq_len:
+                    _pds = foam.protein_debye_stability(
+                        B_GPa=2.5, G_GPa=1.0, MW_Da=float(seq_len) * 110.0)
+                    if isinstance(_pds, dict):
+                        phonon_stable = _pds.get('stable')
+            except Exception:
+                phonon_stable = None
             show_crystal_3d(str(af_path), uid, confirmed=False,
-                            phonon_stable=None, energy=None)
+                            phonon_stable=phonon_stable, energy=None)
     
     console.print(table)
     console.print(f"[cyan]Total protein hits: {len(results)}[/]")
