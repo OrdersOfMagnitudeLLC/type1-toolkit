@@ -3100,7 +3100,7 @@ static ggml_tensor * llm_compute_wkv_b(ggml_context * ctx, ggml_cgraph * graph,
 
     ggml_build_forward_expand(graph, wkv_b);
 
-    auto plan = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+    auto plan = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
     if (plan.work_size > work_data.size()) work_data.resize(plan.work_size);
     plan.work_data = work_data.data();
 
@@ -3195,7 +3195,7 @@ static void llm_prepare_mla(llama_model & model, int mla) {
 
             ggml_build_forward_expand(graph, wk_b);
 
-            auto plan = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+            auto plan = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
             if (plan.work_size > work_data.size()) work_data.resize(plan.work_size);
             plan.work_data = work_data.data();
 
@@ -3327,7 +3327,7 @@ static void llm_prepare_mla(llama_model & model, int mla) {
                 GGML_ASSERT((char *)wk_b_pp->data + ggml_nbytes(wk_b_pp) <=
                             (char *)tensor_data.data() + tensor_data.size());
                 ggml_build_forward_expand(graph, wk_b_pp);
-                auto plan_pp = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+                auto plan_pp = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
                 if (plan_pp.work_size > work_data.size()) work_data.resize(plan_pp.work_size);
                 plan_pp.work_data = work_data.data();
                 auto status_pp = ggml_graph_compute(graph, &plan_pp);
@@ -3344,7 +3344,7 @@ static void llm_prepare_mla(llama_model & model, int mla) {
                         l.wkv_b->nb[1], l.wkv_b->nb[1]*(n_embd_head_qk_nope + n_embd_head_v), l.wkv_b->nb[1]*n_embd_head_qk_nope));
             wv_b->data = tensor_data.data();
             ggml_build_forward_expand(graph, wv_b);
-            plan = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+            plan = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
             if (plan.work_size > work_data.size()) work_data.resize(plan.work_size);
             plan.work_data = work_data.data();
             status = ggml_graph_compute(graph, &plan);
@@ -3482,7 +3482,7 @@ static void llm_prepare_mla(llama_model & model, int mla) {
                 auto f_q    = ggml_cast(ctx_pp, f_cont, l.wk_b->type);
                 f_q->data   = (char *)f_cont->data + ggml_nbytes(f_cont);
                 ggml_build_forward_expand(graph_pp, f_q);
-                auto plan = ggml_graph_plan(graph_pp, std::thread::hardware_concurrency()/2);
+                auto plan = ggml_graph_plan(graph_pp, std::max(1u, std::thread::hardware_concurrency()/2));
                 if (plan.work_size > work_data_pp.size()) work_data_pp.resize(plan.work_size);
                 plan.work_data = work_data_pp.data();
                 auto status = ggml_graph_compute(graph_pp, &plan);
@@ -3796,7 +3796,7 @@ static void llm_prepare_openpangu_param_sinks(llama_model & model) {
         ggml_build_forward_expand(graph, sink_blk);
         ggml_build_forward_expand(graph, s_lat_t);
 
-        auto plan = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+        auto plan = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
         if (plan.work_size > work_data.size()) work_data.resize(plan.work_size);
         plan.work_data = work_data.data();
 
@@ -3904,7 +3904,7 @@ static void llm_apply_khad_pretransform(llama_model & model) {
         ggml_build_forward_expand(graph, out_q);
 
         std::vector<uint8_t> work_data;
-        auto plan = ggml_graph_plan(graph, std::thread::hardware_concurrency()/2);
+        auto plan = ggml_graph_plan(graph, std::max(1u, std::thread::hardware_concurrency()/2));
         if (plan.work_size > work_data.size()) work_data.resize(plan.work_size);
         plan.work_data = work_data.data();
         bool ok = (ggml_graph_compute(graph, &plan) == GGML_STATUS_SUCCESS);
