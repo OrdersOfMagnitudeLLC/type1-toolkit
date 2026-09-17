@@ -1438,7 +1438,12 @@ float gpu_nssort_general(int64_t* h_arr, int n, int64_t h_min, int64_t h_max, GP
                 if (bps < 1) bps = 1;
                 blocks_per_sector_report[s] = bps;
                 for (int bi = 0; bi < bps; ++bi) {
-                    if (total_mb_blocks >= REFINE_MAX_TOTAL_BLOCKS) break;
+                    if (total_mb_blocks >= REFINE_MAX_TOTAL_BLOCKS) {
+                        fprintf(stderr, "NSSort_GPU error %s:%d: REFINE_MAX_TOTAL_BLOCKS (%d) exceeded, "
+                                        "input too large for multi-block refine path\n",
+                                __FILE__, __LINE__, REFINE_MAX_TOTAL_BLOCKS);
+                        exit(1);
+                    }
                     int chunk_off = bi * REFINE_CHUNK_SIZE;
                     int chunk_len = (int)sec_n - chunk_off;
                     if (chunk_len > REFINE_CHUNK_SIZE) chunk_len = REFINE_CHUNK_SIZE;
