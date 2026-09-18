@@ -4302,7 +4302,7 @@ def _sieve_segment(start, end, base_primes):
 
 def simulate_fusion_plasma(args):
     """Resistive nonlinear MHD time-stepper."""
-    _print_eta(args, '~20 min at grid=32 on Spectre (CPU-only, 16GB RAM)')
+    _print_eta(args, '~20 min at grid=32 on this machine (CPU-only)')
     preset = args.preset if args.preset is not None else 'custom'
     if preset == 'iter':
         density = args.density if args.density is not None else 1.0e20
@@ -4315,7 +4315,7 @@ def simulate_fusion_plasma(args):
     n = args.grid if args.grid is not None else 32
     duration = getattr(args, 'duration', 1.0e-4)
     if n > 64:
-        console.print("[yellow]Grid >64 is disabled for nonlinear MHD on Spectre.\u200bCapping at 64.[/]")
+        console.print("[yellow]Grid >64 is disabled for nonlinear MHD on this machine.​Capping at 64.[/]")
         n = 64
     try:
         from scipy.integrate import solve_ivp
