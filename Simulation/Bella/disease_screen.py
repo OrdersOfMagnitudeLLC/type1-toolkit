@@ -14,6 +14,7 @@ import re
 import itertools
 from datetime import datetime
 from multiprocessing import Pool
+from pathlib import Path
 
 from rdkit import Chem
 from rdkit.Chem import Descriptors
@@ -542,8 +543,7 @@ def build_full_disease_targets():
 
     # --- External target loader (targets_20k.json) ---
     import json as _json, os as _os
-    _ext_path = _os.path.expanduser(
-        "~/NS/Simulation/Bella2/data/targets_20k.json")
+    _ext_path = str(Path(__file__).parent / "data" / "targets_20k.json")
     if _os.path.exists(_ext_path):
         with open(_ext_path) as _f:
             _ext_targets = _json.load(_f)
