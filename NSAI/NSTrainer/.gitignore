@@ -1,0 +1,26 @@
+# Large data directories — not tracked
+ablation_results/
+models/
+teacher_acts_100m/
+teacher_acts_cache/
+teacher_acts_chat_v2/
+teacher_logits_cache_qwen3b/
+teacher_acts_proof/
+teacher_acts_chat/
+teacher_acts_v2/
+__pycache__/
+*.o
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+c4_sample.txt
+tinyshakespeare.txt
+loss_comparison.png
+*_results.txt
+*_results_*.txt
+*.log
+results_*.txt
+run_*.txt
+tokenizer/

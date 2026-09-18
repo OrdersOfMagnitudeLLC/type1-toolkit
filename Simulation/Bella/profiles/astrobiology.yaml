@@ -1,0 +1,37 @@
+name: astrobiology
+description: Biosignatures in planetary atmospheres : O2+CH4 disequilibrium, N2O,
+  vegetation red edge
+query_inject: habitable zone K dwarf G dwarf M dwarf exoplanet atmosphere spectroscopy
+protein_query: null
+signals:
+- id: o2_ch4_disequilibrium
+  molecules:
+  - O2
+  - CH4
+  - H2O
+  weight: 0.5
+- id: n2o_presence
+  molecules:
+  - N2O
+  weight: 0.3
+- id: vegetation_red_edge
+  wavelength_nm: 700
+  weight: 0.2
+data_sources:
+- gaia_dr3
+- jwst_mast
+- sdss
+target_spectral_types:
+- K
+- G
+- M
+max_distance_pc: 100
+n_initial_candidates: 10000
+max_spectral_followup: 200
+use_cache: true
+tmag_range: [-3, 10]
+cone_arcsec: 30.0
+nexsci_limit: 500
+hk_threshold: 0.3
+category: planetary-science
+subcategory: astro

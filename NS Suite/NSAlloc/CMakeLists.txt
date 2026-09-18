@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.20)
+project(nsalloc CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(nsalloc alloc_bench.cpp)
+target_include_directories(nsalloc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+find_library(MIMALLOC_LIB NAMES mimalloc libmimalloc)
+if(MIMALLOC_LIB)
+    target_link_libraries(nsalloc PRIVATE ${MIMALLOC_LIB})
+else()
+    message(WARNING "mimalloc not found")
+endif()
+target_compile_options(nsalloc PRIVATE -O3 -march=native)
+
+option(NS_ALLOC_NEW "Build alloc_bench_new variant" OFF)
+if(NS_ALLOC_NEW)
+    add_executable(nsalloc_new alloc_bench_new.cpp)
+    target_include_directories(nsalloc_new PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+    target_link_libraries(nsalloc_new PRIVATE mimalloc)
+    target_compile_options(nsalloc_new PRIVATE -O3 -march=native)
+endif()

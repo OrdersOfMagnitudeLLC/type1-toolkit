@@ -1,0 +1,8 @@
+name: senolytics
+category: life-sciences
+description: Compounds clearing senescent cells to slow aging
+protein_query: p21 p16 BCL-2 BCL-XL navitoclax dasatinib quercetin senolytic
+query_inject: senescent cell clearance apoptosis CDK inhibitor BCL-2 family
+target_pathways: [p53-p21, p16-RB, BCL-2 anti-apoptotic, PI3K-AKT]
+excluded_elements: [La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu]
+min_crustal_ppm: 1

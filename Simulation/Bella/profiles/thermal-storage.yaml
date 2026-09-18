@@ -1,0 +1,74 @@
+query_inject: thermal energy storage material latent heat sensible heat
+  phase change earth-abundant PCM
+protein_query: null
+description: 'Thermal energy storage materials with high heat capacity or latent
+  heat. Earth-abundant salts, oxides, and metals only.'
+required_elements:
+- Al
+- Mg
+- Ca
+- Na
+- K
+- Li
+- Fe
+- Si
+- C
+- O
+- S
+- P
+- N
+- Cl
+- F
+- B
+- Mn
+- Ti
+excluded_elements:
+- Pt
+- Ir
+- Pd
+- Rh
+- Ru
+- Au
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Na
+- K
+- Mg
+- Ca
+- Al
+- Cl
+- O
+required_chemistry:
+- salt, oxide, nitrate, carbonate, or low-melting alloy phase-change material
+- melting or decomposition above 100 C
+excluded_chemistry:
+- pure elemental gas
+- pure noble metal
+name: thermal-storage
+synthesis_temp_max_C: 600
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: false
+adsorb_molecules:
+- H2O
+neb_molecule: H2O
+category: materials-energy

@@ -1,0 +1,74 @@
+query_inject: soil bacteria enzyme nitrogen cycling phosphate solubilization carbon
+  sequestration
+protein_query: nitrogenase phytase carbonic anhydrase soil microbiome
+description: Soil microbiome enzymes for nitrogen cycling, phosphate solubilization,
+  and carbon sequestration.
+required_elements:
+- C
+- H
+- O
+- N
+- P
+- S
+- K
+- Ca
+- Mg
+- Fe
+- Mn
+- Mo
+- Co
+- Ni
+- Cu
+- Zn
+excluded_elements:
+- La
+- Ce
+- Pr
+- Nd
+- Pm
+- Sm
+- Eu
+- Gd
+- Tb
+- Dy
+- Ho
+- Er
+- Tm
+- Yb
+- Lu
+min_crustal_ppm: 1
+required_elements_preferred:
+- C
+- H
+- O
+- N
+- P
+- S
+- K
+- Ca
+- Mg
+- Fe
+- Mn
+- Mo
+- Co
+- Ni
+- Cu
+- Zn
+required_chemistry:
+- must contain C OR H OR N OR O or P or S (biomolecule)
+- must contain K OR Ca OR Mg OR Fe (soil metal)
+excluded_chemistry:
+- pure intermetallic
+name: soil-microbiome
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+sim_profile: soil-microbiome
+watch_auto_adsorb: true
+watch_auto_neb: true
+adsorb_molecules:
+- N2
+- H2O
+neb_molecule: N2
+category: earth-systems

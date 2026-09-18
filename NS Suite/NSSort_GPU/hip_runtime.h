@@ -1,0 +1,49 @@
+#ifndef HIP_RUNTIME_H
+#define HIP_RUNTIME_H
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+#define hipSuccess cudaSuccess
+#define hipErrorInvalidValue cudaErrorInvalidValue
+#define hipErrorOutOfMemory cudaErrorOutOfMemory
+#define hipMalloc cudaMalloc
+#define hipFree cudaFree
+#define hipMemcpy cudaMemcpy
+#define hipMemcpyDeviceToHost cudaMemcpyDeviceToHost
+#define hipMemcpyHostToDevice cudaMemcpyHostToDevice
+#define hipMemcpyDeviceToDevice cudaMemcpyDeviceToDevice
+#define hipDeviceSynchronize cudaDeviceSynchronize
+#define hipGetLastError cudaGetLastError
+#define hipGetErrorString cudaGetErrorString
+#define hipGetErrorName cudaGetErrorName
+#define hipPeekAtLastError cudaPeekAtLastError
+#define hipStreamCreate cudaStreamCreate
+#define hipStreamDestroy cudaStreamDestroy
+#define hipStreamSynchronize cudaStreamSynchronize
+#define hipEventCreate cudaEventCreate
+#define hipEventDestroy cudaEventDestroy
+#define hipEventRecord cudaEventRecord
+#define hipEventSynchronize cudaEventSynchronize
+#define hipEventElapsedTime cudaEventElapsedTime
+#define hipDeviceGetAttribute cudaDeviceGetAttribute
+#define hipDeviceGetName cudaDeviceGetName
+#define hipDeviceTotalMem cudaDeviceTotalMem
+#define hipGetDeviceProperties cudaGetDeviceProperties
+#define hipGetDeviceCount cudaGetDeviceCount
+#define hipSetDevice cudaSetDevice
+#define hipDeviceReset cudaDeviceReset
+#define hipFuncGetAttributes cudaFuncGetAttributes
+#define hipFuncSetAttribute cudaFuncSetAttribute
+#define hipFuncAttributeMaxDynamicSharedMemorySize cudaFuncAttributeMaxDynamicSharedMemorySize
+#define hipDeviceAttributeMultiprocessorCount cudaDevAttrMultiProcessorCount
+#define hipMemset cudaMemset
+#define __HIPCC__
+#define __HIP_PLATFORM_NVIDIA__
+#define hipWarpSize 32
+#endif
+#define hipError_t cudaError_t
+#define hipError_t cudaError_t
+#define hipEvent_t cudaEvent_t
+#define hipStream_t cudaStream_t
+#define hipDeviceAttribute_t cudaDeviceAttribute_t
+#define hipFuncAttributes cudaFuncAttributes
+#define hipDeviceProp_t cudaDeviceProp

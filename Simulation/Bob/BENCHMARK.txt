@@ -1,0 +1,27 @@
+BOB Benchmark Results
+Hardware: i7-1165G7, 8 threads
+Dataset: 520,000 synthetic materials, 5 properties
+Comparison: Brute force C++ (O3, same hardware) + Pareto front
+Note: Numbers below are without NSIndex.
+      With -DUSE_NSINDEX: Wide 346x, Tight 1313x,
+      Batch 101x (see README.md)
+
+Index build time: 0.51s (one-time)
+
+Wide Query (~25% selectivity per dimension):
+  BOB:         0.38ms
+  Brute force: 2.80ms
+  Speedup:     7.42x
+
+Tight Query (~0.1% selectivity per dimension):
+  BOB:         0.027ms
+  Brute force: 3.12ms
+  Speedup:     115x
+
+Batch (1000 varied queries):
+  BOB total:         0.21s
+  Brute force total: 3.47s
+  Avg speedup:       16.87x
+
+Algorithm: NSSort index build + NSIndex range queries + parallel SIMD bitset intersection (OMP)
+False positives: 0

@@ -1,0 +1,59 @@
+FULL DISEASE SCREEN: SUMMARY
+======================================================================
+Total targets completed:   995
+Targets with >=20 clean:   872
+Targets with 10-19 clean:  0
+Targets with <10 clean:    123 (need manual review)
+Total clean candidates:    53469
+Total relaxed candidates:  0
+Total exhausted:           0
+Runtime minutes:           6.2
+
+Top 20 targets by D_score closest to 0 (best diagnostic window):
+  target                            D_score
+  ----------------------------------------
+  CASP2                              -2.101
+  ACE                                -2.115
+  CASP3                              -2.122
+  CASP7                              -2.122
+  TMPRSS2                            -2.122
+  PRSS8                              -2.143
+  ACE2                               -2.213
+  CASP8                              -2.235
+  CTSL                               -3.817
+  CASP1                              -3.831
+  MMP3                               -3.831
+  MMP12                              -3.859
+  MMP2                               -3.894
+  MMP14                              -3.894
+  CASP12                             -3.915
+  MMP13                              -3.936
+  GPR137B                            -7.070
+  GGH                                -7.214
+  CAPN6                              -7.221
+  PSMA1                              -7.227
+
+Bottom 20 (exhausted or <5 clean): flag for manual review:
+  target                         clean_count
+  ----------------------------------------
+  CDKN1A                                  0
+  ABCC2                                   0
+  ABCC4                                   0
+  ABCC1                                   0
+  TK1                                     0
+  CDKN2A                                  0
+  HSP90B1                                 0
+  PKM                                     0
+  FLT1                                    0
+  RAF1                                    0
+  ERBB3                                   0
+  PRKCD                                   0
+  CHEK2                                   0
+  AURKA                                   0
+  BUB1                                    0
+  MAP3K5                                  0
+  BUB1B                                   0
+  MYLK                                    0
+  PFKFB3                                  0
+  PBK                                     0
+======================================================================

@@ -1,0 +1,93 @@
+JUST WANT TO COMPRESS FILES
+---------------------------
+Mount NSPack on a folder. Everything inside compresses automatically.
+No other steps. Works with any software.
+
+Linux/Mac:
+  nspack mount ~/my-assets ~/my-assets-compressed
+  # Now use ~/my-assets normally. Files store 2-8x smaller on disk.
+  nspack unmount ~/my-assets
+
+Windows:
+  nspack_fs.exe mount Z: C:\my-assets-compressed
+  # Now use Z:\ normally. Files store 2-8x smaller on disk.
+  nspack_fs.exe unmount Z:
+
+Check space saved:
+  nspack status ~/my-assets
+
+
+WHAT FILES DOES IT HELP MOST
+-----------------------------
+Big wins (4x or more):
+  .obj .ply         -- 3D models (7.8x)
+  .hdr .exr         -- HDR images (25x)
+  .bvh              -- animation (4.3x)
+  .sqlite           -- databases (varies)
+
+Good wins (2-4x):
+  .wav              -- audio (2.3x)
+  .png .jpg         -- images (1.5-4.5x)
+
+No win:
+  .mp4 .h264 .zip   -- already compressed, NSPack passes through unchanged
+
+
+ADDING YOUR OWN FILE TYPE
+--------------------------
+See EXTENDING.txt
+
+
+CLOUD DEPLOYMENT
+----------------
+NSPack runs on any Linux cloud server. Mount it between your application
+and your storage volume. Your application sees normal files. Disk usage
+drops 2-8x. No application changes required.
+
+STEP 1 -- Install on your server
+  apt install libfuse3-dev   # Debian/Ubuntu
+  git clone <nspack-repo>
+  cmake -B build && cmake --build build
+  cp build/nspack /usr/local/bin/
+  cp build/nspack_fs /usr/local/bin/
+
+STEP 2 -- Set up storage
+  # Create two directories: one for compressed storage, one as the mount point
+  mkdir /mnt/nspack-store    # compressed data lives here
+  mkdir /mnt/assets          # your application uses this
+
+STEP 3 -- Mount
+  nspack_fs mount /mnt/assets /mnt/nspack-store
+
+  # Point your application at /mnt/assets -- it sees normal files
+  # Data on disk is compressed in /mnt/nspack-store
+
+STEP 4 -- Auto-mount on reboot
+  Add to /etc/rc.local or a systemd service:
+    nspack_fs mount /mnt/assets /mnt/nspack-store
+
+STEP 5 -- Migrate existing files (optional)
+  # If you have existing files to compress in place:
+  nspack migrate /mnt/assets --dry-run   # preview first
+  nspack migrate /mnt/assets             # run for real
+
+CHECKING SAVINGS
+  nspack status /mnt/assets
+  # Shows per-file compression ratios and total space saved
+
+OBJECT STORAGE (S3-compatible)
+  Mount your object storage bucket locally using s3fs or rclone FUSE,
+  then mount NSPack on top of that mount point.
+  Your application reads and writes normal files. NSPack compresses them.
+  The compressed versions upload to object storage.
+
+  # Example with rclone:
+  rclone mount myremote:mybucket /mnt/bucket-raw &
+  nspack_fs mount /mnt/assets /mnt/bucket-raw
+  # Application writes to /mnt/assets -- compressed data goes to cloud bucket
+
+PERFORMANCE NOTES
+  - Compression runs on write, decompression on read -- first access is slightly
+    slower than direct disk. Subsequent reads from OS page cache are normal speed.
+  - For write-heavy workloads: NSPack saves more disk than it costs in CPU.
+  - For read-heavy workloads: decompress once, serve from page cache.

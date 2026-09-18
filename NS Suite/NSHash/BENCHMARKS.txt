@@ -1,0 +1,25 @@
+NSHash vs competitors: 1M keys, ns/op (lower is better)
+All competitors built with -O3 -march=native
+Cold-run medians, 3 runs
+
+Lookup:
+Workload    | NSHash | absl  | ankerl | robinhood | std   | fph   | boost
+------------|--------|-------|--------|-----------|-------|-------|-------
+Sequential  |  8.52  | 19.38 | 24.09  | 21.88     | 27.44 | 14.23 | 20.52
+Random      | 12.96  | 18.75 | 17.29  | 22.08     | 33.28 | 14.36 | 19.78
+Bounded     |  1.19  | 10.14 | 11.01  |  8.29     |  2.59 |  2.96 | 14.39
+Timestamp   |  1.62  | 19.09 | 14.41  | 22.20     |  3.53 | 15.19 | 21.74
+
+Insert: Sequential (1M keys, total ms / ops/sec):
+Map         | ms      | ops/s
+------------|---------|----------
+NSHash      |   7.04  | 142.0M
+boost       |  16.1   |  62.2M
+ankerl      |  21.1   |  47.3M
+std         |  22.1   |  45.3M
+robin_hood  |  24.9   |  40.2M
+absl        |  30.0   |  33.3M
+fph         | 712.9   |   1.4M
+
+vs absl lookup: Sequential 2.28x | Random 1.45x | Bounded 8.53x | Timestamp 11.76x
+Sequential insert: 4.26x absl | 101x fph | 3.1x std

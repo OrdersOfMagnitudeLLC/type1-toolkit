@@ -1,0 +1,18 @@
+NSSort GPU vs cub::DeviceRadixSort: int64_t, N=100000000
+Platform: RTX 2000 Ada, CUDA 12.8. Median of 5 runs.
+=========================================================
+
+distribution      ns_sort(ms)      cub(ms)    ratio   result
+-----------------------------------------------------------------
+zero                    0.074      115.589 1570.00x   WIN
+sorted                  3.926      116.260   29.62x   WIN
+reverse_sorted         54.442      116.273    2.14x   WIN
+almost_sorted          60.515      116.284    1.92x   WIN
+root_dup                7.713      115.955   15.03x   WIN
+two_dup                 8.849      115.569   13.07x   WIN
+eight_dup               7.522      115.582   15.37x   WIN
+zipf                    8.997      115.749   12.87x   WIN
+exponential           117.600      116.408    1.01x   LOSS
+uniform               180.400      117.935    1.53x   LOSS
+
+Done.

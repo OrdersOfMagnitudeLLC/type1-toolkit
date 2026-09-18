@@ -1,0 +1,4 @@
+*.o
+*.nsm
+*.gguf
+nsquant

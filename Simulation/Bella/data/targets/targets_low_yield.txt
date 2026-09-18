@@ -1,0 +1,300 @@
+# targets_low_yield.txt
+# Format: UniProt_ID | gene_name | disease | priority_score | r_pocket | source
+# Total: 296 targets with <10 clean candidates from first screen
+#
+P14625 | HSP90B1 | Chemical and Drug Induced Liver Injury | 7500.0 | 6.00 | 20k_uniprot
+P07900 | HSP90AA1 | Weight Loss | 5400.0 | 6.00 | 20k_uniprot
+Q99623 | PHB2 | Weight Loss | 1500.0 | 6.50 | 20k_uniprot
+Q5T8D3 | ACBD5 | Weight Loss | 1500.0 | 6.00 | 20k_uniprot
+Q96P20 | NLRP3 | Chemical and Drug Induced Liver Injury | 2400.0 | 6.50 | 20k_uniprot
+P42830 | CXCL5 | Inflammation | 2400.0 | 6.00 | 20k_uniprot
+P39900 | MMP12 | Inflammation | 2400.0 | 6.00 | 20k_uniprot
+Q07325 | CXCL9 | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+P68871 | HBB | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+O15455 | TLR3 | Weight Loss | 2400.0 | 6.50 | 20k_uniprot
+Q9BRX8 | PRXL2A | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+O43541 | SMAD6 | Necrosis | 2400.0 | 6.00 | 20k_uniprot
+P51681 | CCR5 | Necrosis | 2400.0 | 6.50 | 20k_uniprot
+P98088 | MUC5AC | Inflammation | 2400.0 | 6.00 | 20k_uniprot
+P62136 | PPP1CA | Weight Loss | 2400.0 | 6.20 | 20k_uniprot
+P49961 | ENTPD1 | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+O00175 | CCL24 | Inflammation | 2400.0 | 6.00 | 20k_uniprot
+Q16581 | C3AR1 | Chemical and Drug Induced Liver Injury | 2400.0 | 6.50 | 20k_uniprot
+O00626 | CCL22 | Inflammation | 2400.0 | 6.00 | 20k_uniprot
+Q96CC6 | RHBDF1 | Prenatal Exposure Delayed Effects | 2400.0 | 6.50 | 20k_uniprot
+P01589 | IL2RA | Inflammation | 2400.0 | 6.50 | 20k_uniprot
+Q86YJ6 | THNSL2 | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+Q9NRM6 | IL17RB | Chemical and Drug Induced Liver Injury | 2400.0 | 6.50 | 20k_uniprot
+P40429 | RPL13A | Weight Loss | 2400.0 | 6.00 | 20k_uniprot
+P29475 | NOS1 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+P35754 | GLRX | Chemical and Drug Induced Liver Injury | 1800.0 | 6.00 | 20k_uniprot
+P17655 | CAPN2 | Chemical and Drug Induced Liver Injury | 1800.0 | 6.00 | 20k_uniprot
+O60894 | RAMP1 | Weight Loss | 1800.0 | 6.50 | 20k_uniprot
+P25786 | PSMA1 | Chemical and Drug Induced Liver Injury | 1800.0 | 5.50 | 20k_uniprot
+P40306 | PSMB10 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+P07384 | CAPN1 | Necrosis | 1800.0 | 6.00 | 20k_uniprot
+P28065 | PSMB9 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+P28070 | PSMB4 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+P37088 | SCNN1A | Chemical and Drug Induced Liver Injury | 1800.0 | 8.00 | 20k_uniprot
+P20618 | PSMB1 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+Q96PU5 | NEDD4L | Prenatal Exposure Delayed Effects | 1800.0 | 6.00 | 20k_uniprot
+Q8NER1 | TRPV1 | Necrosis | 1800.0 | 6.50 | 20k_uniprot
+Q9HBY8 | SGK2 | Chemical and Drug Induced Liver Injury | 1800.0 | 6.80 | 20k_uniprot
+P28066 | PSMA5 | Necrosis | 1800.0 | 5.50 | 20k_uniprot
+P26045 | PTPN3 | Weight Loss | 1800.0 | 6.50 | 20k_uniprot
+P25787 | PSMA2 | Chemical and Drug Induced Liver Injury | 1800.0 | 5.50 | 20k_uniprot
+Q99436 | PSMB7 | Chemical and Drug Induced Liver Injury | 1800.0 | 5.50 | 20k_uniprot
+P49721 | PSMB2 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+P25788 | PSMA3 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+Q9H1D0 | TRPV6 | Prenatal Exposure Delayed Effects | 1800.0 | 6.50 | 20k_uniprot
+O75078 | ADAM11 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q96DB9 | FXYD5 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+P20810 | CAST | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+P80108 | GPLD1 | Chemical and Drug Induced Liver Injury | 1800.0 | 6.00 | 20k_uniprot
+Q9Y5S1 | TRPV2 | Weight Loss | 1800.0 | 6.50 | 20k_uniprot
+Q12955 | ANK3 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+P04632 | CAPNS1 | Chemical and Drug Induced Liver Injury | 1800.0 | 5.50 | 20k_uniprot
+Q6P9H4 | CNKSR3 | Weight Loss | 1800.0 | 6.80 | 20k_uniprot
+O15484 | CAPN5 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q8NEY1 | NAV1 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q9Y6Q1 | CAPN6 | Weight Loss | 1800.0 | 5.50 | 20k_uniprot
+O00168 | FXYD1 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q9NY72 | SCN3B | Prenatal Exposure Delayed Effects | 1800.0 | 8.00 | 20k_uniprot
+P61328 | FGF12 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q5T686 | AVPI1 | Prenatal Exposure Delayed Effects | 1800.0 | 6.00 | 20k_uniprot
+Q8IWT1 | SCN4B | Weight Loss | 1800.0 | 8.00 | 20k_uniprot
+P55064 | AQP5 | Weight Loss | 1800.0 | 6.00 | 20k_uniprot
+Q96BR1 | SGK3 | Weight Loss | 1800.0 | 6.80 | 20k_uniprot
+P13051 | UNG | Chemical and Drug Induced Liver Injury | 600.0 | 6.00 | 20k_uniprot
+Q86VB7 | CD163 | Weight Loss | 600.0 | 6.50 | 20k_uniprot
+O00408 | PDE2A | Weight Loss | 600.0 | 6.00 | 20k_uniprot
+P41208 | CETN2 | Weight Loss | 600.0 | 6.00 | 20k_uniprot
+Q58EX2 | SDK2 | Weight Loss | 600.0 | 6.00 | 20k_uniprot
+P51160 | PDE6C | Weight Loss | 600.0 | 6.00 | 20k_uniprot
+P16333 | NCK1 | Weight Loss | 600.0 | 6.00 | 20k_uniprot
+Q96IK1 | BOD1 | Prenatal Exposure Delayed Effects | 600.0 | 6.00 | 20k_uniprot
+O76001 | OR2J3 | Birth Weight | 600.0 | 6.50 | 20k_uniprot
+A6NFK2 | GRXCR2 | Prenatal Exposure Delayed Effects | 600.0 | 6.00 | 20k_uniprot
+Q8IYS8 | BOD1L2 | Histiocytosis | 600.0 | 6.00 | 20k_uniprot
+A0A2R8Y7D0 | TINCR | Chemical and Drug Induced Liver Injury | 7500.0 | 6.00 | 20k_uniprot
+A0JLT2 | MED19 | Prenatal Exposure Delayed Effects | 7500.0 | 7.00 | 20k_uniprot
+A1A5B4 | ANO9 | Inflammation | 7500.0 | 6.00 | 20k_uniprot
+A2A288 | ZC3H12D | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A2A2Y4 | FRMD3 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A2RRP1 | NBAS | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A6NDV4 | TMEM8B | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A6NFQ2 | TCAF2 | Weight Loss | 7500.0 | 8.00 | 20k_uniprot
+A6NIX2 | WTIP | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A6NKB5 | PCNX2 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+A7MD48 | SRRM4 | Prenatal Exposure Delayed Effects | 7500.0 | 6.00 | 20k_uniprot
+A8K7I4 | CLCA1 | Weight Loss | 7500.0 | 8.00 | 20k_uniprot
+A8K830 | POU2AF3 | Prenatal Exposure Delayed Effects | 7500.0 | 6.00 | 20k_uniprot
+A8MZ59 | LEUTX | Carcinoma, Ovarian Epithelial | 7500.0 | 6.00 | 20k_uniprot
+G2XKQ0 | SUMO1P1 | ST Elevation Myocardial Infarction | 7500.0 | 6.00 | 20k_uniprot
+K7EJ46 | SMIM22 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+O00214 | LGALS8 | Chemical and Drug Induced Liver Injury | 7500.0 | 6.00 | 20k_uniprot
+O00220 | TNFRSF10A | Weight Loss | 7500.0 | 6.50 | 20k_uniprot
+O00270 | GPR31 | Hyperplasia | 7500.0 | 6.50 | 20k_uniprot
+O00444 | PLK4 | Weight Loss | 7500.0 | 6.80 | 20k_uniprot
+O00463 | TRAF5 | Weight Loss | 7500.0 | 6.50 | 20k_uniprot
+O00470 | MEIS1 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+O00512 | BCL9 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+O00559 | EBAG9 | Weight Loss | 7500.0 | 6.50 | 20k_uniprot
+O00560 | SDCBP | Chemical and Drug Induced Liver Injury | 7500.0 | 6.00 | 20k_uniprot
+O00592 | PODXL | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+O00743 | PPP6C | Weight Loss | 7500.0 | 6.20 | 20k_uniprot
+O14519 | CDK2AP1 | Weight Loss | 7500.0 | 6.80 | 20k_uniprot
+O14569 | CYB561D2 | Weight Loss | 7500.0 | 6.00 | 20k_uniprot
+O14595 | CTDSP2 | Weight Loss | 7500.0 | 6.20 | 20k_uniprot
+O14686 | KMT2D | Prenatal Exposure Delayed Effects | 7500.0 | 6.00 | 20k_uniprot
+O14744 | PRMT5 | Chemical and Drug Induced Liver Injury | 7500.0 | 6.80 | 20k_uniprot
+P48506 | GCLC | Chemical and Drug Induced Liver Injury | 2100.0 | 6.10 | 20k_uniprot
+P48507 | GCLM | Chemical and Drug Induced Liver Injury | 2100.0 | 6.10 | 20k_uniprot
+P23560 | BDNF | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+P53539 | FOSB | Necrosis | 2100.0 | 6.00 | 20k_uniprot
+Q9Y617 | PSAT1 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+P04181 | OAT | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+Q13224 | GRIN2B | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+P43007 | SLC1A4 | Chemical and Drug Induced Liver Injury | 2100.0 | 7.50 | 20k_uniprot
+Q99259 | GAD1 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+O94925 | GLS | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+P52732 | KIF11 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.50 | 20k_uniprot
+Q12879 | GRIN2A | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+P78352 | DLG4 | Prenatal Exposure Delayed Effects | 2100.0 | 6.00 | 20k_uniprot
+Q7Z3E1 | TIPARP | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+Q8TD30 | GPT2 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+P51955 | NEK2 | Necrosis | 2100.0 | 6.80 | 20k_uniprot
+Q9BW19 | KIFC1 | Necrosis | 2100.0 | 6.00 | 20k_uniprot
+P00505 | GOT2 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+P16083 | NQO2 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.40 | 20k_uniprot
+Q9UPX8 | SHANK2 | Prenatal Exposure Delayed Effects | 2100.0 | 6.00 | 20k_uniprot
+Q99624 | SLC38A3 | Chemical and Drug Induced Liver Injury | 2100.0 | 7.50 | 20k_uniprot
+P42262 | GRIA2 | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+P01210 | PENK | Memory Disorders | 2100.0 | 6.00 | 20k_uniprot
+Q12959 | DLG1 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+P30038 | ALDH4A1 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+O75955 | FLOT1 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+P78563 | ADARB1 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+P54886 | ALDH18A1 | Weight Loss | 2100.0 | 6.80 | 20k_uniprot
+P42263 | GRIA3 | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+O95954 | FTCD | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+Q9UJS0 | SLC25A13 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+Q92820 | GGH | Prenatal Exposure Delayed Effects | 2100.0 | 5.50 | 20k_uniprot
+Q8WXX7 | AUTS2 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+P43681 | CHRNA4 | Weight Loss | 2100.0 | 6.50 | 20k_uniprot
+O14745 | NHERF1 | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+Q7Z429 | GRINA | Chemical and Drug Induced Liver Injury | 2100.0 | 6.50 | 20k_uniprot
+Q07837 | SLC3A1 | Chemical and Drug Induced Liver Injury | 2100.0 | 7.50 | 20k_uniprot
+P24588 | AKAP5 | Weight Loss | 2100.0 | 6.80 | 20k_uniprot
+O15240 | VGF | Chemical and Drug Induced Liver Injury | 2100.0 | 6.00 | 20k_uniprot
+P51790 | CLCN3 | Chemical and Drug Induced Liver Injury | 2100.0 | 7.50 | 20k_uniprot
+Q9ULB1 | NRXN1 | Prenatal Exposure Delayed Effects | 2100.0 | 6.00 | 20k_uniprot
+Q9C0H2 | TTYH3 | Weight Loss | 2100.0 | 8.00 | 20k_uniprot
+Q96PQ0 | SORCS2 | Weight Loss | 2100.0 | 6.50 | 20k_uniprot
+Q13255 | GRM1 | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+Q14957 | GRIN2C | Prenatal Exposure Delayed Effects | 2100.0 | 6.50 | 20k_uniprot
+O15067 | PFAS | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+Q96CX2 | KCTD12 | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+O14841 | OPLAH | Weight Loss | 2100.0 | 6.00 | 20k_uniprot
+Q01814 | ATP2B2 | Weight Loss | 2100.0 | 7.50 | 20k_uniprot
+P0DP25 | CALM3 | Prenatal Exposure Delayed Effects | 2100.0 | 6.00 | 20k_uniprot
+P42574 | CASP3 | Chemical and Drug Induced Liver Injury | 1200.0 | 5.50 | 20k_uniprot
+Q16236 | NFE2L2 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P49327 | FASN | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P05362 | ICAM1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.50 | 20k_uniprot
+P29466 | CASP1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+Q14457 | BECN1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P55210 | CASP7 | Chemical and Drug Induced Liver Injury | 1200.0 | 5.50 | 20k_uniprot
+Q16625 | OCLN | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+Q14973 | SLC10A1 | Chemical and Drug Induced Liver Injury | 1200.0 | 7.50 | 20k_uniprot
+P06493 | CDK1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.80 | 20k_uniprot
+P18847 | ATF3 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+O15392 | BIRC5 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P02786 | TFRC | Chemical and Drug Induced Liver Injury | 1200.0 | 6.50 | 20k_uniprot
+P01130 | LDLR | Chemical and Drug Induced Liver Injury | 1200.0 | 6.50 | 20k_uniprot
+Q8WTV0 | SCARB1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.50 | 20k_uniprot
+Q9NX09 | DDIT4 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P09429 | HMGB1 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+P06400 | RB1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+O95832 | CLDN1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P08195 | SLC3A2 | Chemical and Drug Induced Liver Injury | 1200.0 | 7.50 | 20k_uniprot
+Q9H1Y0 | ATG5 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+Q16552 | IL17A | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+O75807 | PPP1R15A | Necrosis | 1200.0 | 6.20 | 20k_uniprot
+P04233 | CD74 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+O15393 | TMPRSS2 | Chemical and Drug Induced Liver Injury | 1200.0 | 5.50 | 20k_uniprot
+P08254 | MMP3 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+Q03060 | CREM | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+P05161 | ISG15 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+Q16649 | NFIL3 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+Q8WXG1 | RSAD2 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+Q00613 | HSF1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+Q01650 | SLC7A5 | Chemical and Drug Induced Liver Injury | 1200.0 | 7.50 | 20k_uniprot
+Q92985 | IRF7 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P09914 | IFIT1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P05556 | ITGB1 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.50 | 20k_uniprot
+P13164 | IFITM1 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+Q9Y572 | RIPK3 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.80 | 20k_uniprot
+Q96AZ6 | ISG20 | Chemical and Drug Induced Liver Injury | 1200.0 | 6.00 | 20k_uniprot
+P68104 | EEF1A1 | Weight Loss | 1200.0 | 6.50 | 20k_uniprot
+P05026 | ATP1B1 | Weight Loss | 1200.0 | 6.00 | 20k_uniprot
+P15559 | NQO1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.40 | 20k_uniprot
+P62736 | ACTA2 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P08670 | VIM | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P12830 | CDH1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P22303 | ACHE | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P00352 | ALDH1A1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P47989 | XDH | Chemical and Drug Induced Liver Injury | 300.0 | 6.40 | 20k_uniprot
+O75460 | ERN1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.80 | 20k_uniprot
+P48163 | ME1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+Q08426 | EHHADH | Chemical and Drug Induced Liver Injury | 300.0 | 5.90 | 20k_uniprot
+Q9NP59 | SLC40A1 | Weight Loss | 300.0 | 7.50 | 20k_uniprot
+P12821 | ACE | Weight Loss | 300.0 | 5.50 | 20k_uniprot
+Q12834 | CDC20 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+O14682 | ENC1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P00750 | PLAT | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+Q969P5 | FBXO32 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+O14543 | SOCS3 | Necrosis | 300.0 | 6.00 | 20k_uniprot
+Q13794 | PMAIP1 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+O00762 | UBE2C | Chemical and Drug Induced Liver Injury | 300.0 | 6.10 | 20k_uniprot
+P07451 | CA3 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P06276 | BCHE | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+Q15714 | TSC22D1 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+Q86TX2 | ACOT1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+Q9NYY3 | PLK2 | Weight Loss | 300.0 | 6.80 | 20k_uniprot
+Q71U36 | TUBA1A | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P05091 | ALDH2 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P49753 | ACOT2 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P51648 | ALDH3A2 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P00558 | PGK1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.80 | 20k_uniprot
+P52209 | PGD | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P62753 | RPS6 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+Q15653 | NFKBIB | Chemical and Drug Induced Liver Injury | 300.0 | 6.50 | 20k_uniprot
+P48735 | IDH2 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P40925 | MDH1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+O75874 | IDH1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P09936 | UCHL1 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P63000 | RAC1 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P43686 | PSMC4 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+Q12882 | DPYD | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P22413 | ENPP1 | Chemical and Drug Induced Liver Injury | 300.0 | 6.20 | 20k_uniprot
+P43235 | CTSK | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+Q99618 | CDCA3 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+P13995 | MTHFD2 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P68133 | ACTA1 | Weight Loss | 300.0 | 6.00 | 20k_uniprot
+Q9BQE3 | TUBA1C | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+O95154 | AKR7A3 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P68366 | TUBA4A | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P51659 | HSD17B4 | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+P06576 | ATP5F1B | Chemical and Drug Induced Liver Injury | 300.0 | 6.00 | 20k_uniprot
+Q96RU8 | TRIB1 | Weight Loss | 300.0 | 6.50 | 20k_uniprot
+P01579 | IFNG | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P35222 | CTNNB1 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P40763 | STAT3 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P05121 | SERPINE1 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+Q16539 | MAPK14 | Chemical and Drug Induced Liver Injury | 450.0 | 6.80 | 20k_uniprot
+P45984 | MAPK9 | Necrosis | 450.0 | 6.80 | 20k_uniprot
+P17676 | CEBPB | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P78543 | BTG2 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P19022 | CDH2 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+O75293 | GADD45B | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+O43474 | KLF4 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P09038 | FGF2 | Necrosis | 450.0 | 6.00 | 20k_uniprot
+P06401 | PGR | Prenatal Exposure Delayed Effects | 450.0 | 6.50 | 20k_uniprot
+Q13950 | RUNX2 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P48436 | SOX9 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P07711 | CTSL | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P31350 | RRM2 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P98170 | XIAP | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P46531 | NOTCH1 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P08476 | INHBA | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P12931 | SRC | Chemical and Drug Induced Liver Injury | 450.0 | 6.80 | 20k_uniprot
+Q9BUX1 | CHAC1 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P05230 | FGF1 | Necrosis | 450.0 | 6.00 | 20k_uniprot
+Q16612 | NREP | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P12644 | BMP4 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+O00458 | IFRD1 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P31949 | S100A11 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P10600 | TGFB3 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P12643 | BMP2 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+Q9H4B4 | PLK3 | Chemical and Drug Induced Liver Injury | 450.0 | 6.80 | 20k_uniprot
+Q9UJX0 | OSGIN1 | Necrosis | 450.0 | 6.00 | 20k_uniprot
+P49454 | CENPF | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+Q6NUM9 | RETSAT | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P19883 | FST | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P00751 | CFB | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P41182 | BCL6 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P17612 | PRKACA | Weight Loss | 450.0 | 6.80 | 20k_uniprot
+O43490 | PROM1 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+Q06945 | SOX4 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P09529 | INHBB | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+O43623 | SNAI2 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P78504 | JAG1 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P98066 | TNFAIP6 | Necrosis | 450.0 | 6.00 | 20k_uniprot
+P34741 | SDC2 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+P13929 | ENO3 | Weight Loss | 450.0 | 5.80 | 20k_uniprot
+Q9UJU2 | LEF1 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+Q9Y2D1 | ATF5 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+Q01860 | POU5F1 | Chemical and Drug Induced Liver Injury | 450.0 | 6.00 | 20k_uniprot
+Q9NR12 | PDLIM7 | Weight Loss | 450.0 | 6.00 | 20k_uniprot
+P42575 | CASP2 | Necrosis | 450.0 | 5.50 | 20k_uniprot

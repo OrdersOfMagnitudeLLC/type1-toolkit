@@ -1,0 +1,134 @@
+# Stray root symlink + KunFramework results
+/NSMace/
+KunFramework/results/
+
+# Models and weights
+*.gguf
+*.bin
+*.pt
+*.pth
+NSInfer/weights/
+NSKVCache/weights/
+models/
+
+# Build artifacts
+*.o
+*.a
+*.so
+build/
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+
+# Bella SPARC engine (downloaded, not OOM code)
+Bella/sparc-engine/
+
+# Binaries
+NSRun/nsrun_test
+NSRun/nsrun
+Bob/bob
+Bella/bella
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Compiled binaries
+NSAlloc/alloc_bench
+NSBVH/nsbvh_debug
+NSBVH/nsbvh_simple
+NSComp/nscomp_bench
+NSFix/bench_*
+NSFix/fix_hash_benchmark
+NSFix/test
+NSIndex/bench
+NSIndex/nsindex_bench
+NSKVCache/tinyllama_local/
+NSLock/lock_bench
+NSMesh/mesh_bench2
+NSOptimize/optimize_bench
+NSQueue/queue_bench
+NSRun/nsrun_test
+NSRun/nsrun
+NSRun/llama.cpp/
+NSSort/ips4o
+Bella/cif_cache/*.zip
+
+# Simulation data and outputs
+*.dens
+*.npy
+*.npz
+*.aimd
+*.cif
+*.pdb
+*.xyz
+
+# Fix paths — previous entries used wrong relative paths
+Simulation/Bella/cif_cache/
+Simulation/Bella/.bella_sparc_*/
+Simulation/Bella/sparc-engine/
+Simulation/Bella/findings/
+Simulation/Bob/data/
+deprecated/
+NSAI/vendor/highway/
+NSAI/vendor/highway/**/*.pdf
+NS Suite/NSSort/ips4o/
+.env
+
+# Deprecated tree
+deprecated/
+
+# Simulation outputs
+Simulation/Bella/phonon_runs/
+Simulation/Bella/findings/
+Simulation/Bella/.bella_sparc_*/
+Simulation/Bella/sparc-engine/
+Simulation/Bella/engine/
+*.dens
+*.dens_*
+
+# Bella backup files
+Simulation/Bella/*.bak
+Simulation/Bella/*.pre-change
+Simulation/Bella/*.v4
+Simulation/Bella/*.v4-now
+
+# Compiled binaries
+NSAI/nsrun_test
+NSAI/NSQuant/nsquant
+Simulation/Bob/battery_query
+Simulation/Bob/data/
+Simulation/Bella/cif_cache/
+# Large data files — never commit
+*.fits
+*.zip
+*.npy
+*.npz
+*.csv
+*.dat
+*.so
+*.so.*
+*.bin
+*.tsv
+*.cif
+*.aimd
+*.dens
+*.json
+*.pkl
+.venv/
+__pycache__/
+cache/
+deprecated/
+
+# Bella2 simulation outputs and caches
+Simulation/Bella2/findings/
+Simulation/Bella2/data/
+Simulation/Bella2/results_20k_*.log
+Simulation/Bella2/results_smoketest/
+Simulation/Bella2/results_smoketest2/
+Simulation/Bella2/results_final_*/
+Simulation/Bella2/zinc_property_cache.pkl
+Simulation/Bella/NSMace/vendor/highway
+main.log
+probabilities.txt

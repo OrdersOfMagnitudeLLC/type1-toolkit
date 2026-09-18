@@ -1,0 +1,52 @@
+Copyright (c) 2026 Orders of Magnitude LLC
+Licensed under the OOM Commercial License v1.0
+See LICENSE.md in the repository root or ofmagnitude.com
+
+NSFix Bare Metal Throughput Benchmark
+=====================================
+
+Methodology
+
+A layered benchmark progressively strips overhead to measure how close FIX
+message processing can approach the hardware memory bandwidth ceiling. 100,000
+FIX 4.2 NewOrderSingle messages (124 bytes each) are concatenated into a single
+contiguous 12.5 MB buffer and processed across 10 timed iterations on one core.
+Each layer adds work on top of the previous one: raw memory scan, message
+boundary detection, field extraction, schema-aware parsing, and finally the
+full NSFix production parser with session management, callbacks, and dispatch.
+A memcpy reference establishes the memory bandwidth ceiling for the machine.
+
+Results (11th Gen Intel Core i7-1165G7, single core, -O3 -march=native)
+
+Layer  Description                          Throughput      GB/sec
+-----  -----------------------------------  -------------  -------
+0      AVX2 raw SOH scan                    1.1B SOH/sec   10
+0a     AVX-512 raw SOH scan                 1.6B SOH/sec   14
+1      AVX2 message boundary detection      43M msg/sec    5
+2      AVX2 bare parser (7 fields)          15M msg/sec    2
+2a     AVX-512 two-phase (scan + extract)   13M msg/sec    2
+2b     AVX-512 schema-aware (no tag decode) 16M msg/sec    2
+2c     AVX-512 hardcoded tag lengths        24M msg/sec    3
+3      NSFix feed_batch (no callback)      11M msg/sec    1
+4      NSFix feed_batch + full callback     11M msg/sec    1
+5      NSFix feed per-message (contiguous)  10M msg/sec    1
+6      NSFix feed per-message (vector)      11M msg/sec    1
+
+memcpy bandwidth: 19.1 GB/sec
+Theoretical maximum: 154M msg/sec
+
+Interpretation
+
+The AVX-512 raw scanner reaches 73% of the memcpy ceiling. The remaining 27%
+is loop control and popcount overhead, not memory bandwidth. Throughput drops
+sharply at Layer 1 (5 GB/sec) because each SOH triggers a dependent load to
+check for the "10=" checksum pattern. Field extraction at Layer 2 cuts throughput
+in half again: 14 fields per message require tag decoding, equals-sign scanning,
+and string_view construction, all scalar and dependent. Schema-aware parsing
+(Layer 2c) recovers some throughput by eliminating tag decode and equals-scan
+via hardcoded field offsets, reaching 24M msg/sec. The production parser (Layers
+3-6) runs at 10-11M msg/sec; the gap from Layer 2c is the cost of the 520-byte
+Message struct, dispatch array lookup, handle_message routing, and session state
+management. The 10x gap between production throughput and the theoretical maximum
+is the irreducible cost of semantic extraction: every field parsed is a byte
+touched, a branch taken, a value stored.

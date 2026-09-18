@@ -1,0 +1,8 @@
+NSAlloc vs mimalloc 3.5.1 (native build, -O3 -march=native): 100K ops, mean ns/op
+
+Pattern                          | NSAlloc (ns/op) | mimalloc (ns/op) | Speedup
+---------------------------------|-----------------|------------------|--------
+Bulk Reset (NSMultiPool)         |         113.787 |          967.240 | 8.5x
+Fixed Size Hot Path (NSPool<64,64>)  |       2.585 |            3.330 | 1.3x
+Fixed Size Hot Path (NSPool<64,128>) |      2.701 |            3.330 | 1.2x
+Fixed Size Hot Path (NSPool<64,256>) |      2.708 |            3.330 | 1.2x

@@ -1,0 +1,7 @@
+NSOptimize vs Greedy vs 2-opt: 20K cities, 200 clusters
+
+Method            | Distance (units) | Time (μs)   | vs 2-opt distance | vs 2-opt time
+------------------|-------------------|-------------|-------------------|---------------
+Global Greedy TSP |          429,370 |     654,734 | 1.22x             | 0.04x
+Standard 2-opt    |          353,382 |  17,777,548 | 1.0x              | 1.0x
+NS Hierarchical   |          363,896 |      49,727 | 1.03x             | 0.003x

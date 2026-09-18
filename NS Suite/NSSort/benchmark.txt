@@ -1,0 +1,19 @@
+NSSort vs IPS4o vs VQSort: 100M int64_t elements
+Methodology: 3 warmup + 3 timed runs, 64MB cache flush, median reported
+IPS4o: parallel mode, 8 threads. VQSort: Highway 1.0.7, single-threaded.
+
+Distribution    | NSSort (ms) | IPS4o (ms) | VQSort (ms) | vs IPS4o | vs VQSort
+----------------|-------------|------------|-------------|----------|-----------
+zero            |       0.001 |        182 |     193.835 | 182000x  | 193835x
+sorted          |        52.9 |        787 |     3655.6  | 14.9x    | 69.1x
+reverse_sorted  |        81.5 |        840 |     3760.9  | 10.3x    | 46.1x
+almost_sorted   |         712 |        782 |     3482.5  | 1.10x    | 4.89x
+root_dup        |         220 |        521 |     2466.3  | 2.36x    | 11.2x
+two_dup         |         126 |        186 |      528.9  | 1.47x    | 4.20x
+eight_dup       |         135 |        243 |      887.7  | 1.80x    | 6.58x
+zipf            |         249 |        418 |      661.3  | 1.68x    | 2.65x
+exponential     |        2120 |       1107 |      875.5  | 0.47x(L) | 0.41x(L)
+uniform         |        1232 |        808 |     1491.9  | 0.65x(L) | 1.21x
+
+Losses: IPS4o wins on exponential and uniform (8-thread parallelism on structureless data).
+VQSort wins on exponential only (single-threaded AVX-512 comparison sort).

@@ -1,0 +1,55 @@
+query_inject: refractory alloy tungsten tantalum vanadium plasma facing component
+  neutron activation
+protein_query: null
+description: Refractory W/Ta/V alloys for plasma-facing fusion components, >2500C
+  melting point, low neutron activation.
+required_elements:
+- W
+- Ta
+- V
+excluded_elements:
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- W
+- Ta
+- V
+- Cr
+- Fe
+- Ni
+- Mo
+- Nb
+required_chemistry:
+- must contain W OR V OR Ta OR Mo
+- must be pure metal OR carbide OR nitride
+excluded_chemistry:
+- pure sulfide without O
+- halide
+name: fusion-materials
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+sim_profile: fusion-plasma
+watch_auto_adsorb: true
+watch_auto_neb: true
+adsorb_molecules:
+- H2
+neb_molecule: H2
+category: materials-energy

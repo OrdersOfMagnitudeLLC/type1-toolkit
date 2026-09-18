@@ -1,0 +1,22 @@
+"""
+Test plugin for Bella
+"""
+
+def name() -> str:
+    return "Test Plugin"
+
+def search(query: str, limit: int = 5) -> list[dict]:
+    """Return fake test data."""
+    results = []
+    for i in range(min(limit, 3)):
+        results.append({
+            "formula": f"TestCompound{i}",
+            "cif_content": None,
+            "source": "test",
+            "properties": {"test": True}
+        })
+    return results
+
+def fetch_cif(material_id: str) -> str:
+    """Fetch CIF content (not implemented)."""
+    return ""

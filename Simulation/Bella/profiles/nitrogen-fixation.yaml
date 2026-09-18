@@ -1,0 +1,56 @@
+query_inject: nitrogen fixation catalyst stable high surface porous
+protein_query: null
+description: Ambient-temperature N2 activation catalysts (transition-metal Mo/Fe/V
+  analogs).
+required_elements:
+- Mo
+- Fe
+- V
+- Ru
+- W
+excluded_elements:
+- La
+- Ce
+- Pr
+- Nd
+- Pm
+- Sm
+- Eu
+- Gd
+- Tb
+- Dy
+- Ho
+- Er
+- Tm
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+min_element_ppm: 5
+required_elements_preferred:
+- Mo
+- Fe
+- V
+- Ru
+- W
+- Ti
+- Ni
+- Co
+required_chemistry:
+- must contain Mo OR Fe OR V OR Ru OR W
+- must be nitride OR phosphide OR carbide class
+excluded_chemistry:
+- pure oxide without transition metal
+- halide
+- pure intermetallic
+name: nitrogen-fixation
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+adsorb_molecules:
+- N2
+neb_molecule: N2
+watch_auto_adsorb: true
+watch_auto_neb: true
+category: materials-energy

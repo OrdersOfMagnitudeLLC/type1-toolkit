@@ -1,0 +1,51 @@
+query_inject: solid state battery ionic conductor sulfide oxide lithium sodium magnesium
+protein_query: null
+description: 'Solid-state battery electrolytes: Li/Na/Mg sulfides and oxides, >1 mS/cm
+  ionic conductivity.'
+required_elements:
+- Li
+- Na
+- Mg
+- S
+- O
+excluded_elements:
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+min_element_ppm: 10
+required_elements_preferred:
+- Li
+- Na
+- Mg
+- S
+- O
+required_chemistry:
+- must contain Li OR Na OR Mg as mobile carrier
+- must be sulfide OR oxide OR phosphate class
+excluded_chemistry:
+- pure intermetallic
+name: solid-state-batteries
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+watch_auto_adsorb: true
+watch_auto_neb: true
+adsorb_molecules:
+- Li
+neb_molecule: Li
+category: materials-energy

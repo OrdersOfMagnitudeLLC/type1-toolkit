@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.20)
+project(nsfft CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(nsfft nsfft_bench.cpp)
+target_include_directories(nsfft PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+find_library(FFTW3_LIB NAMES fftw3 libfftw3 fftw3f)
+if(FFTW3_LIB)
+    target_link_libraries(nsfft PRIVATE ${FFTW3_LIB})
+else()
+    message(WARNING "fftw3 not found")
+endif()
+target_compile_options(nsfft PRIVATE -O3 -march=native)

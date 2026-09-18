@@ -1,0 +1,5 @@
+sparc-engine/build/
+sparc-engine/*.o
+.env
+
+NSMace/weights/

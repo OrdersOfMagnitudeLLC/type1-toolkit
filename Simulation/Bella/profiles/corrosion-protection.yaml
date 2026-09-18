@@ -1,0 +1,71 @@
+query_inject: anti-corrosion coating passivation barrier oxide ceramic
+  earth-abundant steel protection
+protein_query: null
+description: 'Earth-abundant anti-corrosion coatings and passivation layers
+  for steel and aluminum. No rare earths or precious metals.'
+required_elements:
+- Fe
+- Al
+- Zn
+- Mg
+- Cr
+- Ti
+- Zr
+- Si
+- C
+- O
+- N
+- P
+- S
+- Ca
+- Sr
+- Ce
+excluded_elements:
+- Pt
+- Ir
+- Pd
+- Rh
+- Ru
+- Au
+- Gd
+- Sm
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Zn
+- Al
+- Cr
+- Si
+- O
+required_chemistry:
+- oxide, phosphate, silicate, or zinc-rich primer/coating
+- must form passive or sacrificial barrier
+excluded_chemistry:
+- pure noble metal coating
+- pure hydrocarbon without inhibitor
+name: corrosion-protection
+synthesis_temp_max_C: 400
+aqueous_stable: true
+bandgap_range: null
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: false
+adsorb_molecules:
+- H2O
+- Cl-
+- O2
+neb_molecule: H2O
+category: materials-coatings

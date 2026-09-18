@@ -1,0 +1,57 @@
+query_inject: solar cell photovoltaic bandgap semiconductor silicon gallium arsenide
+  perovskite
+protein_query: null
+description: 'Photovoltaic absorbers: Si, GaAs, and perovskite analogs with 1.1-1.7
+  eV bandgap, earth-abundant.'
+required_elements:
+- Si
+- Ga
+- As
+- Ti
+- O
+- N
+- S
+excluded_elements:
+- Gd
+- Sm
+- Ce
+- Er
+- Dy
+- Pr
+- Tb
+- Ho
+- La
+- Tm
+- Eu
+- Pm
+- Nd
+- Yb
+- Lu
+- Sc
+- Y
+min_crustal_ppm: 1
+required_elements_preferred:
+- Si
+- Ga
+- As
+- Ti
+- O
+- N
+- S
+required_chemistry:
+- bandgap between 1.0-1.8 eV required
+- must contain Si OR Ge OR (Pb AND I) OR (Sn AND I)
+excluded_chemistry:
+- pure intermetallic
+name: photovoltaics
+synthesis_temp_max_C: 800
+aqueous_stable: false
+bandgap_range: null
+min_element_ppm: 5
+watch_auto_adsorb: true
+watch_auto_neb: true
+adsorb_molecules:
+- H2O
+- CO2
+neb_molecule: H2O
+category: materials-energy

@@ -1,0 +1,42 @@
+name: technosignatures
+description: Technosignatures : IR excess, light curve dimming, industrial atmospheric
+  pollutants
+query_inject: nearby star photometry infrared excess light curve anomaly
+protein_query: null
+signals:
+- id: ir_excess
+  wise_bands:
+  - W3
+  - W4
+  color_threshold: -0.5
+  weight: 0.35
+- id: dimming_anomaly
+  mission: TESS
+  weight: 0.3
+- id: cfc_pollutants
+  molecules:
+  - CFC_11
+  - CFC_12
+  - NO2
+  weight: 0.35
+data_sources:
+- gaia_dr3
+- wise_neowise
+- tess
+- jwst_mast
+target_spectral_types:
+- K
+- G
+- F
+- M
+- A
+max_distance_pc: 300
+n_initial_candidates: 50000
+max_tess_followup: 500
+max_spectral_followup: 200
+use_cache: true
+tmag_range: [-3, 10]
+cone_arcsec: 30.0
+nexsci_limit: 500
+hk_threshold: 0.3
+category: planetary-science

@@ -1,0 +1,6 @@
+nsfft_band vs FFTW
+==================
+N=1048576 f_low=100 f_high=104 (5 bins)
+nsfft_band: 14.8708 ms
+fftw: 22.3061 ms
+

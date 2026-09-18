@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.20)
+project(nssort_gpu_hip CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 17)
+
+find_package(CUDAToolkit REQUIRED)
+enable_language(CUDA)
+
+add_executable(nssort_gpu_hip NSSort_GPU.hip)
+target_compile_options(nssort_gpu_hip PRIVATE -O3 -arch=sm_89 -I/opt/hip/include)
+target_link_libraries(nssort_gpu_hip PRIVATE CUDA::cudart)
+target_compile_definitions(nssort_gpu_hip PRIVATE __HIP_PLATFORM_NVIDIA__)

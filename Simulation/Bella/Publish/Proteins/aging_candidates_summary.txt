@@ -1,0 +1,54 @@
+FULL DISEASE SCREEN: SUMMARY
+======================================================================
+Total targets completed:   18
+Targets with >=20 clean:   0
+Targets with 10-19 clean:  2
+Targets with <10 clean:    16 (need manual review)
+Total clean candidates:    57
+Total relaxed candidates:  0
+Total exhausted:           0
+Runtime minutes:           0.2
+
+Top 20 targets by D_score closest to 0 (best diagnostic window):
+  target                            D_score
+  ----------------------------------------
+  ACE                                -6.036
+  CASP3                              -6.050
+  MMP3                               -7.752
+  CASP1                              -7.758
+  MMP12                              -7.766
+  MMP13                              -7.800
+  SIRT6                              -9.027
+  NAMPT                             -11.092
+  CD38                              -11.099
+  SIRT3                             -11.120
+  PRKAA2                            -13.128
+  PRKAA1                            -13.135
+  TERT                              -13.178
+  FOXO3                             -13.185
+  SIRT1                             -13.186
+  BCL2L1                            -13.515
+  BCL2                              -13.524
+
+Bottom 20 (exhausted or <5 clean): flag for manual review:
+  target                         clean_count
+  ----------------------------------------
+  BCL2                                    0
+  BCL2L1                                  0
+  MTOR                                    0
+  SIRT1                                   0
+  FOXO3                                   0
+  TERT                                    0
+  CASP1                                   0
+  SIRT3                                   0
+  PRKAA1                                  0
+  PRKAA2                                  0
+  CD38                                    0
+  CASP3                                   2
+  MMP12                                   3
+  SIRT6                                   5
+  MMP13                                   8
+  ACE                                     8
+  MMP3                                   12
+  NAMPT                                  19
+======================================================================
