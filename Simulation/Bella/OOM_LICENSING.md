@@ -2,7 +2,7 @@
 ## DO NOT MODIFY THIS FILE WITHOUT EXPLICIT INSTRUCTION FROM THE AUTHOR
 
 ### Engine: DFT-FE (LGPL v2.1+)
-- Source lives in ~/NS/Bella/engine/
+- Source lives in Bella/engine/
 - LGPL means: any modification to DFT-FE source files must also be LGPL
 - RULE: Never modify files inside engine/src/ directly
 - RULE: Never add OOM proprietary code inside engine/ directory
@@ -20,14 +20,14 @@
 - BellaSubspaceSolver class = new file added to DFT-FE build
 - Implements DFT-FE's internal solver interface
 - Internally calls Bella CheFSI via function pointer / header include
-- Lives in: ~/NS/Bella/integration/
+- Lives in: Bella/integration/
 - This file is LGPL by necessity (touches DFT-FE interface)
 - RULE: Integration layer contains NO algorithm logic: only the handshake
 
 ### Vacuum Skip (Proprietary → LGPL boundary)
 - Vacuum detection and mask generation: Bella proprietary code
 - Mask is passed to DFT-FE via existing mesh/cell API: zero DFT-FE modification
-- RULE: Vacuum logic lives in ~/NS/Bella/vacuum/ not in engine/
+- RULE: Vacuum logic lives in Bella/vacuum/ not in engine/
 
 ### What This Means In Practice
 - OOM sells: Bella CheFSI algorithm + Bob + vacuum logic (proprietary)

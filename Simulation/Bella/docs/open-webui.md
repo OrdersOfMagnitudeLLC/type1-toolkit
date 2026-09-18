@@ -85,7 +85,7 @@ With the tool enabled on a model, prompts like these work:
 
 - `Run a Bella discovery for nitrogen fixation and show the top candidate.`
 - `How does Mo2FeN2 adsorb N2?`
-- `Generate a PDF report for the latest findings JSON in ~/NS/Bella/findings/`
+- `Generate a PDF report for the latest findings JSON in your Bella findings directory`
 
 The model decides whether to call `discover`, `adsorb`, or `report`, then formats Bella's terminal output for the researcher.
 
@@ -101,7 +101,7 @@ Replace these placeholders with real screenshots after your first successful run
 
 - **"bella not found" inside Open WebUI:** Make sure `BELLA_PATH` is an absolute path and the file is executable. Use `which bella` on the host.
 - **Timeouts on discovery:** Increase `timeout=...` in the tool definition to `3600` for confirm-quality runs.
-- **PDF not opening:** The container cannot see `~/NS/Bella/findings`. Either mount that folder as a Docker volume or run report on paths the container can access.
+- **PDF not opening:** The container cannot see the Bella findings directory. Either mount that folder as a Docker volume or run report on paths the container can access.
 
 ## Estimated setup time
 

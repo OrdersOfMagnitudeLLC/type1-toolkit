@@ -101,7 +101,7 @@ Search UniProt and RCSB PDB for proteins.
 #### `fetch-screen <query>`
 Fetch CIFs from the Materials Project and screen them.
 
-- **Current behavior:** the MP CIF endpoint is not used; the command falls back to copying the first 5 `.cif` files from `~/NS/Bob/data/cifs` into `/tmp/bella_mp` and then runs `batch-screen` on them.
+- **Current behavior:** the MP CIF endpoint is not used; the command falls back to copying the first 5 `.cif` files from `Bob/data/cifs` into `/tmp/bella_mp` and then runs `batch-screen` on them.
 - Headless-safe.
 
 #### `search <query>`
