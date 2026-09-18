@@ -1,6 +1,6 @@
 # Datasets
 
-Training and evaluation used the following publicly available datasets. None are included in this repository — download before running experiments.
+Training and evaluation used the following publicly available datasets. None are included in this repository - download before running experiments.
 
 ## C4 (Colossal Clean Crawled Corpus)
 - HuggingFace: `allenai/c4`, English split

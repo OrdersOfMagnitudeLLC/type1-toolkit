@@ -4,7 +4,7 @@
 # See ./LICENSE.md for terms.
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 """
-bella_astro.py — Astrobiology / technosignature discovery pipeline.
+bella_astro.py: Astrobiology / technosignature discovery pipeline.
 
 Queries public astronomical archives for biosignatures and technosignatures,
 ranks candidates by anomaly score, and writes Bella findings reports.
@@ -853,7 +853,7 @@ def run_astro_pipeline(
     if cache_path.exists() and toi_path.exists():
         if toi_path.stat().st_mtime > cache_path.stat().st_mtime:
             cache_path.unlink()
-            print("[BELLA ASTRO] TOI catalog updated — cache cleared automatically")
+ print("[BELLA ASTRO] TOI catalog updated - cache cleared automatically")
 
     candidates = query_gaia_candidates(
         mode=mode,

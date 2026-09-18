@@ -2,7 +2,7 @@
 """Universal teacher logit caching script.
 
 Caches top-k logits from any GGUF model for NS bigram-filtered windows.
-Uses the teacher's own tokenizer throughout — no external tokenizers.
+Uses the teacher's own tokenizer throughout - no external tokenizers.
 """
 
 import os
@@ -24,7 +24,7 @@ def main():
     parser.add_argument("--top-k", type=int, default=100, help="Logits to save per token position")
     parser.add_argument("--n-ctx", type=int, default=512, help="Context size for llama-cpp-python")
     parser.add_argument("--cache-dir", default=None, help="Output directory (default: teacher_logits_cache_{model_name}/)")
-    parser.add_argument("--scorer", default="unigram", choices=["unigram", "bigram"], help="NS filter type (default: unigram — bigram is too sparse for large vocabs)")
+ parser.add_argument("--scorer", default="unigram", choices=["unigram", "bigram"], help="NS filter type (default: unigram: bigram is too sparse for large vocabs)")
     args = parser.parse_args()
 
     cache_dir = args.cache_dir or f"teacher_logits_cache_{args.model_name}"

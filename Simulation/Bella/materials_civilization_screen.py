@@ -65,7 +65,7 @@ def compute_rank_score(debye_T, formula):
 
 
 def compute_rank_score_abundance_only(formula):
-    """Abundance-only ranking score (no Debye multiplier) — for GNoME candidates."""
+ """Abundance-only ranking score (no Debye multiplier) - for GNoME candidates."""
     elements = re.findall(r'[A-Z][a-z]?', formula)
     abundances = [ABUNDANCE_PPM.get(el, 0.1) for el in elements]
     if not abundances:
@@ -313,7 +313,7 @@ CATEGORY_FILTERS = {
         "formation_energy_max": 0.0,
         "B_GPa_min": 100,
         "B_GPa_max": 300,
-        "note": "Hard magnetic materials without rare earth elements — wind turbines, EV motors"
+ "note": "Hard magnetic materials without rare earth elements - wind turbines, EV motors"
     },
 }
 CATEGORY_FILTERS.update(EXTRA_CATEGORY_FILTERS)
@@ -539,7 +539,7 @@ CATEGORY_NOTES = {
         "DEPLOY: Any farmer with access to ground material."
     ),
     "atmospheric_water_harvesting": (
-        "Passive desiccant — adsorbs moisture from air, releases with low heat. "
+ "Passive desiccant: adsorbs moisture from air, releases with low heat. "
         "NEEDS: Temperature swing 50-80C, solar heat sufficient. "
         "OUTPUT: Liquid water from air, no well or river required. "
         "DEPLOY: Village scale, solar thermal driver, zero grid."
@@ -551,7 +551,7 @@ CATEGORY_NOTES = {
         "DEPLOY: Household or community filter, no electricity."
     ),
     "fluoride_removal": (
-        "Ion exchange — fluoride displaces surface hydroxyl. "
+ "Ion exchange: fluoride displaces surface hydroxyl. "
         "NEEDS: Filter column, contact time 10-30 min. "
         "OUTPUT: Fluoride below WHO limit 1.5 mg/L. "
         "DEPLOY: Community water point, no electricity."
@@ -584,13 +584,13 @@ CATEGORY_NOTES = {
         "Sunlight drives water → H2 + O2 directly on powder surface. "
         "NEEDS: Sunlight + water + catalyst powder suspension. NO electricity. "
         "OUTPUT: H2 fuel or H2O2 for sanitation. "
-        "DEPLOY: Village reactor — pond with catalyst, sunlight, collect gas."
+ "DEPLOY: Village reactor: pond with catalyst, sunlight, collect gas."
     ),
     "thermoelectric_high_zt": (
         "Temperature gradient → electricity directly (Seebeck effect). "
         "NEEDS: Hot side (cookstove, engine exhaust, geothermal) + cold side. "
         "OUTPUT: Electricity from waste heat, no moving parts. "
-        "DEPLOY: Attach to any heat source — cookstove electrification."
+ "DEPLOY: Attach to any heat source: cookstove electrification."
     ),
     "geothermal_casing": (
         "Wellbore casing survives 300-400C acidic brine for decades. "
@@ -607,7 +607,7 @@ CATEGORY_NOTES = {
     "solid_electrolyte": (
         "Conducts Li/Na ions between electrodes without liquid. "
         "NEEDS: Thin film or pellet between anode and cathode. "
-        "OUTPUT: Safer battery — no liquid electrolyte fire risk. "
+ "OUTPUT: Safer battery: no liquid electrolyte fire risk. "
         "DEPLOY: Battery manufacturing."
     ),
     "anode_lithium_free": (
@@ -653,12 +653,12 @@ CATEGORY_NOTES = {
         "DEPLOY: Factory rooftop, village biochar kiln, direct air capture."
     ),
     "co2_reduction_catalyst": (
-        "ELECTROCHEMICAL — NOT passive absorption. Requires applied voltage. "
+ "ELECTROCHEMICAL: NOT passive absorption. Requires applied voltage. "
         "CO2 + H2O + electricity → CO, ethylene, ethanol, acetate (sellable products). "
         "Zn sites activate CO2 to CO; Cu sites couple CO to C2+ products. "
-        "Surface regenerates under applied potential — does not passivate. "
+ "Surface regenerates under applied potential - does not passivate. "
         "NEEDS: Solar panel + electrolytic cell + CO2 source (air or flue gas). "
-        "OUTPUT: Sellable carbon products — ethylene ($1200/ton), ethanol, CO. "
+ "OUTPUT: Sellable carbon products: ethylene ($1200/ton), ethanol, CO. "
         "DEPLOY: Village solar electrolyzer. Scrap brass works as electrode material."
     ),
     "low_carbon_cement": (
@@ -676,14 +676,14 @@ CATEGORY_NOTES = {
     ),
     "transparent_conductor_itofree": (
         "Conducts electricity while transmitting visible light. "
-        "Replaces indium tin oxide (ITO) — indium is scarce. "
+ "Replaces indium tin oxide (ITO): indium is scarce. "
         "NEEDS: Thin film deposition on glass/plastic. "
         "OUTPUT: Touch screens, solar cells, LED displays without supply chain risk. "
         "DEPLOY: Display and solar panel manufacturing."
     ),
     "piezoelectric_leadfree": (
         "Converts mechanical stress to electricity (and vice versa). "
-        "Replaces PZT (lead zirconate titanate) — lead is toxic. "
+ "Replaces PZT (lead zirconate titanate) - lead is toxic. "
         "NEEDS: Poling in electric field during manufacturing. "
         "OUTPUT: Sensors, actuators, ultrasound, energy harvesting from vibration. "
         "DEPLOY: Electronics manufacturing, medical devices."
@@ -696,7 +696,7 @@ CATEGORY_NOTES = {
     ),
     "mxene_alternative": (
         "2D conductive material for energy storage and EM shielding. "
-        "MXenes require HF synthesis — dangerous. This replaces that. "
+ "MXenes require HF synthesis: dangerous. This replaces that. "
         "NEEDS: Safer exfoliation or direct synthesis. "
         "OUTPUT: Supercapacitor electrode, EM shielding, sensor. "
         "DEPLOY: Electronics manufacturing."
@@ -737,7 +737,7 @@ CATEGORY_NOTES = {
         "Civilization-scale energy transmission. "
         "NEEDS: High-pressure synthesis or thin-film deposition. "
         "OUTPUT: Lossless power transmission if confirmed. "
-        "DEPLOY: Grid-scale transformation. CONJECTURE — no confirmed RT superconductors exist. "
+ "DEPLOY: Grid-scale transformation. CONJECTURE: no confirmed RT superconductors exist. "
         "Phonon confirmation REQUIRED before any claim."
     ),
     "room-temperature-superconductor": (
@@ -747,7 +747,7 @@ CATEGORY_NOTES = {
         "NEEDS: High-pressure synthesis or thin-film deposition. "
         "OUTPUT: Lossless power transmission if confirmed. "
         "DEPLOY: Grid-scale transformation. "
-        "DERIVED — T79 void-fill condition at solid-state scale."
+ "DERIVED: T79 void-fill condition at solid-state scale."
     ),
     "radiation_shielding": (
         "Space-grade shielding, nuclear-adjacent. "
@@ -833,7 +833,7 @@ LITERATURE_CANDIDATES = {
          "capacity_kg_per_kg": 0.50, "regen_T_C": 75,
          "access": "VILLAGE", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 1.20,
-         "note": "Highest capacity hygroscopic salt. Works below 20% RH — functional in arid climates. Li supply moderate concern.",
+ "note": "Highest capacity hygroscopic salt. Works below 20% RH: functional in arid climates. Li supply moderate concern.",
          "status": "MEASURED [literature]"},
         {"formula": "Na12Al12Si12O48", "mechanism": "molecular sieve",
          "capacity_kg_per_kg": 0.25, "regen_T_C": 150,
@@ -871,7 +871,7 @@ LITERATURE_CANDIDATES = {
          "targets": ["Pb", "Cd", "Zn"], "capacity_mg_per_g": 120,
          "access": "VILLAGE", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 1.50,
-         "note": "Ca5(PO4)3OH. Highest Pb capacity of any natural mineral. Synthesizable from bone ash or Ca + phosphate. Pb displaces Ca in lattice irreversibly — excellent sink.",
+ "note": "Ca5(PO4)3OH. Highest Pb capacity of any natural mineral. Synthesizable from bone ash or Ca + phosphate. Pb displaces Ca in lattice irreversibly - excellent sink.",
          "status": "MEASURED [literature]"},
         {"formula": "C", "mechanism": "surface adsorption + pore trapping",
          "targets": ["Pb", "Cd", "Hg", "As"], "capacity_mg_per_g": 40,
@@ -897,7 +897,7 @@ LITERATURE_CANDIDATES = {
          "capacity_mg_per_g": 20, "pH_range": "6-9",
          "access": "VILLAGE", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 1.20,
-         "note": "Fluorapatite. F substitutes into hydroxyapatite structure. Bone char is the cheapest form — used in Ethiopia, Tanzania.",
+ "note": "Fluorapatite. F substitutes into hydroxyapatite structure. Bone char is the cheapest form: used in Ethiopia, Tanzania.",
          "status": "MEASURED [literature]"},
         {"formula": "Mg2Al2H8O12", "mechanism": "anion exchange",
          "capacity_mg_per_g": 45, "pH_range": "5-9",
@@ -937,7 +937,7 @@ LITERATURE_CANDIDATES = {
          "conductivity_mS_cm": 0.16, "E_window_V": "0-5",
          "access": "INDUSTRIAL_SMALL", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 45.0,
-         "note": "Sulfide electrolyte. Room temperature Li+ conductivity 0.16 mS/cm. No La/Zr — all abundant. Sensitive to moisture during processing. Scale-up pathway clear via ball milling.",
+ "note": "Sulfide electrolyte. Room temperature Li+ conductivity 0.16 mS/cm. No La/Zr: all abundant. Sensitive to moisture during processing. Scale-up pathway clear via ball milling.",
          "status": "MEASURED [literature]"},
         {"formula": "Li3PO4", "mechanism": "Li+ hopping",
          "conductivity_mS_cm": 0.002, "E_window_V": "0-5.5",
@@ -949,13 +949,13 @@ LITERATURE_CANDIDATES = {
          "conductivity_mS_cm": 1.0, "E_window_V": "0-6",
          "access": "INDUSTRIAL_SMALL", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 120.0,
-         "note": "LLZO garnet. Gold standard solid electrolyte. 1 mS/cm at RT, widest window. La is MODERATE (light rare earth). Requires sintering at 1100C — energy intensive but manufacturable.",
+ "note": "LLZO garnet. Gold standard solid electrolyte. 1 mS/cm at RT, widest window. La is MODERATE (light rare earth). Requires sintering at 1100C: energy intensive but manufacturable.",
          "status": "MEASURED [literature]"},
         {"formula": "Na3PS4", "mechanism": "Na+ hopping",
          "conductivity_mS_cm": 0.20, "E_window_V": "0-5",
          "access": "INDUSTRIAL_SMALL", "safe_farmers": "PASS",
          "carbon_cycle": "NEUTRAL", "cost_usd_per_kg": 30.0,
-         "note": "Sodium analog of Li3PS4. For Na-ion batteries — removes Li dependency entirely. Na is seawater-abundant. Comparable conductivity to Li3PS4.",
+ "note": "Sodium analog of Li3PS4. For Na-ion batteries: removes Li dependency entirely. Na is seawater-abundant. Comparable conductivity to Li3PS4.",
          "status": "MEASURED [literature]"},
     ],
 }
@@ -963,131 +963,131 @@ LITERATURE_CANDIDATES = {
 # Manual candidates for new categories: (formula, debye_K, B_GPa, G_GPa, formE, band_gap, note)
 MANUAL_CANDIDATES = {
     "plasma_resistant": [
-        ("HfC", 700, 243, 191, -1.5, 0.0, "Hafnium carbide — highest melting point known (~3900C)", "MEASURED", "Toth 1971"),
-        ("ZrC", 680, 223, 175, -1.4, 0.0, "Zirconium carbide — extreme T refractory, earth-abundant Zr", "MEASURED", ""),
-        ("TaC", 650, 221, 188, -1.3, 0.0, "Tantalum carbide — ultra-high T, hard", "MEASURED", ""),
-        ("HfN", 550, 190, 150, -1.2, 0.0, "Hafnium nitride — plasma-facing, high hardness", "ESTIMATED", ""),
-        ("ZrN", 530, 180, 140, -1.3, 0.0, "Zirconium nitride — refractory, good thermal shock", "ESTIMATED", ""),
-        ("TaN", 500, 190, 150, -1.0, 0.0, "Tantalum nitride — high T stability", "ESTIMATED", ""),
-        ("HfB2", 650, 200, 180, -1.5, 0.0, "Hafnium diboride — UHTC, excellent thermal shock", "ESTIMATED", ""),
-        ("ZrB2", 630, 190, 170, -1.6, 0.0, "Zirconium diboride — UHTC, abundant Zr", "ESTIMATED", ""),
-        ("TiB2", 680, 220, 185, -1.4, 0.0, "Titanium diboride — high hardness, abundant Ti", "ESTIMATED", ""),
-        ("W2C", 450, 230, 180, -0.8, 0.0, "Tungsten semi-carbide — high T, good thermal conductivity", "ESTIMATED", ""),
+ ("HfC", 700, 243, 191, -1.5, 0.0, "Hafnium carbide - highest melting point known (~3900C)", "MEASURED", "Toth 1971"),
+ ("ZrC", 680, 223, 175, -1.4, 0.0, "Zirconium carbide - extreme T refractory, earth-abundant Zr", "MEASURED", ""),
+ ("TaC", 650, 221, 188, -1.3, 0.0, "Tantalum carbide - ultra-high T, hard", "MEASURED", ""),
+ ("HfN", 550, 190, 150, -1.2, 0.0, "Hafnium nitride - plasma-facing, high hardness", "ESTIMATED", ""),
+ ("ZrN", 530, 180, 140, -1.3, 0.0, "Zirconium nitride - refractory, good thermal shock", "ESTIMATED", ""),
+ ("TaN", 500, 190, 150, -1.0, 0.0, "Tantalum nitride - high T stability", "ESTIMATED", ""),
+ ("HfB2", 650, 200, 180, -1.5, 0.0, "Hafnium diboride - UHTC, excellent thermal shock", "ESTIMATED", ""),
+ ("ZrB2", 630, 190, 170, -1.6, 0.0, "Zirconium diboride - UHTC, abundant Zr", "ESTIMATED", ""),
+ ("TiB2", 680, 220, 185, -1.4, 0.0, "Titanium diboride - high hardness, abundant Ti", "ESTIMATED", ""),
+ ("W2C", 450, 230, 180, -0.8, 0.0, "Tungsten semi-carbide - high T, good thermal conductivity", "ESTIMATED", ""),
     ],
     "room_temp_superconductor_candidates": [
-        ("LaH10", 1500, 150, 100, -0.5, 0.0, "Lanthanum decahydride — CONJECTURE, high-pressure SC near 250K"),
-        ("YH9", 1400, 140, 90, -0.4, 0.0, "Yttrium nonahydride — CONJECTURE, predicted high-Tc"),
-        ("CeH9", 1300, 130, 85, -0.4, 0.0, "Cerium nonahydride — CONJECTURE, predicted high-Tc"),
-        ("MgB2", 900, 120, 80, -0.5, 0.0, "Magnesium diboride — confirmed SC at 39K, high Debye"),
-        ("Bi2Sr2CaCu2O8", 350, 80, 40, -1.0, 0.0, "BSCCO — confirmed HTSC at 95K, cuprate"),
-        ("YBa2Cu3O7", 400, 90, 50, -1.2, 0.0, "YBCO — confirmed HTSC at 93K, cuprate"),
-        ("Tl2Ba2Ca2Cu3O10", 380, 85, 45, -1.0, 0.0, "TBCCO — confirmed HTSC at 127K, cuprate"),
-        ("Hg12Tl3Ba30Ca30Cu45O127", 320, 70, 35, -0.8, 0.0, "Hg-Tl cuprate — CONJECTURE, record Tc claim 135K"),
-        ("H3S", 1200, 180, 120, -0.3, 0.0, "Hydrogen sulfide — CONJECTURE, SC at 203K under 150GPa"),
-        ("BaH12", 1100, 160, 100, -0.3, 0.0, "Barium dodecahydride — CONJECTURE, predicted high-Tc"),
+ ("LaH10", 1500, 150, 100, -0.5, 0.0, "Lanthanum decahydride - CONJECTURE, high-pressure SC near 250K"),
+ ("YH9", 1400, 140, 90, -0.4, 0.0, "Yttrium nonahydride - CONJECTURE, predicted high-Tc"),
+ ("CeH9", 1300, 130, 85, -0.4, 0.0, "Cerium nonahydride - CONJECTURE, predicted high-Tc"),
+ ("MgB2", 900, 120, 80, -0.5, 0.0, "Magnesium diboride - confirmed SC at 39K, high Debye"),
+ ("Bi2Sr2CaCu2O8", 350, 80, 40, -1.0, 0.0, "BSCCO - confirmed HTSC at 95K, cuprate"),
+ ("YBa2Cu3O7", 400, 90, 50, -1.2, 0.0, "YBCO - confirmed HTSC at 93K, cuprate"),
+ ("Tl2Ba2Ca2Cu3O10", 380, 85, 45, -1.0, 0.0, "TBCCO - confirmed HTSC at 127K, cuprate"),
+ ("Hg12Tl3Ba30Ca30Cu45O127", 320, 70, 35, -0.8, 0.0, "Hg-Tl cuprate - CONJECTURE, record Tc claim 135K"),
+ ("H3S", 1200, 180, 120, -0.3, 0.0, "Hydrogen sulfide - CONJECTURE, SC at 203K under 150GPa"),
+ ("BaH12", 1100, 160, 100, -0.3, 0.0, "Barium dodecahydride - CONJECTURE, predicted high-Tc"),
     ],
     "radiation_shielding": [
-        ("B4C", 900, 220, 180, -0.8, 2.0, "Boron carbide — neutron absorber, lightweight armor"),
-        ("WC", 550, 350, 280, -0.5, 0.0, "Tungsten carbide — gamma shielding, high density"),
-        ("Pb3O4", 200, 60, 30, -0.8, 2.5, "Red lead oxide — gamma shielding, high Z"),
-        ("Bi2O3", 250, 70, 35, -0.6, 2.8, "Bismuth oxide — lead-free gamma shielding"),
-        ("BaSO4", 300, 80, 40, -1.2, 4.0, "Barite — X-ray shielding, low cost"),
-        ("Fe3B", 450, 200, 150, -0.3, 0.0, "Iron boride — combined neutron + gamma shielding"),
-        ("Gd2O3", 280, 120, 60, -1.0, 3.5, "Gadolinium oxide — best neutron absorber, high cross-section"),
-        ("HfO2", 400, 180, 90, -1.2, 5.5, "Hafnium oxide — neutron absorber, high T stable"),
-        ("WNiFe", 350, 250, 180, -0.3, 0.0, "W-Ni-Fe heavy alloy — gamma + neutron shielding, 93W-4Ni-3Fe"),
-        ("BN", 1200, 300, 250, -0.8, 5.8, "Boron nitride — neutron shielding proxy for borated PE"),
+ ("B4C", 900, 220, 180, -0.8, 2.0, "Boron carbide - neutron absorber, lightweight armor"),
+ ("WC", 550, 350, 280, -0.5, 0.0, "Tungsten carbide - gamma shielding, high density"),
+ ("Pb3O4", 200, 60, 30, -0.8, 2.5, "Red lead oxide - gamma shielding, high Z"),
+ ("Bi2O3", 250, 70, 35, -0.6, 2.8, "Bismuth oxide - lead-free gamma shielding"),
+ ("BaSO4", 300, 80, 40, -1.2, 4.0, "Barite - X-ray shielding, low cost"),
+ ("Fe3B", 450, 200, 150, -0.3, 0.0, "Iron boride - combined neutron + gamma shielding"),
+ ("Gd2O3", 280, 120, 60, -1.0, 3.5, "Gadolinium oxide - best neutron absorber, high cross-section"),
+ ("HfO2", 400, 180, 90, -1.2, 5.5, "Hafnium oxide - neutron absorber, high T stable"),
+ ("WNiFe", 350, 250, 180, -0.3, 0.0, "W-Ni-Fe heavy alloy - gamma + neutron shielding, 93W-4Ni-3Fe"),
+ ("BN", 1200, 300, 250, -0.8, 5.8, "Boron nitride - neutron shielding proxy for borated PE"),
     ],
     "extreme_hardness": [
-        ("BN", 1300, 400, 480, -0.7, 6.0, "Cubic BN — second hardest material after diamond", "MEASURED", ""),
-        ("BC2N", 1100, 350, 280, -0.6, 3.0, "B-C-N ternary — predicted superhard, between diamond and cBN", "ESTIMATED", ""),
-        ("BC5", 1000, 300, 240, -0.5, 2.0, "Boron carbide C5 — predicted superhard", "ESTIMATED", ""),
-        ("OsB2", 600, 350, 280, -0.8, 0.0, "Osmium diboride — ultra-hard, high T stable", "ESTIMATED", ""),
-        ("ReB2", 650, 360, 273, -0.9, 0.0, "Rhenium diboride — superhard, high T", "MEASURED", ""),
-        ("WB4", 550, 304, 268, -0.4, 0.0, "Tungsten tetraboride — predicted superhard", "MEASURED", ""),
-        ("MoB4", 500, 280, 220, -0.5, 0.0, "Molybdenum tetraboride — hard, abundant Mo", "ESTIMATED", ""),
-        ("B6O", 1200, 380, 300, -0.7, 3.5, "Boron suboxide — third hardest known material", "ESTIMATED", ""),
-        ("BC2N", 1100, 340, 270, -0.6, 3.0, "r-BC2N — rhombohedral superhard B-C-N phase", "ESTIMATED", ""),
-        ("BC8", 1400, 420, 340, -0.5, 2.5, "BC8 diamond-cubic — predicted superhard carbon phase", "ESTIMATED", ""),
+ ("BN", 1300, 400, 480, -0.7, 6.0, "Cubic BN - second hardest material after diamond", "MEASURED", ""),
+ ("BC2N", 1100, 350, 280, -0.6, 3.0, "B-C-N ternary - predicted superhard, between diamond and cBN", "ESTIMATED", ""),
+ ("BC5", 1000, 300, 240, -0.5, 2.0, "Boron carbide C5 - predicted superhard", "ESTIMATED", ""),
+ ("OsB2", 600, 350, 280, -0.8, 0.0, "Osmium diboride - ultra-hard, high T stable", "ESTIMATED", ""),
+ ("ReB2", 650, 360, 273, -0.9, 0.0, "Rhenium diboride - superhard, high T", "MEASURED", ""),
+ ("WB4", 550, 304, 268, -0.4, 0.0, "Tungsten tetraboride - predicted superhard", "MEASURED", ""),
+ ("MoB4", 500, 280, 220, -0.5, 0.0, "Molybdenum tetraboride - hard, abundant Mo", "ESTIMATED", ""),
+ ("B6O", 1200, 380, 300, -0.7, 3.5, "Boron suboxide - third hardest known material", "ESTIMATED", ""),
+ ("BC2N", 1100, 340, 270, -0.6, 3.0, "r-BC2N - rhombohedral superhard B-C-N phase", "ESTIMATED", ""),
+ ("BC8", 1400, 420, 340, -0.5, 2.5, "BC8 diamond-cubic - predicted superhard carbon phase", "ESTIMATED", ""),
     ],
     "thermal_interface_materials": [
-        ("AlN", 900, 280, 180, -1.5, 6.2, "Aluminum nitride — best non-diamond thermal conductor, 320 W/mK", "ESTIMATED", ""),
-        ("BN", 1200, 36, 18, -0.8, 5.8, "Hexagonal BN — high thermal conductivity, electrical insulator", "MEASURED", "in-plane"),
-        ("BN", 1300, 400, 480, -0.7, 6.0, "Cubic BN — high thermal conductivity, electrical insulator", "MEASURED", ""),
-        ("C", 1800, 443, 478, -0.5, 5.5, "Diamond thin film — highest thermal conductivity, 2000 W/mK", "MEASURED", ""),
-        ("C", 1800, 500, 400, -0.5, 5.5, "Graphene composite proxy — extreme thermal conductivity", "ESTIMATED", ""),
-        ("SiC", 1000, 250, 200, -0.7, 3.0, "Silicon carbide — high thermal conductivity, semiconductor", "ESTIMATED", ""),
-        ("BeO", 800, 250, 160, -1.8, 10.5, "Beryllium oxide — high thermal conductivity, toxic Be", "ESTIMATED", ""),
-        ("Al2O3", 700, 230, 150, -1.6, 8.8, "Sapphire — good thermal, electrical insulator, low cost", "ESTIMATED", ""),
-        ("GaN", 600, 200, 160, -1.1, 3.4, "Gallium nitride — thermal + electronic, power devices", "ESTIMATED", ""),
-        ("Ga2O3", 550, 180, 140, -1.0, 4.8, "Beta-Ga2O3 — ultra-wide bandgap, high breakdown voltage", "ESTIMATED", ""),
+ ("AlN", 900, 280, 180, -1.5, 6.2, "Aluminum nitride - best non-diamond thermal conductor, 320 W/mK", "ESTIMATED", ""),
+ ("BN", 1200, 36, 18, -0.8, 5.8, "Hexagonal BN - high thermal conductivity, electrical insulator", "MEASURED", "in-plane"),
+ ("BN", 1300, 400, 480, -0.7, 6.0, "Cubic BN - high thermal conductivity, electrical insulator", "MEASURED", ""),
+ ("C", 1800, 443, 478, -0.5, 5.5, "Diamond thin film - highest thermal conductivity, 2000 W/mK", "MEASURED", ""),
+ ("C", 1800, 500, 400, -0.5, 5.5, "Graphene composite proxy - extreme thermal conductivity", "ESTIMATED", ""),
+ ("SiC", 1000, 250, 200, -0.7, 3.0, "Silicon carbide - high thermal conductivity, semiconductor", "ESTIMATED", ""),
+ ("BeO", 800, 250, 160, -1.8, 10.5, "Beryllium oxide - high thermal conductivity, toxic Be", "ESTIMATED", ""),
+ ("Al2O3", 700, 230, 150, -1.6, 8.8, "Sapphire - good thermal, electrical insulator, low cost", "ESTIMATED", ""),
+ ("GaN", 600, 200, 160, -1.1, 3.4, "Gallium nitride - thermal + electronic, power devices", "ESTIMATED", ""),
+ ("Ga2O3", 550, 180, 140, -1.0, 4.8, "Beta-Ga2O3 - ultra-wide bandgap, high breakdown voltage", "ESTIMATED", ""),
     ],
     "hydrogen_storage_hydrides": [
-        ("MgH2", 650, 45, 20, -0.8, 0.0, "Magnesium hydride — 7.6 wt% H2, abundant, high T desorption", "MEASURED", ""),
-        ("TiH2", 550, 100, 70, -0.6, 0.0, "Titanium hydride — stable, moderate capacity", "ESTIMATED", ""),
-        ("LaNi5H6", 300, 80, 50, -0.4, 0.0, "LaNi5 hydride — room T reversible, commercial AB5", "ESTIMATED", ""),
-        ("FeTiH2", 400, 90, 60, -0.3, 0.0, "Iron-titanium hydride — room T reversible, abundant", "ESTIMATED", ""),
-        ("Mg2NiH4", 450, 100, 70, -0.5, 0.0, "Mg-Ni hydride — improved kinetics vs MgH2", "ESTIMATED", ""),
-        ("NaAlH4", 350, 70, 45, -0.4, 0.0, "Sodium alanate — 5.6 wt%, catalyzed reversible", "ESTIMATED", ""),
-        ("LiBH4", 500, 90, 60, -0.5, 0.0, "Lithium borohydride — 18.5 wt% theoretical capacity", "ESTIMATED", ""),
-        ("CaBH42", 400, 80, 50, -0.4, 0.0, "Calcium borohydride — 11.5 wt%, moderate T", "ESTIMATED", ""),
-        ("LaNi5", 300, 80, 50, -0.3, 0.0, "LaNi5 AB5 proxy — reversible H2 storage alloy", "ESTIMATED", ""),
-        ("Mg2FeH6", 500, 110, 75, -0.5, 0.0, "Mg-Fe hydride — 5.5 wt%, high volumetric density", "ESTIMATED", ""),
+ ("MgH2", 650, 45, 20, -0.8, 0.0, "Magnesium hydride - 7.6 wt% H2, abundant, high T desorption", "MEASURED", ""),
+ ("TiH2", 550, 100, 70, -0.6, 0.0, "Titanium hydride - stable, moderate capacity", "ESTIMATED", ""),
+ ("LaNi5H6", 300, 80, 50, -0.4, 0.0, "LaNi5 hydride - room T reversible, commercial AB5", "ESTIMATED", ""),
+ ("FeTiH2", 400, 90, 60, -0.3, 0.0, "Iron-titanium hydride - room T reversible, abundant", "ESTIMATED", ""),
+ ("Mg2NiH4", 450, 100, 70, -0.5, 0.0, "Mg-Ni hydride - improved kinetics vs MgH2", "ESTIMATED", ""),
+ ("NaAlH4", 350, 70, 45, -0.4, 0.0, "Sodium alanate - 5.6 wt%, catalyzed reversible", "ESTIMATED", ""),
+ ("LiBH4", 500, 90, 60, -0.5, 0.0, "Lithium borohydride - 18.5 wt% theoretical capacity", "ESTIMATED", ""),
+ ("CaBH42", 400, 80, 50, -0.4, 0.0, "Calcium borohydride - 11.5 wt%, moderate T", "ESTIMATED", ""),
+ ("LaNi5", 300, 80, 50, -0.3, 0.0, "LaNi5 AB5 proxy - reversible H2 storage alloy", "ESTIMATED", ""),
+ ("Mg2FeH6", 500, 110, 75, -0.5, 0.0, "Mg-Fe hydride - 5.5 wt%, high volumetric density", "ESTIMATED", ""),
     ],
     "co2_capture_materials": [
-        ("MgO", 650, 160, 130, -1.6, 7.8, "Magnesium oxide — CO2 sorbent, 30-50% capacity, abundant", "MEASURED", ""),
-        ("CaO", 600, 150, 90, -1.7, 7.0, "Calcium oxide — CaO looping, high capacity, very cheap", "ESTIMATED", ""),
-        ("Li2O", 500, 120, 70, -1.4, 8.0, "Lithium oxide — CO2 capture, moderate capacity", "ESTIMATED", ""),
-        ("K2CO3", 300, 80, 50, -1.0, 4.0, "Potassium carbonate — CO2 sorbent, regenerable", "ESTIMATED", ""),
-        ("Na2CO3", 320, 85, 50, -1.1, 4.8, "Sodium carbonate — CO2 capture, very cheap", "ESTIMATED", ""),
-        ("Mg2Al2H8O12", 350, 100, 60, -0.8, 3.5, "Hydrotalcite LDH proxy — anion exchange CO2 capture", "ESTIMATED", ""),
-        ("ZnC8H12N4", 280, 70, 40, -0.5, 3.0, "ZIF-8 MOF proxy — high surface area CO2 capture", "ESTIMATED", ""),
-        ("TiO2", 500, 210, 140, -1.2, 3.0, "Amine-sorbent TiO2 proxy — functionalized CO2 capture", "ESTIMATED", ""),
-        ("Na12Al12Si12O48", 400, 90, 55, -1.3, 4.5, "Zeolite 13X proxy — pore-based CO2 adsorption", "ESTIMATED", ""),
-        ("CaCO3", 350, 100, 60, -1.2, 4.0, "Calcium carbonate reactive form — mineralization CO2", "ESTIMATED", ""),
+ ("MgO", 650, 160, 130, -1.6, 7.8, "Magnesium oxide - CO2 sorbent, 30-50% capacity, abundant", "MEASURED", ""),
+ ("CaO", 600, 150, 90, -1.7, 7.0, "Calcium oxide - CaO looping, high capacity, very cheap", "ESTIMATED", ""),
+ ("Li2O", 500, 120, 70, -1.4, 8.0, "Lithium oxide - CO2 capture, moderate capacity", "ESTIMATED", ""),
+ ("K2CO3", 300, 80, 50, -1.0, 4.0, "Potassium carbonate - CO2 sorbent, regenerable", "ESTIMATED", ""),
+ ("Na2CO3", 320, 85, 50, -1.1, 4.8, "Sodium carbonate - CO2 capture, very cheap", "ESTIMATED", ""),
+ ("Mg2Al2H8O12", 350, 100, 60, -0.8, 3.5, "Hydrotalcite LDH proxy - anion exchange CO2 capture", "ESTIMATED", ""),
+ ("ZnC8H12N4", 280, 70, 40, -0.5, 3.0, "ZIF-8 MOF proxy - high surface area CO2 capture", "ESTIMATED", ""),
+ ("TiO2", 500, 210, 140, -1.2, 3.0, "Amine-sorbent TiO2 proxy - functionalized CO2 capture", "ESTIMATED", ""),
+ ("Na12Al12Si12O48", 400, 90, 55, -1.3, 4.5, "Zeolite 13X proxy - pore-based CO2 adsorption", "ESTIMATED", ""),
+ ("CaCO3", 350, 100, 60, -1.2, 4.0, "Calcium carbonate reactive form - mineralization CO2", "ESTIMATED", ""),
     ],
     "water_splitting_catalysts": [
-        ("IrO2", 500, 200, 140, -0.8, 0.0, "Iridium oxide — best OER catalyst, scarce Ir"),
-        ("RuO2", 480, 190, 130, -0.7, 0.0, "Ruthenium oxide — excellent OER, scarce Ru"),
-        ("NiFeOx", 400, 160, 100, -0.5, 0.0, "NiFe oxide — best non-precious OER, abundant"),
-        ("CoP", 380, 140, 90, -0.4, 0.0, "Cobalt phosphide — HER catalyst, moderate cost"),
-        ("MoS2", 450, 180, 120, -0.5, 1.2, "Molybdenum disulfide — HER catalyst, layered"),
-        ("NiMoP", 350, 130, 85, -0.4, 0.0, "Ni-Mo phosphide — bifunctional HER/OER"),
-        ("FeCoNi", 300, 120, 80, -0.2, 0.0, "FeCoNi alloy — OER catalyst, earth-abundant"),
-        ("Cu2O", 300, 110, 70, -0.3, 2.1, "Cuprous oxide — photocatalytic water splitting"),
-        ("BiVO4", 280, 90, 55, -0.6, 2.4, "Bismuth vanadate — photoanode OER, visible light"),
-        ("Ta3N5", 350, 130, 85, -0.5, 2.1, "Tantalum nitride — photoanode, visible light absorption"),
+ ("IrO2", 500, 200, 140, -0.8, 0.0, "Iridium oxide - best OER catalyst, scarce Ir"),
+ ("RuO2", 480, 190, 130, -0.7, 0.0, "Ruthenium oxide - excellent OER, scarce Ru"),
+ ("NiFeOx", 400, 160, 100, -0.5, 0.0, "NiFe oxide - best non-precious OER, abundant"),
+ ("CoP", 380, 140, 90, -0.4, 0.0, "Cobalt phosphide - HER catalyst, moderate cost"),
+ ("MoS2", 450, 180, 120, -0.5, 1.2, "Molybdenum disulfide - HER catalyst, layered"),
+ ("NiMoP", 350, 130, 85, -0.4, 0.0, "Ni-Mo phosphide - bifunctional HER/OER"),
+ ("FeCoNi", 300, 120, 80, -0.2, 0.0, "FeCoNi alloy - OER catalyst, earth-abundant"),
+ ("Cu2O", 300, 110, 70, -0.3, 2.1, "Cuprous oxide - photocatalytic water splitting"),
+ ("BiVO4", 280, 90, 55, -0.6, 2.4, "Bismuth vanadate - photoanode OER, visible light"),
+ ("Ta3N5", 350, 130, 85, -0.5, 2.1, "Tantalum nitride - photoanode, visible light absorption"),
     ],
     "fertilizer_catalyst_expanded": [
-        ("Fe2Mo", 400, 160, 100, -0.3, 0.0, "Iron-molybdenum — nitrogen fixation catalyst"),
-        ("FeMo6", 350, 140, 90, -0.2, 0.0, "Fe-Mo cluster — nitrogen activation"),
-        ("VN", 450, 180, 120, -0.5, 0.0, "Vanadium nitride — N2 activation, moderate cost V"),
-        ("MoN", 400, 160, 100, -0.4, 0.0, "Molybdenum nitride — nitrogen fixation surface"),
-        ("Mo2N", 420, 170, 110, -0.5, 0.0, "Molybdenum semi-nitride — high activity N2 reduction"),
-        ("Fe3Mo3N", 380, 150, 95, -0.4, 0.0, "Fe-Mo nitride ternary — nitrogen fixation"),
-        ("Co3Mo3N", 370, 145, 90, -0.4, 0.0, "Co-Mo nitride — nitrogen fixation, Co moderate"),
-        ("Ni2Mo4N", 360, 140, 88, -0.3, 0.0, "Ni-Mo nitride — nitrogen activation"),
-        ("MnFe2O4", 350, 130, 85, -0.5, 0.0, "Manganese ferrite — nitrogen fixation support"),
-        ("Fe16N2", 400, 160, 100, -0.3, 0.0, "Iron nitride — high activity, abundant Fe"),
+ ("Fe2Mo", 400, 160, 100, -0.3, 0.0, "Iron-molybdenum - nitrogen fixation catalyst"),
+ ("FeMo6", 350, 140, 90, -0.2, 0.0, "Fe-Mo cluster - nitrogen activation"),
+ ("VN", 450, 180, 120, -0.5, 0.0, "Vanadium nitride - N2 activation, moderate cost V"),
+ ("MoN", 400, 160, 100, -0.4, 0.0, "Molybdenum nitride - nitrogen fixation surface"),
+ ("Mo2N", 420, 170, 110, -0.5, 0.0, "Molybdenum semi-nitride - high activity N2 reduction"),
+ ("Fe3Mo3N", 380, 150, 95, -0.4, 0.0, "Fe-Mo nitride ternary - nitrogen fixation"),
+ ("Co3Mo3N", 370, 145, 90, -0.4, 0.0, "Co-Mo nitride - nitrogen fixation, Co moderate"),
+ ("Ni2Mo4N", 360, 140, 88, -0.3, 0.0, "Ni-Mo nitride - nitrogen activation"),
+ ("MnFe2O4", 350, 130, 85, -0.5, 0.0, "Manganese ferrite - nitrogen fixation support"),
+ ("Fe16N2", 400, 160, 100, -0.3, 0.0, "Iron nitride - high activity, abundant Fe"),
         ("Fe3Mn4", 420, 170, 90, -0.18, 0.0, "N2 adsorption -1.134 eV MACE-validated T50 OPTIMAL | B/G/Debye estimated from Fe-Mn class | OOM 2026", "ESTIMATED", "OOM 2026 MACE"),
         ("Mo2FeN2", 510, 235, 125, -0.48, 0.0, "MACE phonon stable 0.436 THz | NEB barrier 1.193 eV | SPARC pending RunPod | B/G/Debye estimated from Mo-nitride class | OOM 2026", "ESTIMATED", "OOM 2026 MACE+NEB"),
     ],
     "extreme_temperature_structural": [
-        ("HfC", 700, 220, 190, -1.5, 0.0, "HfC UHTC — highest melting point, plasma-facing"),
-        ("ZrCSiC", 600, 200, 160, -1.2, 0.0, "ZrC-SiC composite — UHTC with oxidation resistance"),
-        ("TiC", 650, 210, 175, -1.5, 0.0, "Titanium carbide — high T, abundant Ti"),
-        ("NbC", 550, 190, 150, -1.0, 0.0, "Niobium carbide — refractory, moderate cost Nb"),
-        ("Mo2C", 500, 200, 160, -0.6, 0.0, "Molybdenum carbide — high T structural"),
-        ("Cr3C2", 480, 180, 140, -0.5, 0.0, "Chromium carbide — oxidation resistant, hard"),
-        ("VC", 520, 195, 155, -0.8, 0.0, "Vanadium carbide — high T, hard"),
-        ("WCoC", 450, 220, 180, -0.4, 0.0, "WC-Co proxy — cemented carbide for high T"),
-        ("SiC", 1000, 250, 200, -0.7, 3.0, "SiC fiber composite — high T structural, oxidation resistant"),
-        ("TaB2", 600, 200, 165, -1.3, 0.0, "Tantalum diboride — UHTC, extreme T structural"),
+ ("HfC", 700, 220, 190, -1.5, 0.0, "HfC UHTC - highest melting point, plasma-facing"),
+ ("ZrCSiC", 600, 200, 160, -1.2, 0.0, "ZrC-SiC composite - UHTC with oxidation resistance"),
+ ("TiC", 650, 210, 175, -1.5, 0.0, "Titanium carbide - high T, abundant Ti"),
+ ("NbC", 550, 190, 150, -1.0, 0.0, "Niobium carbide - refractory, moderate cost Nb"),
+ ("Mo2C", 500, 200, 160, -0.6, 0.0, "Molybdenum carbide - high T structural"),
+ ("Cr3C2", 480, 180, 140, -0.5, 0.0, "Chromium carbide - oxidation resistant, hard"),
+ ("VC", 520, 195, 155, -0.8, 0.0, "Vanadium carbide - high T, hard"),
+ ("WCoC", 450, 220, 180, -0.4, 0.0, "WC-Co proxy - cemented carbide for high T"),
+ ("SiC", 1000, 250, 200, -0.7, 3.0, "SiC fiber composite - high T structural, oxidation resistant"),
+ ("TaB2", 600, 200, 165, -1.3, 0.0, "Tantalum diboride - UHTC, extreme T structural"),
     ],
     "permanent_magnet_ree_free": [
-        ("Mn2VSi", 648, 180, 95, -0.3, 0.0, "Heusler alloy — permanent magnet candidate, REE-free, predicted high anisotropy | OOM 2026", "ESTIMATED", "OOM 2026"),
-        ("Fe3Ni", 520, 155, 85, -0.25, 0.0, "Fe-Ni tetrataenite — meteoritic permanent magnet, Earth-abundant | literature", "MEASURED", "Lewis 2014"),
-        ("MnAl", 480, 130, 70, -0.18, 0.0, "Mn-Al tau phase — REE-free hard magnet, studied since 1960s | literature", "MEASURED", "Zeng 2002"),
+ ("Mn2VSi", 648, 180, 95, -0.3, 0.0, "Heusler alloy - permanent magnet candidate, REE-free, predicted high anisotropy | OOM 2026", "ESTIMATED", "OOM 2026"),
+ ("Fe3Ni", 520, 155, 85, -0.25, 0.0, "Fe-Ni tetrataenite - meteoritic permanent magnet, Earth-abundant | literature", "MEASURED", "Lewis 2014"),
+ ("MnAl", 480, 130, 70, -0.18, 0.0, "Mn-Al tau phase - REE-free hard magnet, studied since 1960s | literature", "MEASURED", "Zeng 2002"),
     ],
 }
 MANUAL_CANDIDATES.update(EXTRA_MANUAL_CANDIDATES)
@@ -1164,7 +1164,7 @@ def _build_manual_hits(cat):
             "deployable": scarcity["deployable"],
             "supply_risk": "WARN" if scarcity["tier"] == "SCARCE" else "PASS",
             "application_note": CATEGORY_NOTES.get(cat, ""),
-            "dG_ads": "N/A [MANUAL — literature values]",
+ "dG_ads": "N/A [MANUAL: literature values]",
             "score": score,
             "note": f"CONJECTURE : {note}{ref_str}",
         })
@@ -1509,7 +1509,7 @@ def _run_category(cat, pool, filt):
                 else:
                     out["flag"] = "TOO_WEAK"
             else:
-                out["dG_ads"] = "N/A [PHONON_PENDING — no B/G for adsorption]"
+ out["dG_ads"] = "N/A [PHONON_PENDING - no B/G for adsorption]"
                 out["flag"] = "SKIP"
         # Combined score
         if out["tier"] == "ABUNDANT":
@@ -1625,7 +1625,7 @@ def _process_category(cat, pool, max_iter=3):
                 "supply_risk": "WARN" if tier == "SCARCE" else "PASS",
                 "application_note": CATEGORY_NOTES.get(cat, ""),
                 "dG_ads": -0.35,
-                "dG_source": "[MEASURED — literature desorption enthalpy]",
+ "dG_source": "[MEASURED: literature desorption enthalpy]",
                 "flag": "OPTIMAL",
                 "score": (
                     (5 - 1) * 3
@@ -1806,7 +1806,7 @@ def main(args=None):
             "safe_farmers": safe,
             "carbon_cycle": carbon,
             "co2_opportunity": co2,
-            "dG_ads": "N/A [HEA — no single adsorbate target]",
+ "dG_ads": "N/A [HEA: no single adsorbate target]",
             "route": synth["route"],
             "T_process_C": synth["T_process_C"],
             "E_kWh_per_kg": synth["E_kWh_per_kg"],
@@ -1829,9 +1829,9 @@ def main(args=None):
     for cat, hits in results.items():
         print(f"\n=== {cat.upper()} ===")
         if cat in MANUAL_CANDIDATES:
-            print("  # SOURCE: Manual candidates (literature values — CONJECTURE pending phonon confirmation)")
+ print(" # SOURCE: Manual candidates (literature values - CONJECTURE pending phonon confirmation)")
         elif cat in LITERATURE_CANDIDATES:
-            print("  # SOURCE: Literature (mechanism requires porosity/ion-exchange — not screenable from bulk B/G)")
+ print(" # SOURCE: Literature (mechanism requires porosity/ion-exchange - not screenable from bulk B/G)")
         if not hits:
             print("  NO_CANDIDATES")
             continue
@@ -1855,7 +1855,7 @@ def main(args=None):
                     f"supply_risk={h['supply_risk']:>4s}  "
                     f"note={first_sentence(h['application_note'])})")
             if isinstance(h.get("dG_ads"), (int, float)):
-                source = h.get("dG_source", "[T50 Domain II — DERIVED, f_corr MEASURED]")
+ source = h.get("dG_source", "[T50 Domain II - DERIVED, f_corr MEASURED]")
                 base += (f"  dG_ads={h['dG_ads']:>7.3f}eV {source}")
                 if h.get("flag"):
                     base += f"  {h['flag']}"
@@ -1962,7 +1962,7 @@ if __name__ == "__main__":
     _p.add_argument("--version", type=str, default="12")
     _p.add_argument("--output", type=str, default="findings/materials_v12")
     _p.add_argument("--gnome", type=str, default="",
-                    help="Path to GNoME CSV file — skips MP API, skips Debye gate")
+ help="Path to GNoME CSV file: skips MP API, skips Debye gate")
     _args = _p.parse_args()
     VERSION_LABEL = _args.version
     OUTPUT_DIR = _args.output

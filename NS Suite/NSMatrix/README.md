@@ -29,7 +29,7 @@ Baseline: Eigen (fixed-size blocks). 16x16 float blocks, AVX-512.
 | B=100,000 | 171.70 | 353.10 | **2.06x** |
 
 Headline: **3.3x Eigen at B=1,000 blocks.** Win condition: caller declares
-block-diagonal structure — Eigen has no native mechanism for this.
+block-diagonal structure: Eigen has no native mechanism for this.
 
 ## Third-party
 

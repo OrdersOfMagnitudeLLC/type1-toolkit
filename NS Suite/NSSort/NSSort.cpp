@@ -1905,7 +1905,7 @@ void run_perf_tests() {
 #ifndef BENCH_MODE
 int main() {
 
-    puts("NSSort v9 — v7 + 256-sample nearly-sorted path + Regime A/B");
+ puts("NSSort v9: v7 + 256-sample nearly-sorted path + Regime A/B");
     puts("===========================================================\n");
     run_correctness_tests();
     // run_perf_tests();

@@ -61,4 +61,4 @@ Computational predictions require experimental validation before use.
 CONTACT
 -------
 orders@ofmagnitude.com
-License: CC BY 4.0 — Orders of Magnitude LLC — https://creativecommons.org/licenses/by/4.0/
+License: CC BY 4.0: Orders of Magnitude LLC: https://creativecommons.org/licenses/by/4.0/

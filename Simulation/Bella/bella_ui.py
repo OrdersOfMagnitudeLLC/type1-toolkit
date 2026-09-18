@@ -117,7 +117,7 @@ def _command_panel(title, command, build_form, run_args_fn):
 
 
 def main():
-    st.title('Bella — Lightweight Universal Simulator')
+ st.title('Bella: Lightweight Universal Simulator')
     st.markdown("No Docker. No server. Just `pip install streamlit` and `bella ui`.")
 
     # Sidebar: domain profile selector
@@ -221,7 +221,7 @@ def main():
                     'Source': r.get('source'),
                     'NSMace (eV)': r.get('nsmace_energy'),
                     'Phonon stable': r.get('phonon_stable'),
-                    'Confidence': f"{r.get('confidence', '—')}",
+ 'Confidence': f"{r.get('confidence', ': ')}",
                 })
             st.dataframe(rows)
             with open(findings, 'rb') as f:

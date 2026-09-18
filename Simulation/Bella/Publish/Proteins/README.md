@@ -87,4 +87,4 @@ candidate (target, dG, D_score, Kd, toxicity) is available in
 proteins_300k_candidates.csv and the screen_run/ raw output.
 
 Contact: orders@ofmagnitude.com
-License: CC BY 4.0 — Orders of Magnitude LLC — https://creativecommons.org/licenses/by/4.0/
+License: CC BY 4.0: Orders of Magnitude LLC: https://creativecommons.org/licenses/by/4.0/

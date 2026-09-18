@@ -3024,7 +3024,7 @@ static void llm_requantize_output_tensor(llama_model & model, ggml_type new_type
 // the returned tensor (data pointing into tmp_buffer) is only valid until the
 // buffers are reused, and only its type/shape/data may be used: its src chain
 // and the populated graph reference stack locals of this function, so do not
-// walk the srcs or recompute the graph — clear it with ggml_graph_clear before
+// walk the srcs or recompute the graph - clear it with ggml_graph_clear before
 // reuse. ctx/graph must be able to hold the ~8 nodes of the derivation.
 // Returns null if the graph computation fails.
 static ggml_tensor * llm_compute_wkv_b(ggml_context * ctx, ggml_cgraph * graph,
@@ -3312,7 +3312,7 @@ static void llm_prepare_mla(llama_model & model, int mla) {
             };
 
             // pp_opt-favoring wk_b_pp = quantize(wk_b_f32) directly (absorb-favoring
-            // wk_b above is its transpose). Not gated on mla — wk_b_pp shares wk_b_f32
+ // wk_b above is its transpose). Not gated on mla: wk_b_pp shares wk_b_f32
             // with the wk_b synthesis above and skipping it breaks absorb on some
             // quant combinations. Second pass below gates the mla=1 saving for
             // GGUFs that ship wk_b directly.
@@ -4848,7 +4848,7 @@ static bool llm_load_tensors(
 
     ml.done_getting_tensors();
 
-    // --dry-run skips MAP_POPULATE/WILLNEED — tensor data is never read.
+ // --dry-run skips MAP_POPULATE/WILLNEED - tensor data is never read.
     ml.init_mappings(!defer_expert_mmap && !dry_run, use_mlock ? &model.mlock_mmaps : nullptr, ml.use_thp);
     model.mappings.reserve(ml.mappings.size());
 
@@ -5273,7 +5273,7 @@ static void llama_set_inputs(llama_context & lctx, const llama_batch & batch) {
         // ASSUMPTION (latent today): min(pos) over the whole [0,n_kv) span equals the sequence's
         // genuine first-present token only for a NON-SLIDING cache. GLM_DSA has no SWA, so the
         // oldest cell of a seq is its true sink; if SWA were ever added, the window could evict the
-        // real sink and min(pos) would anchor on the wrong (window-floor) cell — revisit then.
+ // real sink and min(pos) would anchor on the wrong (window-floor) cell - revisit then.
         std::unordered_map<llama_seq_id, llama_pos> seq_min_pos;
         for (int64_t i = 0; i < n_kv; ++i) {
             const auto & cell = kv_self.cells[i];
@@ -5761,7 +5761,7 @@ static void llama_set_inputs(llama_context & lctx, const llama_batch & batch) {
 
             // For causal models running in non-causal mode (e.g., Gemma-4 image decode),
             // the flash-attn mask is allocated as [n_kv, n_tokens_pad] and must be filled
-            // using KV cache cell metadata — not batch-token indices — because image tokens
+ // using KV cache cell metadata: not batch-token indices - because image tokens
             // occupy cells starting at n_past, not at cell 0.
             if (cparams.flash_attn && hparams.causal_attn && !lctx.is_encoding) {
                 const ggml_half h_inf  = ggml_fp32_to_fp16(-INFINITY);
@@ -6614,7 +6614,7 @@ static int llama_decode_internal(
                 // (in position order), compute cosine distance of its K vector from
                 // the rolling mean K vector of the preceding 64 tokens. Cells whose
                 // distance exceeds mean + 2*stddev are novel/anomalous relative to
-                // their local context and are PROTECTED (never evicted — they stay
+ // their local context and are PROTECTED (never evicted - they stay
                 // resident in the working cache). Remaining cells are KVBox eviction
                 // candidates, scored/sorted as before.
                 struct CellPos { uint32_t idx; llama_pos pos; float entropy; };
@@ -10980,7 +10980,7 @@ struct llama_data_write {
             write_openpangu_state(ctx, seq_id, false);
         }
 
-        // DSV4 compressed indexer cache (only for DSV4 models — preserves
+ // DSV4 compressed indexer cache (only for DSV4 models - preserves
         // the old file layout for all other architectures)
         if (ctx->model.arch == LLM_ARCH_DEEPSEEK4 && ctx->dsv4.cache.cache_ctx != nullptr) {
             const uint32_t dsv4_n_layer = n_layer;

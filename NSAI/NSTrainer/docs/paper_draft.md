@@ -2,7 +2,7 @@
 
 ## 1. Abstract
 
-Modern language model training applies a uniform gradient update to every token, regardless of its information content. We introduce **NS-weighted training**, which filters training examples by their Shannon information. On a 50MB sample of the C4 web corpus, unigram NS-data filtering matches a 1000-step standard training run at step 132, reducing the number of gradient steps required by **86.8%**. We further show that analytical initialization from a small teacher model, followed by only 4% of standard fine-tune steps, beats full standard training — a pipeline that reduces total training compute to ~30% of baseline. Our results suggest that the Shannon entropy of data, not raw token count, is the correct lower bound for gradient descent cost.
+Modern language model training applies a uniform gradient update to every token, regardless of its information content. We introduce **NS-weighted training**, which filters training examples by their Shannon information. On a 50MB sample of the C4 web corpus, unigram NS-data filtering matches a 1000-step standard training run at step 132, reducing the number of gradient steps required by **86.8%**. We further show that analytical initialization from a small teacher model, followed by only 4% of standard fine-tune steps, beats full standard training - a pipeline that reduces total training compute to ~30% of baseline. Our results suggest that the Shannon entropy of data, not raw token count, is the correct lower bound for gradient descent cost.
 
 ## 2. The Shannon Waste Problem
 
@@ -96,7 +96,7 @@ We replace the standard two-layer FFN ($d_\text{model} \to d_\text{ff} \to d_\te
 
 | Configuration | Params | Param Δ | Final Loss | Gap vs Standard |
 |---|---|---|---|---|
-| Standard FFN (baseline) | 3,225,153 | — | 2.0834 | — |
+| Standard FFN (baseline) | 3,225,153 | - | 2.0834 | - |
 | Layer 0 only, k=32 | 3,093,313 | −4.1% | 2.0744 | **−0.0090** |
 | Layers 0+3, k=32 | 2,961,473 | −8.2% | 2.1607 | +0.0772 |
 | All layers, k=32 | 2,697,793 | −16.4% | 2.1916 | +0.1082 |
@@ -107,9 +107,9 @@ We replace the standard two-layer FFN ($d_\text{model} \to d_\text{ff} \to d_\te
 **Key findings.**
 
 - **Layer 0 dynamic FFN beats standard by 0.009 loss with 4.1% fewer parameters.** The rank-32 dynamic matrix is sufficient to replace the first layer's FFN at no quality cost.
-- **k=32 is optimal for a 512-node library** (6.25% activation rate). Increasing to k=48 degrades quality because the router loses selectivity — top-48 weights approach uniformity, collapsing the dynamic matrix to a fixed average.
+- **k=32 is optimal for a 512-node library** (6.25% activation rate). Increasing to k=48 degrades quality because the router loses selectivity - top-48 weights approach uniformity, collapsing the dynamic matrix to a fixed average.
 - **Per-layer compounding prevents all-layer replacement.** Each additional dynamic layer degrades quality proportionally: layer 0 alone gains 0.009, layers 0+3 lose 0.077, all layers lose 0.108.
-- **Independent node libraries don't fix compounding — it's structural.** Scaling the library from 512 to 1024 to 2048 nodes across all layers does not close the gap (0.096 → 0.101). The bottleneck is not library capacity but the rank-32 constraint per layer: a rank-32 matrix cannot match the full-rank 1024-dimensional standard FFN at every position.
+- **Independent node libraries don't fix compounding - it's structural.** Scaling the library from 512 to 1024 to 2048 nodes across all layers does not close the gap (0.096 → 0.101). The bottleneck is not library capacity but the rank-32 constraint per layer: a rank-32 matrix cannot match the full-rank 1024-dimensional standard FFN at every position.
 
 ### 4.5 Full Pipeline: Teacher → Analytical Solve → Fine-tune
 
@@ -124,7 +124,7 @@ We combine NS-weighted training, analytical initialization, and short fine-tunin
 | Standard 200-step baseline | 2.6006 |
 | Gap (analytical+FT vs standard) | **−0.0422** |
 
-The analytical init alone (2.5916) matches the teacher's 200-step loss (2.5913) to within 0.0003 nat — near-perfect reconstruction. Just 50 fine-tune steps improve the student to 2.5585, beating the 200-step standard baseline by 0.0422. The pipeline uses **4× fewer gradient steps** (50 vs 200), produces a **1.9× larger model**, and achieves a **better result** than standard training.
+The analytical init alone (2.5916) matches the teacher's 200-step loss (2.5913) to within 0.0003 nat - near-perfect reconstruction. Just 50 fine-tune steps improve the student to 2.5585, beating the 200-step standard baseline by 0.0422. The pipeline uses **4× fewer gradient steps** (50 vs 200), produces a **1.9× larger model**, and achieves a **better result** than standard training.
 
 The Ledoit-Wolf shrinkage formula is:
 
@@ -152,19 +152,19 @@ Total: $20\% + 5\% + 5\% = 30\%$ of standard training compute, producing a large
 
 ## 6. Implications for Sovereign AI
 
-The NS filter determines what the model learns. Whoever controls the filter controls the model's inductive bias — not the compute provider, not the cloud, not the foundation model vendor. This shifts AI sovereignty from infrastructure owners back to data owners. The filter is a single-pass, CPU-only computation over raw text; it requires no GPU, no cloud API, and no external service. A data owner with a laptop and a corpus can produce a model whose knowledge distribution reflects their own priorities, not those of a remote platform.
+The NS filter determines what the model learns. Whoever controls the filter controls the model's inductive bias - not the compute provider, not the cloud, not the foundation model vendor. This shifts AI sovereignty from infrastructure owners back to data owners. The filter is a single-pass, CPU-only computation over raw text; it requires no GPU, no cloud API, and no external service. A data owner with a laptop and a corpus can produce a model whose knowledge distribution reflects their own priorities, not those of a remote platform.
 
-Different filter thresholds produce different models from identical raw data. A medical institution filters for clinical language density, producing a model that prioritizes diagnostic reasoning and terminology. A legal firm filters for rare statutory combinations, producing a model attuned to regulatory edge cases. Same pipeline, different knowledge emphasis, no architectural changes. Customization happens at the data level, not the weight level. This eliminates the need for domain-specific fine-tuning pipelines, LoRA adapters, or prompt engineering — the model is born specialized because it was trained on the information-dense subset of the relevant domain.
+Different filter thresholds produce different models from identical raw data. A medical institution filters for clinical language density, producing a model that prioritizes diagnostic reasoning and terminology. A legal firm filters for rare statutory combinations, producing a model attuned to regulatory edge cases. Same pipeline, different knowledge emphasis, no architectural changes. Customization happens at the data level, not the weight level. This eliminates the need for domain-specific fine-tuning pipelines, LoRA adapters, or prompt engineering - the model is born specialized because it was trained on the information-dense subset of the relevant domain.
 
 The combined compute reduction is substantial. NS-weighted training reduces gradient steps by up to 86.8%. Analytical initialization from a small teacher model, followed by short fine-tuning, reduces total training to approximately 30% of standard cost. Together, the pipeline achieves a theoretical ceiling of roughly 333× reduction from baseline. A model trainable in hours on a laptop CPU removes the dependency on cloud GPU clusters entirely. Nations, institutions, and individuals can train domain-specific models on their own hardware, on their own data, without external dependency. The capital barrier to entry collapses from millions of dollars in GPU rentals to the cost of a consumer CPU and a text file.
 
-NS filtering selects which windows of text the model trains on. The raw data never leaves the local machine. The model learns only the information-dense subset. This is not compression — it is selection. The distinction matters legally and ethically. Compression implies that the original data can be reconstructed from the compressed representation; selection implies that the raw data remains intact and untouched, simply not all of it is used for training. No derivative work is created. No data is transmitted. The filter is a local read operation, and the training set is a subset of the local corpus.
+NS filtering selects which windows of text the model trains on. The raw data never leaves the local machine. The model learns only the information-dense subset. This is not compression: it is selection. The distinction matters legally and ethically. Compression implies that the original data can be reconstructed from the compressed representation; selection implies that the raw data remains intact and untouched, simply not all of it is used for training. No derivative work is created. No data is transmitted. The filter is a local read operation, and the training set is a subset of the local corpus.
 
-Standard data curation methods — RLHF, content filtering, safety alignment — change what the model is allowed to say. NS filtering changes what the model learns to say by selecting the most information-dense signal. No content is blocked; low-information content is simply not worth the compute. A model trained on NS-filtered data has never been told what not to say — it has merely been taught from the parts of the corpus that carry the most information per token. The result is a model whose knowledge reflects the statistical structure of the most informative text, not the policy preferences of a alignment team.
+Standard data curation methods: RLHF, content filtering, safety alignment - change what the model is allowed to say. NS filtering changes what the model learns to say by selecting the most information-dense signal. No content is blocked; low-information content is simply not worth the compute. A model trained on NS-filtered data has never been told what not to say - it has merely been taught from the parts of the corpus that carry the most information per token. The result is a model whose knowledge reflects the statistical structure of the most informative text, not the policy preferences of a alignment team.
 
-The pipeline described in this paper — information-theoretic data selection, analytical weight initialization, and architecture-level sparsity — collectively relocate the center of gravity in AI development from compute providers to data holders. The model is a function of the filter. The filter is a function of the data owner's priorities. This is not a minor optimization. It is a structural redistribution of who controls what AI systems learn.
+The pipeline described in this paper - information-theoretic data selection, analytical weight initialization, and architecture-level sparsity - collectively relocate the center of gravity in AI development from compute providers to data holders. The model is a function of the filter. The filter is a function of the data owner's priorities. This is not a minor optimization. It is a structural redistribution of who controls what AI systems learn.
 
-## Section: Overnight Training Attempt — 252M/300M Scale (2026-09-03)
+## Section: Overnight Training Attempt: 252M/300M Scale (2026-09-03)
 
 ### What Was Attempted
 Full-scale training run targeting 252M and 300M parameter student models using the
@@ -176,7 +176,7 @@ All overnight runs failed to produce coherent language models.
 ### Root Cause Analysis (three independent failure modes)
 
 **1. Teacher quality mismatch**
-Teacher model was 13.9M parameters — too small to carry meaningful representational
+Teacher model was 13.9M parameters: too small to carry meaningful representational
 signal for a 252M–300M student. Gram-based analytical solve transfers the teacher's
 learned structure. If the teacher has no learned structure worth transferring, the
 solve produces noise, not initialization. Teacher capacity must be ≥ student capacity
@@ -209,7 +209,7 @@ Data: C4 50MB with NS bigram filter applied (same filtering, better teacher sign
 Optimizer: AdamW with 8-bit quantization via bitsandbytes.
 Student: 500M at d_model=896 (matches teacher dimensions exactly, no projection needed).
 Fine-tune: 1000 steps with gradient checkpointing.
-RAM budget: ~2.5GB — fits on Spectre with Brave closed.
+RAM budget: ~2.5GB: fits on Spectre with Brave closed.
 
 ---
 
@@ -311,9 +311,9 @@ Full LoRA KD pipeline on Qwen2.5-3B-Instruct (3.8B parameters):
 
 NSKVCache replaces the standard KV cache with a two-tier system: a small working cache (n_batch tokens) for the current decode window, and a large cold store (INT8 quantized) for evicted tokens. A page-level scoring index enables retrieval of relevant cold pages back into the working cache when needed.
 
-**Pre-RoPE K storage.** K vectors are intercepted before `ggml_rope()` in `llama.cpp` and stored unrotated. On injection, RoPE is re-applied at the original position. This eliminates RoPE distance suppression — a token at position 500 injected into a working cache at position 500 has the same attention weight as if it had never been evicted.
+**Pre-RoPE K storage.** K vectors are intercepted before `ggml_rope()` in `llama.cpp` and stored unrotated. On injection, RoPE is re-applied at the original position. This eliminates RoPE distance suppression - a token at position 500 injected into a working cache at position 500 has the same attention weight as if it had never been evicted.
 
-**QUEST-style page index.** The context is divided into pages of 16 tokens. For each page, the index stores element-wise max and min of post-RoPE K vectors, plus a running sum of pre-RoPE K vectors — all at a single scoring layer (`retrieval_layer = n_layers / 2`). Single-layer storage collapses the index from 4,398 MiB to 95.4 MiB at 1M context.
+**QUEST-style page index.** The context is divided into pages of 16 tokens. For each page, the index stores element-wise max and min of post-RoPE K vectors, plus a running sum of pre-RoPE K vectors - all at a single scoring layer (`retrieval_layer = n_layers / 2`). Single-layer storage collapses the index from 4,398 MiB to 95.4 MiB at 1M context.
 
 **Content-based K matching.** The query's K vectors (from the last n_q_tok prefill tokens) are averaged per head to form `query_content_k`. Each page's content score is the mean cosine similarity between `query_content_k[h]` and `mean_k_page[h]` across all KV heads. This solves the weak-Q problem: QUEST-only scoring fails on adversarial prompts where the question's attention pattern doesn't match the target page's K distribution.
 
@@ -331,14 +331,14 @@ NSKVCache replaces the standard KV cache with a two-tier system: a small working
 | Context | 1M tokens projected |
 | Raw FP16 KV | 35,156 MiB (34.33 GiB) |
 | KVBox total | **168.5 MiB** |
-| — INT8 buffer (4,096 pos) | 73.1 MiB |
-| — Page index (62,500 pages) | 95.4 MiB |
-| — Codebook | 0 entries, 0.00 MiB |
+| - INT8 buffer (4,096 pos) | 73.1 MiB |
+| - Page index (62,500 pages) | 95.4 MiB |
+| - Codebook | 0 entries, 0.00 MiB |
 | **Compression ratio** | **208.7x** |
 
 ### 8.3 Cross-Window Recall Test
 
-A secret code (MANGO7734) is buried at position ~855 in 1,460 tokens of lorem ipsum. The question "What is the secret code?" is appended at the end. With `-b 1024 -c 2048`, the working cache holds only the last 1,024 tokens — the MANGO page is evicted and must be retrieved.
+A secret code (MANGO7734) is buried at position ~855 in 1,460 tokens of lorem ipsum. The question "What is the secret code?" is appended at the end. With `-b 1024 -c 2048`, the working cache holds only the last 1,024 tokens - the MANGO page is evicted and must be retrieved.
 
 | Metric | Value |
 |---|---|
@@ -356,9 +356,9 @@ Content-based K matching correctly identifies the MANGO page (content score 0.93
 
 **Pre-RoPE K storage eliminates RoPE distance suppression.** Storing K vectors before RoPE and re-applying rotation at the original position on injection means the model attends to retrieved tokens as if they had never been evicted. Without this, injected tokens would be suppressed by the RoPE distance penalty.
 
-**Content K-matching solves the weak-Q problem.** QUEST scoring uses the query's attention pattern to bound which pages might be relevant. On adversarial prompts (e.g., a question about a buried fact in a sea of filler), the query's attention is diffuse and QUEST fails to rank the target page. Content matching uses the query's K vectors — which encode what the question is *about* — to find pages with similar K patterns. The two signals are complementary: QUEST captures attention relevance, content captures semantic relevance.
+**Content K-matching solves the weak-Q problem.** QUEST scoring uses the query's attention pattern to bound which pages might be relevant. On adversarial prompts (e.g., a question about a buried fact in a sea of filler), the query's attention is diffuse and QUEST fails to rank the target page. Content matching uses the query's K vectors - which encode what the question is *about* - to find pages with similar K patterns. The two signals are complementary: QUEST captures attention relevance, content captures semantic relevance.
 
-**Single-layer scoring is sufficient.** The page index stores max/min/sum K at only the middle layer (n_layers/2). This reduces the index from 4,398 MiB to 95.4 MiB at 1M context with no loss in retrieval quality — the middle layer's K distribution is representative enough for page-level scoring.
+**Single-layer scoring is sufficient.** The page index stores max/min/sum K at only the middle layer (n_layers/2). This reduces the index from 4,398 MiB to 95.4 MiB at 1M context with no loss in retrieval quality - the middle layer's K distribution is representative enough for page-level scoring.
 
 ### 8.5 Full-Stack Integration
 
@@ -401,4 +401,4 @@ The cold 60% of weights receive delta compression on top of Q2, exploiting the o
 | NSInfer | Production ready (standalone component) |
 | NSQuant | Architecture complete, benchmark pending |
 
-Each targets a specific bottleneck in the LLM pipeline — training data efficiency, KV cache memory, attention compute, inference latency, and model size — and each applies the same Negative Space principle: exploit the structure that general-purpose tools ignore.
+Each targets a specific bottleneck in the LLM pipeline - training data efficiency, KV cache memory, attention compute, inference latency, and model size - and each applies the same Negative Space principle: exploit the structure that general-purpose tools ignore.

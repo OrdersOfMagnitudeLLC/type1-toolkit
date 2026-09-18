@@ -356,7 +356,7 @@ def validate_fe4n(console, sparc_runner, sparc_ram_mb: int, run_phonon=None) -> 
     expected_a = 3.795
     actual_a = result.get("lattice_a")
     if actual_a is None:
-        table.add_row("lattice a", f"{expected_a:.3f} Å", "N/A", "—", "FAIL")
+ table.add_row("lattice a", f"{expected_a:.3f} Å", "N/A", " - ", "FAIL")
         all_pass = False
     else:
         err_pct = abs(actual_a - expected_a) / expected_a * 100.0
@@ -374,7 +374,7 @@ def validate_fe4n(console, sparc_runner, sparc_ram_mb: int, run_phonon=None) -> 
     imaginary = result.get("imaginary")
     min_freq = result.get("min_freq")
     if imaginary is None:
-        table.add_row("phonon stable", "True", "N/A", "—", "FAIL")
+ table.add_row("phonon stable", "True", "N/A", " - ", "FAIL")
         all_pass = False
     else:
         status = "PASS" if not imaginary else "FAIL"
@@ -383,7 +383,7 @@ def validate_fe4n(console, sparc_runner, sparc_ram_mb: int, run_phonon=None) -> 
             if min_freq is not None
             else str(not imaginary)
         )
-        table.add_row("phonon stable", "True", actual_text, "—", status)
+ table.add_row("phonon stable", "True", actual_text, " - ", status)
         if status == "FAIL":
             all_pass = False
 
@@ -447,7 +447,7 @@ def validate_fe4n(console, sparc_runner, sparc_ram_mb: int, run_phonon=None) -> 
                     actual_fe = e_fe4n_per - (4.0 * e_fe_per + 0.5 * e_n_per)
 
     if actual_fe is None:
-        table.add_row("E_form/atom", f"{expected_fe:.2f} eV", "N/A", "—", "N/A")
+ table.add_row("E_form/atom", f"{expected_fe:.2f} eV", "N/A", " - ", "N/A")
     else:
         err_pct = abs(actual_fe - expected_fe) / abs(expected_fe) * 100.0
         status = "PASS" if err_pct <= 20.0 else "FAIL"
@@ -463,9 +463,9 @@ def validate_fe4n(console, sparc_runner, sparc_ram_mb: int, run_phonon=None) -> 
 
     console.print(table)
     if all_pass:
-        console.print("[bold green]Fe4N VALIDATION PASS — pipeline trustworthy for nitrides[/]")
+ console.print("[bold green]Fe4N VALIDATION PASS - pipeline trustworthy for nitrides[/]")
     else:
-        console.print("[bold red]Fe4N VALIDATION FAIL — fix math before further discovery[/]")
+ console.print("[bold red]Fe4N VALIDATION FAIL - fix math before further discovery[/]")
     if result.get("error"):
         console.print(f"[red]  Phonon run error: {result['error']}[/]")
     if result.get("returncode") not in (0, None):
@@ -514,7 +514,7 @@ def run_math_integrity_check(console, sparc_runner, sparc_ram_mb: int) -> list:
 def _run_materials_validation(console, sparc_runner, sparc_ram_mb: int, run_phonon=None, with_phonon: bool = False) -> bool:
     """Run known-material checks and Fe4N validation."""
     workdir = Path(tempfile.mkdtemp(prefix="bella_validate_"))
-    console.print("[bold cyan]BELLA VALIDATION — known materials[/]")
+ console.print("[bold cyan]BELLA VALIDATION - known materials[/]")
 
     sparc_timeout = 10
     table = Table(
@@ -569,8 +569,8 @@ def _run_materials_validation(console, sparc_runner, sparc_ram_mb: int, run_phon
                     name,
                     prop,
                     f"{expected}",
-                    f"{actual:.3f}" if actual is not None else "—",
-                    f"{err:.1f}%" if err is not None else "—",
+ f"{actual:.3f}" if actual is not None else " - ",
+ f"{err:.1f}%" if err is not None else " - ",
                     status,
                 )
             else:
@@ -586,8 +586,8 @@ def _run_materials_validation(console, sparc_runner, sparc_ram_mb: int, run_phon
                     name,
                     prop,
                     str(expected),
-                    str(actual) if actual is not None else "—",
-                    "—",
+ str(actual) if actual is not None else " - ",
+ ": ",
                     status,
                 )
 
@@ -653,7 +653,7 @@ def _run_pde_validation(console, quick=False) -> bool:
     except Exception as e:
         console.print(f"[red]Diffusion PDE check failed: {e}[/]")
         all_pass = False
-        table.add_row("diffusion", "vs analytical Gaussian", "—", "< 1%", "FAIL")
+ table.add_row("diffusion", "vs analytical Gaussian", " - ", "< 1%", "FAIL")
 
     # --- (b) Wave: u_tt = c^2*u_xx, c=1.0, standing wave on [0,1] ---
     try:
@@ -679,7 +679,7 @@ def _run_pde_validation(console, quick=False) -> bool:
     except Exception as e:
         console.print(f"[red]Wave PDE check failed: {e}[/]")
         all_pass = False
-        table.add_row("wave", "vs sin(pi*x)*cos(pi*t)", "—", "< 2%", "FAIL")
+ table.add_row("wave", "vs sin(pi*x)*cos(pi*t)", " - ", "< 2%", "FAIL")
 
     # --- (c) Gray-Scott reaction-diffusion: qualitative spot/stripe pattern ---
     try:
@@ -713,11 +713,11 @@ def _run_pde_validation(console, quick=False) -> bool:
     except Exception as e:
         console.print(f"[red]Gray-Scott PDE check failed: {e}[/]")
         all_pass = False
-        table.add_row("Gray-Scott", "pattern variance", "—", "> 0.01", "FAIL")
+ table.add_row("Gray-Scott", "pattern variance", " - ", "> 0.01", "FAIL")
 
     console.print(table)
     if not all_pass:
-        console.print("[bold red]bella validate FAIL — PDE solver math incorrect. Do not trust simulation results.[/]")
+ console.print("[bold red]bella validate FAIL - PDE solver math incorrect. Do not trust simulation results.[/]")
     return all_pass
 
 
@@ -749,7 +749,7 @@ def _run_protein_validation(console) -> bool:
     except Exception as e:
         console.print(f"[red]H2O geometry check failed: {e}[/]")
         all_pass = False
-        table.add_row("H2O", "geometry", "—", "—", "FAIL")
+ table.add_row("H2O", "geometry", ": ", " - ", "FAIL")
 
     # --- ACE2 (6M0J) backbone geometry and helix fraction ---
     pdb_id = "6M0J"
@@ -793,20 +793,20 @@ def _run_protein_validation(console) -> bool:
     except Exception as e:
         console.print(f"[yellow]ACE2 validation could not complete: {e}[/]")
         all_pass = False
-        table.add_row("ACE2 6M0J", "helix fraction", "> 40%", "—", "FAIL")
+ table.add_row("ACE2 6M0J", "helix fraction", "> 40%", " - ", "FAIL")
 
     console.print(table)
     return all_pass
 
 
 def _run_foam_validation(console) -> bool:
-    """Foam mechanics validation suite — T50/T71/T73/Debye/QCD/Toxicity.
+ """Foam mechanics validation suite: T50/T71/T73/Debye/QCD/Toxicity.
 
     Tests the core foam physics functions against known experimental
     and derived anchors. No SPARC or GPU required.
     """
     if not FOAM_AVAILABLE:
-        console.print("[yellow]SKIP foam validation — foam_screener_v2 not available[/yellow]")
+ console.print("[yellow]SKIP foam validation - foam_screener_v2 not available[/yellow]")
         return True
 
     console.print("\n[bold cyan]FOAM MECHANICS VALIDATION[/bold cyan]")
@@ -932,7 +932,7 @@ def _run_foam_validation(console) -> bool:
 
     console.print(table)
     if all_pass:
-        console.print("[bold green]Foam mechanics PASS — T50/T71/T73/Debye/QCD/Toxicity validated.[/]")
+ console.print("[bold green]Foam mechanics PASS - T50/T71/T73/Debye/QCD/Toxicity validated.[/]")
     else:
-        console.print("[bold red]Foam mechanics FAIL — check foam_screener_v2.py physics.[/]")
+ console.print("[bold red]Foam mechanics FAIL - check foam_screener_v2.py physics.[/]")
     return all_pass

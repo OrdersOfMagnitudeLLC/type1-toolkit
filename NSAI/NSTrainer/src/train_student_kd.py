@@ -3,7 +3,7 @@
 
 Loads top-k logits cached by cache_qwen_logits.py and trains a GPT-style
 student decoder. KD loss is KL(teacher || student) computed only over the
-cached top-k vocab positions — never materializes the full vocab x seq tensor.
+cached top-k vocab positions: never materializes the full vocab x seq tensor.
 """
 
 import os
@@ -81,7 +81,7 @@ class StudentGPT(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# KD loss — chunked, only over top-k positions
+# KD loss: chunked, only over top-k positions
 # ---------------------------------------------------------------------------
 
 def kd_loss(hidden, lm_head_weight, teacher_indices, teacher_values, chunk_size=32):

@@ -86,24 +86,26 @@ T38 Hodge's Harmony         : Hodge classes=harmonic foam modes; algebraic cycle
 T39 The Mirror Wall         : hard problem permanent; self-referential computation+Gödel [DERIVED]
 T40 Heisenberg Uncertainty  : Prime Cell restoring force × Planck time = ℏ, ratio 1.0000 [DERIVED]
 T41 Tsirelson Bound         : 2√2 from shared foam surface; max CHSH=2.8284 exact [DERIVED]
-T42 Entanglement            : Planck wormhole=shared foam boundary; ER=EPR; throat r=r_P [DERIVED]
-T43 Dark Energy=Exotic Matter: w=-1=negative pressure; de Sitter=Schwarzschild (T19) [DERIVED]
-T44 Wave-Function Collapse  : YL pressure hierarchy; measurement apparatus >> quantum bubble [DERIVED]
-T45 The Answer Key Theorem  : ΔP=2γ/r unifies all 85; named for Einstein (Einstein's Answer) [DERIVED]
-T46 Goldbach's Echo         : primes=Prime Cells; r(n)>0 all even n>2; 0 failures to n=1000 [DERIVED]
-T47 de Polignac's Pairs     : foam self-similarity → min gap recurs → ∞ twin primes; 205 pairs <10k [DERIVED]
-T48 Collatz's Drain         : avg energy/step=-0.1971<0; bounded below 0; terminates at 1 [DERIVED]
-T49 Oesterlé's Bound        : Prime Cell resonance instability → c<rad(abc)^(1+ε) [DERIVED]
+T42 Tunneling WKB           : bubble propagation through pressure barrier; WKB coefficient [DERIVED]
+T43 Wave-Function Collapse  : YL pressure hierarchy; measurement apparatus >> quantum bubble [DERIVED]
+T44 Entanglement            : Planck wormhole=shared foam boundary; ER=EPR; throat r=r_P [DERIVED]
+T45 Dark Energy=Exotic Matter: w=-1=negative pressure; de Sitter=Schwarzschild (T19) [DERIVED]
+T46 The Answer Key Theorem  : ΔP=2γ/r unifies all 85; named for Einstein (Einstein's Answer) [DERIVED]
+T47 Goldbach's Echo         : primes=Prime Cells; r(n)>0 all even n>2; 0 failures to n=1000 [DERIVED]
+T48 de Polignac's Pairs     : foam self-similarity → min gap recurs → ∞ twin primes; 205 pairs <10k [DERIVED]
+T49 Collatz's Drain         : avg energy/step=-0.1971<0; bounded below 0; terminates at 1 [DERIVED]
+T50 Oesterlé's Bound        : Prime Cell resonance instability → c<rad(abc)^(1+ε) [DERIVED]
 
 ### CROSS-SCALE EXTENSIONS
-T50 Schreiber's Boundary    : |ΔG|∝r^0.704; 7/7 hydrophobic pockets YL-consistent; R²=0.321 [DERIVED]
+T51 Schreiber's Boundary    : |ΔG|∝r^0.704; 7/7 hydrophobic pockets YL-consistent; R²=0.321 [DERIVED]
                                Domain: hydrophobic burial pockets (bromodomain, HSP90, PARP, BCL)
                                Excluded: ATP-competitive kinases, charged S1 proteases
-T51 Gibbs-Thomson           : ΔTm/Tm∝r^(-1.564); surface stress correction closes exponent; R²=0.889 [DERIVED]
+T52 Gibbs-Thomson           : ΔTm/Tm∝r^(-1.564); surface stress correction closes exponent; R²=0.889 [DERIVED]
                                Model: A/r + B/r²; ΔR²=+0.072 over pure YL
-T52 Berry's Bridge          : H_foam self-adjoint; Weyl N=(r_S/r_P)²=1.035e122=Bekenstein-Hawking S [DERIVED]
+T53 Berry's Bridge          : H_foam self-adjoint; Weyl N=(r_S/r_P)²=1.035e122=Bekenstein-Hawking S [DERIVED]
                                Weyl density → no gaps → all Riemann zeros on Re(s)=1/2
-T53 (=T46 Answer Key)       : ΔP=2γ/r is T45 [DERIVED]
+                               Deprecated as distinct count; number historically reused as
+                               duplicate label for T46 (Answer Key)
 
 ### LIFE & COSMOLOGY EXTENSIONS
 T54 Oberhummer's Window     : Hoyle/CNS strong-force life window; nuclear stability lower bound [DERIVED]
@@ -154,7 +156,7 @@ T83 Yukawa's Ladder         : lepton masses via bottom-tau unification; m_τ 0.0
 
 ### GRAVITATIONAL EPIGENETICS
 T84 Wakata's Archives       : gravitational epigenetics; methylation decay M(t,g)=M_floor+(M0-M_floor)exp(-k(1-g/g_earth)t); Sakura 0% error [DERIVED]
-                               Chain: T2→T50→T57→T84; cytoskeletal tensegrity → chromatin → DNMT access
+                               Chain: T2→T51→T57→T84; cytoskeletal tensegrity → chromatin → DNMT access
                                Named for Koichi Wakata, JAXA
 
 ### NEGATIVE SPACE

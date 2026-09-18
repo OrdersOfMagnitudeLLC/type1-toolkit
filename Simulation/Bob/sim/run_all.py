@@ -2,7 +2,7 @@
 # Licensed under the OOM Commercial License v1.0
 # See LICENSE.md in the repository root or ofmagnitude.com
 
-"""Batch runner — runs bob_md.py on all CIFs with appropriate routing."""
+"""Batch runner: runs bob_md.py on all CIFs with appropriate routing."""
 
 import os, glob, json, time, argparse
 import sys
@@ -64,7 +64,7 @@ for cif in cifs:
     try:
         atoms = read(cif)
     except Exception as e:
-        print(f"  SKIP (unreadable): {os.path.basename(cif)} — {e}")
+ print(f" SKIP (unreadable): {os.path.basename(cif)}: {e}")
         continue
     name = os.path.splitext(os.path.basename(cif))[0]
     syms = set(atoms.get_chemical_symbols())

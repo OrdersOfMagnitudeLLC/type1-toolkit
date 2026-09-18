@@ -1,6 +1,6 @@
 # NSTrainer
 
-Training infrastructure for the OOM model family. Implements NS-filtered fine-tuning — scoring and selecting training samples by importance so the model reaches a target quality in far fewer steps — plus knowledge-distillation and analytical weight-init experiments. Demonstrated NS-filtered training matching a 1000-step baseline at step 132 (86.8% fewer steps) on the C4 dataset.
+Training infrastructure for the OOM model family. Implements NS-filtered fine-tuning: scoring and selecting training samples by importance so the model reaches a target quality in far fewer steps - plus knowledge-distillation and analytical weight-init experiments. Demonstrated NS-filtered training matching a 1000-step baseline at step 132 (86.8% fewer steps) on the C4 dataset.
 
 ## Install
 
@@ -18,12 +18,12 @@ See `data/DATASETS.md` for required datasets before running any training scripts
 
 ## Layout
 
-- `src/` — training, distillation, ablation, and analysis scripts (`run_all.sh` is the RunPod pipeline entry point)
-- `tests/` — test/benchmark scripts (run with `PYTHONPATH=src`)
-- `docs/` — `paper_draft.md`, methodology and results writeup
-- `data/` — dataset docs, download script, and sample corpora
-- `cpp/` — C++ KV-box / llama components
-- `checkpoints/`, `results/` — generated artifacts (gitignored)
+- `src/` - training, distillation, ablation, and analysis scripts (`run_all.sh` is the RunPod pipeline entry point)
+- `tests/` - test/benchmark scripts (run with `PYTHONPATH=src`)
+- `docs/` - `paper_draft.md`, methodology and results writeup
+- `data/` - dataset docs, download script, and sample corpora
+- `cpp/` - C++ KV-box / llama components
+- `checkpoints/`, `results/`: generated artifacts (gitignored)
 
 ## Methodology
 

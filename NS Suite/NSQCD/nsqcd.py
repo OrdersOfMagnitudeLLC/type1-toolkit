@@ -1,5 +1,5 @@
 """
-NSQCD — Analytic QCD Calculator
+NSQCD: Analytic QCD Calculator
 Orders of Magnitude LLC
 DERIVED from T32 (Kun Framework / Foam Mechanics)
 
@@ -266,7 +266,7 @@ class NSQCD:
         mgap_err = abs(mgap - 1.5) / 1.5 * 100
 
         lines = [
-            "=== NSQCD — Analytic QCD (Orders of Magnitude LLC) ===",
+ "=== NSQCD: Analytic QCD (Orders of Magnitude LLC) ===",
             "DERIVED from T32 (Kun Framework / Foam Mechanics)",
             f"IR fixed point: g² = {self.G2_FOAM:.1f} (BPST instanton condensation)",
             "-" * 54,

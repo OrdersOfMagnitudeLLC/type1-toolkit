@@ -3,7 +3,7 @@
 # See LICENSE.md in the repository root or ofmagnitude.com
 
 #!/usr/bin/env python3
-"""Pre-compute ZINC property cache — one-time cost, then zinc_screen is pure dict lookups."""
+"""Pre-compute ZINC property cache: one-time cost, then zinc_screen is pure dict lookups."""
 
 import pickle
 import math

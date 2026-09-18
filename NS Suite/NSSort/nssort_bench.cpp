@@ -221,7 +221,7 @@ double median_of_three(array<double, 3> times) {
 // ---------------------------------------------------------------------------
 
 int main() {
-    cout << "=== NSSort vs IPS4o (parallel) — 100M int64_t ===" << endl;
+ cout << "=== NSSort vs IPS4o (parallel) - 100M int64_t ===" << endl;
     cout << "Methodology: 3 warmup + 3 timed runs, 64MB cache flush, median reported" << endl;
     cout << endl;
 

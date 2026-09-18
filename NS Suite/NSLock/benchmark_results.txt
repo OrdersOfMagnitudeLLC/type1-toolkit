@@ -1,9 +1,9 @@
 NSLock Benchmark Results
-Hardware: x86_64 — 11th Gen Intel Core i7-1165G7 @ 2.80GHz (8 logical CPUs, pinned 0-7)
+Hardware: x86_64: 11th Gen Intel Core i7-1165G7 @ 2.80GHz (8 logical CPUs, pinned 0-7)
 Compiler: g++ -O3 -march=native -std=c++17 -mavx2
 Date: 2026-09-13
 
-Scenario 1 — Pure read throughput:
+Scenario 1: Pure read throughput:
 Threads: 256 | Operations: 100,000,000 | Reader ratio: 100%
 
 StdRWLock:  11,120,000 ops/sec
@@ -11,7 +11,7 @@ NSRWLock:   25,420,000 ops/sec
 
 NSRWLock vs std::shared_mutex: 2.29x
 
-Scenario 2 — Mixed workload:
+Scenario 2: Mixed workload:
 Threads: 8 | Operations: 100,000,000 | Reader ratio: 95%
 
 StdRWLock:  5,000,000 ops/sec
@@ -19,7 +19,7 @@ NSRWLock:   7,170,000 ops/sec
 
 NSRWLock vs std::shared_mutex: 1.43x
 
-Stress test: 8 writers + 248 readers — Correctness: PASS
+Stress test: 8 writers + 248 readers: Correctness: PASS
 
 Claims:
 - 2.29x std::shared_mutex at 256 threads, 100% read workload (pinned 0-7)

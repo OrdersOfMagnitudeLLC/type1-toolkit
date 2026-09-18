@@ -4,7 +4,7 @@
 
 import os
 """
-Bob MD — MACE-MPA-0 ionic conductivity screener
+Bob MD: MACE-MPA-0 ionic conductivity screener
 Frozen-framework NVT MD for rigid-host battery materials.
 Usage:
   python bob_md.py --cif material.cif --test          # 100-step validation (~60s)
@@ -292,7 +292,7 @@ def load_grid_interpolators(grid_path):
 def grid_forces(interps, pos_mobile):
     """
     Query interpolated forces for N mobile ions.
-    pos_mobile: (N, 3) Å — must be wrapped into [0, cell_len]
+ pos_mobile: (N, 3) Å: must be wrapped into [0, cell_len]
     Returns: (N, 3) eV/Å
     """
     ifx, ify, ifz, cell_len = interps
@@ -639,10 +639,10 @@ def main():
         return
 
     if os.path.exists(grid_path):
-        print(f"  Grid found: {grid_path} — using fast interpolation")
+ print(f" Grid found: {grid_path}: using fast interpolation")
         grid_interps = load_grid_interpolators(grid_path)
     else:
-        print(f"  No grid found — using MACE direct (slow). Run --precompute first.")
+ print(f" No grid found: using MACE direct (slow). Run --precompute first.")
 
     traj_interval = 10
     results = {'material': material_name, 'temps': [], 'D_vals': [], 'r2_vals': []}
@@ -659,7 +659,7 @@ def main():
         msd = compute_msd(traj)
         print(f"\n  MSD at final step: {msd[-1]:.4f} Å²")
         print(f"  Frames collected: {len(msd)}")
-        print(f"  Mobile ions moving: {'YES' if msd[-1] > 0.001 else 'NO — check structure'}")
+ print(f" Mobile ions moving: {'YES' if msd[-1] > 0.001 else 'NO: check structure'}")
         print("\n[TEST PASSED] Full run ready.")
         return
 

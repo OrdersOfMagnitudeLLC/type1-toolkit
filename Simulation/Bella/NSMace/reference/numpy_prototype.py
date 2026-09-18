@@ -3,7 +3,7 @@
 # See LICENSE.md in the repository root or ofmagnitude.com
 
 """
-NSMace session 4 — numpy prototype of the full MACE forward pass for water,
+NSMace session 4: numpy prototype of the full MACE forward pass for water,
 including the correct conv_tp tensor product, symmetric-contraction products
 block, skip_tp residual, atomic energies, and scale/shift.
 

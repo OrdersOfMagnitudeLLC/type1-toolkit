@@ -4,7 +4,7 @@
 # See ./LICENSE.md for terms.
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 """
-bella_stellar.py — Stellar technosignature discovery pipeline.
+bella_stellar.py: Stellar technosignature discovery pipeline.
 
 Processes Breakthrough Listen public radio hit data through NS-accelerated
 algorithms to find technosignature candidates.

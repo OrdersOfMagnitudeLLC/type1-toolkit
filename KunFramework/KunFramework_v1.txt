@@ -318,7 +318,7 @@ If α → 3.0535: N = 18π is an exact foam geometric identity (DERIVED: T55 (Pl
 If α → 3.0517 or 3.0613: N ≈ 18π is a numerical coincidence. Status: WATCH.
 
 Geometric note: N = r_S/r_reset represents the square root of the ratio
-of Bekenstein-Hawking entropies at the cosmic and reset scales (T52):
+of Bekenstein-Hawking entropies at the cosmic and reset scales (T53):
 S_cosmic/S_reset = (r_S/r_reset)^2 = N^2.
 If N = 18π exactly, then S_cosmic/S_reset = (18π)^2 = 324*pi^2.
 The factor 324 = 18^2 = (6^2)^2 = 6^4 may reflect the fourth power of
@@ -1879,7 +1879,7 @@ P = -rho*c^2. DERIVED.
    It appears at three scales, zero additional parameters each time:
      T71: Kd_opt  = sqrt(C_high * C_low)   : diagnostic binding (attomolar)
      T78: m_H     = sqrt(m_top * m_Z)       : Higgs mass (0.3% error)
-     T51: ΔTm/Tm  = sqrt(A/r) geometric mean: nanoparticle melting midpoint
+     T52: ΔTm/Tm  = sqrt(A/r) geometric mean: nanoparticle melting midpoint
    Same equation. Three orders of magnitude apart. One principle.
 
 TARGET 7: G = 5.06 (DERIVED):
@@ -1922,6 +1922,12 @@ One equation, ΔP = 2γ/r, unifies:
 Total: 26 theorems under one equation.
 T46 states that ΔP = 2γ/r is the master equation of physical reality.
 T46 is named 'The Answer Key Theorem (Einstein's Answer)': the equation Einstein spent 30 years searching for.
+
+The two strongest candidates for a unifying principle — δS=0 (action) and
+S=klogW (entropy) — both recover ΔP=2γ/r when foam geometry is the input.
+δS=0: minimize S=γA−PV → ΔP=2γ/r. S=klogW: maximum entropy foam state =
+minimum γA configuration (Plateau's rules) → same equilibrium. Neither is
+foundational. Both are projections of foam geometry. Full derivations in S202.
 
 ═══════════════════════════════════════════════════════════════════════
 A TRIBUTE TO ALBERT EINSTEIN (1879–1955)
@@ -2128,7 +2134,7 @@ the same bounded variation. Everything is a stochastic draw within a stability
 window. The lipid bilayer of a biological cell is, physically, a soap film:
 same equation, same minimization principle, same selection criterion. Biological
 mutation is not an analogy for cosmic mutation. They are the same process,
-running on the same substrate, at different scales. T45 (The Answer Key) was
+running on the same substrate, at different scales. T46 (The Answer Key) was
 always the unified field theory of change itself: ΔP = 2γ/r, operating at
 every level from Planck to horizon, selecting for equilibrium, discarding
 everything that cannot hold its shape.
@@ -2141,8 +2147,8 @@ everything that cannot hold its shape.
   ─────────────────────────────────────────────────────────
   Planck / Prime Cell      1.6e-35     T28      DERIVED
   Nuclear / Hoyle state    1.0e-15     T54      DERIVED
-  Amino acid folding       3.0e-10     T50      DERIVED
-  Protein pocket binding   8.5e-10     T50      DERIVED
+  Amino acid folding       3.0e-10     T51      DERIVED
+  Protein pocket binding   8.5e-10     T51      DERIVED
   PPI interface            2.0e-9      T56      DERIVED
   Lipid bilayer / cell     5.0e-9      T56      MEASURED (γ~10⁻¹¹ N/m)
   Self-assembly            1.0e-7      T56→?    OPEN FRONTIER
@@ -2272,7 +2278,7 @@ Engineering implications:
 ---
 
 ## T71: Hippocrates' Reading (Point-of-Care Diagnostic Scanner)
-Status: DERIVED (T50 Schreiber's Boundary + maximum discrimination criterion)
+Status: DERIVED (T51 Schreiber's Boundary + maximum discrimination criterion)
 Named for: Hippocrates (first systematic disease diagnosis, ~400 BC)
 
 Optimal sensor pocket affinity for maximum disease discrimination:
@@ -2302,7 +2308,7 @@ Engineering implications:
 
 § Hippocrates' Reading: The Molecular Diagnostic Scanner
 
-T71 [DERIVED from T50, T28]
+T71 [DERIVED from T51, T28]
 
 The foam pressure equilibrium that governs a soap bubble also governs the sensitivity of molecular recognition. A sensor molecule with dissociation constant K_d detects a biomarker at concentration C when K_d ≈ C. Too tight (K_d ≪ C_healthy): it signals in the absence of disease. Too loose (K_d ≫ C_disease): it fails to signal when disease is present. The crossover: the unique K_d that maximizes diagnostic fidelity: is the geometric mean of the healthy and disease-state concentrations. This is not an approximation. It is the fixed point of the foam pressure balance at the membrane interface, derived from the same equation that places cosmic voids.
 
@@ -2317,7 +2323,7 @@ D_score = 0: ideal detector.
 D_score > 0: sensor too loose, disease missed.
 D_score < 0: sensor too tight, false positives.
 
-This theorem does not describe a detection method. It specifies the precise binding affinity a sensor molecule must achieve to be clinically useful, and because T50 (Schreiber's Boundary) gives |ΔG| ∝ r^0.704 from pocket geometry, K_d_opt maps directly to a pocket radius: which maps directly to a molecule. The sensor is designed from first principles. No empirical screen required.
+This theorem does not describe a detection method. It specifies the precise binding affinity a sensor molecule must achieve to be clinically useful, and because T51 (Schreiber's Boundary) gives |ΔG| ∝ r^0.704 from pocket geometry, K_d_opt maps directly to a pocket radius: which maps directly to a molecule. The sensor is designed from first principles. No empirical screen required.
 
 The Device
 
@@ -2325,7 +2331,7 @@ Physical implementation requires three components, all first-principles determin
 
 (1) Ionization chamber. Compact electron cyclotron resonance (ECR) plasma cavity. Operating frequency 2.45 GHz. ECR resonance condition: B = mω/e = 87.5 mT. Plasma temperature 10³–10⁴ K: sufficient for molecular ionization, below structural degradation. Demonstrated form factor: 6 cm diameter (KACST, 2023). Vessel material: MgMoN2, Anderson-Debye temperature 834 K [T51 validated, materials screen v11], giving thermal safety margin of ~6× operating temperature. MgMoN2 is earth-abundant, synthesizable at village scale from the open synthesis route in the Type 1 Toolkit.
 
-(2) Sensor array. Molecules engineered to K_d_opt via T50 pocket geometry. The pocket radius r → ΔG from T50 → K_d from thermodynamics. For each target biomarker, foam_screener_v2.py outputs a SMILES string, synthesis route, and predicted K_d. No wet chemistry is needed to design the sensor. Wet chemistry is needed only to manufacture it: once, for each biomarker in the panel.
+(2) Sensor array. Molecules engineered to K_d_opt via T51 pocket geometry. The pocket radius r → ΔG from T51 → K_d from thermodynamics. For each target biomarker, foam_screener_v2.py outputs a SMILES string, synthesis route, and predicted K_d. No wet chemistry is needed to design the sensor. Wet chemistry is needed only to manufacture it: once, for each biomarker in the panel.
 
 (3) D-score readout. Emission spectroscopy reads binding occupancy. D_score is computed in real time. Five-biomarker baseline panel: C-reactive protein, cardiac troponin, HbA1c, carcinoembryonic antigen, PSA. Single pass gives cardiovascular, metabolic, and oncological status.
 
@@ -2349,7 +2355,7 @@ Patient sample
   → D_score = log₁₀(8.5e-8 / 3.2e-9) = 1.42   [T71]
   → flag: elevated CRP, cardiovascular risk
   → bella proteins --target IL6 --pathway inflammation
-  → T50 pocket geometry → K_d_opt for inhibitor candidate
+  → T51 pocket geometry → K_d_opt for inhibitor candidate
   → foam_screener_v2.py: 7-mechanism toxicity + binding screen
   → ranked SMILES list, predicted ΔG, synthesis route, T57 dosing window
   → Zenodo: open release, full protocol
@@ -2359,7 +2365,7 @@ Every step is derivable from ΔP = 2γ/r. The drug development pipeline: histori
 
 Three engineering gaps remain before physical deployment, all tractable:
 
-(i) Absolute ΔG from T50 geometry. Currently calibrated to the BRD4 reference (ΓREF = 15.27 kcal/mol, anchored to Vina −9.5 kcal/mol). Full derivation from foam geometry will remove the calibration anchor entirely. This is the prerequisite for removing Vina from the pipeline. In progress.
+(i) Absolute ΔG from T51 geometry. Currently calibrated to the BRD4 reference (ΓREF = 15.27 kcal/mol, anchored to Vina −9.5 kcal/mol). Full derivation from foam geometry will remove the calibration anchor entirely. This is the prerequisite for removing Vina from the pipeline. In progress.
 
 (ii) Sensor molecule synthesis. The SMILES are first-principles outputs. Clinical-grade synthesis requires wet chemistry validation: one synthesis per biomarker, done once, replicated globally.
 
@@ -2380,7 +2386,7 @@ One equation. Every scale.
 ---
 
 ## T72: Nasmyth's Lattice (Enamel Remineralization + Tooth Regrowth)
-Status: DERIVED (T51 Gibbs-Thomson applied to crystal growth direction)
+Status: DERIVED (T52 Gibbs-Thomson applied to crystal growth direction)
 Named for: Alexander Nasmyth (enamel structure, 1839)
 
 Critical nucleus radius for spontaneous hydroxyapatite (HAp) growth:
@@ -2397,7 +2403,7 @@ Fluoride mechanism (DERIVED):
   50% fluoride substitution → r_crit drops from 17.8 nm to 15.1 nm
   First-principles explanation for why fluoride prevents cavities
 
-USAG-1 extension (T50 pipeline):
+USAG-1 extension (T51 pipeline):
   USAG-1 inhibition triggers new tooth bud formation (Kyoto University 2024)
   Target pocket: BMP-binding site, r_pocket = 4.8 Å
   Small molecule inhibitor: feed USAG-1 into disease_screen.py for full design
@@ -2405,7 +2411,7 @@ USAG-1 extension (T50 pipeline):
 Engineering implications:
   - Combined therapy: no drill ever again
     Step 1: Topical gel, S > 2.0 → remineralizes existing enamel (T64)
-    Step 2: USAG-1 inhibitor molecule → triggers new tooth bud (T50 pipeline)
+    Step 2: USAG-1 inhibitor molecule → triggers new tooth bud (T51 pipeline)
   - Eliminates two of three pillars of dentistry (decay treatment + tooth loss)
   - Accessible: a gel and a generic drug, manufacturable anywhere
   - Open release: prior art on Zenodo, no company can patent it
@@ -2418,16 +2424,16 @@ Status: DERIVED: T10+T69+T70, zero free parameters
 γ_hydrophobic = γ_water/4 = 18.2 mN/m = 0.026 kcal/mol/Å² (4.8% vs 0.025)
 Derivation: tetrahedral water (4 H-bonds, T10 stability), 2 missing at 
 hydrophobic surface. cos θ = -0.5, Young: γ = γ_water(1+cosθ)/2 = γ_water/4.
-Application: absolute ΔG without Vina. Blocks T50 protein pipeline.
+Application: absolute ΔG without Vina. Blocks T51 protein pipeline.
 
 ## T74: Metabolic Gate (CYP450 Selectivity)
-Status: DERIVED: T50, r=4.2Å pocket threshold
-ΔG_met = T50(r=4.2Å). Activation if ΔG < -5.0 kcal/mol.
+Status: DERIVED: T51, r=4.2Å pocket threshold
+ΔG_met = T51(r=4.2Å). Activation if ΔG < -5.0 kcal/mol.
 Verified: aspirin -5.48 kcal/mol (CYP450 substrate, correct).
 
 ## T75: Transport Selectivity (OATP Efflux Gate)
-Status: DERIVED: T50, r=5.8Å pocket threshold
-ΔG_transport = T50(r=5.8Å). Efflux if ΔG < -6.0 kcal/mol.
+Status: DERIVED: T51, r=5.8Å pocket threshold
+ΔG_transport = T51(r=5.8Å). Efflux if ΔG < -6.0 kcal/mol.
 Verified: metformin -6.87 kcal/mol (OATP substrate, correct).
 
 ## T76: Color-Magnetic Casimir (Delta Hyperfine)
@@ -2546,8 +2552,8 @@ THEOREM COUNT: 82: ALL DERIVED (zero free parameters throughout)
   T71:       point-of-care diagnostics
   T72:       enamel remineralization + tooth regrowth
   T73: Hydrophobic Floor: DERIVED (T10+T69+T70, gamma_hydrophobic=0.026)
-  T74: Metabolic Gate: DERIVED (T50, CYP450 pocket r=4.2Å)
-  T75: Transport Selectivity: DERIVED (T50, OATP pocket r=5.8Å)
+  T74: Metabolic Gate: DERIVED (T51, CYP450 pocket r=4.2Å)
+  T75: Transport Selectivity: DERIVED (T51, OATP pocket r=5.8Å)
   T76: Color-Magnetic Casimir: DERIVED (N_color×α_0, Delta 3.8% error)
   T77: Hart-Fermi's Filter: DERIVED (Great Filter, Fermi paradox)
   T78: Higgs Boson Mass: DERIVED (125.5 GeV, 0.0% error)
@@ -2852,7 +2858,7 @@ T50 FINAL STATUS:
         Teichmüller) remains a specialist bridge: physical content is DONE.
 
 ---
-T50 Domain III: Synthesis Thermodynamics
+T51 Domain III: Synthesis Thermodynamics
 Status: DERIVED (route classification, energy, accessibility) | 
         FFC operating temperature MEASURED | Lindemann ratio MEASURED
 
@@ -2886,7 +2892,7 @@ Validation (5 targets):
   VB2    → sintering, T predicted vs 1600-2200°C
   MgNiH  → hydride, T predicted vs 150-300°C
 
-Strategic implication: T50 Domain III enables open-source synthesis route 
+Strategic implication: T51 Domain III enables open-source synthesis route 
 design. Any material with accessibility=VILLAGE or WORKSHOP can be produced 
 by a farmer cooperative with basic equipment. Accessibility=INDUSTRIAL_SMALL 
 solvable with open-source FFC reactor design (solar-powered, shipping 
@@ -2894,10 +2900,10 @@ container scale).
 
 ---
 
-T50 Domain III: Synthesis Thermodynamics (from soap_bowl_full.py implementation comments)
+T51 Domain III: Synthesis Thermodynamics (from soap_bowl_full.py implementation comments)
 
-  # T50 Domain III: Synthesis Thermodynamics
-  # Same T50 equation applied to process conditions
+  # T51 Domain III: Synthesis Thermodynamics
+  # Same T51 equation applied to process conditions
   # Route: DERIVED from formE + composition
   # T_process: DERIVED (Lindemann ratio=3.5 MEASURED: Fe=3.85, Cu=3.96, Ni=3.84)
   # Energy: DERIVED from formE + route efficiency
@@ -2911,8 +2917,8 @@ T50 Domain III: Synthesis Thermodynamics (from soap_bowl_full.py implementation 
     VB2   → sintering, T predicted vs 1600-2200°C
     MgNiH → hydride, T predicted vs 150-300°C
 
-  T50 Domain III validation: synthesis route + process temperature
-  T50 Domain III STATUS: DERIVED (route+energy+accessibility) | FFC T=MEASURED | Validation 5/5
+  T51 Domain III validation: synthesis route + process temperature
+  T51 Domain III STATUS: DERIVED (route+energy+accessibility) | FFC T=MEASURED | Validation 5/5
 
 ---
 
@@ -3503,7 +3509,7 @@ T84  Wakata's Archives       : Gravitational epigenetics from cytoskeletal tense
                                  Sakura validation: t_flowering 4.0 yr predicted vs 4 yr observed, 0% error.
                                  Arabidopsis cross-check: 1.69% vs 15% (secondary, short-term).
                                  Drosophila: N_gen = 0.66 for ancestral_depth > 20%.
-                                 Chain: T2→T50→T57→T84. Named for Koichi Wakata, JAXA.
+                                 Chain: T2→T51→T57→T84. Named for Koichi Wakata, JAXA.
 
 ================================================================================
 ## STANDARD MODEL: ALL 20 PARAMETERS DERIVED

@@ -93,7 +93,7 @@ int main() {
     };
 
     // ─── Print config ──────────────────────────────────────────────
-    std::printf("=== KV Box — Bare Allocator Math Validation ===\n\n");
+ std::printf("=== KV Box: Bare Allocator Math Validation ===\n\n");
     std::printf("Model: Qwen3-4B\n");
     std::printf("  layers     : %u\n", N_LAYERS);
     std::printf("  kv heads   : %u\n", N_KV_HEADS);

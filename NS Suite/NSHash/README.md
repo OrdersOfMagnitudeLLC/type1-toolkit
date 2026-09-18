@@ -35,7 +35,7 @@ Sequential insert (1M keys):
 
 | Map | Time (ms) | ops/sec | vs NSHash |
 |-----|-----------|---------|-----------|
-| NSHash | 7.04 | 142.0M | — |
+| NSHash | 7.04 | 142.0M | - |
 | boost | 16.1 | 62.2M | 2.28x |
 | ankerl | 21.1 | 47.3M | 3.00x |
 | std | 22.1 | 45.3M | 3.1x |

@@ -945,7 +945,7 @@ def section_t55_plateaus_bridge():
     print()
     print("  Status: DERIVED — T4 + T5 + T18 + T32")
     print("  Proof: reset threshold pressure = YM instanton action × dimensional")
-    print("  bridge × de Sitter vacuum pressure. N=18π follows from T45 (Answer Key)")
+    print("  bridge × de Sitter vacuum pressure. N=18π follows from T46 (Answer Key)")
     print("  applied at the reset scale. Additional layer of proof for T18 and T32.")
     print()
     print("  Named for Joseph Plateau (1801-1883), who mapped soap film geometry")
@@ -973,7 +973,7 @@ def section_t56_primordial_mutation():
     for name, r, p, src in scales:
         print(f"{name:<35} {r:<15.3e} {p:<25} {src}")
     print()
-    print("  One equation governs all rows: ΔP = 2γ/r (T45, The Answer Key).")
+    print("  One equation governs all rows: ΔP = 2γ/r (T46, The Answer Key).")
     print("  Mutation is not metaphor. It is YL equilibrium variation under")
     print("  selection pressure, operating identically at every scale.")
     print("  Status: DERIVED from T2+T5+T28+T45+T54.")
@@ -989,8 +989,8 @@ def section_t56_life_walk():
     scales = [
         ('Planck / Prime Cell',      1.6e-35, 'T28', 'DERIVED'),
         ('Nuclear / Hoyle state',    1.0e-15, 'T54', 'DERIVED'),
-        ('Amino acid folding',       3.0e-10, 'T50', 'DERIVED'),
-        ('Protein pocket binding',   8.5e-10, 'T50', 'DERIVED'),
+        ('Amino acid folding',       3.0e-10, 'T51', 'DERIVED'),
+        ('Protein pocket binding',   8.5e-10, 'T51', 'DERIVED'),
         ('PPI interface',            2.0e-9,  'T56', 'DERIVED'),
         ('Lipid bilayer / cell',     5.0e-9,  'T56', 'MEASURED'),
         ('Self-assembly',            1.0e-7,  'T56→?', 'OPEN FRONTIER'),
@@ -4278,10 +4278,10 @@ def section50():
 
 
 # ---------------------------------------------------------------------------
-# T50 Domain II: Schreiber's Boundary: Inorganic Surface Extension
+# T51 Domain II: Schreiber's Boundary: Inorganic Surface Extension
 # ---------------------------------------------------------------------------
-def _t50_crystal_C_geo(crystal_system):
-    """Anderson-Debye crystal topology factor for T50 Domain II."""
+def _t51_crystal_C_geo(crystal_system):
+    """Anderson-Debye crystal topology factor for T51 Domain II."""
     if crystal_system is None:
         crystal_system = "cubic"
     if hasattr(crystal_system, 'value'):
@@ -4298,12 +4298,12 @@ def _t50_crystal_C_geo(crystal_system):
     return 8.0 * math.pi / 3.0
 
 
-def t50_inorganic_adsorption(B_GPa, V_cell_A3, n_atoms,
+def t51_inorganic_adsorption(B_GPa, V_cell_A3, n_atoms,
                               adsorbate="N2", site="hollow",
                               crystal_system="cubic"):
     """
-    T50 Domain II: Schreiber's Boundary — Inorganic Surface Extension.
-    Same equation as T50, different domain: crystal surfaces.
+    T51 Domain II: Schreiber's Boundary — Inorganic Surface Extension.
+    Same equation as T51, different domain: crystal surfaces.
     Status: DERIVED (geometry), f_corr MEASURED (Pauli repulsion, LJ limit).
     """
     adsorbate_radius = {
@@ -4327,7 +4327,7 @@ def t50_inorganic_adsorption(B_GPa, V_cell_A3, n_atoms,
     V_atom = (V_cell_A3 / n_atoms) * 1e-30  # m³
     h_WS = (3.0 * V_atom / (4.0 * math.pi)) ** (1.0 / 3.0)
 
-    C_geo = _t50_crystal_C_geo(crystal_system)
+    C_geo = _t51_crystal_C_geo(crystal_system)
     gamma = (B_GPa * 1e9 * h_WS) / C_geo  # J/m²
 
     r_ads = r_ads_A * 1e-10  # m
@@ -4354,18 +4354,18 @@ def t50_inorganic_adsorption(B_GPa, V_cell_A3, n_atoms,
         "dG_eV": round(dG_eV, 4),
         "gamma_Jm2": round(gamma, 4),
         "r_contact_A": round(r_contact * 1e10, 3),
-        "status": "T50 Domain II — DERIVED, f_corr MEASURED",
+        "status": "T51 Domain II — DERIVED, f_corr MEASURED",
     }
 
 
-def section_t50_inorganic_surface():
-    """T50 Domain II section: inorganic adsorption validation."""
+def section_t51_inorganic_surface():
+    """T51 Domain II section: inorganic adsorption validation."""
     log("")
     log("=" * 70)
-    log("T50 — Schreiber's Boundary | Domain II: Inorganic Crystal Surfaces")
+    log("T51 — Schreiber's Boundary | Domain II: Inorganic Crystal Surfaces")
     log("=" * 70)
-    log("  # T50 Domain II: Schreiber's Boundary — Inorganic Surface Extension")
-    log("  # Same equation as T50, different domain: crystal surfaces")
+    log("  # T51 Domain II: Schreiber's Boundary — Inorganic Surface Extension")
+    log("  # Same equation as T51, different domain: crystal surfaces")
     log("  # Status: DERIVED (geometry), f_corr MEASURED (Pauli repulsion, LJ limit)")
     log("")
 
@@ -4389,11 +4389,11 @@ def section_t50_inorganic_surface():
         ("Cu",  137, 47.24, 4, "FCC", (-0.5, -0.1), "CO"),   # Cu CO adsorption
     ]
 
-    log("T50 Domain II validation: inorganic adsorption vs experimental range")
+    log("T51 Domain II validation: inorganic adsorption vs experimental range")
     log("-" * 70)
     passed = 0
     for name, B, V, n, cs, (lo, hi), ads in VALIDATION:
-        res = t50_inorganic_adsorption(B, V, n, adsorbate=ads, site="hollow", crystal_system=cs)
+        res = t51_inorganic_adsorption(B, V, n, adsorbate=ads, site="hollow", crystal_system=cs)
         dG = res["dG_eV"]
         lower, upper = lo, hi
         if dG < lower or dG > upper:
@@ -4408,15 +4408,15 @@ def section_t50_inorganic_surface():
         log(f"  {name:5s}  B={B:3d} GPa  V={V:5.2f} A³  n={n}  dG_pred={dG:7.3f} eV  exp=[{lower:.1f},{upper:.1f}]  {status}")
 
     log("")
-    log(f"T50 Domain II validation: {passed}/{len(VALIDATION)} within experimental range")
-    log(f"T50 STATUS: DERIVED (geometry) | f_corr per-crystal-system MEASURED | Validation {passed}/{len(VALIDATION)} | Domain: inorganic crystal surfaces")
+    log(f"T51 Domain II validation: {passed}/{len(VALIDATION)} within experimental range")
+    log(f"T51 STATUS: DERIVED (geometry) | f_corr per-crystal-system MEASURED | Validation {passed}/{len(VALIDATION)} | Domain: inorganic crystal surfaces")
     log("")
     return passed
 
 
 # ============================================================
-# T50: Schreiber's Boundary | Domain III: Synthesis Thermodynamics
-# Same T50 equation applied to process conditions
+# T51: Schreiber's Boundary | Domain III: Synthesis Thermodynamics
+# Same T51 equation applied to process conditions
 # Route: DERIVED from formE + composition
 # T_process: DERIVED (Lindemann ratio=3.5 MEASURED: Fe=3.85,Cu=3.96,Ni=3.84)
 # Energy: DERIVED from formE + route efficiency
@@ -4449,10 +4449,10 @@ ROUTE_EFFICIENCY = {
     "electrochemical_FFC": 0.50,
 }
 
-def t50_synthesis(formula_str, B_GPa, V_cell_A3, n_atoms,
+def t51_synthesis(formula_str, B_GPa, V_cell_A3, n_atoms,
                   formE_eV_per_atom, debye_K, crystal_system="cubic"):
     """
-    T50 Domain III: Synthesis Thermodynamics
+    T51 Domain III: Synthesis Thermodynamics
     Returns route, T_process_K, E_kWh_per_kg, accessibility score
     """
     import re
@@ -4562,18 +4562,18 @@ def t50_synthesis(formula_str, B_GPa, V_cell_A3, n_atoms,
         "E_kWh_per_kg": round(E_kWh_per_kg, 2),
         "accessibility": access,
         "accessibility_label": label,
-        "status": f"DERIVED [T50 Domain III] | FFC temp MEASURED"
+        "status": f"DERIVED [T51 Domain III] | FFC temp MEASURED"
     }
 
 
-def section_t50_synthesis():
-    """T50 Domain III section: synthesis route and temperature validation."""
+def section_t51_synthesis():
+    """T51 Domain III section: synthesis route and temperature validation."""
     log("")
     log("=" * 70)
-    log("T50 — Schreiber's Boundary | Domain III: Synthesis Thermodynamics")
+    log("T51 — Schreiber's Boundary | Domain III: Synthesis Thermodynamics")
     log("=" * 70)
-    log("  # T50 Domain III: Synthesis Thermodynamics")
-    log("  # Same T50 equation applied to process conditions")
+    log("  # T51 Domain III: Synthesis Thermodynamics")
+    log("  # Same T51 equation applied to process conditions")
     log("  # Route: DERIVED from formE + composition")
     log("  # T_process: DERIVED (Lindemann ratio=3.5 MEASURED: Fe=3.85,Cu=3.96,Ni=3.84)")
     log("  # Energy: DERIVED from formE + route efficiency")
@@ -4590,12 +4590,12 @@ def section_t50_synthesis():
         ("MgNiH",   99.3,  None, 4, -0.238, 540,  "hydride",              423,  573),
     ]
 
-    log("T50 Domain III validation: synthesis route + process temperature")
+    log("T51 Domain III validation: synthesis route + process temperature")
     log("-" * 70)
     passed = 0
     for name, B, V, n, formE, debye, expected, T_min, T_max in VALIDATION_III:
         V_use = V if V is not None else 20.0 * n
-        res = t50_synthesis(name, B, V_use, n, formE, debye, "cubic")
+        res = t51_synthesis(name, B, V_use, n, formE, debye, "cubic")
         route_ok = res["route"] == expected
         T_C = res["T_process_C"]
         T_lo_C = T_min - 150 - 273
@@ -4615,31 +4615,31 @@ def section_t50_synthesis():
             f"exp=[{T_min-273:.0f},{T_max-273:.0f}]C±150C  {status}")
 
     log("")
-    log(f"T50 Domain III validation: {passed}/{len(VALIDATION_III)}")
-    log(f"T50 Domain III STATUS: DERIVED (route+energy+accessibility) | "
+    log(f"T51 Domain III validation: {passed}/{len(VALIDATION_III)}")
+    log(f"T51 Domain III STATUS: DERIVED (route+energy+accessibility) | "
         f"FFC T=MEASURED | Validation {passed}/{len(VALIDATION_III)}")
     log("")
     return passed
 
 
-def section_t50_all():
-    """Run all T50 domains together."""
+def section_t51_all():
+    """Run all T51 domains together."""
     log("")
     log("=" * 70)
-    log("T50 — Schreiber's Boundary | All Domains")
+    log("T51 — Schreiber's Boundary | All Domains")
     log("=" * 70)
-    p2 = section_t50_inorganic_surface()
-    p3 = section_t50_synthesis()
+    p2 = section_t51_inorganic_surface()
+    p3 = section_t51_synthesis()
     log("")
-    log(f"T50 ALL-DOMAIN STATUS: Domain II {p2}/{5} | Domain III {p3}/{5}")
+    log(f"T51 ALL-DOMAIN STATUS: Domain II {p2}/{5} | Domain III {p3}/{5}")
     log("")
     return p2, p3
 
 
 # ---------------------------------------------------------------------------
-# T50 Domain I: Schreiber's Boundary: Protein Pocket Binding
+# T51 Domain I: Schreiber's Boundary: Protein Pocket Binding
 # ---------------------------------------------------------------------------
-# T50 Domain I: protein-ligand binding ΔG from Young-Laplace surface tension
+# T51 Domain I: protein-ligand binding ΔG from Young-Laplace surface tension
 # at pocket contact area. Two formulations:
 #   (1) Calibrated: GAMMA_REF_MNM = 15.27 (empirical anchor to BRD4 -9.5 kcal/mol)
 #   (2) Derived: from γ_bio (Sharp & Honig 1990) + k_geo (Laskowski 1993)
@@ -4647,7 +4647,7 @@ def section_t50_all():
 
 GAMMA_REF_MNM = 15.27  # [EMPIRICAL] calibrated to BRD4 -9.5 kcal/mol at r=4.2 Å
 
-# Physical constants for derived formula (T50 + YL pressure volume integral):
+# Physical constants for derived formula (T51 + YL pressure volume integral):
 # γ_bio: protein-water surface tension, cal/mol/Å²
 #   Sharp & Honig 1990, MEASURED range 25-47, geometric mean 36
 # d/r: pocket depth-to-radius ratio
@@ -4660,20 +4660,20 @@ K_GEO = D_OVER_R_POCKET * math.pi  # [DERIVED] = 0.942, geometric contact factor
 # Unit conversion: cal/mol → kcal/mol (÷1000)
 # The exponent 0.704 is the curvature-corrected accessible contact area scaling
 # (burial volume ∝ r^1.704, but accessible contact area ∝ r^0.704)
-GAMMA_REF_DERIVED = 2.0 * GAMMA_BIO_CAL_MOL_A2 * K_GEO / 1000.0  # [DERIVED T50] = 0.0678 kcal/mol/Å
+GAMMA_REF_DERIVED = 2.0 * GAMMA_BIO_CAL_MOL_A2 * K_GEO / 1000.0  # [DERIVED T51] = 0.0678 kcal/mol/Å
 
 
-def t50_delta_g(r):
-    """T50 Domain I: calibrated protein-ligand ΔG [kcal/mol].
+def t51_delta_g(r):
+    """T51 Domain I: calibrated protein-ligand ΔG [kcal/mol].
     Empirical anchor: GAMMA_REF_MNM = 15.27 calibrated to BRD4 -9.5 kcal/mol.
     ΔG = -GAMMA_REF_MNM × r^0.704  [kcal/mol]
     """
     return -GAMMA_REF_MNM * (r ** 0.704)
 
 
-def t50_delta_g_derived(r):
-    """T50 Domain I: physics-derived protein-ligand ΔG [kcal/mol].
-    From T50 + YL pressure volume integral:
+def t51_delta_g_derived(r):
+    """T51 Domain I: physics-derived protein-ligand ΔG [kcal/mol].
+    From T51 + YL pressure volume integral:
       ΔG = ΔP × V_contact = (2γ_bio/r) × (k_geo × r^2.704)
     But accessible contact area ∝ r^0.704 (curvature-corrected):
       ΔG = -2 × γ_bio × k_geo × r^0.704 / 1000  [kcal/mol]
@@ -4683,18 +4683,18 @@ def t50_delta_g_derived(r):
     return -GAMMA_REF_DERIVED * (r ** 0.704)
 
 
-def t50_validation_report():
-    """T50 Domain I validation: compare calibrated vs derived ΔG.
+def t51_validation_report():
+    """T51 Domain I validation: compare calibrated vs derived ΔG.
     Computes both at r = 3.5, 4.2, 5.0, 6.0, 7.0, 8.0 Å.
     Labels: DERIVED if mean ratio 0.8–1.2, else T73_GAP.
     """
     log("")
     log("=" * 70)
-    log("T50 Domain I — Protein Pocket Binding: Calibrated vs Derived Validation")
+    log("T51 Domain I — Protein Pocket Binding: Calibrated vs Derived Validation")
     log("=" * 70)
     log("")
     log("  Calibrated: ΔG = -GAMMA_REF_MNM × r^0.704  (GAMMA_REF_MNM = 15.27, [EMPIRICAL])")
-    log("  Derived:    ΔG = -2×γ_bio×k_geo×r^0.704/1000  (γ_bio=36, k_geo=0.942, [DERIVED T50])")
+    log("  Derived:    ΔG = -2×γ_bio×k_geo×r^0.704/1000  (γ_bio=36, k_geo=0.942, [DERIVED T51])")
     log(f"  GAMMA_REF_DERIVED = 2 × {GAMMA_BIO_CAL_MOL_A2} × {K_GEO:.4f} / 1000 = {GAMMA_REF_DERIVED:.6f} kcal/mol/Å")
     log("")
 
@@ -4703,8 +4703,8 @@ def t50_validation_report():
     log(f"  {'r (Å)':<10} {'dG_cal (kcal/mol)':<22} {'dG_der (kcal/mol)':<22} {'ratio der/cal':<15}")
     log("  " + "-" * 65)
     for r in r_values:
-        dG_cal = t50_delta_g(r)
-        dG_der = t50_delta_g_derived(r)
+        dG_cal = t51_delta_g(r)
+        dG_der = t51_delta_g_derived(r)
         ratio = dG_der / dG_cal if dG_cal != 0 else float('inf')
         ratios.append(ratio)
         log(f"  {r:<10.1f} {dG_cal:<22.4f} {dG_der:<22.6f} {ratio:<15.4f}")
@@ -4733,13 +4733,13 @@ def t50_validation_report():
         log("  STOP: derivation needs unit correction before proceeding.")
 
     log("")
-    log(f"T50 Domain I STATUS: {label}")
+    log(f"T51 Domain I STATUS: {label}")
     log("")
 
     # BRD4 validation point
     r_brd4 = 4.2
-    dG_brd4_cal = t50_delta_g(r_brd4)
-    dG_brd4_der = t50_delta_g_derived(r_brd4)
+    dG_brd4_cal = t51_delta_g(r_brd4)
+    dG_brd4_der = t51_delta_g_derived(r_brd4)
     log(f"  BRD4 validation (r=4.2 Å):")
     log(f"    Calibrated: ΔG = {dG_brd4_cal:.4f} kcal/mol (anchor: -9.5)")
     log(f"    Derived:    ΔG = {dG_brd4_der:.6f} kcal/mol")
@@ -17532,7 +17532,7 @@ def section_s182_t62b_wagners_barrier():
 # ---------------------------------------------------------------------------
 # Section 183 -- T63: Hippocrates' Reading (Point-of-Care Diagnostic Scanner)
 # ---------------------------------------------------------------------------
-# DERIVED from T50 + maximum discrimination criterion d(delta_theta)/dKd = 0
+# DERIVED from T51 + maximum discrimination criterion d(delta_theta)/dKd = 0
 # Kd_optimal = sqrt(C_h * C_d)
 # delta_theta_max = (sqrt(C_d/C_h) - 1) / (sqrt(C_d/C_h) + 1)
 # ---------------------------------------------------------------------------
@@ -17546,7 +17546,7 @@ def section_s183_t63_hippocrates_reading():
     log("")
     log("=" * 70)
     log("S183 -- T63 HIPPOCRATES' READING (POINT-OF-CARE DIAGNOSTIC SCANNER)")
-    log("DERIVED (T50 + maximum discrimination criterion d(delta_theta)/dKd=0)")
+    log("DERIVED (T51 + maximum discrimination criterion d(delta_theta)/dKd=0)")
     log("Named: Hippocrates' Reading")
     log("=" * 70)
     log("")
@@ -17565,12 +17565,12 @@ def section_s183_t63_hippocrates_reading():
     # Derivation chain (make explicit):
     # T57: membrane stiffening → pressure fluctuation δP at cell surface
     # δP = d(2γ/r)/dt × Δt [DERIVED from T57]
-    # Detection noise floor = δP × V_sensor_pocket [T50 Domain II]
+    # Detection noise floor = δP × V_sensor_pocket [T51 Domain II]
     # Signal = biomarker binding event at concentration C
     # SNR = 1 at crossover: K_d = C (detection threshold)
     # Two thresholds: K_d = C_healthy (lower), K_d = C_disease (upper)
     # Optimal K_d = geometric mean (maximizes SNR margin equally)
-    # = sqrt(C_healthy × C_disease) [DERIVED from T57 + T50]
+    # = sqrt(C_healthy × C_disease) [DERIVED from T57 + T51]
     # This upgrades T71 from information-theoretic to foam-mechanical
     log("  delta_theta_max = (sqrt(C_d/C_h) - 1) / (sqrt(C_d/C_h) + 1)")
     log("  dG_design = kT_body * ln(Kd_optimal)  [eV, normalized to C_h=1]")
@@ -17635,7 +17635,7 @@ def section_s183_t63_hippocrates_reading():
     log("")
 
     log("LABELS:")
-    log("  DERIVED (T50 + maximum discrimination criterion d(delta_theta)/dKd=0)")
+    log("  DERIVED (T51 + maximum discrimination criterion d(delta_theta)/dKd=0)")
     log("  Named: Hippocrates' Reading")
     log("")
 
@@ -17775,10 +17775,10 @@ def section_s184_t64_nasmyths_lattice():
     # --- USAG-1 inhibition: tooth regrowth extension ---
     log("--- USAG-1 INHIBITION: TOOTH REGROWTH EXTENSION ---")
     log("USAG-1 target class: protein-protein interaction (PPI) surface.")
-    log("T50 pocket formula scope: hydrophobic burial pockets only.")
-    log("PPI surfaces are outside T50 domain — no pocket ΔG computed here.")
+    log("T51 pocket formula scope: hydrophobic burial pockets only.")
+    log("PPI surfaces are outside T51 domain — no pocket ΔG computed here.")
     log("Correct pipeline: add USAG-1 to disease_screen.py with AlphaFold structure.")
-    log("Full Vina docking will give real ΔG — T50 geometric estimate does not apply.")
+    log("Full Vina docking will give real ΔG — T51 geometric estimate does not apply.")
     log("")
     log("Combined therapy:")
     log("  Step 1: Topical gel S > 2.0 (T64) — remineralizes existing enamel")
@@ -17799,7 +17799,7 @@ def section_s184_t64_nasmyths_lattice():
     log("LABELS:")
     log("  DERIVED (T51 Gibbs-Thomson crystal growth direction)")
     log("  Named: Nasmyth's Lattice (Alexander Nasmyth, enamel structure 1839)")
-    log("  USAG-1: DERIVED (T50 + T63 design rule applied to USAG-1 pocket)")
+    log("  USAG-1: DERIVED (T51 + T63 design rule applied to USAG-1 pocket)")
     log("")
 
     all_pass = s2_in_range and fluoride_table_printed
@@ -17826,8 +17826,8 @@ def section_s184_t64_nasmyths_lattice():
 # ---------------------------------------------------------------------------
 # T61: Constituent quark mass -- DERIVED + DERIVED_LIMIT
 # T73: Hydrophobic floor full theorem -- DERIVED from T10+T69+T70
-# T74: Metabolic Gate -- DERIVED from T50
-# T75: Transport Selectivity -- DERIVED from T50
+# T74: Metabolic Gate -- DERIVED from T51
+# T75: Transport Selectivity -- DERIVED from T51
 # T76: Color-magnetic Casimir -- DERIVED
 # T33: Hoyle vs foam drift -- CONSISTENT
 # ---------------------------------------------------------------------------
@@ -17942,18 +17942,18 @@ def section_s185_theorem_gaps():
     log(f"  Label: DERIVED from T10+T69+T70, zero free parameters")
     log("")
 
-    def t73_absolute_dG(sasa_burial_A2, t50_pocket_score_kcal):
+    def t73_absolute_dG(sasa_burial_A2, t51_pocket_score_kcal):
         """
         Absolute binding free energy from foam mechanics.
-        DERIVED: T73 (hydrophobic burial) + T50 (pocket geometry).
+        DERIVED: T73 (hydrophobic burial) + T51 (pocket geometry).
         No Vina. No empirical anchor.
 
         sasa_burial_A2: nonpolar SASA buried upon binding [A^2]
-        t50_pocket_score_kcal: T50 pocket dG from existing t50_pocket_dg() [kcal/mol]
+        t51_pocket_score_kcal: T51 pocket dG from existing t51_pocket_dg() [kcal/mol]
         returns: dG_binding [kcal/mol]
         """
         dG_hydrophobic = -gamma_hydrophobic_kcal * sasa_burial_A2
-        dG_binding = dG_hydrophobic + t50_pocket_score_kcal
+        dG_binding = dG_hydrophobic + t51_pocket_score_kcal
         return dG_binding
 
     results['T73'] = {
@@ -17966,7 +17966,7 @@ def section_s185_theorem_gaps():
 
     log(f"  T73 DERIVED: gamma_hydrophobic = {gamma_hydrophobic_mNm:.2f} mN/m")
     log(f"  = {gamma_hydrophobic_kcal:.4f} kcal/mol/A^2")
-    log(f"  t73_absolute_dG(sasa_burial_A2, t50_pocket_score_kcal) function defined.")
+    log(f"  t73_absolute_dG(sasa_burial_A2, t51_pocket_score_kcal) function defined.")
     log("")
 
     # =======================================================================
@@ -17974,30 +17974,30 @@ def section_s185_theorem_gaps():
     # =======================================================================
     log("-" * 70)
     log("T74: METABOLIC GATE THEOREM")
-    log("Label: DERIVED (from T50)")
+    log("Label: DERIVED (from T51)")
     log("-" * 70)
     log("")
 
-    log("Mechanism: CYP450 oxidation occurs when molecule fits T50 hydrophobic pocket at r=4.2A.")
-    log("  dG_met = t50_pocket_dg(smiles, r=4.2)")
+    log("Mechanism: CYP450 oxidation occurs when molecule fits T51 hydrophobic pocket at r=4.2A.")
+    log("  dG_met = t51_pocket_dg(smiles, r=4.2)")
     log("  Threshold: dG_met < -5.0 kcal/mol -> metabolic activation likely")
     log("  Named for: the CYP450 gate that determines first-pass metabolism")
     log("")
 
-    # Simplified T50 pocket dG: dG = -GAMMA_REF * r^ALPHA_POCKET
+    # Simplified T51 pocket dG: dG = -GAMMA_REF * r^ALPHA_POCKET
     # Using foam_screener_v2.py constants
     ALPHA_POCKET = 0.704
     GAMMA_REF = 1.993949
     r_cyp450 = 4.2  # Angstrom, CYP450 pocket radius
 
     # Aspirin SMILES: CC(=O)Oc1ccccc1C(=O)O
-    # T50 pocket dG: dG = -GAMMA_REF * r^ALPHA_POCKET (foam_screener_v2.py formula)
+    # T51 pocket dG: dG = -GAMMA_REF * r^ALPHA_POCKET (foam_screener_v2.py formula)
     dG_met_aspirin = -GAMMA_REF * (r_cyp450 ** ALPHA_POCKET)
 
     log(f"  T74 DERIVED: Metabolic Gate Theorem")
     log(f"  CYP450 pocket radius: {r_cyp450} A")
     log(f"  Activation threshold: dG < -5.0 kcal/mol")
-    log(f"  Derived from T50 (Schreiber's Boundary), zero free parameters")
+    log(f"  Derived from T51 (Schreiber's Boundary), zero free parameters")
     log(f"  Aspirin (CC(=O)Oc1ccccc1C(=O)O): dG_met = {dG_met_aspirin:.2f} kcal/mol")
     if dG_met_aspirin < -5.0:
         log(f"  -> Metabolic activation LIKELY (dG < -5.0)")
@@ -18017,12 +18017,12 @@ def section_s185_theorem_gaps():
     # =======================================================================
     log("-" * 70)
     log("T75: TRANSPORT SELECTIVITY THEOREM")
-    log("Label: DERIVED (from T50)")
+    log("Label: DERIVED (from T51)")
     log("-" * 70)
     log("")
 
-    log("Mechanism: OATP-mediated efflux occurs when T50 pocket complementarity at r=5.8A.")
-    log("  dG_transport = t50_pocket_dg(smiles, r=5.8)")
+    log("Mechanism: OATP-mediated efflux occurs when T51 pocket complementarity at r=5.8A.")
+    log("  dG_transport = t51_pocket_dg(smiles, r=5.8)")
     log("  Threshold: dG_transport < -6.0 kcal/mol -> efflux likely (poor CNS penetration)")
     log("  Named for: OATP transporter selectivity filter")
     log("")
@@ -18033,7 +18033,7 @@ def section_s185_theorem_gaps():
     log(f"  T75 DERIVED: Transport Selectivity Theorem")
     log(f"  OATP pocket radius: {r_oatp} A")
     log(f"  Efflux threshold: dG < -6.0 kcal/mol")
-    log(f"  Derived from T50 (Schreiber's Boundary), zero free parameters")
+    log(f"  Derived from T51 (Schreiber's Boundary), zero free parameters")
     log(f"  Metformin (CN(C)C(=N)N=C(N)N): dG_transport = {dG_transport_metformin:.2f} kcal/mol")
     if dG_transport_metformin < -6.0:
         log(f"  -> Efflux LIKELY (dG < -6.0), poor CNS penetration")
@@ -20841,7 +20841,7 @@ def section_s195_t84_wakata_archives():
     print("S195 -- T84: WAKATA'S ARCHIVES (Gravitational Epigenetic Theorem)")
     print("=" * 70)
     print()
-    print("Chain: T2 -> T50 -> T57 -> T84")
+    print("Chain: T2 -> T51 -> T57 -> T84")
     print("Named for Koichi Wakata, JAXA")
     print()
 
@@ -20849,7 +20849,7 @@ def section_s195_t84_wakata_archives():
     # 1. MECHANOSENSITIVE PATHWAY FROM YOUNG-LAPLACE
     # ===================================================================
     print("-" * 70)
-    print("1. MECHANOSENSITIVE PATHWAY (CYTOSKELETAL TENSEGRITY, T50-derived)")
+    print("1. MECHANOSENSITIVE PATHWAY (CYTOSKELETAL TENSEGRITY, T51-derived)")
     print("-" * 70)
     print()
 
@@ -20885,12 +20885,12 @@ def section_s195_t84_wakata_archives():
     print()
     print("  NOTE: P_hydrostatic/DeltaP_YL = 0.49% -- too small to drive effect")
     print("  directly. Primary mechanosensitive pathway is cytoskeletal tensegrity")
-    print("  (T50-derived), not hydrostatic pressure:")
+    print("  (T51-derived), not hydrostatic pressure:")
     print("    Gravity loads actin cytoskeleton -> nuclear lamina -> chromatin")
     print("    compaction -> DNMT access maintained.")
     print("    Remove g -> actin tension drops -> chromatin decompresses ->")
     print("    demethylation proceeds.")
-    print("  Same chain T2->T50->T57->T84, correct mechanism.")
+    print("  Same chain T2->T51->T57->T84, correct mechanism.")
     print()
 
     # ===================================================================
@@ -21084,6 +21084,223 @@ def section_s195_t84_wakata_archives():
     return results
 
 
+# ---------------------------------------------------------------------------
+# T77: HART-FERMI'S FILTER (Great Filter Theorem)
+# ---------------------------------------------------------------------------
+# DERIVED from T14 + T21 + T56
+# Named for Enrico Fermi and Michael Hart (1975)
+#
+# Derivation:
+# T14: ~10^59 civilizations probable in R5
+# T21: R5 terminal: foam generative cascade ends here
+# T56: YL pressure dynamics operate at ALL scales including civilizational
+# Fermi observation (MEASURED): no detected civilizations in observable volume
+#
+# If P_survive = fraction reaching stable Type I+, then:
+# P_survive × 10^59 << 1 per observable Hubble volume
+# → P_survive < ~10^-70 (upper bound)
+#
+# YL mechanism: at civilizational scale, internal pressure growth
+# (population, resource draw, complexity) must equilibrate with
+# external expansion (territory, energy capture).
+# Unbalanced ΔP → boundary rupture (civilizational collapse).
+# Discovery threshold (reading own physics) coincides with maximum
+# internal pressure, minimum external relief.
+# → Filter bottleneck is a foam pressure equilibrium problem.
+#
+# Predicts: most civilizations collapse at or just after the
+# discovery threshold. Fermi silence is the observational signature.
+# STATUS: DERIVED (mechanism) | MEASURED (Fermi silence input)
+# ---------------------------------------------------------------------------
+def section_t77_hart_fermi_filter():
+    """T77: Hart-Fermi's Filter — Great Filter from foam pressure equilibrium."""
+    import math
+    import time
+
+    t0 = time.time()
+
+    log("")
+    log("=" * 70)
+    log("T77 — HART-FERMI'S FILTER (Great Filter Theorem)")
+    log("DERIVED from T14 + T21 + T56")
+    log("Named for Enrico Fermi and Michael Hart (1975)")
+    log("=" * 70)
+    log("")
+
+    # T14: civilization count in R5
+    N_civ_R5 = 1e59
+    log("T14 INPUT:")
+    log(f"  N_civ_R5 = {N_civ_R5:.0e} civilizations probable in R5")
+    log("")
+
+    # Fermi observation (MEASURED)
+    N_observed = 0
+    log("FERMI OBSERVATION (MEASURED):")
+    log(f"  N_observed = {N_observed} detected civilizations in observable volume")
+    log("")
+
+    # P_survive upper bound
+    # P_survive × N_civ_R5 << 1 → P_survive < 1/N_civ_R5
+    # With safety margin for observable volume subset: P_survive < ~10^-70
+    p_survive_bound = 1e-70
+    log("UPPER BOUND:")
+    log(f"  P_survive × {N_civ_R5:.0e} << 1 per Hubble volume")
+    log(f"  → P_survive < {p_survive_bound:.0e}")
+    log("")
+
+    # YL mechanism at civilizational scale
+    log("YL MECHANISM (T56 at civilizational scale):")
+    log("  Internal pressure: population, resource draw, complexity growth")
+    log("  External expansion: territory, energy capture")
+    log("  ΔP = P_internal - P_external")
+    log("  If ΔP > 2γ/r_boundary → boundary rupture (collapse)")
+    log("  Discovery threshold = maximum internal pressure, minimum external relief")
+    log("  → Filter bottleneck is a foam pressure equilibrium problem")
+    log("")
+
+    # Prediction
+    log("PREDICTION:")
+    log("  Most civilizations collapse at or just after discovery threshold.")
+    log("  Fermi silence is the observational signature of YL equilibrium failure.")
+    log("")
+
+    # Status
+    log("LABELS:")
+    log("  DERIVED (mechanism: T14+T21+T56 → YL pressure equilibrium at civilizational scale)")
+    log("  MEASURED (Fermi silence: zero detected civilizations, observational input)")
+    log("")
+
+    verdict = "T77 DERIVED: Great Filter = YL pressure equilibrium failure at discovery threshold"
+    log(f"  Verdict: {verdict}")
+
+    t1 = time.time()
+    log(f"  Computation time: {(t1 - t0) * 1000:.3f} ms")
+
+    out = RESULTS_DIR / "T77_hart_fermi_filter.txt"
+    text = "\n".join(lines_out) + "\n"
+    out.write_text(text)
+    log(f"  Saved: {out}")
+
+    return (N_civ_R5, p_survive_bound, verdict)
+
+def section_s201_clay_closure_ym():
+    """S201: T32 Formal Closure — Yang-Mills existence and mass gap, formal. (2026-09-16)"""
+    import math
+
+    hbar = 1.0546e-34
+    c    = 2.998e8
+    r_P  = 1.616e-35
+    GeV  = 1.602e-10
+
+    print("")
+    print("=" * 70)
+    print("S201 -- T32 FORMAL CLOSURE: YANG-MILLS EXISTENCE + MASS GAP")
+    print("Formal answer to the Yang-Mills existence and mass gap problem")
+    print("=" * 70)
+    print()
+    print("FORMAL REQUIREMENT:")
+    print("  (a) Prove existence of quantum Yang-Mills theory on R^4")
+    print("  (b) Prove mass gap Delta > 0")
+    print()
+    print("PART A — EXISTENCE (from S128):")
+    print("  Axiom A2 (foam) provides a UV-complete Planck regulator at r_P.")
+    print("  With this regulator, all 5 Wightman axioms are satisfied (S128).")
+    print("  Haag-Kastler axioms satisfied (S163).")
+    print("  QFT exists as a Planck-regulated theory: ESTABLISHED.")
+    print()
+    print("  Continuum limit (r_P -> 0):")
+    print("  The Planck regulator is a physical UV cutoff, not a mathematical trick.")
+    print("  All physical observables are computed in the IR regime (r >> r_P).")
+    print("  The theory at r_P -> 0 is defined by its IR fixed point.")
+    print()
+    print("PART B — MASS GAP (from S166 + S173):")
+    print("  Mass gap is IR-generated at the confinement scale:")
+    print("    m_gap = C_gap * Lambda_QCD")
+    print("  C_gap = 4.0629 (DERIVED, S173, foam topology, zero free parameters)")
+    print()
+
+    # m_gap from S173 (mu_conf - Lambda_1loop, two-loop flavor-matched)
+    m_gap = 1.5207  # GeV, DERIVED in S173, 1.4% error vs lattice 1.5 GeV
+    C_gap = 4.0629  # DERIVED in S173, foam topology, zero free parameters
+    Lambda_QCD = 0.3743  # GeV, S172 two-loop Nf=3 (not PDG)
+
+    print(f"  m_gap = {m_gap:.4f} GeV  (S173: mu_conf - Lambda_1loop)")
+    print(f"  C_gap = {C_gap:.4f}  (S173: foam topology)")
+    print(f"  Lambda_QCD = {Lambda_QCD:.4f} GeV  (S172: two-loop Nf=3)")
+    print(f"  Cross-check: C_gap * Lambda_QCD = {C_gap * Lambda_QCD:.4f} GeV")
+    print()
+    print("  RG INVARIANCE OF THE GAP:")
+    b0 = 9.0
+    g2 = 4.0
+    exponent = -8 * math.pi**2 / (b0 * g2)
+    print(f"  Lambda_QCD = mu * exp(-8*pi^2 / (b0*g^2))")
+    print(f"  Exponent = {exponent:.6f}  (b0={b0}, g^2={g2})")
+    print(f"  Lambda_QCD is RG-invariant by construction.")
+    print(f"  As r_P -> 0: mu -> inf, exp(exponent) -> 0, product = const.")
+    print(f"  Therefore m_gap > 0 in the r_P -> 0 limit. PROVEN.")
+    print()
+    print("PART C — FORMAL OBJECTION ANSWERED:")
+    print("  The formal problem requires proof without assuming a regulator.")
+    print("  Response: The foam regulator is physical (A2, empirically grounded")
+    print("  at 27-sigma). The mass gap is IR-generated and regulator-independent")
+    print("  by the RG argument above. The gap is not a UV artifact.")
+    print("  This is the analytic version of what lattice QCD demonstrates")
+    print("  numerically: a non-perturbative gap that survives a -> 0.")
+    print("  The foam closes it analytically.")
+    print()
+    print("T32 FORMAL CLOSURE: COMPLETE")
+    print("  (a) Yang-Mills theory exists on R^4 (Wightman + continuum limit)")
+    print("  (b) Mass gap Delta = 1.5207 GeV > 0, RG-invariant")
+    print("  THEOREM: unconditional within Foam Mechanics + A2")
+    print("=" * 70)
+
+    return {
+        "existence": "PROVEN",
+        "mass_gap_GeV": 1.5207,
+        "C_gap": C_gap,
+        "Lambda_QCD_GeV": 0.3743,
+        "RG_invariant": True,
+        "formal_closure": "COMPLETE"
+    }
+
+
+def section_s202_t46_scope_proof():
+    """S202: T46 Scope Proof — Action and Entropy as Foam Projections. (2026-09-18)"""
+
+    print("")
+    print("=" * 70)
+    print("S202 -- T46 SCOPE PROOF: ACTION AND ENTROPY AS FOAM PROJECTIONS")
+    print("δS=0 and S=klogW both recover ΔP=2γ/r when foam is the input")
+    print("=" * 70)
+    print()
+    print("DERIVATION 1 -- ACTION (δS = 0):")
+    print("  Foam cell action: S = γA − PV")
+    print("  Vary at fixed V:  δS = γ dA − P dV = 0")
+    print("  Sphere: A = 4πr², V = (4/3)πr³")
+    print("  dA/dr = 8πr,  dV/dr = 4πr²")
+    print("  δS = 0  →  γ·8πr = P·4πr²  →  ΔP = 2γ/r")
+    print("  Zero free parameters.")
+    print()
+    print("DERIVATION 2 -- ENTROPY (S = k log W):")
+    print("  Maximum entropy foam state = maximum W configuration.")
+    print("  At fixed volume, W is maximized by the minimum-area")
+    print("  configuration = minimum γA (Plateau's rules).")
+    print("  min γA at fixed V → same variational condition → ΔP = 2γ/r.")
+    print("  Same Young-Laplace equilibrium.")
+    print()
+    print("SCOPE VERDICT:")
+    print("  Both δS=0 and S=klogW recover ΔP=2γ/r when foam is the input.")
+    print("  Neither is foundational. Label: DERIVED.")
+    print("=" * 70)
+
+    return {
+        "action":   "S=γA−PV, δS=0 → ΔP=2γ/r",
+        "entropy":  "max W = min γA (Plateau) → ΔP=2γ/r",
+        "free_parameters": 0,
+        "label":    "DERIVED",
+    }
+
+
 if __name__ == "__main__":
     from datetime import datetime
     run_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -21166,12 +21383,12 @@ if __name__ == "__main__":
                     only_result = section48()
                 elif only == "49":
                     only_result = section49()
-                elif only == "50b":
-                    only_result = section_t50_inorganic_surface()
-                elif only == "50":
-                    only_result = section_t50_all()
-                elif only == "t50_validation":
-                    only_result = t50_validation_report()
+                elif only == "t51b":
+                    only_result = section_t51_inorganic_surface()
+                elif only == "t51":
+                    only_result = section_t51_all()
+                elif only == "t51_validation":
+                    only_result = t51_validation_report()
                 elif only == "nsqcd_lambda":
                     only_result = section_nsqcd_lambda()
                 elif only == "51":
@@ -21424,7 +21641,7 @@ if __name__ == "__main__":
                     only_result = section_s185_theorem_gaps()
                 elif only == "186":
                     only_result = section_s186_void_fill()
-                elif only == "77":
+                elif only == "t77":
                     only_result = section_t77_hart_fermi_filter()
                 elif only == "187":
                     only_result = section_s187_t78_higgs_mass()
@@ -21454,6 +21671,18 @@ if __name__ == "__main__":
                     only_result = section_s199_yukawa_susy_rg()
                 elif only == "200":
                     only_result = section_s200_tau_yukawa_rg()
+                elif only == "201":
+                    only_result = section_s201_clay_closure_ym()
+                elif only == "202":
+                    only_result = section_s202_t46_scope_proof()
+                elif only == "n18pi":
+                    only_result = section_n18pi_geometric()
+                elif only == "t54":
+                    only_result = section_t54_oberhummer_window()
+                elif only == "t55":
+                    only_result = section_t55_plateaus_bridge()
+                elif only == "t56":
+                    only_result = section_t56_primordial_mutation()
                 else:
                     main()
 
@@ -21571,7 +21800,7 @@ if __name__ == "__main__":
 # T53: Berry's Bridge (Riemann–Foam Symmetry) DERIVED
 # ---------------------------------------------------------------------------
 # T53 NOTE: This theorem number is deprecated.
-# T53 = T45 (Einstein's Answer Key): same content, duplicate label.
+# T53 = T46 (Einstein's Answer Key): same content, duplicate label.
 # Theorem count 73 does not include T53 as a distinct theorem.
 # Retained here for section numbering continuity only.
 # ---------------------------------------------------------------------------
@@ -21614,181 +21843,3 @@ if __name__ == "__main__":
 # modest 2–5× improvement from Fe dissolution, pending measurement.
 # ---------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------
-# T77: HART-FERMI'S FILTER (Great Filter Theorem)
-# ---------------------------------------------------------------------------
-# DERIVED from T14 + T21 + T56
-# Named for Enrico Fermi and Michael Hart (1975)
-#
-# Derivation:
-# T14: ~10^59 civilizations probable in R5
-# T21: R5 terminal: foam generative cascade ends here
-# T56: YL pressure dynamics operate at ALL scales including civilizational
-# Fermi observation (MEASURED): no detected civilizations in observable volume
-#
-# If P_survive = fraction reaching stable Type I+, then:
-# P_survive × 10^59 << 1 per observable Hubble volume
-# → P_survive < ~10^-70 (upper bound)
-#
-# YL mechanism: at civilizational scale, internal pressure growth
-# (population, resource draw, complexity) must equilibrate with
-# external expansion (territory, energy capture).
-# Unbalanced ΔP → boundary rupture (civilizational collapse).
-# Discovery threshold (reading own physics) coincides with maximum
-# internal pressure, minimum external relief.
-# → Filter bottleneck is a foam pressure equilibrium problem.
-#
-# Predicts: most civilizations collapse at or just after the
-# discovery threshold. Fermi silence is the observational signature.
-# STATUS: DERIVED (mechanism) | MEASURED (Fermi silence input)
-# ---------------------------------------------------------------------------
-def section_t77_hart_fermi_filter():
-    """T77: Hart-Fermi's Filter — Great Filter from foam pressure equilibrium."""
-    import math
-    import time
-
-    t0 = time.time()
-
-    log("")
-    log("=" * 70)
-    log("T77 — HART-FERMI'S FILTER (Great Filter Theorem)")
-    log("DERIVED from T14 + T21 + T56")
-    log("Named for Enrico Fermi and Michael Hart (1975)")
-    log("=" * 70)
-    log("")
-
-    # T14: civilization count in R5
-    N_civ_R5 = 1e59
-    log("T14 INPUT:")
-    log(f"  N_civ_R5 = {N_civ_R5:.0e} civilizations probable in R5")
-    log("")
-
-    # Fermi observation (MEASURED)
-    N_observed = 0
-    log("FERMI OBSERVATION (MEASURED):")
-    log(f"  N_observed = {N_observed} detected civilizations in observable volume")
-    log("")
-
-    # P_survive upper bound
-    # P_survive × N_civ_R5 << 1 → P_survive < 1/N_civ_R5
-    # With safety margin for observable volume subset: P_survive < ~10^-70
-    p_survive_bound = 1e-70
-    log("UPPER BOUND:")
-    log(f"  P_survive × {N_civ_R5:.0e} << 1 per Hubble volume")
-    log(f"  → P_survive < {p_survive_bound:.0e}")
-    log("")
-
-    # YL mechanism at civilizational scale
-    log("YL MECHANISM (T56 at civilizational scale):")
-    log("  Internal pressure: population, resource draw, complexity growth")
-    log("  External expansion: territory, energy capture")
-    log("  ΔP = P_internal - P_external")
-    log("  If ΔP > 2γ/r_boundary → boundary rupture (collapse)")
-    log("  Discovery threshold = maximum internal pressure, minimum external relief")
-    log("  → Filter bottleneck is a foam pressure equilibrium problem")
-    log("")
-
-    # Prediction
-    log("PREDICTION:")
-    log("  Most civilizations collapse at or just after discovery threshold.")
-    log("  Fermi silence is the observational signature of YL equilibrium failure.")
-    log("")
-
-    # Status
-    log("LABELS:")
-    log("  DERIVED (mechanism: T14+T21+T56 → YL pressure equilibrium at civilizational scale)")
-    log("  MEASURED (Fermi silence: zero detected civilizations, observational input)")
-    log("")
-
-    verdict = "T77 DERIVED: Great Filter = YL pressure equilibrium failure at discovery threshold"
-    log(f"  Verdict: {verdict}")
-
-    t1 = time.time()
-    log(f"  Computation time: {(t1 - t0) * 1000:.3f} ms")
-
-    out = RESULTS_DIR / "T77_hart_fermi_filter.txt"
-    text = "\n".join(lines_out) + "\n"
-    out.write_text(text)
-    log(f"  Saved: {out}")
-
-    return (N_civ_R5, p_survive_bound, verdict)
-
-def section_s201_clay_closure_ym():
-    """S201: T32 Formal Closure — Yang-Mills existence and mass gap, formal. (2026-09-16)"""
-    import math
-
-    hbar = 1.0546e-34
-    c    = 2.998e8
-    r_P  = 1.616e-35
-    GeV  = 1.602e-10
-
-    print("")
-    print("=" * 70)
-    print("S201 -- T32 FORMAL CLOSURE: YANG-MILLS EXISTENCE + MASS GAP")
-    print("Formal answer to the Yang-Mills existence and mass gap problem")
-    print("=" * 70)
-    print()
-    print("FORMAL REQUIREMENT:")
-    print("  (a) Prove existence of quantum Yang-Mills theory on R^4")
-    print("  (b) Prove mass gap Delta > 0")
-    print()
-    print("PART A — EXISTENCE (from S128):")
-    print("  Axiom A2 (foam) provides a UV-complete Planck regulator at r_P.")
-    print("  With this regulator, all 5 Wightman axioms are satisfied (S128).")
-    print("  Haag-Kastler axioms satisfied (S163).")
-    print("  QFT exists as a Planck-regulated theory: ESTABLISHED.")
-    print()
-    print("  Continuum limit (r_P -> 0):")
-    print("  The Planck regulator is a physical UV cutoff, not a mathematical trick.")
-    print("  All physical observables are computed in the IR regime (r >> r_P).")
-    print("  The theory at r_P -> 0 is defined by its IR fixed point.")
-    print()
-    print("PART B — MASS GAP (from S166 + S173):")
-    print("  Mass gap is IR-generated at the confinement scale:")
-    print("    m_gap = C_gap * Lambda_QCD")
-    print("  C_gap = 4.0629 (DERIVED, S173, foam topology, zero free parameters)")
-    print()
-
-    # m_gap from S173 (mu_conf - Lambda_1loop, two-loop flavor-matched)
-    m_gap = 1.5207  # GeV, DERIVED in S173, 1.4% error vs lattice 1.5 GeV
-    C_gap = 4.0629  # DERIVED in S173, foam topology, zero free parameters
-    Lambda_QCD = 0.3743  # GeV, S172 two-loop Nf=3 (not PDG)
-
-    print(f"  m_gap = {m_gap:.4f} GeV  (S173: mu_conf - Lambda_1loop)")
-    print(f"  C_gap = {C_gap:.4f}  (S173: foam topology)")
-    print(f"  Lambda_QCD = {Lambda_QCD:.4f} GeV  (S172: two-loop Nf=3)")
-    print(f"  Cross-check: C_gap * Lambda_QCD = {C_gap * Lambda_QCD:.4f} GeV")
-    print()
-    print("  RG INVARIANCE OF THE GAP:")
-    b0 = 9.0
-    g2 = 4.0
-    exponent = -8 * math.pi**2 / (b0 * g2)
-    print(f"  Lambda_QCD = mu * exp(-8*pi^2 / (b0*g^2))")
-    print(f"  Exponent = {exponent:.6f}  (b0={b0}, g^2={g2})")
-    print(f"  Lambda_QCD is RG-invariant by construction.")
-    print(f"  As r_P -> 0: mu -> inf, exp(exponent) -> 0, product = const.")
-    print(f"  Therefore m_gap > 0 in the r_P -> 0 limit. PROVEN.")
-    print()
-    print("PART C — FORMAL OBJECTION ANSWERED:")
-    print("  The formal problem requires proof without assuming a regulator.")
-    print("  Response: The foam regulator is physical (A2, empirically grounded")
-    print("  at 27-sigma). The mass gap is IR-generated and regulator-independent")
-    print("  by the RG argument above. The gap is not a UV artifact.")
-    print("  This is the analytic version of what lattice QCD demonstrates")
-    print("  numerically: a non-perturbative gap that survives a -> 0.")
-    print("  The foam closes it analytically.")
-    print()
-    print("T32 FORMAL CLOSURE: COMPLETE")
-    print("  (a) Yang-Mills theory exists on R^4 (Wightman + continuum limit)")
-    print("  (b) Mass gap Delta = 1.5207 GeV > 0, RG-invariant")
-    print("  THEOREM: unconditional within Foam Mechanics + A2")
-    print("=" * 70)
-
-    return {
-        "existence": "PROVEN",
-        "mass_gap_GeV": 1.5207,
-        "C_gap": C_gap,
-        "Lambda_QCD_GeV": 0.3743,
-        "RG_invariant": True,
-        "formal_closure": "COMPLETE"
-    }

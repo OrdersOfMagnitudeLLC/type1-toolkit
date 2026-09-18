@@ -4,7 +4,7 @@
 
 #!/usr/bin/env python3
 """
-NSQCD Benchmark — Compare analytic results vs lattice QCD / measured values.
+NSQCD Benchmark: Compare analytic results vs lattice QCD / measured values.
 """
 
 import os
@@ -68,7 +68,7 @@ def main():
     lines.append(f"Runtime: {(t1-t0)*1000:.1f} ms")
     lines.append("")
     lines.append("Thresholds: m_gap <5%, Lambda_Nf3 <6% (3-loop perturbative uncertainty), alpha_s(m_Z) <1%")
-    lines.append("Excluded: Lambda_Nf0 (perturbative vs lattice — different theories), alpha_s(<2 GeV) (non-perturbative)")
+ lines.append("Excluded: Lambda_Nf0 (perturbative vs lattice: different theories), alpha_s(<2 GeV) (non-perturbative)")
     lines.append("No GPU. No lattice. No free parameters.")
 
     output = "\n".join(lines)

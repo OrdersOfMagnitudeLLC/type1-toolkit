@@ -1,6 +1,6 @@
 #pragma once
 
-// KVBox — compressed KV cache mirror using dynamic-range INT8 quantization
+// KVBox: compressed KV cache mirror using dynamic-range INT8 quantization
 // + position-indexed hash map. No cross-layer grouping: each layer stored
 // independently. Per-head dynamic scale preserves full value range.
 // Collision-free: every position gets its own slot via std::unordered_map.
@@ -111,7 +111,7 @@ struct KVBox {
 
     // Write K and V for (token_idx, layer, head).
     // k_f16 / v_f16: each head_dim ggml_fp16_t values.
-    // Raw FP16 storage — no quantization.
+ // Raw FP16 storage: no quantization.
     void write_slot(uint64_t token_idx, uint32_t layer,
                     uint32_t head, const ggml_fp16_t* k_f16,
                     const ggml_fp16_t* v_f16) {
@@ -144,7 +144,7 @@ struct KVBox {
 
     // Read K and V for (token_idx, layer, head) from storage.
     // Returns true if the position was previously written (cache hit).
-    // Raw FP16 — no dequantization needed.
+ // Raw FP16: no dequantization needed.
     bool read_slot(uint64_t token_idx, uint32_t layer,
                    uint32_t head, ggml_fp16_t* k_f16,
                    ggml_fp16_t* v_f16) const {

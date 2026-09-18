@@ -118,7 +118,7 @@ CLASS_GAMMA = {name: compute_class_gamma(name) for name in CLASS_ANCHORS}
 
 def t50_binding_dG(r_pocket_angstrom, sasa_A2):
     """
-    DERIVED — T50 Schreiber's Boundary
+ DERIVED: T50 Schreiber's Boundary
     Foam-derived binding free energy from pocket radius and buried SASA.
     ΔG = -γ_water × r^α_pocket × SASA  (converted to kcal/mol)
     """
@@ -129,7 +129,7 @@ def t50_binding_dG(r_pocket_angstrom, sasa_A2):
 
 def t73_floor_dG(r_pocket_angstrom, sasa_A2):
     """
-    DERIVED — T73 Hydrophobic Floor
+ DERIVED: T73 Hydrophobic Floor
     Minimum binding energy from hydrophobic burial at given pocket geometry.
     ΔG_floor = -γ_eff × SASA  (γ_eff = γ_water/4, tetrahedral water)
     """
@@ -152,7 +152,7 @@ LOGP_MIN = 1.0   # below this: too hydrophilic for hydrophobic pocket
 LOGP_MAX = 5.0   # Lipinski limit
 
 def t50_binding_dG_molecule(r_pocket, logp_molecule):
-    """DERIVED — T50 + T73 hydrophobic burial scaling.
+ """DERIVED: T50 + T73 hydrophobic burial scaling.
     
     dG_molecule = dG_pocket × (logP / logP_ref)
     Molecules with higher logP score better in hydrophobic pockets.
@@ -174,11 +174,11 @@ def t71_diagnostic_score(dG_kcal, c_healthy_nM=1.0, c_disease_nM=100.0,
                          calibration_factor=T71_CALIBRATION_FACTOR,
                          logp_molecule=2.5):
     """
-    DERIVED — T71 Kd Diagnostic Scanner (calibrated, molecule-aware)
+ DERIVED: T71 Kd Diagnostic Scanner (calibrated, molecule-aware)
     Converts T50 binding dG to calibrated Kd, then computes diagnostic score.
     
     Molecule adjustment: dG_molecule = dG_pocket - (0.3 * logp_molecule)
-    Same logP bonus as zinc_screen ranking — hydrophobic molecules bind tighter.
+ Same logP bonus as zinc_screen ranking - hydrophobic molecules bind tighter.
     
     Kd_raw = exp(dG_molecule * 4184 / (8.314 * 310)) * 1e9   [nM]
     Kd_calibrated = Kd_raw * calibration_factor                [nM]
@@ -211,7 +211,7 @@ def t71_diagnostic_score(dG_kcal, c_healthy_nM=1.0, c_disease_nM=100.0,
 #   - Molecular complexity: rings >=2, rotatable bonds <=10
 
 def t85_pharmacophore_gate(smiles):
-    """DERIVED — T85 Pharmacophore Gate
+ """DERIVED: T85 Pharmacophore Gate
     
     Foam-mechanical requirements for hydrophobic pocket binding:
       aromatic ring → π-stacking stabilizes bubble surface (T28 Prime Cell)
@@ -370,7 +370,7 @@ def debye_temperature_anderson(
 
     Validated: 4.09% MAE on 22 materials, 90.5% within 10%,
     100% within 15%, zero free parameters.
-    Theorem: T_DEBYE — DERIVED from T45+T2
+ Theorem: T_DEBYE: DERIVED from T45+T2
 
     Parameters
     ----------
@@ -490,7 +490,7 @@ def debye_temperature_lindemann(
     Fallback Debye temperature from Lindemann criterion + foam WS geometry.
     Use only when B, G, rho are unavailable.
     Accuracy: ~14% MAE (vs 4% for Anderson).
-    Theorem: T_DEBYE fallback — DERIVED structure, MEASURED h_WS.
+ Theorem: T_DEBYE fallback: DERIVED structure, MEASURED h_WS.
     """
     import math
     HBAR = 1.05457e-34
@@ -508,7 +508,7 @@ def debye_temperature_lindemann(
         'stable'    : theta_D > 300.0,
         'method'    : 'Lindemann-fallback',
         'theorem'   : 'T_DEBYE fallback (DERIVED+MEASURED h_WS=0.0944)',
-        'accuracy'  : '~14% MAE — use Anderson formula when B/G/rho available',
+ 'accuracy' : '~14% MAE: use Anderson formula when B/G/rho available',
     }
 
 
@@ -744,12 +744,12 @@ def t50_binding(pocket_radius_A: float,
     
     Parameters
     ----------
-    pocket_radius_A : float — pocket radius in Ångströms
-    ligand_radius_A : float — ligand effective radius in Å (optional)
-    fill_fraction   : float — ligand/pocket radius ratio (default 0.65)
-    f_polar_pocket  : float — fraction of polar groups on pocket surface
-    f_polar_ligand  : float — fraction of polar groups on ligand surface
-    n_rotatable     : int   — number of rotatable bonds (auto from ligand radius)
+ pocket_radius_A : float: pocket radius in Ångströms
+ ligand_radius_A : float: ligand effective radius in Å (optional)
+ fill_fraction : float: ligand/pocket radius ratio (default 0.65)
+ f_polar_pocket : float: fraction of polar groups on pocket surface
+ f_polar_ligand : float: fraction of polar groups on ligand surface
+ n_rotatable : int: number of rotatable bonds (auto from ligand radius)
     
     Returns
     -------
@@ -792,7 +792,7 @@ def t50_binding(pocket_radius_A: float,
         'fill_fraction'    : round(fill_fraction, 4),
         'n_rotatable'      : n_rotatable,
         'alpha'            : ALPHA_POCKET,
-        'theorem'          : 'T50 (Schreiber Boundary) — DERIVED',
+ 'theorem' : 'T50 (Schreiber Boundary): DERIVED',
         'elapsed_us'       : round(elapsed_us, 2),
         'valid_domains'    : 'hydrophobic burial: bromodomain, HSP90, PARP, BCL',
         'excluded'         : 'ATP-kinase, charged S1 protease',
@@ -804,7 +804,7 @@ def t50_from_sasa(sasa_buried_A2: float,
                   f_polar_ligand: float = 0.20,
                   n_rotatable:    int   = 3) -> dict:
     """
-    T50 from buried SASA directly — the physically correct input.
+ T50 from buried SASA directly: the physically correct input.
     r_eff = sqrt(sasa_buried / pi)
     Then calls t50_binding(r_eff, ...) internally.
     This is the Vina replacement pathway.
@@ -921,7 +921,7 @@ def t73_hydrophobic_floor() -> dict:
         'gamma_molecular'  : round(gamma_molecular, 4),
         'kT_300K'          : kT_300K,
         'snr_floor_vs_kT'  : round(snr, 2),
-        'theorem'          : 'T73 (Hydrophobic Floor) — DERIVED from T45+T50+T35',
+ 'theorem' : 'T73 (Hydrophobic Floor): DERIVED from T45+T50+T35',
         'derivation'       : 'ΔG_floor = -γ_ref * r_vdw^α, r_vdw=1.5Å (T35 Planck floor at molecular scale)',
         'elapsed_us'       : round(elapsed_us, 2),
     }
@@ -985,7 +985,7 @@ def t56_ppi_binding(interface_sasa_A2: float,
         'hotspot_sasa_A2'     : round(sasa_hotspot, 1),
         'r_hotspot_A'         : round(r_hotspot, 3),
         'hot_spot_fraction'   : HOT_SPOT_FRACTION,
-        'theorem'             : 'T56 + T50 hotspot (Clackson-Wells 1995) — DERIVED',
+ 'theorem' : 'T56 + T50 hotspot (Clackson-Wells 1995) - DERIVED',
         'note'                : '25% of PPI interface drives binding. Rest is padding.',
     }
 
@@ -1003,8 +1003,8 @@ def t51_melting(radius_nm: float, T_bulk_K: float) -> dict:
     
     Parameters
     ----------
-    radius_nm : float — nanoparticle radius in nanometres
-    T_bulk_K  : float — bulk melting point in Kelvin
+ radius_nm : float: nanoparticle radius in nanometres
+ T_bulk_K : float: bulk melting point in Kelvin
     
     Returns
     -------
@@ -1025,7 +1025,7 @@ def t51_melting(radius_nm: float, T_bulk_K: float) -> dict:
         'dTm_over_Tm'    : round(dTm_over_Tm, 6),
         'radius_nm'      : radius_nm,
         'model'          : 'A/r + B/r² (surface stress, T51)',
-        'theorem'        : 'T51 (Gibbs-Thomson) — DERIVED',
+ 'theorem' : 'T51 (Gibbs-Thomson): DERIVED',
         'elapsed_us'     : round(elapsed_us, 2),
     }
 
@@ -1037,7 +1037,7 @@ def t51_melting_physical(formula: str,
                          L_J_mol: float,
                          material_class: str = 'metal') -> dict:
     """
-    T51 Gibbs-Thomson — universal Turnbull derivation.
+ T51 Gibbs-Thomson: universal Turnbull derivation.
     No per-material table. Works on any material including undiscovered.
 
     Inputs required (all computable from crystal structure):
@@ -1077,7 +1077,7 @@ def t51_melting_physical(formula: str,
         'Tm_bulk_K'        : T_bulk_K,
         'Tm_nano_K'        : round(Tm_nano, 2),
         'delta_Tm_K'       : round(T_bulk_K - Tm_nano, 2),
-        'theorem'          : 'T51 (Gibbs-Thomson) + Turnbull 1950 — DERIVED',
+ 'theorem' : 'T51 (Gibbs-Thomson) + Turnbull 1950 - DERIVED',
         'note'             : 'Turnbull C_T is class-specific (3 classes), not per-material',
         'free_parameters'  : 0,
     }
@@ -1165,7 +1165,7 @@ def phonon_stability(
         theta_D = C_DEBYE_LEGACY * math.sqrt(A_FOAM * (r_atomic_A ** (ALPHA_DEBYE - 1)) / M_reduced)
         debye_stable = theta_D > T_ROOM
         debye_method = 'C_DEBYE-legacy (low accuracy)'
-        theta_D_accuracy = 'legacy fit — use Anderson or Lindemann if data available'
+ theta_D_accuracy = 'legacy fit: use Anderson or Lindemann if data available'
 
     score_corrected = score
 
@@ -1191,8 +1191,8 @@ def phonon_stability(
     # Electronic instabilities: permanent ceiling, outside foam scope
     if formula in ELECTRONIC_INSTABILITY:
         stable = False
-        confidence = 'ELECTRONIC INSTABILITY — outside foam scope (Mott/spin-orbit)'
-        recommendation = 'FAIL — electronic instability. Foam cannot predict this class.'
+ confidence = 'ELECTRONIC INSTABILITY - outside foam scope (Mott/spin-orbit)'
+ recommendation = 'FAIL: electronic instability. Foam cannot predict this class.'
 
     # Confidence bands
     if score > 0.85:   confidence = 'HIGH (>85% phonon-stable materials in this band)'
@@ -1200,8 +1200,8 @@ def phonon_stability(
     elif score > 0.50: confidence = 'LOW-MODERATE (near threshold, run SPARC to confirm)'
     else:              confidence = 'UNSTABLE (run SPARC only if structure is unusual)'
 
-    recommendation = 'PASS — proceed to T50/T51 or DFT confirmation' if stable \
-                     else 'FAIL — likely imaginary phonons, verify structure first'
+ recommendation = 'PASS: proceed to T50/T51 or DFT confirmation' if stable \
+ else 'FAIL: likely imaginary phonons, verify structure first'
 
     elapsed_us = (time.perf_counter() - t0) * 1e6
 
@@ -1219,7 +1219,7 @@ def phonon_stability(
         'theta_D_accuracy': theta_D_accuracy,
         'confidence'     : confidence,
         'recommendation' : recommendation,
-        'theorem'        : 'T45+T2 (Answer Key + Foam Scaling) — DERIVED',
+ 'theorem' : 'T45+T2 (Answer Key + Foam Scaling): DERIVED',
         'note'           : 'Replaces MACE for screening. Borderline: run SPARC.',
         'elapsed_us'     : round(elapsed_us, 2),
     }
@@ -1243,7 +1243,7 @@ def design_protein_pocket(target_dG_kcal: float,
         'required_sasa_A2'  : round(sasa_needed, 1),
         'pocket_radius_A'   : round(r_contact / 0.65, 3),
         'design_spec'       : f'Hydrophobic pocket r={r_contact/0.65:.1f}Å, SASA≥{sasa_needed:.0f}Å²',
-        'theorem'           : 'T50 inverted — GENERATIVE',
+ 'theorem' : 'T50 inverted: GENERATIVE',
         'note'              : 'This is the pocket geometry needed. Design ligand to fill it.',
     }
 
@@ -1276,7 +1276,7 @@ def design_binding_sequence(target_dG_kcal: float,
         'f_hyd_required'  : round(f_hyd, 4),
         'feasible'        : feasible,
         'note'            : 'f_hyd 0.30-0.70 = realistic protein composition',
-        'theorem'         : 'T50 inverted — GENERATIVE design',
+ 'theorem' : 'T50 inverted: GENERATIVE design',
     }
 
 
@@ -1286,7 +1286,7 @@ def life_walk() -> None:
     T56: The Primordial Mutation Theorem.
     """
     print("=" * 70)
-    print("THE LIFE WALK — T56 (The Primordial Mutation Theorem)")
+ print("THE LIFE WALK: T56 (The Primordial Mutation Theorem)")
     print("One equation: ΔP = 2γ/r (T45, The Answer Key)")
     print("=" * 70)
     
@@ -1296,7 +1296,7 @@ def life_walk() -> None:
         ("Amino acid folding",    3.0e-10,   "T50", f"|ΔG|={-GAMMA_REF*(3.0**ALPHA_POCKET):.2f} kcal/mol", "DERIVED"),
         ("Protein pocket",        8.5e-10,   "T50", f"|ΔG|={-GAMMA_REF*(8.5*0.65**ALPHA_POCKET):.2f} kcal/mol", "DERIVED"),
         ("PPI interface (T56)",   2.0e-9,    "T56", f"ΔG_PPI = -γ×r^0.704 + charged + HB; MAE < 1 kcal/mol", "DERIVED"),
-        ("Lipid bilayer / cell",  5.0e-9,    "T56", "γ ~ 10⁻¹¹ N/m — cell IS a soap film",  "MEASURED"),
+ ("Lipid bilayer / cell", 5.0e-9, "T56", "γ ~ 10⁻¹¹ N/m - cell IS a soap film", "MEASURED"),
         ("Self-assembly [open]",  1.0e-7,    "T56→?", "Capsid/organelle scale: composite YL, not yet derived", "OPEN"),
         ("Stellar equilibrium",   7.0e8,     "T56", "dP/dr = -ρg ≡ YL at stellar scale",     "DERIVED"),
         ("Cosmic void foam",      9.5e23,    "T2",  "γ ∝ r^3.0517, R²=0.9998, 27σ",         "MEASURED"),
@@ -1325,7 +1325,7 @@ def protein_debye_stability(
     """
     Debye temperature for protein phonon modes (T56: Primordial Mutation Theorem).
 
-    Proteins are foam at biological scale — same Young-Laplace physics.
+ Proteins are foam at biological scale - same Young-Laplace physics.
     B = bulk modulus of protein interior (hydrophobic core compressibility)
     G = shear modulus (backbone flexibility)
     ρ = protein density (~1.35 g/cm³ universal for folded proteins)
@@ -1438,7 +1438,7 @@ def membrane_toxicity_foam(
                 'verdict': 'SAFE',
                 'cell_type': cell_type,
                 'C_tested_uM': round(Cmax_uM * C_multiples, 2),
-                'theorem': 'T56+T45 (Primordial Mutation + Answer Key) — DERIVED',
+ 'theorem': 'T56+T45 (Primordial Mutation + Answer Key) - DERIVED',
                 'method': 'non-cationic, no Nernst accumulation',
             }
     else:
@@ -1467,7 +1467,7 @@ def membrane_toxicity_foam(
                     'verdict': 'TOXIC',
                     'cell_type': cell_type,
                     'C_tested_uM': round(Cmax_uM * C_multiples, 2),
-                    'theorem': 'T56+T45 (Primordial Mutation + Answer Key) — DERIVED',
+ 'theorem': 'T56+T45 (Primordial Mutation + Answer Key) - DERIVED',
                     'method': 'tricyclic_amphiphile',
                 }
         else:
@@ -1483,7 +1483,7 @@ def membrane_toxicity_foam(
                 'verdict': 'SAFE',
                 'cell_type': cell_type,
                 'C_tested_uM': round(Cmax_uM * C_multiples, 2),
-                'theorem': 'T56+T45 (Primordial Mutation + Answer Key) — DERIVED',
+ 'theorem': 'T56+T45 (Primordial Mutation + Answer Key) - DERIVED',
                 'method': 'not amphiphilic, no lysis',
             }
 
@@ -1557,7 +1557,7 @@ def membrane_toxicity_foam(
         'verdict'          : verdict,
         'cell_type'        : cell_type,
         'C_tested_uM'      : round(Cmax_uM * C_multiples, 2),
-        'theorem'          : 'T56+T45 (Primordial Mutation + Answer Key) — DERIVED',
+ 'theorem' : 'T56+T45 (Primordial Mutation + Answer Key) - DERIVED',
         'method'           : 'Young-Laplace Gibbs adsorption, foam membrane model',
     }
 
@@ -1667,7 +1667,7 @@ def gsh_defense_foam(smiles, mito_toxic, etc_level, reactive_flag, Cmax_free_uM)
     """
     Hepatocyte GSH buffer: 5mM pool, ~1mM/hr synthesis rate.
     DILI occurs when depletion rate > recovery rate for > 24hr.
-    Attack pressure vs defense pressure — T56 foam equilibrium.
+ Attack pressure vs defense pressure: T56 foam equilibrium.
     DERIVED from T56 + T45.
     """
     GSH_pool_mM = 5.0
@@ -1712,7 +1712,7 @@ def gsh_defense_foam(smiles, mito_toxic, etc_level, reactive_flag, Cmax_free_uM)
 
 def oatp_transport_foam(smiles, Cmax_free_uM):
     """
-    OATP1B1/1B3 active uptake — T50 binding to amphipathic transport pocket.
+ OATP1B1/1B3 active uptake: T50 binding to amphipathic transport pocket.
     DERIVED from T50 + T56 (membrane coupling).
     """
     from rdkit import Chem
@@ -1774,7 +1774,7 @@ def pgp_efflux_foam(smiles, Cmax_free_uM):
     P-glycoprotein (ABCB1) pumps lipophilic drugs out of hepatocytes.
     Substrate criteria: logP 2-5, MW 300-900, H-bond donors < 3.
     Efflux ratio 2-10x reduces effective intracellular concentration.
-    DERIVED from T50 — MDR1 pore is a YL pressure boundary.
+ DERIVED from T50: MDR1 pore is a YL pressure boundary.
     """
     from rdkit import Chem
     from rdkit.Chem import Descriptors
@@ -1849,7 +1849,7 @@ def mito_accumulation_foam(smiles, Cmax_uM):
 
 def membrane_maintenance_t57(logP, MW, smiles=None):
     """
-    Mechanism 7 — Membrane Maintenance (T57 Hayflick's Pressure).
+ Mechanism 7: Membrane Maintenance (T57 Hayflick's Pressure).
     DERIVED from T57: compounds that partition strongly into membranes
     AND carry hydroxyl or carboxyl groups can slow cortical stiffening.
     """
@@ -1903,7 +1903,7 @@ def membrane_maintenance_t57(logP, MW, smiles=None):
 
 def cyp450_substrate_foam(smiles: str) -> dict:
     """
-    CYP450 3A4 reactive metabolite risk — T50 binding to hydrophobic pocket.
+ CYP450 3A4 reactive metabolite risk: T50 binding to hydrophobic pocket.
     DERIVED from T50 Domain I.
     """
     r_ligand = r_ligand_from_smiles(smiles)
@@ -2139,7 +2139,7 @@ def bsep_inhibition_foam(
     IC50_ref = 10 μM (median BSEP inhibitor from FDA data)
     FDA threshold: IC50 < 25 μM = clinically relevant inhibition
 
-    Theorem: T50+T45 (Foam Surface Binding + Answer Key) — DERIVED
+ Theorem: T50+T45 (Foam Surface Binding + Answer Key) - DERIVED
     Ref: Pedersen JM et al., J Med Chem 2013; FDA BSEP guidance 2012
     """
     import math
@@ -2182,14 +2182,14 @@ def bsep_inhibition_foam(
         'IC50_est_uM'    : round(IC50_est_uM, 3),
         'bsep_inhibitor' : bsep_inhibitor,
         'severity'       : severity,
-        'theorem'        : 'T50+T45 (Foam Pocket Binding) — DERIVED',
+ 'theorem' : 'T50+T45 (Foam Pocket Binding): DERIVED',
         'note'           : 'Pedersen 2013: score=logP×√(MW/200), threshold=4.0',
     }
 
 
 def etc_inhibition_foam(smiles):
     """
-    ETC Complex I inhibition — T50 binding to ubiquinone pocket.
+ ETC Complex I inhibition: T50 binding to ubiquinone pocket.
     Planar molecule required; then T50 ΔG to pocket r = 3.9 Å.
     DERIVED from T50 Domain I.
     """
@@ -2346,7 +2346,7 @@ def main():
                 fm.write(str(s) + '\n')
                 print(s)
 
-            mprnt("\n=== MEMBRANE TOXICITY FOAM MODEL v3 — NERNST-CORRECTED ===")
+ mprnt("\n=== MEMBRANE TOXICITY FOAM MODEL v3 - NERNST-CORRECTED ===")
             mprnt("(membrane + Nernst-corrected mitochondrial + reactive metabolite)")
 
             labeled   = [d for d in DILI_VALIDATION if d['DILI'] >= 0]
@@ -2523,7 +2523,7 @@ def qcd_mass_gap(Lambda_GeV=None, Nf=3, mu_conf=2.1911):
 
 def qcd_running_coupling(mu_GeV, mu0_GeV=1.0, g2_0=4.0, Nf=0):
     """
-    Running coupling alpha_s(mu) — delegates to NSQCD three-loop (DERIVED from T32).
+ Running coupling alpha_s(mu): delegates to NSQCD three-loop (DERIVED from T32).
     Falls back to one-loop inline from foam fixed point.
     """
     if _NSQCD_AVAILABLE:

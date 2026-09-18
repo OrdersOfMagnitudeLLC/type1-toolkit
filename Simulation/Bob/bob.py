@@ -564,7 +564,7 @@ def search(query: str, limit: int = 20) -> list[dict]:
 def main(argv=None):
     """CLI entry point for Bob search."""
     import argparse
-    parser = argparse.ArgumentParser(description="Bob — catalysis hub literature search")
+ parser = argparse.ArgumentParser(description="Bob - catalysis hub literature search")
     parser.add_argument("--query", default="N2 reduction", help="search query")
     parser.add_argument("--limit", type=int, default=10, help="max results")
     parser.add_argument("--domain", default=None, help="domain profile (semiconductor, mram, etc.)")

@@ -254,7 +254,7 @@ int main(int argc, char** argv) {
         std::cout << "\nBenchmarking NSRWLock..." << std::endl;
         benchmark_ns();
     } else {
-        // Scenario 1: pure-read throughput — 256 threads, 100% readers.
+ // Scenario 1: pure-read throughput: 256 threads, 100% readers.
         // Matches the design claim: zero reader-reader cache contention.
         NUM_THREADS = 256;
         READER_RATIO = 1.0;
@@ -265,7 +265,7 @@ int main(int argc, char** argv) {
         std::cout << "\nBenchmarking NSRWLock..." << std::endl;
         benchmark_ns();
 
-        // Scenario 2: mixed workload — 8 threads, 95% read / 5% write.
+ // Scenario 2: mixed workload: 8 threads, 95% read / 5% write.
         NUM_THREADS = 8;
         READER_RATIO = 0.95;
         std::cout << "\n--- Scenario 2: mixed (8 threads, 95% read / 5% write) ---" << std::endl;

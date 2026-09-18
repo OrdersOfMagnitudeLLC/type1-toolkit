@@ -54,4 +54,4 @@ bash Publish/Stellar/pipeline_commands.sh
 - Two consistent drift detections on the same target is necessary but not sufficient for technosignature classification.
 - Full-sky coverage requires additional Breakthrough Listen data releases.
 
-License (OOM Stellar Pipeline): CC BY 4.0 — Orders of Magnitude LLC — https://creativecommons.org/licenses/by/4.0/
+License (OOM Stellar Pipeline): CC BY 4.0: Orders of Magnitude LLC: https://creativecommons.org/licenses/by/4.0/

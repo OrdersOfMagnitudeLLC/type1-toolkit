@@ -55,7 +55,7 @@ def save_reference_density(cif_path: str, workdir: str, name: str, pressure: flo
         )
     else:
         print(
-            f"[BELLA] ⚠ PRINT_DENSITY may not be set — "
+ f"[BELLA] ⚠ PRINT_DENSITY may not be set - "
             f"no density files found to cache"
         )
 
@@ -103,7 +103,7 @@ PHONON_INDEX = Path.home() / ".bella" / "phonon_results.json"
 
 def save_phonon_result(cif_path: str, pressure: float, min_freq: float,
                        imaginary: bool, wall_time_s: float) -> None:
-    """Permanently log a completed phonon result. Never overwrites — appends."""
+ """Permanently log a completed phonon result. Never overwrites: appends."""
     import json, hashlib
     PHONON_INDEX.parent.mkdir(parents=True, exist_ok=True)
     key = cache_key(cif_path, pressure)

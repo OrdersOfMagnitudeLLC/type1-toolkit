@@ -4,7 +4,7 @@
 # See ./LICENSE.md for terms.
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 """
-bella_phonon.py — general crystal-phonon pipeline with SPARC + phonopy.
+bella_phonon.py: general crystal-phonon pipeline with SPARC + phonopy.
 
 Usage example (Bella sweep):
     python3 bella_phonon.py \
@@ -882,7 +882,7 @@ def run_one_pressure(
     # Fast MACE-MP-0 phonon path (default)
     if not args.sparc_phonon:
         if args.dry_run:
-            print(f"  [dry-run] MACE phonons at {pressure:.2f} GPa — skipped")
+ print(f" [dry-run] MACE phonons at {pressure:.2f} GPa - skipped")
             return None
         relaxed = sort_atoms_by_element(base_atoms.copy())
 
@@ -933,7 +933,7 @@ def run_one_pressure(
         exit_code = run_sparc(pdir, name, args.sparc_bin, args.np, dry_run=args.dry_run, raise_on_error=False, timeout=args.timeout)
 
         if args.dry_run:
-            print(f"  [dry-run] pressure {pressure:.2f} GPa — inputs written")
+ print(f" [dry-run] pressure {pressure:.2f} GPa - inputs written")
             return None
 
         if exit_code != 0:
@@ -1075,7 +1075,7 @@ def main() -> int:
         print(f"\n=== Pressure {p:.2f} GPa ===")
         r = run_one_pressure(base_atoms, p, supercell_matrix, args)
         if r is None:
-            print(f"  [dry-run] pressure {p:.2f} GPa — inputs written, execution skipped")
+ print(f" [dry-run] pressure {p:.2f} GPa - inputs written, execution skipped")
             continue
         results.append(r)
         if r["sparc_exit"] != 0:

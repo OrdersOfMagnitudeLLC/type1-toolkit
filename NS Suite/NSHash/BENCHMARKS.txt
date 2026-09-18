@@ -10,7 +10,7 @@ Random      | 12.96  | 18.75 | 17.29  | 22.08     | 33.28 | 14.36 | 19.78
 Bounded     |  1.19  | 10.14 | 11.01  |  8.29     |  2.59 |  2.96 | 14.39
 Timestamp   |  1.62  | 19.09 | 14.41  | 22.20     |  3.53 | 15.19 | 21.74
 
-Insert — Sequential (1M keys, total ms / ops/sec):
+Insert: Sequential (1M keys, total ms / ops/sec):
 Map         | ms      | ops/s
 ------------|---------|----------
 NSHash      |   7.04  | 142.0M

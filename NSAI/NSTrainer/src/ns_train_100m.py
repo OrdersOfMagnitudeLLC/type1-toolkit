@@ -195,7 +195,7 @@ def main():
     lines.append("")
     lines.append("Step | Loss | Time/100 (s) | RSS (MB)")
     for step in range(100, N_STEPS + 1, 100):
-        lines.append(f"{step:4d} | {losses[step]:.4f} | — | —")
+ lines.append(f"{step:4d} | {losses[step]:.4f} | - | - ")
 
     output = "\n".join(lines)
     print("\n" + output)

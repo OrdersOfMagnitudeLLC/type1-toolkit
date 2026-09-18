@@ -7,7 +7,7 @@ Dense Uniform (10K random, 500/500)| random                   | 14,372,553  | 22
 Sparse Clustered (20 clusters, 20/500)| 70% targeted + 30% random| 13,968,010 | 10,178,868      | 7.16        | 9.82        | 1.37x faster
 Mixed (10 clusters + 5K random, 500/500)| 70% targeted + 30% random| 10,960,110 | 7,629,760      | 9.12        | 13.11       | 1.44x faster
 
-Win condition: Clustered geometry — sparse clustered and mixed scenes with
+Win condition: Clustered geometry: sparse clustered and mixed scenes with
 targeted rays. NS-BVH grid skips empty cells (96% in sparse scene),
 delivering 1.37-1.44x over Embree 4.4.1.
 Dense uniform is a documented loss (1.59x slower): no structure to exploit,

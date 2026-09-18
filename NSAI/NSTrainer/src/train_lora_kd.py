@@ -32,7 +32,7 @@ def cosine_lr(step, total_steps, lr_max, lr_min_ratio=0.1):
 
 
 # ---------------------------------------------------------------------------
-# Chunked KD loss — only over top-k positions, never full vocab
+# Chunked KD loss: only over top-k positions, never full vocab
 # ---------------------------------------------------------------------------
 
 def kd_loss_chunked(student_logits, teacher_indices, teacher_values, chunk_size=32):
@@ -161,7 +161,7 @@ def main():
         t_indices = torch.from_numpy(np.stack(t_idx_chunks)).long().to(device)
         t_values = torch.from_numpy(np.stack(t_val_chunks).astype(np.float32)).to(device)
 
-        # Forward — full vocab logits (Qwen2.5-0.5B is small enough)
+ # Forward: full vocab logits (Qwen2.5-0.5B is small enough)
         outputs = model(input_ids=x)
         logits = outputs.logits  # (B, T, V)
 
@@ -169,7 +169,7 @@ def main():
         # Use positions 0..T-2 to predict tokens 1..T-1
         shift_logits = logits[:, :-1, :]            # (B, T-1, V)
         shift_targets = x[:, 1:]                     # (B, T-1)
-        shift_t_indices = t_indices[:, 1:, :]        # (B, T-1, K) — teacher logits for predicting token t+1
+ shift_t_indices = t_indices[:, 1:, :] # (B, T-1, K) - teacher logits for predicting token t+1
         shift_t_values = t_values[:, 1:, :]          # (B, T-1, K)
 
         # Cross-entropy loss

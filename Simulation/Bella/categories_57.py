@@ -65,8 +65,8 @@ EXTRA_CATEGORY_FILTERS = {
 }
 
 EXTRA_CATEGORY_NOTES = {
-    "battery_anode_sodium": "Na-ion battery anode — post-Li energy storage. NEEDS: Carbonization or alloy synthesis. OUTPUT: Na-ion anode. DEPLOY: Grid Na-ion batteries. CONJECTURE pending phonon confirmation.",
-    "battery_cathode_sodium": "Na-ion cathode — earth-abundant storage. NEEDS: Solid-state synthesis. OUTPUT: Na-ion cathode. DEPLOY: Stationary storage. CONJECTURE pending phonon confirmation.",
+ "battery_anode_sodium": "Na-ion battery anode: post-Li energy storage. NEEDS: Carbonization or alloy synthesis. OUTPUT: Na-ion anode. DEPLOY: Grid Na-ion batteries. CONJECTURE pending phonon confirmation.",
+ "battery_cathode_sodium": "Na-ion cathode: earth-abundant storage. NEEDS: Solid-state synthesis. OUTPUT: Na-ion cathode. DEPLOY: Stationary storage. CONJECTURE pending phonon confirmation.",
     "flow_battery_membrane": "Ion-exchange membrane for flow batteries. NEEDS: Polymer or ceramic membrane. OUTPUT: Selective ion transport. DEPLOY: Grid flow batteries. CONJECTURE pending phonon confirmation.",
     "redox_flow_electrolyte": "Redox-active electrolyte. NEEDS: Electrolyte formulation. OUTPUT: Solution energy storage. DEPLOY: Long-duration grid storage. CONJECTURE pending phonon confirmation.",
     "thermoelectric_low_grade_heat": "Thermoelectric for waste heat <200C. NEEDS: Nanostructuring. OUTPUT: Electricity from waste heat. DEPLOY: Factory heat recovery. CONJECTURE pending phonon confirmation.",

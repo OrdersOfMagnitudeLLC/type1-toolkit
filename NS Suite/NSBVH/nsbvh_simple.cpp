@@ -1167,7 +1167,7 @@ void run_secondary_ray_benchmark(const std::vector<AABB>& objects,
     double total_unsorted = ms_unsorted;
     double total_sorted = ms_sort + ms_sorted;
 
-    std::cout << "=== " << scene_name << " — Secondary Rays (10M, Radix Sort) ===" << std::endl;
+ std::cout << "=== " << scene_name << " - Secondary Rays (10M, Radix Sort) ===" << std::endl;
     std::cout << "  Rays: " << N_SEC << " (random directions, object-center origins)" << std::endl;
     std::cout << "  Key computation:  " << std::fixed << std::setprecision(2) << ms_keys << " ms" << std::endl;
     std::cout << "  NSRay conversion:  " << std::fixed << std::setprecision(2) << ms_conv << " ms" << std::endl;

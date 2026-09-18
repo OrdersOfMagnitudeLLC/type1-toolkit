@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NSQCD — Analytic QCD Calculator
+NSQCD: Analytic QCD Calculator
 Usage:
   python3 nsqcd_cli.py                    # full report
   python3 nsqcd_cli.py --alpha-s 1.0     # alpha_s at 1 GeV
@@ -20,7 +20,7 @@ from nsqcd import NSQCD
 
 def main():
     parser = argparse.ArgumentParser(
-        description="NSQCD — Analytic QCD Calculator (Orders of Magnitude LLC)"
+ description="NSQCD: Analytic QCD Calculator (Orders of Magnitude LLC)"
     )
     parser.add_argument('--alpha-s', type=float, metavar='GEV',
                         help='Running coupling alpha_s at given scale (GeV)')

@@ -5,7 +5,7 @@
 # Copyright (C) 2026 Orders of Magnitude LLC <orders@ofmagnitude.com>
 import os
 """
-Bella — Lightweight Universal Simulator
+Bella: Lightweight Universal Simulator
 """
 import argparse, datetime, functools, glob, importlib, importlib.util, inspect, io, json, math, os, queue, re, subprocess, sys, tempfile, threading, time, zipfile, requests, resource, psutil
 from pathlib import Path
@@ -140,7 +140,7 @@ EASTER_EGG_FORMULAS = {
 ║   Orders of Magnitude noticed.                               ║
 ║   You have a broad spectrum and high potential.              ║
 ║                                                              ║
-║   — ofmagnitude.com                                          ║
+║: ofmagnitude.com ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
         """
@@ -156,7 +156,7 @@ EASTER_EGG_FORMULAS = {
 ║   You went looking for materials and found a universe.       ║
 ║                                                              ║
 ║   Orders of Magnitude noticed.                               ║
-║   — ofmagnitude.com                                          ║
+║: ofmagnitude.com ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
         """
@@ -246,8 +246,8 @@ def _mp_benchmark(formula: str, e_form_mace: float):
             if not docs:
                 return None
             stable = min(docs, key=lambda d: getattr(d, 'energy_above_hull', 1e9))
-            mp_id = getattr(stable, 'material_id', '—')
-            name = getattr(stable, 'formula_pretty', '—')
+ mp_id = getattr(stable, 'material_id', ' - ')
+ name = getattr(stable, 'formula_pretty', ' - ')
             mp_eform = getattr(stable, 'formation_energy_per_atom', None)
             if mp_eform is None:
                 return None
@@ -406,12 +406,11 @@ def _check_materials_project_api_key():
 
 _WELCOME = """
 ─────────────────────────────────────────────
-  Bella — Lightweight Universal Simulator
+ Bella: Lightweight Universal Simulator
   by Orders of Magnitude · ofmagnitude.com
 ─────────────────────────────────────────────
 
-  Atoms to answers. Materials, proteins, PDEs, math —
-  one interface, no GPU required.
+ Atoms to answers. Materials, proteins, PDEs, math:   one interface, no GPU required.
 
   Quick start:
     bella discover "nitrogen fixation catalyst"
@@ -440,7 +439,7 @@ _WELCOMED = Path.home() / '.bella' / '.welcomed'
 
 def _show_welcome():
     """Print a clean welcome screen with all domains grouped by category."""
-    console.print("\n[bold]Bella — Lightweight Universal Simulator[/bold]")
+ console.print("\n[bold]Bella: Lightweight Universal Simulator[/bold]")
     console.print("[dim]by Orders of Magnitude · ofmagnitude.com[/dim]\n")
 
     cat_order = [
@@ -460,7 +459,7 @@ def _show_welcome():
         table = Table("Domain", "Description", box=box.SIMPLE, show_header=False)
         for name, profile in sorted(grouped[cat]):
             desc = (profile.get('description') or '').replace('\n', ' ').split()
-            desc = ' '.join(desc[:5]) if desc else '—'
+ desc = ' '.join(desc[:5]) if desc else ' - '
             table.add_row(f"  {name}", desc)
         console.print(table)
 
@@ -914,7 +913,7 @@ def _print_what_to_try(stage, reason, formula=None, domain=None):
 
 def print_banner():
     console.print("[bold cyan]BELLA[/bold cyan]", justify="center")
-    console.print("[cyan]Universal Molecular Simulator — Orders of Magnitude LLC[/cyan]", justify="center")
+ console.print("[cyan]Universal Molecular Simulator - Orders of Magnitude LLC[/cyan]", justify="center")
     console.print("[dim]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/dim]", justify="center")
 
 def parse_xyz(path):
@@ -1495,8 +1494,8 @@ def run_sparc(atoms, name, xyzdir):
                 err_color = "bold green"
             err_str = f"[{err_color}]{last_error:.3E}[/{err_color}]"
         else:
-            err_str = "—"
-        table.title = Text.from_markup("[bold cyan]SPARC SCF — done[/bold cyan]")
+ err_str = ": "
+ table.title = Text.from_markup("[bold cyan]SPARC SCF - done[/bold cyan]")
         table.add_row(str(n_scf), f"{energy:.8f}", err_str, status)
         live.update(table)
 
@@ -1512,22 +1511,22 @@ def results_panel(mace_e, mace_t, mace_forces, sparc_e, sparc_t, sparc_forces, c
         mace_rows = []
         if mace_e is not None:
             mace_rows.append(f"Energy: {mace_e:.3f} eV")
-            mace_rows.append(f"Forces: {'[green]✓[/] computed' if mace_forces else '—'}")
+ mace_rows.append(f"Forces: {'[green]✓[/] computed' if mace_forces else ' - '}")
             mace_rows.append(f"Time:   {mace_t:.1f} ms")
         else:
             mace_rows.append("[red]✗ FAILED[/]")
-        left = Panel("\n".join(mace_rows), title="[cyan]MACE — ML Force Field[/]", border_style="cyan")
+ left = Panel("\n".join(mace_rows), title="[cyan]MACE - ML Force Field[/]", border_style="cyan")
         panels.append(left)
 
     if show_sparc:
         sparc_rows = []
         if sparc_e is not None:
             sparc_rows.append(f"Energy: {sparc_e:.3f} Ha")
-            sparc_rows.append(f"Forces: {'[green]✓[/] computed' if sparc_forces else '—'}")
+ sparc_rows.append(f"Forces: {'[green]✓[/] computed' if sparc_forces else ' - '}")
             sparc_rows.append(f"Time:   {sparc_t:.2f} s")
         else:
             sparc_rows.append("[red]✗ FAILED[/]")
-        right = Panel("\n".join(sparc_rows), title="[magenta]SPARC — Quantum DFT[/]", border_style="magenta")
+ right = Panel("\n".join(sparc_rows), title="[magenta]SPARC - Quantum DFT[/]", border_style="magenta")
         panels.append(right)
 
     parts = [Columns(panels, equal=True, expand=True)]
@@ -1558,7 +1557,7 @@ def results_panel(mace_e, mace_t, mace_forces, sparc_e, sparc_t, sparc_forces, c
         border = "bold green" if mace_e is not None else "bold red"
 
     console.print(Panel(Group(*parts), title="Results",
-                        subtitle="OOM LLC — ofmagnitude.com",
+ subtitle="OOM LLC: ofmagnitude.com",
                         border_style=border))
 
 def _run_sim_profile(args):
@@ -1582,7 +1581,7 @@ def _run_sim_profile(args):
     params = profile.get('params', {}) or {}
 
     dry = getattr(args, 'dry_run', False)
-    console.print(f"[cyan]Sim profile:[/cyan] {name} — {profile.get('description', '')}")
+ console.print(f"[cyan]Sim profile:[/cyan] {name} - {profile.get('description', '')}")
     console.print(f"  command: {command}")
     console.print(f"  target: {target}")
     console.print(f"  params: {params}")
@@ -2481,7 +2480,7 @@ def cmd_proteins(args):
             console.print(f"[red]FASTA file not found: {fasta_path}[/]")
             return 1
         seq = _read_fasta(fasta_path).upper()
-        console.print(f"[cyan]FASTA: {fasta_path} — {len(seq)} residues[/]")
+ console.print(f"[cyan]FASTA: {fasta_path}: {len(seq)} residues[/]")
         console.print(f"[dim]{seq[:60]}{'...' if len(seq) > 60 else ''}[/]")
         valid = all(c in 'ACDEFGHIKLMNPQRSTVWY' for c in seq)
         console.print("[green]✓ valid amino-acid sequence[/]" if valid else "[red]✗ invalid characters[/]")
@@ -2493,7 +2492,7 @@ def cmd_proteins(args):
         query = ''
     if domain and domain in DOMAIN_PROFILES:
         profile = DOMAIN_PROFILES[domain]
-        console.print(f"[cyan]Domain profile: {domain} — {profile['description']}[/]")
+ console.print(f"[cyan]Domain profile: {domain}: {profile['description']}[/]")
         if profile.get('protein_query'):
             query = profile['protein_query'] if not query else f"{query} {profile['protein_query']}"
     if not query:
@@ -2566,18 +2565,18 @@ def cmd_proteins(args):
         af_path = None
         if source == 'uniprot' and uid:
             af_path = fetch_alphafold_structure(uid)
-        af_str = f"[green]✓[/] {af_path.name}" if af_path else "[dim]—[/]"
+ af_str = f"[green]✓[/] {af_path.name}" if af_path else "[dim] - [/]"
         
         row = [uid, source, name, organism, str(seq_len), pdb_id, af_str]
         if esm2:
             score = props.get('esm2_score')
-            row.append(f"{score:.3f}" if score is not None else "—")
+ row.append(f"{score:.3f}" if score is not None else " - ")
         table.add_row(*row)
         
         if show and source == 'uniprot' and af_path:
             # T56 Debye stability from foam screener (screening-level estimate;
             # folded-globular defaults B=2.5/G=1.0 GPa, MW ~ 110 Da/residue).
-            # Falls back to None on any failure — display only, never fatal.
+ # Falls back to None on any failure: display only, never fatal.
             phonon_stable = None
             try:
                 import foam_screener_v2 as foam
@@ -2675,7 +2674,7 @@ def cmd_drugs(args):
         console.print(table)
         console.print(f"[cyan]Total matches: {len(results)}[/]")
         if results:
-            console.print(f"[cyan]AlphaFold structure: {results[0].get('alphafold_url', '—')}[/]")
+ console.print(f"[cyan]AlphaFold structure: {results[0].get('alphafold_url', ': ')}[/]")
         return True
     
     if not _fetch_and_print(uniprot_id):
@@ -2774,10 +2773,10 @@ def cmd_create(args):
         table = Table("Formula", "Bind E (eV)", "Bind dG (kcal/mol)", "Min dist (Å)", "Stable",
                       title=f"Created binders for {binding_target}", box=box.ROUNDED)
         for r in results:
-            be = f"{r['binding_energy_ev']:.3f}" if r['binding_energy_ev'] is not None else "—"
-            dg = f"{r['binding_free_energy_kcal']:.2f}" if r['binding_free_energy_kcal'] is not None else "—"
-            dmin = f"{r['min_distance_A']:.2f}" if r['min_distance_A'] is not None else "—"
-            stable = "✓" if r['stable_contact'] else "—"
+ be = f"{r['binding_energy_ev']:.3f}" if r['binding_energy_ev'] is not None else " - "
+ dg = f"{r['binding_free_energy_kcal']:.2f}" if r['binding_free_energy_kcal'] is not None else " - "
+ dmin = f"{r['min_distance_A']:.2f}" if r['min_distance_A'] is not None else " - "
+ stable = "✓" if r['stable_contact'] else " - "
             table.add_row(r['formula'], be, dg, dmin, stable)
         console.print(table)
 
@@ -2918,7 +2917,7 @@ def cmd_run_auto(args):
             estimated_cost = (estimated_time_hours := estimated_time_seconds / 3600) * args.mpi_nodes * 0.25
             console.print(f"[cyan]Estimated time: {estimated_time_minutes:.2f} minutes ({estimated_time_seconds:.1f} seconds)[/]")
             console.print(f"[cyan]Estimated cost: ${estimated_cost:.2f} at $0.25/hr per node[/]")
-            console.print(f"[yellow]Note: This is planning mode only — actual MPI implementation is future work[/]")
+ console.print(f"[yellow]Note: This is planning mode only: actual MPI implementation is future work[/]")
             return
         else:
             console.print(f"[yellow]Could not count atoms, skipping MPI planning[/]")
@@ -3062,7 +3061,7 @@ def run_phonon(formula: str, cif_path: str, quality: str = "screen", skip_phonon
         formula: Material formula identifier
         cif_path: Path to CIF file
         quality: SPARC quality mode (screen/confirm)
-        skip_phonon_on_screen_mode: default True — skip phonon in screen mode
+ skip_phonon_on_screen_mode: default True: skip phonon in screen mode
 
     Returns:
         dict with 'phonon_stable' (bool), 'min_freq' (float, THz), 'max_freq' (float, THz)
@@ -3107,10 +3106,10 @@ def run_phonon(formula: str, cif_path: str, quality: str = "screen", skip_phonon
     try:
         n_atoms, _, _, _ = parse_cif(cif_path)
         if n_atoms < 4:
-            console.print(f"[dim]⊘[/] phonon skipped — unit cell too small ({n_atoms} atoms), need supercell")
+ console.print(f"[dim]⊘[/] phonon skipped - unit cell too small ({n_atoms} atoms), need supercell")
             return {'phonon_stable': None, 'min_freq': None, 'max_freq': None}
     except Exception as e:
-        console.print(f"[yellow]⚠[/] phonon skipped — failed to parse CIF: {e}")
+ console.print(f"[yellow]⚠[/] phonon skipped - failed to parse CIF: {e}")
         return {'phonon_stable': None, 'min_freq': None, 'max_freq': None}
     
     # Pre-relax P1 / generative candidates with NSMace before SPARC phonons
@@ -3591,19 +3590,19 @@ def show_crystal_3d(cif_path: str, formula: str, confirmed: bool = False, phonon
     elif phonon_stable is False:
         phonon_str = "Phonon: ✗ unstable"
     else:
-        phonon_str = "Phonon: —"
+ phonon_str = "Phonon: - "
 
     # Lattice parameters and unit-cell volume
     try:
         a, b, c, alpha, beta, gamma = atoms.cell.cellpar()
         lattice_str = f"a={a:.3f}Å b={b:.3f}Å c={c:.3f}Å α={alpha:.2f}° β={beta:.2f}° γ={gamma:.2f}°"
     except Exception:
-        lattice_str = "Lattice: —"
+ lattice_str = "Lattice: - "
     try:
         volume = atoms.get_volume()
         volume_str = f"V = {volume:.2f} Å³"
     except Exception:
-        volume_str = "V = — Å³"
+ volume_str = "V =: Å³"
 
     # Crystal system and point group from space group number
     crystal_system = None
@@ -3625,23 +3624,23 @@ def show_crystal_3d(cif_path: str, formula: str, confirmed: bool = False, phonon
                 elif 195 <= sg_num <= 230: crystal_system = "cubic"
             except Exception:
                 pass
-    sym_str = f"Crystal system: {crystal_system or '—'}  Point group: {point_group or '—'}"
+ sym_str = f"Crystal system: {crystal_system or ': '} Point group: {point_group or ': '}"
 
     # Formation energy per atom (SPARC first, then MACE)
     fe_source = sparc_energy if sparc_energy is not None else energy
     if fe_source is not None and num_atoms > 0:
         formation_str = f"E_form/atom = {fe_source / num_atoms:.3f} eV"
     else:
-        formation_str = "E_form/atom = —"
+ formation_str = "E_form/atom =: "
 
     # Synthesis difficulty from abundance and suggested route from anion
     min_ppm = _min_crustal_ppm(formula)
     if min_ppm > 1000:
         difficulty_str = "Synthesis: Earth-abundant / straightforward"
     elif min_ppm >= 100:
-        difficulty_str = "Synthesis: Moderate — check supplier availability"
+ difficulty_str = "Synthesis: Moderate: check supplier availability"
     else:
-        difficulty_str = "Synthesis: Rare elements — synthesis non-trivial"
+ difficulty_str = "Synthesis: Rare elements: synthesis non-trivial"
     try:
         comp = _parse_formula(formula)
         if 'F' in comp:
@@ -5433,7 +5432,7 @@ def cmd_view(args):
     import pyvista as pv
     n = len(views)
     shape = (1, n) if n <= 2 else (2, 2)
-    pl = pv.Plotter(shape=shape, off_screen=headless, title="Bella — grid view")
+ pl = pv.Plotter(shape=shape, off_screen=headless, title="Bella - grid view")
     pl.set_background("#0a0a0a")
     pl.hide_axes()
     idx = 0
@@ -6271,13 +6270,13 @@ class BellaLive:
             'phonon': 'pending'
         }
         self.current = {
-            'formula': '—',
-            'source': '—',
-            'nsmace_ev': '—',
-            'sparc_ev': '—',
-            'sparc_status': '—',
-            'phonon_status': '—',
-            'literature_status': '—',
+ 'formula': ': ',
+ 'source': ': ',
+ 'nsmace_ev': ': ',
+ 'sparc_ev': ': ',
+ 'sparc_status': ': ',
+ 'phonon_status': ': ',
+ 'literature_status': ': ',
             'disagreement': None
         }
         self.counts = {
@@ -6885,7 +6884,7 @@ def _run_generated_screen(domain, workdir, top_n=5):
                 r['formula'],
                 f"{r['binding_energy']:.2f}",
                 f"{r['pocket_fit']:.1f}",
-                f"{mw:.1f}" if mw else '—',
+ f"{mw:.1f}" if mw else ': ',
                 'NOVEL (generated)'
             )
     else:
@@ -6893,8 +6892,8 @@ def _run_generated_screen(domain, workdir, top_n=5):
         table = Table("Formula", "Source", "Abundance", "NSMace", "SPARC", "Status",
                       title="GENERATED CANDIDATES", box=box.ASCII)
         for r in candidates[:top_n]:
-            table.add_row(r['formula'], r['source'], r['properties'].get('abundance', '—'),
-                          f"NSMace:{r['nsmace_energy']:.1f}eV", '—', 'NOVEL (generated)')
+ table.add_row(r['formula'], r['source'], r['properties'].get('abundance', ' - '),
+ f"NSMace:{r['nsmace_energy']:.1f}eV", ' - ', 'NOVEL (generated)')
     console.print(table)
     return candidates[:top_n]
 
@@ -6955,7 +6954,7 @@ def cmd_discover(args):
 
     if domain and domain in DOMAIN_PROFILES:
         profile = DOMAIN_PROFILES[domain]
-        console.print(f"[cyan]Domain profile: {domain} — {profile['description']}[/]")
+ console.print(f"[cyan]Domain profile: {domain}: {profile['description']}[/]")
         if profile.get('query_inject'):
             query = f"{query} {profile['query_inject']}"
         if profile.get('protein_query') and protein_query is None:
@@ -7163,7 +7162,7 @@ def cmd_discover(args):
         print(f"DEBUG stage 2: {len(all_results)} candidates from Bob")
         
         if not all_results:
-            console.print("[red]Bob returned 0 candidates[/] [yellow]— try --generative or check API keys.[/]")
+ console.print("[red]Bob returned 0 candidates[/] [yellow] - try --generative or check API keys.[/]")
             for name, st in plugin_status.items():
                 if st.get('last_status') == 'error':
                     console.print(f"  {name}: {st.get('last_error')}")
@@ -7233,11 +7232,11 @@ def cmd_discover(args):
             for result in deduplicated:
                 props = result.get('properties', {})
                 band_gap = props.get('band_gap') or props.get('bandgap')
-                band_gap_str = f"{band_gap:.3f}" if band_gap is not None else "—"
-                abundance = props.get('abundance', '—')
-                source = result.get('source') or result.get('plugin', '—')
+ band_gap_str = f"{band_gap:.3f}" if band_gap is not None else " - "
+ abundance = props.get('abundance', ' - ')
+ source = result.get('source') or result.get('plugin', ' - ')
                 ae = props.get('activation_energy')
-                ae_str = f"{ae:.3f}" if ae is not None else "—"
+ ae_str = f"{ae:.3f}" if ae is not None else " - "
                 aqueous = _aqueous_stable(result['formula'])
                 st = _synth_temp_c(result['formula'])
                 st_str = f"{st}"
@@ -7341,7 +7340,7 @@ def cmd_discover(args):
         cif_count = sum(1 for r in top_50 if r.get('cif_content'))
         
         if cif_count == 0 and not protein_candidates:
-            console.print("[red]NSMace returned 0 CIFs[/] [yellow]— try --search-only or check SPARC pseudopotentials.[/]")
+ console.print("[red]NSMace returned 0 CIFs[/] [yellow] - try --search-only or check SPARC pseudopotentials.[/]")
             _print_what_to_try('nsmace', 'zero', domain=domain)
             live.update_stage('nsmace', 'failed')
             return
@@ -7376,8 +7375,8 @@ def cmd_discover(args):
                 )
                 if binding_result:
                     console.print(f"  [cyan]Binding screen[/] {uid} × {top_material.get('formula', '')}: "
-                                  f"{binding_result.get('binding_energy_ev', '—')} eV, "
-                                  f"{binding_result.get('min_distance_A', '—')} Å")
+ f"{binding_result.get('binding_energy_ev', ' - ')} eV, "
+ f"{binding_result.get('min_distance_A', ' - ')} Å")
         
         # Parallel NSMace screening with caching
         def run_nsmace_on_cif(item, capture_trajectory=False):
@@ -7573,7 +7572,7 @@ def cmd_discover(args):
             if result['status'] in ('CONFIRMED', 'PENDING'):
                 live.update_material({
                     'formula': result['formula'],
-                    'sparc_ev': f"{result['sparc_energy']:.3f} eV" if result['sparc_energy'] else "—",
+ 'sparc_ev': f"{result['sparc_energy']:.3f} eV" if result['sparc_energy'] else " - ",
                     'sparc_status': result['status']
                 })
                 
@@ -7648,7 +7647,7 @@ def cmd_discover(args):
                             parts.append('COD (' + str(lit['cod_entries']) + ' entries)')
                         if lit.get('mp_checked'):
                             parts.append('MP (' + str(lit['mp_entries']) + ' entries)')
-                        lit_status = '[yellow]⚠ KNOWN — ' + ', '.join(parts) + '[/]'
+ lit_status = '[yellow]⚠ KNOWN: ' + ', '.join(parts) + '[/]'
                     else:
                         lit_status = '[dim]unchecked[/]'
                 
@@ -7750,7 +7749,7 @@ def cmd_discover(args):
             _fire_easter_egg_post(result['formula'])
         console.print()
         console.print("[bold cyan]────────────────────────────────────────[/]")
-        console.print(f"[bold cyan]BELLA RESULT — {result['formula']}[/]")
+ console.print(f"[bold cyan]BELLA RESULT - {result['formula']}[/]")
         console.print("[bold cyan]────────────────────────────────────────[/]")
         console.print(f"Material ID   : {result['formula']}")
         console.print(f"Source        : {result['source']}")
@@ -7780,7 +7779,7 @@ def cmd_discover(args):
                 console.print(f"Density       : ? g/cm³")
                 console.print(f"Space group   : ?")
         except Exception:
-            console.print(f"Natoms        : {result.get('n_atoms', '—')}")
+ console.print(f"Natoms : {result.get('n_atoms', ': ')}")
             console.print(f"Density       : ? g/cm³")
             console.print(f"Space group   : ?")
         console.print()
@@ -7878,7 +7877,7 @@ def cmd_discover(args):
 
         console.print()
         console.print("[bold cyan]────────────────────────────────────────[/]")
-        console.print(f"[bold cyan]BELLA RESULT — {uniprot_id} ({protein_name})[/]")
+ console.print(f"[bold cyan]BELLA RESULT - {uniprot_id} ({protein_name})[/]")
         console.print("[bold cyan]────────────────────────────────────────[/]")
         console.print(f"Type          : Protein")
         console.print(f"Organism      : {organism}")
@@ -7892,8 +7891,8 @@ def cmd_discover(args):
         if binding_result and binding_result.get('uniprot_id') == uniprot_id:
             be = binding_result.get('binding_energy_ev')
             md = binding_result.get('min_distance_A')
-            be_str = f"{be:.3f} eV" if be is not None else "—"
-            md_str = f"{md:.3f} Å" if md is not None else "—"
+ be_str = f"{be:.3f} eV" if be is not None else " - "
+ md_str = f"{md:.3f} Å" if md is not None else " - "
             console.print(f"Binding screen: {be_str} / {md_str} contact")
         else:
             console.print(f"Binding screen : ?")
@@ -7928,7 +7927,7 @@ def cmd_discover(args):
             comp = _parse_formula(result['formula'])
             result['elements_str'] = ', '.join(f"{el}:{CRUSTAL_ABUNDANCE_PPM.get(el, 0)}" for el in sorted(comp.keys()))
         except Exception:
-            result['elements_str'] = '—'
+ result['elements_str'] = ': '
 
         # One-line phonon summary
         if result.get('phonon_skipped_reason'):
@@ -7940,27 +7939,27 @@ def cmd_discover(args):
         elif result.get('min_freq') is not None:
             result['phonon_str'] = f"{result['min_freq']:.2f}±1.0/{result['max_freq']:.2f}±1.0 THz {'stable' if result.get('phonon_stable') else 'unstable'}"
         else:
-            result['phonon_str'] = '—'
+ result['phonon_str'] = ': '
 
     # Plain-ASCII final summary table
     table = Table("Formula", "Source", "Elements", "Abundance", "NSMace (eV)", "SPARC (eV)", "ΔHf (kJ/mol)", "N2 Ea (eV)", "Aqueous", "Synth (°C)", "Phonon", "Conf.", "Status", box=box.ASCII)
     for result in confirmed_results:
         abundance = _min_crustal_ppm(result['formula'])
-        abundance_str = f"{abundance:.0f} ppm" if abundance > 0 else "—"
+ abundance_str = f"{abundance:.0f} ppm" if abundance > 0 else " - "
         dh = result.get('enthalpy_of_formation_kj_mol')
-        dh_str = f"{dh:.2f}" if dh is not None else '—'
+ dh_str = f"{dh:.2f}" if dh is not None else ' - '
         n_atoms = _n_atoms(result['formula']) or result.get('n_atoms', 1)
         nsmace_unc = n_atoms * 0.1
         conf = _confidence_score(result)
         ae = result.get('properties', {}).get('activation_energy') if result.get('properties') else None
-        ae_str = f"{ae:.3f}" if ae is not None else "—"
+ ae_str = f"{ae:.3f}" if ae is not None else " - "
         aqueous = _aqueous_stable(result['formula'])
         st = _synth_temp_c(result['formula'])
-        st_str = f"{st}" if st is not None else "—"
+ st_str = f"{st}" if st is not None else " - "
         table.add_row(
             result['formula'],
             result['source'],
-            result.get('elements_str', '—'),
+ result.get('elements_str', ': '),
             abundance_str,
             f"{result['nsmace_energy']:.3f}±{nsmace_unc:.1f}",
             f"{result['sparc_energy']:.3f}" if result.get('sparc_energy') is not None else "N/A",
@@ -7968,7 +7967,7 @@ def cmd_discover(args):
             ae_str,
             aqueous,
             st_str,
-            result.get('phonon_str', '—'),
+ result.get('phonon_str', ': '),
             str(conf),
             result.get('status', 'PENDING')
         )
@@ -7995,22 +7994,22 @@ def cmd_discover(args):
         if n_elements > PUBLICATION_BAR['max_elements']:
             reasons.append(f'{n_elements} elements')
         if result.get('sparc_quality') != PUBLICATION_BAR['sparc_quality']:
-            reasons.append(f"sparc_quality={result.get('sparc_quality', '—')}")
+ reasons.append(f"sparc_quality={result.get('sparc_quality', ' - ')}")
         if not reasons:
             publication_ready.append(result)
     if not publication_ready:
-        console.print("\nNo publication-ready candidates found. Phonon confirmation required — rerun with --sparc-quality confirm and verify phonon stability.")
+ console.print("\nNo publication-ready candidates found. Phonon confirmation required: rerun with --sparc-quality confirm and verify phonon stability.")
     else:
         for result in publication_ready:
             abundance = _min_crustal_ppm(result['formula'])
-            abundance_str = f"{abundance:.0f} ppm" if abundance > 0 else "—"
-            phonon_str = f"{result['min_freq']:.2f}/{result['max_freq']:.2f} THz stable" if result.get('phonon_stable') else '—'
+ abundance_str = f"{abundance:.0f} ppm" if abundance > 0 else " - "
+ phonon_str = f"{result['min_freq']:.2f}/{result['max_freq']:.2f} THz stable" if result.get('phonon_stable') else ' - '
             pub_table.add_row(
                 result['formula'],
-                result.get('source', '—'),
+ result.get('source', ': '),
                 abundance_str,
                 phonon_str,
-                f"{result.get('sparc_energy', 0):.3f}" if result.get('sparc_energy') is not None else '—',
+ f"{result.get('sparc_energy', 0):.3f}" if result.get('sparc_energy') is not None else ' - ',
                 result.get('status', 'PENDING')
             )
         console.print(pub_table)
@@ -8139,7 +8138,7 @@ def cmd_benchmark(args):
         fetch_time = t1 - t0
         
         if not cif_content:
-            rows.append([mp_id, '—', f"{fetch_time:.2f}", '—', '—', '—', 'fetch failed'])
+ rows.append([mp_id, ': ', f"{fetch_time:.2f}", ' - ', ' - ', ' - ', 'fetch failed'])
             continue
         
         cif_path = cif_cache_dir / f"{mp_id}.cif"
@@ -8156,7 +8155,7 @@ def cmd_benchmark(args):
         # NSMace screen
         t2 = time.perf_counter()
         nsmace_energy = None
-        nsmace_status = '—'
+ nsmace_status = ': '
         try:
             proc = subprocess.run(
                 [MACE_BIN, '--unit-cell', str(cif_path), '--screen-only'],
@@ -8221,8 +8220,8 @@ def cmd_benchmark(args):
             formula,
             f"{fetch_time:.2f}",
             f"{nsmace_time:.2f}",
-            f"{sparc_time:.2f}" if run_sparc else "—",
-            f"{phonon_time:.2f}" if run_phonon else "—",
+ f"{sparc_time:.2f}" if run_sparc else " - ",
+ f"{phonon_time:.2f}" if run_phonon else " - ",
             status
         ])
         console.print(f"[dim]→[/] {mp_id} {formula}: {status}[/dim]", markup=False)
@@ -8285,7 +8284,7 @@ def cmd_watch(args):
     
     while args.max_runs == 0 or run_count < args.max_runs:
         run_count += 1
-        console.print(f"[cyan]Watch run #{run_count} — {args.query}[/]")
+ console.print(f"[cyan]Watch run #{run_count} - {args.query}[/]")
         
         # Reuse cmd_discover logic directly
         results = cmd_discover(args)
@@ -8513,10 +8512,10 @@ def parse_nl(text):
 
 BELLA_SYSTEM_PROMPT = f"""You are Bella, a materials discovery AI.
 Tools available:
-  search(query)     — Bob only, NO simulation, instant, use when user says 'search', 'find candidates', 'what exists'
-  discover(query, show) — full pipeline with simulation, use ONLY when user says 'simulate', 'confirm', 'run DFT', 'discover'
-  proteins(query, limit) — search UniProt + PDB, fast protein lookup
-  combined(material_query, protein_query, show) — search materials AND proteins, then run NSMace binding screen on top material x top protein
+ search(query): Bob only, NO simulation, instant, use when user says 'search', 'find candidates', 'what exists'
+ discover(query, show): full pipeline with simulation, use ONLY when user says 'simulate', 'confirm', 'run DFT', 'discover'
+ proteins(query, limit): search UniProt + PDB, fast protein lookup
+ combined(material_query, protein_query, show) - search materials AND proteins, then run NSMace binding screen on top material x top protein
   view(material_id, animate)
   results()
   status()
@@ -8555,12 +8554,12 @@ def cmd_results_summary():
             with open(json_file, 'r') as f:
                 data = json.load(f)
             for result in data.get('results', []):
-                formula = result.get('formula', '—')
-                source = result.get('source', '—')
-                status = result.get('status', '—')
-                phonon = 'stable' if result.get('phonon_stable') is True else 'unstable' if result.get('phonon_stable') is False else '—'
+ formula = result.get('formula', ': ')
+ source = result.get('source', ': ')
+ status = result.get('status', ': ')
+ phonon = 'stable' if result.get('phonon_stable') is True else 'unstable' if result.get('phonon_stable') is False else ' - '
                 exported = 'Yes' if any(_findings_root().rglob(f'exports/{formula}/*')) else 'No'
-                novel = '✓' if result.get('literature', {}).get('novel') is True else '⚠' if result.get('literature', {}).get('novel') is False else '—'
+ novel = '✓' if result.get('literature', {}).get('novel') is True else '⚠' if result.get('literature', {}).get('novel') is False else ' - '
                 rows.append((formula, source, status, phonon, novel, exported))
         except Exception:
             continue
@@ -9163,22 +9162,22 @@ def _pdf_report(findings_path: str, out_path: str) -> None:
     cif_dir = (Path(findings_path).resolve().parents[1] / 'cif_cache') if len(Path(findings_path).parents) > 1 else Path.home() / '.bella' / 'cif_cache'
     exported = set()
     for m in materials:
-        formula = m.get('formula', '—')
+ formula = m.get('formula', ': ')
         n_atoms = _n_atoms(formula) or m.get('n_atoms', 1)
         nsmace_unc = n_atoms * 0.1
         e_form = _formation_energy(formula, m.get('nsmace_energy', 0))
         story.append(Paragraph(f"<b>{formula}</b>", h2))
         props = [
-            ["Source", m.get('source', '—')],
+ ["Source", m.get('source', ': ')],
             ["Formula", formula],
-            ["NSMace energy", f"{m.get('nsmace_energy', '—')} ± {nsmace_unc:.1f} eV"],
-            ["SPARC energy", f"{m.get('sparc_energy', '—')} eV"],
-            ["Phonon min", f"{m.get('min_freq', '—')} ± 1.0 THz"],
-            ["Phonon max", f"{m.get('max_freq', '—')} ± 1.0 THz"],
+ ["NSMace energy", f"{m.get('nsmace_energy', ' - ')} ± {nsmace_unc:.1f} eV"],
+ ["SPARC energy", f"{m.get('sparc_energy', ' - ')} eV"],
+ ["Phonon min", f"{m.get('min_freq', ' - ')} ± 1.0 THz"],
+ ["Phonon max", f"{m.get('max_freq', ' - ')} ± 1.0 THz"],
             ["Phonon stable", "Yes" if m.get('phonon_stable') is True else "No"],
             ["E_form/atom", f"{e_form:.3f} ± {nsmace_unc/n_atoms:.2f} eV/atom"],
-            ["Confidence", f"{_confidence_score(m)}/100 — {_confidence_label(_confidence_score(m))}"],
-            ["Adsorption", m.get('adsorption', '—')],
+ ["Confidence", f"{_confidence_score(m)}/100 - {_confidence_label(_confidence_score(m))}"],
+ ["Adsorption", m.get('adsorption', ' - ')],
         ]
         t = Table(props, colWidths=[1.8*inch, 4*inch])
         t.setStyle(TableStyle([
@@ -9204,7 +9203,7 @@ def _pdf_report(findings_path: str, out_path: str) -> None:
     summary = [["Formula", "Phonon stable", "E_form/atom", "Confidence"]]
     for m in materials:
         summary.append([
-            m.get('formula', '—'),
+ m.get('formula', ': '),
             "Yes" if m.get('phonon_stable') is True else "No",
             f"{_formation_energy(m.get('formula', ''), m.get('nsmace_energy', 0)):.3f}",
             f"{_confidence_score(m)}/100",
@@ -9226,7 +9225,7 @@ def _pdf_report(findings_path: str, out_path: str) -> None:
     story.append(Spacer(1, 0.3*inch))
     story.append(Paragraph(disclaimer, footer_style))
     story.append(Spacer(1, 0.1*inch))
-    story.append(Paragraph("Generated by Bella — ofmagnitude.com", footer_style))
+ story.append(Paragraph("Generated by Bella - ofmagnitude.com", footer_style))
     doc.build(story)
 
 
@@ -9245,42 +9244,42 @@ def _single_report_txt(findings_path: str, out_path: str) -> None:
     materials = _materials_from_data(data)
     lines = []
     lines.append("=" * 70)
-    lines.append("BELLA REPORT — FULL LOG")
+ lines.append("BELLA REPORT: FULL LOG")
     lines.append(f"Source: {findings_path}")
     lines.append(f"Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append(f"Bella version: 0.2.0")
     lines.append("=" * 70)
     lines.append("")
     lines.append("DISCOVERY METADATA")
-    lines.append(f"  query           : {data.get('query', '—')}")
-    lines.append(f"  domain          : {data.get('domain', '—')}")
-    lines.append(f"  timestamp       : {data.get('timestamp', '—')}")
-    lines.append(f"  screened_count  : {data.get('screened_count', '—')}")
-    lines.append(f"  confirmed_count : {data.get('confirmed_count', '—')}")
+ lines.append(f" query : {data.get('query', ': ')}")
+ lines.append(f" domain : {data.get('domain', ': ')}")
+ lines.append(f" timestamp : {data.get('timestamp', ': ')}")
+ lines.append(f" screened_count : {data.get('screened_count', ': ')}")
+ lines.append(f" confirmed_count : {data.get('confirmed_count', ': ')}")
     lines.append(f"  timing          : {data.get('timing', {})}")
     lines.append("")
     for i, m in enumerate(materials, 1):
-        formula = m.get('formula', '—')
+ formula = m.get('formula', ': ')
         n_atoms = _n_atoms(formula) or m.get('n_atoms', 1)
         nsmace_unc = n_atoms * 0.1
         e_form = _formation_energy(formula, m.get('nsmace_energy', 0))
         lines.append(f"CANDIDATE {i}: {formula}")
         lines.append("-" * 70)
-        lines.append(f"  Source              : {m.get('source', '—')}")
+ lines.append(f" Source : {m.get('source', ': ')}")
         lines.append(f"  Formula             : {formula}")
-        lines.append(f"  NSMace energy       : {m.get('nsmace_energy', '—')} ± {nsmace_unc:.1f} eV")
-        lines.append(f"  SPARC energy        : {m.get('sparc_energy', '—')} eV")
+ lines.append(f" NSMace energy : {m.get('nsmace_energy', ': ')} ± {nsmace_unc:.1f} eV")
+ lines.append(f" SPARC energy : {m.get('sparc_energy', ': ')} eV")
         lines.append(f"  Formation energy    : {e_form:.3f} ± {nsmace_unc/n_atoms:.2f} eV/atom")
-        lines.append(f"  Phonon min          : {m.get('min_freq', '—')} ± 1.0 THz")
-        lines.append(f"  Phonon max          : {m.get('max_freq', '—')} ± 1.0 THz")
+ lines.append(f" Phonon min : {m.get('min_freq', ': ')} ± 1.0 THz")
+ lines.append(f" Phonon max : {m.get('max_freq', ': ')} ± 1.0 THz")
         lines.append(f"  Phonon stable       : {m.get('phonon_stable')}")
-        lines.append(f"  Confidence          : {_confidence_score(m)}/100 — {_confidence_label(_confidence_score(m))}")
+ lines.append(f" Confidence : {_confidence_score(m)}/100: {_confidence_label(_confidence_score(m))}")
         lines.append(f"  Literature novelty  : {m.get('literature', {})}")
-        lines.append(f"  Adsorption          : {m.get('adsorption', '—')}")
-        lines.append(f"  MP benchmark        : {m.get('mp_benchmark', '—')}")
-        lines.append(f"  Density             : {m.get('density', '—')} g/cm³")
-        lines.append(f"  Lattice             : {m.get('lattice', '—')}")
-        lines.append(f"  Space group         : {m.get('space_group', '—')}")
+ lines.append(f" Adsorption : {m.get('adsorption', ': ')}")
+ lines.append(f" MP benchmark : {m.get('mp_benchmark', ': ')}")
+ lines.append(f" Density : {m.get('density', ': ')} g/cm³")
+ lines.append(f" Lattice : {m.get('lattice', ': ')}")
+ lines.append(f" Space group : {m.get('space_group', ': ')}")
         lines.append(f"  Uncertainty notes   : NSMace ±0.1 eV/atom, phonon ±1 THz, adsorption ±0.3 eV, NEB ±0.3 eV")
         lines.append("")
     lines.append("=" * 70)
@@ -9299,25 +9298,25 @@ def _single_report_md(findings_path: str, out_path: str) -> None:
         f.write("# Bella Report\n\n")
         f.write(f"**Source:** `{findings_path}`\n\n")
         f.write(f"**Generated:** {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-        f.write(f"**Query:** {data.get('query', '—')}  \n")
-        f.write(f"**Domain:** {data.get('domain', '—')}  \n")
-        f.write(f"**Screened:** {data.get('screened_count', '—')}  \n")
-        f.write(f"**Confirmed:** {data.get('confirmed_count', '—')}  \n\n")
+ f.write(f"**Query:** {data.get('query', ' - ')} \n")
+ f.write(f"**Domain:** {data.get('domain', ' - ')} \n")
+ f.write(f"**Screened:** {data.get('screened_count', ' - ')} \n")
+ f.write(f"**Confirmed:** {data.get('confirmed_count', ' - ')} \n\n")
         for m in materials:
-            formula = m.get('formula', '—')
+ formula = m.get('formula', ': ')
             n_atoms = _n_atoms(formula) or m.get('n_atoms', 1)
             nsmace_unc = n_atoms * 0.1
             e_form = _formation_energy(formula, m.get('nsmace_energy', 0))
             f.write(f"## {formula}\n\n")
-            f.write(f"- **Source:** {m.get('source', '—')}\n")
-            f.write(f"- **NSMace energy:** {m.get('nsmace_energy', '—')} ± {nsmace_unc:.1f} eV\n")
-            f.write(f"- **SPARC energy:** {m.get('sparc_energy', '—')} eV\n")
+ f.write(f"- **Source:** {m.get('source', ' - ')}\n")
+ f.write(f"- **NSMace energy:** {m.get('nsmace_energy', ' - ')} ± {nsmace_unc:.1f} eV\n")
+ f.write(f"- **SPARC energy:** {m.get('sparc_energy', ' - ')} eV\n")
             f.write(f"- **Formation energy:** {e_form:.3f} ± {nsmace_unc/n_atoms:.2f} eV/atom\n")
-            f.write(f"- **Phonon:** {m.get('min_freq', '—')} ± 1.0 THz / {m.get('max_freq', '—')} ± 1.0 THz\n")
+ f.write(f"- **Phonon:** {m.get('min_freq', ' - ')} ± 1.0 THz / {m.get('max_freq', ' - ')} ± 1.0 THz\n")
             f.write(f"- **Phonon stable:** {m.get('phonon_stable')}\n")
-            f.write(f"- **Confidence:** {_confidence_score(m)}/100 — {_confidence_label(_confidence_score(m))}\n")
-            f.write(f"- **MP benchmark:** {m.get('mp_benchmark', '—')}\n")
-            f.write(f"- **Adsorption:** {m.get('adsorption', '—')}\n\n")
+ f.write(f"- **Confidence:** {_confidence_score(m)}/100 - {_confidence_label(_confidence_score(m))}\n")
+ f.write(f"- **MP benchmark:** {m.get('mp_benchmark', ' - ')}\n")
+ f.write(f"- **Adsorption:** {m.get('adsorption', ' - ')}\n\n")
             f.write(f"Plain English: Candidate {formula} has a MACE-consistent formation energy of {e_form:.3f} eV/atom ")
             f.write(f"and confidence score {_confidence_score(m)}/100. Phonon stability is {m.get('phonon_stable')}.\n\n")
 
@@ -9336,7 +9335,7 @@ def _single_report_json(findings_path: str, out_path: str) -> None:
         "candidates": []
     }
     for m in _materials_from_data(data):
-        formula = m.get('formula', '—')
+ formula = m.get('formula', ': ')
         n_atoms = _n_atoms(formula) or m.get('n_atoms', 1)
         out["candidates"].append({
             "formula": formula,
@@ -9447,15 +9446,15 @@ def cmd_report(args):
             f.write("| Formula | Source | NSMace (eV) | SPARC (eV) | Phonon | Novel | Exported |\n")
             f.write("|---------|--------|-------------|------------|--------|-------|----------|\n")
             for data, r in confirmed:
-                formula = r.get('formula', '—')
-                source = r.get('source', '—')
+ formula = r.get('formula', ': ')
+ source = r.get('source', ': ')
                 nsmace = r.get('nsmace_energy')
-                nsmace_str = f"{nsmace:.3f}" if nsmace is not None else '—'
+ nsmace_str = f"{nsmace:.3f}" if nsmace is not None else ' - '
                 sparc = r.get('sparc_energy')
-                sparc_str = f"{sparc:.3f}" if sparc is not None else '—'
-                phonon = 'stable' if r.get('phonon_stable') is True else 'unstable' if r.get('phonon_stable') is False else '—'
+ sparc_str = f"{sparc:.3f}" if sparc is not None else ' - '
+ phonon = 'stable' if r.get('phonon_stable') is True else 'unstable' if r.get('phonon_stable') is False else ' - '
                 lit = r.get('literature') or {}
-                novel = '✓' if lit.get('novel') is True else '—'
+ novel = '✓' if lit.get('novel') is True else ' - '
                 exported = 'Yes' if (findings_dir / 'exports' / str(formula)).exists() else 'No'
                 f.write(f"| {formula} | {source} | {nsmace_str} | {sparc_str} | {phonon} | {novel} | {exported} |\n")
 
@@ -9465,21 +9464,21 @@ def cmd_report(args):
             for data, p in protein_screens:
                 # If a binding result is in the same data file, use it
                 binding = data.get('binding_result') or {}
-                uid = p.get('formula', '—')
-                material = binding.get('material_formula', '—')
+ uid = p.get('formula', ': ')
+ material = binding.get('material_formula', ' - ')
                 be = binding.get('binding_energy_ev')
-                be_str = f"{be:.3f}" if be is not None else '—'
+ be_str = f"{be:.3f}" if be is not None else ' - '
                 d = binding.get('min_distance_A')
-                d_str = f"{d:.3f}" if d is not None else '—'
-                stable = '✓' if binding.get('binding_energy_ev') is not None and binding.get('binding_energy_ev', 0) < 0 else '—'
+ d_str = f"{d:.3f}" if d is not None else ' - '
+ stable = '✓' if binding.get('binding_energy_ev') is not None and binding.get('binding_energy_ev', 0) < 0 else ' - '
                 f.write(f"| {uid} | {material} | {be_str} | {d_str} | {stable} |\n")
 
             f.write("\n## Run History\n\n")
             f.write("| Timestamp | Query | Screened | Confirmed | Duration |\n")
             f.write("|-----------|-------|----------|-----------|----------|\n")
             for data in data_list:
-                ts = data.get('timestamp', '—')
-                query = data.get('query', '—')
+ ts = data.get('timestamp', ': ')
+ query = data.get('query', ': ')
                 screened = data.get('screened_count', 0)
                 confirmed_n = data.get('confirmed_count', 0)
                 timing = data.get('timing', {})
@@ -9534,12 +9533,12 @@ def cmd_query(args):
 
     table = Table("Formula", "Source", "Status", "Phonon", "Novel", "Query", title=f"Query: {expr}", box=box.ROUNDED)
     for data, r in matches:
-        formula = r.get('formula', '—')
-        source = r.get('source', '—')
-        status = r.get('status', '—')
-        phonon = '✓' if r.get('phonon_stable') is True else '✗' if r.get('phonon_stable') is False else '—'
+ formula = r.get('formula', ': ')
+ source = r.get('source', ': ')
+ status = r.get('status', ': ')
+ phonon = '✓' if r.get('phonon_stable') is True else '✗' if r.get('phonon_stable') is False else ' - '
         lit = r.get('literature') or {}
-        novel = '✓' if lit.get('novel') is True else '—'
+ novel = '✓' if lit.get('novel') is True else ' - '
         q = data.get('query', '')[:25]
         table.add_row(formula, source, status, phonon, novel, q)
     console.print(table)
@@ -9755,7 +9754,7 @@ def cmd_help(args):
         console.print(Panel(docs.get(command, f"No detailed help for {command}"), border_style="cyan"))
         return
 
-    console.print(Panel("[bold cyan]BELLA — Materials & Protein Discovery[/bold cyan]\n"
+ console.print(Panel("[bold cyan]BELLA - Materials & Protein Discovery[/bold cyan]\n"
                         "[dim]Bob search → NSMace → SPARC → Phonon → Findings[/dim]",
                         border_style="cyan"))
     console.print()
@@ -9933,7 +9932,7 @@ def cmd_profile(args):
         elif data.get('query_inject'):
             targets = str(data['query_inject']).split()[:3]
         target_str = ', '.join(targets)
-        console.print(f"\n[cyan]Profile: {name}[/] — {desc}")
+ console.print(f"\n[cyan]Profile: {name}[/]: {desc}")
         console.print(f"  Targets: {target_str if target_str else 'none specified'}\n")
         return _route_profile(name)
     if action == 'list':
@@ -10539,7 +10538,7 @@ def cmd_validate_lead(args):
             console.print(f"  Cmax: {_foam_tox.get('Cmax_uM', '?')} uM  effective: {_foam_tox.get('Cmax_effective_uM', '?')} uM  fu={_foam_tox.get('fu', '?')}")
             console.print()
         else:
-            console.print("[yellow]Foam toxicity skipped — invalid SMILES for RDKit parse[/]")
+ console.print("[yellow]Foam toxicity skipped - invalid SMILES for RDKit parse[/]")
     except Exception as e:
         console.print(f"[yellow]Foam toxicity screen unavailable: {e}[/]")
         console.print("[yellow]Continuing with RDKit-only pipeline...[/]")
@@ -10679,7 +10678,7 @@ Elapsed: {time.time()-t0:.1f}s
 
 
 def cmd_t50(args):
-    """T50: Foam binding screen — Schreiber's Boundary."""
+ """T50: Foam binding screen: Schreiber's Boundary."""
     r = getattr(args, 'pocket_radius', 8.5)
     alpha_pocket = 0.704
     gamma_ref = 1.0
@@ -10690,12 +10689,12 @@ def cmd_t50(args):
     print(f"  Scaling exponent: alpha = {alpha_pocket} (DERIVED, T50)")
     print(f"  Valid domains   : hydrophobic burial pockets only")
     print(f"  Excluded        : ATP-competitive kinases, charged S1 proteases")
-    print(f"  Status          : DERIVED — Schreiber's Boundary (T50)")
+ print(f" Status : DERIVED: Schreiber's Boundary (T50)")
     return 0
 
 
 def cmd_t51(args):
-    """T51: Foam melting screen — Gibbs-Thomson extended."""
+ """T51: Foam melting screen: Gibbs-Thomson extended."""
     r = getattr(args, 'radius', 2.0)
     alpha_melt = -1.564
     A_correction = 1.0
@@ -10706,7 +10705,7 @@ def cmd_t51(args):
     print(f"  ΔTm/Tm predicted    : {delta_Tm_over_Tm:.6f}")
     print(f"  Model               : A/r + B/r² (surface stress correction)")
     print(f"  R² = 0.889 (DERIVED, T51)")
-    print(f"  Status              : DERIVED — Gibbs-Thomson Theorem (T51)")
+ print(f" Status : DERIVED: Gibbs-Thomson Theorem (T51)")
     return 0
 
 
@@ -10750,7 +10749,7 @@ def cmd_life_walk(args):
 
 
 def cmd_scan(args):
-    """T71: Hippocrates' Reading — point-of-care diagnostic scanner."""
+ """T71: Hippocrates' Reading: point-of-care diagnostic scanner."""
     import math, json
 
     biomarkers_file = getattr(args, 'biomarkers', None)
@@ -10774,7 +10773,7 @@ def cmd_scan(args):
 
     kT_body = 0.02669  # eV at 310K
 
-    print("T71 | Hippocrates' Reading — Point-of-Care Diagnostic Scanner")
+ print("T71 | Hippocrates' Reading: Point-of-Care Diagnostic Scanner")
     print(f"  kT_body = {kT_body:.5f} eV (37C)")
     print(f"  Formula: Kd_opt = sqrt(C_h * C_d)")
     print(f"           delta_theta_max = (sqrt(C_d/C_h) - 1) / (sqrt(C_d/C_h) + 1)")
@@ -10806,12 +10805,12 @@ def cmd_scan(args):
     print(f"  D_score = {d_score:.4f}")
     print(f"  Disease flag: {'POSITIVE' if d_score > 0.3 else 'NEGATIVE'} (threshold 0.3)")
     print(f"  Biomarkers passing (delta_theta > 0.05): {n_pass}/{len(panel)}")
-    print(f"  Status: DERIVED — Hippocrates' Reading (T71)")
+ print(f" Status: DERIVED: Hippocrates' Reading (T71)")
     return 0
 
 
 def cmd_enamel(args):
-    """T72: Nasmyth's Lattice — enamel remineralization."""
+ """T72: Nasmyth's Lattice: enamel remineralization."""
     import math
 
     S = getattr(args, 'supersaturation', 2.0)
@@ -10826,7 +10825,7 @@ def cmd_enamel(args):
     r_crit = 2 * gamma_HAp * V_m / (R_gas * T_body * math.log(S))
     r_crit_nm = r_crit * 1e9
 
-    print("T72 | Nasmyth's Lattice — Enamel Remineralization")
+ print("T72 | Nasmyth's Lattice: Enamel Remineralization")
     print(f"  Supersaturation S = {S}")
     print(f"  Fluoride fraction  = {fluoride}")
     print(f"  gamma_HAp          = {gamma_HAp:.4f} J/m^2")
@@ -10852,12 +10851,12 @@ def cmd_enamel(args):
         print("")
         print("--- USAG-1 INHIBITOR: TOOTH REGROWTH PIPELINE ---")
         print("USAG-1 inhibitor: run disease_screen.py --target USAG1")
-        print("Target class: PPI surface — Vina docking required")
+ print("Target class: PPI surface: Vina docking required")
         print("Combined therapy: enamel gel (T72) + USAG-1 inhibitor (T50 pipeline)")
-        print("  Step 1: Topical gel S > 2.0 — remineralizes existing enamel")
-        print("  Step 2: USAG-1 inhibitor — triggers new tooth bud")
+ print(" Step 1: Topical gel S > 2.0: remineralizes existing enamel")
+ print(" Step 2: USAG-1 inhibitor: triggers new tooth bud")
         print("  Result: no drill for decay + tooth regrowth for loss")
-    print(f"  Status: DERIVED — Nasmyth's Lattice (T72)")
+ print(f" Status: DERIVED: Nasmyth's Lattice (T72)")
     return 0
 
 
@@ -10973,7 +10972,7 @@ def main():
         discoverp.add_argument('--dry-run', action='store_true', help='astro: Gaia query only, skip WISE/TESS/JWST (connectivity test)')
         discoverp.add_argument('--catalog', default=None,
             help='path to custom CSV catalog (requires ra, dec, name columns)')
-        signalp = sub.add_parser('signal', help='radio technosignature pipeline — NS-accelerated BL hit analysis')
+ signalp = sub.add_parser('signal', help='radio technosignature pipeline - NS-accelerated BL hit analysis')
         signalp.add_argument('--download', action='store_true', help='download Breakthrough Listen 692-star hit dataset (~10GB)')
         signalp.add_argument('--dataset', default=None, help='path to custom hit CSV (default: BL 692-star dataset)')
         signalp.add_argument('--dry-run', action='store_true', help='check dataset availability only')
@@ -11111,12 +11110,12 @@ def main():
         lifep.add_argument('--yaml', default='profiles/life_walk.yaml', help='YAML profile path (default: profiles/life_walk.yaml)')
         lifep.set_defaults(func=cmd_life_walk)
 
-        scanp = sub.add_parser('scan', help='T71 diagnostic scanner — Hippocrates\' Reading')
+ scanp = sub.add_parser('scan', help='T71 diagnostic scanner - Hippocrates\' Reading')
         scanp.add_argument('--biomarkers', default=None, help='JSON file with biomarker panel')
         scanp.add_argument('--example', action='store_true', help='run built-in 5-biomarker panel')
         scanp.set_defaults(func=cmd_scan)
 
-        enamelp = sub.add_parser('enamel', help='T72 enamel remineralization — Nasmyth\'s Lattice')
+ enamelp = sub.add_parser('enamel', help='T72 enamel remineralization - Nasmyth\'s Lattice')
         enamelp.add_argument('--supersaturation', type=float, default=2.0, help='saliva supersaturation ratio S (default: 2.0)')
         enamelp.add_argument('--fluoride', type=float, default=0.0, help='fluoride substitution fraction 0-1 (default: 0.0)')
         enamelp.add_argument('--mode', choices=['report', 'drug'], default='report', help='output mode (default: report)')
@@ -11347,7 +11346,7 @@ def cmd_adsorb(args):
             d = 0.5 * (np.linalg.norm(final_pos[0] - final_pos[1]) +
                        np.linalg.norm(final_pos[0] - final_pos[2]))
 
-        status = "CATALYTICALLY ACTIVE" if E_ads < -0.5 else "—"
+ status = "CATALYTICALLY ACTIVE" if E_ads < -0.5 else " - "
         table.add_row(name, f"{E_ads:.3f} ± 0.3", f"{d:.3f}", status)
 
     console.print(table)
@@ -11376,7 +11375,7 @@ def cmd_adsorb(args):
             console.print(f"[bold cyan]FOAM CROSS-CHECK[/] (T50 Domain II, DERIVED)")
             console.print(f"  dG_ads = {_foam_eV:.3f} eV  (gamma={_foam_ads.get('gamma_Jm2', '?')} J/m², r_contact={_foam_ads.get('r_contact_A', '?')} Å)")
             console.print(f"  Status: {_foam_ads.get('status', '?')}")
-            console.print(f"[dim]  Compare with MACE E_ads above — foam uses Young-Laplace surface tension only.[/]")
+ console.print(f"[dim] Compare with MACE E_ads above - foam uses Young-Laplace surface tension only.[/]")
         else:
             console.print("[yellow]Foam adsorption returned no dG_eV[/]")
     except Exception as e:
@@ -11459,7 +11458,7 @@ def cmd_neb(args):
     rls = energies.index(max(energies))
     rls_str = f"image {rls}"
 
-    console.print(f"[bold cyan]NEB — {args.molecule} dissociation on {args.formula}[/]")
+ console.print(f"[bold cyan]NEB: {args.molecule} dissociation on {args.formula}[/]")
     console.print(f"Initial energy  : {energies[0]:.3f} eV")
     console.print(f"Final energy    : {energies[-1]:.3f} eV")
     console.print(f"Barrier height  : {barrier:.3f} ± 0.3 eV")
@@ -11468,7 +11467,7 @@ def cmd_neb(args):
     if barrier < 0.8:
         console.print("[green]KINETICALLY FEASIBLE[/] (barrier < 0.8 eV)")
     else:
-        console.print("[yellow]Barrier > 0.8 eV — may be kinetically limited[/]")
+ console.print("[yellow]Barrier > 0.8 eV - may be kinetically limited[/]")
     return 0
 
 
@@ -11606,7 +11605,7 @@ def cmd_math(args):
     if target == 'qcd':
         try:
             import foam_screener_v2 as foam
-            console.print("[bold cyan]QCD FROM FOAM (T32 — DERIVED)[/bold cyan]")
+ console.print("[bold cyan]QCD FROM FOAM (T32 - DERIVED)[/bold cyan]")
             console.print()
 
             # 1. Mass gap
@@ -11614,7 +11613,7 @@ def cmd_math(args):
             mg_err = abs(mg - 1.5) / 1.5 * 100
             console.print(f"  Glueball mass gap:  m_gap = {mg:.4f} GeV")
             console.print(f"    Measured: ~1.5 GeV  |  Error: {mg_err:.1f}%")
-            console.print(f"    Label: DERIVED (T32, foam topology — no lattice input)")
+ console.print(f" Label: DERIVED (T32, foam topology: no lattice input)")
             console.print()
 
             # 2. Lambda_QCD
@@ -11635,7 +11634,7 @@ def cmd_math(args):
             a2_err = abs(a2 - 0.303) / 0.303 * 100
             console.print(f"    Error: {a2_err:.1f}%")
             console.print()
-            console.print(f"  alpha_s at m_Z:     {a91:.4f}  (g² = {g2_91:.3f})  (DERIVED_LIMIT — perturbative matching unreliable above 2 GeV, Landau pole proximity)")
+ console.print(f" alpha_s at m_Z: {a91:.4f} (g² = {g2_91:.3f}) (DERIVED_LIMIT - perturbative matching unreliable above 2 GeV, Landau pole proximity)")
             console.print(f"    Measured: 0.1179 (PDG)")
             a91_err = abs(a91 - 0.1179) / 0.1179 * 100
             console.print(f"    Error: {a91_err:.1f}%")

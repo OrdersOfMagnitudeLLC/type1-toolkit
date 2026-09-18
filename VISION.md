@@ -2,7 +2,7 @@
 
 ## NS Suite
 
-Standard library algorithms are generic. They optimize for the average case across all possible inputs. Structured data is not the average case. It has exploitable patterns: distribution shape, key locality, temporal locality, sparsity. NS Suite exploits those patterns. 22 C++ libraries replace std::sort (14.9x on sorted data, 193,000x on zero distribution), absl::flat_hash_map (18.2x bounded), Intel Embree (1.62x mixed scene), Eigen (2.49x block-diagonal), FFTW (31.6x sparse K=10), and 17 other standard components. Total: order-of-magnitude speedups on structured workloads, zero overhead on unstructured ones. Build independently, drop into existing CMake, no runtime dependencies.
+Standard library algorithms are generic. They optimize for the average case across all possible inputs. Structured data is not the average case. It has exploitable patterns: distribution shape, key locality, temporal locality, sparsity. NS Suite exploits those patterns. 23 C++ libraries replace std::sort (14.9x on sorted data, 193,000x on zero distribution), absl::flat_hash_map (18.2x bounded), Intel Embree (1.62x mixed scene), Eigen (2.49x block-diagonal), FFTW (31.6x sparse K=10), and 18 other standard components. Total: order-of-magnitude speedups on structured workloads, zero overhead on unstructured ones. Build independently, drop into existing CMake, no runtime dependencies.
 
 ## Lacuna
 

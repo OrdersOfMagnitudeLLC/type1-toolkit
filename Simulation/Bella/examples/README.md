@@ -34,7 +34,7 @@ Command that produced it:
 
 Results in: Publish/Materials/materials_top10.txt (top 10)
             Publish/Materials/materials_full.csv (full ranked list)
-Highlights: Fe3Mn4, Mo2FeN2, MgMoN2, Shifu (SiHF3, silicon hydrogen trifluoride — candidate pending validation), Mn2VSi
+Highlights: Fe3Mn4, Mo2FeN2, MgMoN2, Shifu (SiHF3, silicon hydrogen trifluoride - candidate pending validation), Mn2VSi
 Categories: 96 civilization-scale material categories
 
 HONEST WALLS

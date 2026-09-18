@@ -2,7 +2,7 @@
 
 **by Orders of Magnitude · ofmagnitude.com**
 
-22 high-performance C++ libraries. Drop-in replacements for standard
+23 high-performance C++ libraries. Drop-in replacements for standard
 algorithms and data structures: faster on structured data, documented
 losses on structureless data.
 
@@ -31,10 +31,11 @@ losses on structureless data.
 | NSFix | QuickFIX | Full production engine, beats bare codecs |
 | NSQuant | PowerInfer | Variable-rate per-cluster, 10-12x disk |
 | NSQCD |  | Three-loop QCD, 0.0% alpha_s error |
+| NSPack | gzip, zstd | 6.9x on 3D meshes, FUSE filesystem |
 
 ## License
 
-OOM Commercial License v1.0 — see LICENSE.md
+OOM Commercial License v1.0: see LICENSE.md
 https://ofmagnitude.com/license
 
 ## Build

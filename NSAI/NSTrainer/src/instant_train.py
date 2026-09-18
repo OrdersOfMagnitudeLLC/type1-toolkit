@@ -217,7 +217,7 @@ def main():
                                          100, ns_train.SEED + 123)
     standard_loss = evaluate(teacher, eval_batches, ns_train.N_HEADS)
 
-    # ---- Step 3: teacher only — save target activations to disk ----
+ # ---- Step 3: teacher only: save target activations to disk ----
     print(f"Pass 1: saving teacher activations for {n_calib} sequences...")
     files = save_teacher_activations(data, teacher, ns_train.N_HEADS, n_calib, cache_dir)
     lns = save_layernorms(teacher)
@@ -227,7 +227,7 @@ def main():
     if ns_train.DEVICE.type == "cuda":
         torch.cuda.empty_cache()
 
-    # ---- Step 4: student only — solve one layer at a time ----
+ # ---- Step 4: student only: solve one layer at a time ----
     print("Pass 2: solving layers with student only...")
     student, _ = ns_train.make_model(vocab_size, ns_train.D_MODEL, ns_train.N_HEADS,
                                      ns_train.N_LAYERS, ns_train.D_FF,

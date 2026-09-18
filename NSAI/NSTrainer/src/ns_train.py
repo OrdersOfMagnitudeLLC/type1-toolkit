@@ -381,7 +381,7 @@ def main():
     for step in (100, 200, 500, 1000):
         print(f"{step:4d} | {losses_a[step]:.4f} | {losses_c[step]:.4f}")
 
-    print(f"\nTotal gradient updates — Standard: {updates_a}, NS-data: {updates_c}")
+ print(f"\nTotal gradient updates: Standard: {updates_a}, NS-data: {updates_c}")
 
     final_a = losses_a[1000]
     crossover = None

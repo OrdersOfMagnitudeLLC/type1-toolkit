@@ -858,7 +858,7 @@ int main() {
     std::mt19937 rng(42);
     const int NUM_RAYS = 100000;
 
-    std::cout << "=== NS-BVH vs Embree4 — Three Scene Types ===" << std::endl;
+ std::cout << "=== NS-BVH vs Embree4: Three Scene Types ===" << std::endl;
     std::cout << "Grid: " << GX << "x" << GY << "x" << GZ
               << " cells (" << CELL_W << "x" << CELL_H << "x" << CELL_D << " units)" << std::endl;
     std::cout << "Rays: " << NUM_RAYS << " per scene" << std::endl;

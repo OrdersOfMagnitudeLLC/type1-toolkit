@@ -49,7 +49,7 @@ def audit(command: str, query: str, extra: dict = None):
     if entry["flagged"]:
         print("\n[BELLA] This query has been logged under OOM dual-use policy.")
         print("[BELLA] Continued use constitutes acceptance of the prohibited-uses terms.")
-        print("[BELLA] See LICENSE — Prohibited Uses section.\n")
+ print("[BELLA] See LICENSE: Prohibited Uses section.\n")
 
 
 def safe_n_jobs(requested_jobs: int, ram_per_worker_gb: float = 3.0,

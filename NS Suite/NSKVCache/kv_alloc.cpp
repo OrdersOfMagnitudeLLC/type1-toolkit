@@ -153,7 +153,7 @@ int main() {
     const uint32_t dim    = 128;
     const uint64_t tokens = 1'000'000;
 
-    std::printf("=== KV Alloc — Bare Allocator with Real Memory ===\n\n");
+ std::printf("=== KV Alloc: Bare Allocator with Real Memory ===\n\n");
 
     KVBox box(layers, heads, dim);
     box.allocate(tokens);

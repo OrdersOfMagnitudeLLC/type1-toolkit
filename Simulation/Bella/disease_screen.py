@@ -385,7 +385,7 @@ def zinc_screen(target_info, max_hits=100, target_name='',
     """Screen pre-computed ZINC property cache against a target pocket.
 
     All molecular properties (MW, logP, HBD, HBA, rings, r_ligand) are
-    pre-computed in the cache. No RDKit calls per molecule — pure dict lookups.
+ pre-computed in the cache. No RDKit calls per molecule: pure dict lookups.
 
     Returns (candidates, stats) where candidates is [(smiles, scaffold), ...].
     """
@@ -1010,7 +1010,7 @@ def _screen_category(category, ctargets, n, dose, n_workers, raw_path,
 
         # T50 domain validation
         if r_pocket is not None and not (T50_VALID_MIN <= r_pocket <= T50_VALID_MAX):
-            print(f"  [warn] {tname}: r={r_pocket:.1f}Å OUTSIDE T50 domain [{T50_VALID_MIN}-{T50_VALID_MAX}Å] — ΔG extrapolated")
+ print(f" [warn] {tname}: r={r_pocket:.1f}Å OUTSIDE T50 domain [{T50_VALID_MIN}-{T50_VALID_MAX}Å] - ΔG extrapolated")
             tinfo['t50_status'] = 'EXTRAPOLATED'
             extrapolated_count += 1
         else:
@@ -1390,7 +1390,7 @@ def run_full_disease_screen(n=2000, dose=50.0, n_workers=4, version='v8',
     n_lt10 = sum(1 for t in all_targets if clean_by_target.get(t, 0) < 10)
 
     print(f"\n{'='*70}")
-    print("FULL DISEASE SCREEN — SUMMARY")
+ print("FULL DISEASE SCREEN: SUMMARY")
     print(f"{'='*70}")
     print(f"Total targets completed:   {len(all_targets)}")
     print(f"Targets with >=20 clean:   {n_20plus}")
@@ -1440,7 +1440,7 @@ def run_full_disease_screen(n=2000, dose=50.0, n_workers=4, version='v8',
         for tname, ds in top_dscore:
             sf.write(f"  {tname:<30} {ds:>10.3f}\n")
         # Bottom 20: exhausted or <5 clean
-        sf.write(f"\nBottom 20 (exhausted or <5 clean) — flag for manual review:\n")
+ sf.write(f"\nBottom 20 (exhausted or <5 clean) - flag for manual review:\n")
         sf.write(f"  {'target':<30} {'clean_count':>10}\n")
         sf.write(f"  {'-'*40}\n")
         bottom = sorted(all_targets, key=lambda t: clean_by_target.get(t, 0))[:20]

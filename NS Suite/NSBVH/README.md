@@ -30,7 +30,7 @@ Baseline: Intel Embree 4.4.1, built from source with `-O3 -march=native`. Confir
 | Sparse Clustered (20 clusters, 20/500 cells) | 70% targeted + 30% random | 14.0M | 10.2M | 7.16 | 9.82 | **1.37x faster** |
 | Mixed (10 clusters + 5K random, 500/500 cells) | 70% targeted + 30% random | 11.0M | 7.6M | 9.12 | 13.11 | **1.44x faster** |
 
-**Win condition:** Clustered geometry — sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.37–1.44x over Embree 4.4.1. No win on structureless random distribution: dense uniform is a documented loss (1.59x slower) — Embree's SAH-optimized BVH2 wins on build quality.
+**Win condition:** Clustered geometry: sparse clustered and mixed scenes with targeted rays. NS-BVH's spatial grid skips empty cells (96% of cells in the sparse scene), delivering 1.37–1.44x over Embree 4.4.1. No win on structureless random distribution: dense uniform is a documented loss (1.59x slower) - Embree's SAH-optimized BVH2 wins on build quality.
 
 ## Secondary Ray Benchmark (10M rays, dense scene)
 
