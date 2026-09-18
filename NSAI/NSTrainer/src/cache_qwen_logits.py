@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description="Cache teacher logits for NS-filtered windows")
     parser.add_argument("--model", required=True, help="Path to GGUF file")
     parser.add_argument("--model-name", required=True, help="Short tag for cache dir, e.g. 'qwen3b'")
-    parser.add_argument("--data", default="c4_sample.txt", help="Path to text file")
+    parser.add_argument("--data", default="data/c4_sample.txt", help="Path to text file")
     parser.add_argument("--n-windows", type=int, default=2945, help="Number of filtered windows to cache")
     parser.add_argument("--block-size", type=int, default=128, help="Tokens per window")
     parser.add_argument("--top-k", type=int, default=100, help="Logits to save per token position")

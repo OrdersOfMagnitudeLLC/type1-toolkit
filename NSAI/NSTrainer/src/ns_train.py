@@ -15,8 +15,8 @@ import torch.nn.functional as F
 # --- hyperparameters -------------------------------------------------
 
 DATA_URL = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
-DATA_PATH = "tinyshakespeare.txt"
-C4_PATH = "c4_sample.txt"
+DATA_PATH = "data/tinyshakespeare.txt"
+C4_PATH = "data/c4_sample.txt"
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 BLOCK_SIZE = 128
