@@ -1,0 +1,123 @@
+# NSPack: Schema-Aware Filesystem Compression
+
+**A filesystem layer that transparently compresses structured file formats while preserving full application compatibility.**
+
+---
+
+## Abstract
+
+NSPack is a schema-aware filesystem layer. Applications read and write normal files. NSPack compresses and decompresses transparently on disk. No file format changes. No decoder required. No software integration. Storage footprint reduces 2-8x depending on file type. Compatible with every existing tool on day 1.
+
+The internal `.nsx` storage format is an implementation detail. It carries an NSP1 header for metadata and per-type compressed payloads; users never interact with it directly.
+
+---
+
+## 1. Introduction
+
+Existing compression tools require users to choose between convenience and space. Generic compressors treat files as opaque byte streams. Domain-specific codecs produce custom formats that force a round trip and require every application to add a decoder.
+
+NSPack removes that tradeoff. It lives below the application, inside the operating system's filesystem path. A directory is mounted through NSPack's filesystem driver. Applications see a normal directory with normal files. Reads and writes use the original file format on the wire. On disk, NSPack stores the data in a compact, schema-aware representation.
+
+This means an existing workflow continues unchanged:
+
+- A DCC application can `cp model.obj /project/assets/` and read it back as a normal OBJ.
+- A DAW can open `/audio/mix.wav` as a normal WAV.
+- A renderer can read `/hdr/studio.exr` as a normal EXR.
+
+The storage behind the mount point is smaller. No code changes. No training. No decoder to distribute.
+
+---
+
+## 2. Architecture
+
+NSPack is split into two binaries:
+
+- `nspack` is the CLI tool. It mounts, unmounts, reports status, and runs benchmarks.
+- `nspack_fs` is the filesystem daemon. It decompresses on `open`, buffers writes, and compresses on `release`. On Linux and macOS it is built on FUSE3 (`nspack_fs.cpp`); on Windows it is built on WinFSP's FUSE2 compatibility layer (`nspack_fs_win.cpp`). Both drivers share one platform-independent core (`nspack_fs_core.hpp`, `nspack_platform.hpp`).
+
+All supported file types round-trip losslessly. PCM audio, images, database rows, text, and BVH hierarchy plus motion data are bit-exact. Vertex, point-cloud, scientific, and HDR data use quantization bounded to roughly 1e-4 of the value range (sub-millimeter precision at human scale).
+
+### 2.1 Mount Layout
+
+```
+application view            storage view
+----------------            ----------------
+/mnt/project/assets/   -->  /store/project/assets/
+/mnt/project/audio.wav       /store/project/audio.wav.nsx
+/mnt/project/model.obj       /store/project/model.obj.nsx
+/mnt/project/source.py       /store/project/source.py.nsx
+```
+
+Applications see the original filename. The storage side appends `.nsx` and contains an NSP1 header plus the compressed payload. NSPack uses an internal `.nsx` sidecar file in the storage directory to hold compressed data. This file is never visible to applications or users -- the FUSE mount presents only original filenames with original extensions.
+
+### 2.2 Operations
+
+- `getattr`: returns the original uncompressed size, so applications do not truncate reads.
+- `readdir`: lists storage entries, stripping the hidden `.nsx` suffix.
+- `open` / `read`: decodes the `.nsx` file into memory and serves the requested range.
+- `create` / `write` / `release`: buffers the full write in memory and recompresses on close.
+- `unlink` / `rename` / `mkdir` / `rmdir`: standard operations on the storage directory.
+
+### 2.3 Compression Pipelines
+
+| File type | Pipeline |
+| --- | --- |
+| `.obj`, `.ply` | Morton 3D spatial sort, delta encode, quantize, zstd |
+| `.bvh` | Temporal delta on motion channels, zstd |
+| `.wav` | Channel separation, per-channel temporal delta, zstd |
+| `.png`, `.jpg` | 2D delta prediction, channel separation, zstd |
+| `.exr`, `.hdr` | Log transform, channel delta, zstd (dimensions derived from file size; `.hdrinfo` sidecar optional) |
+| `.sqlite` | Column extraction, columnar delta, zstd |
+| `.py`, `.c`, `.cpp`, `.h` | Abstract syntax tree serialization, depth delta, zstd |
+| everything else | stored as-is inside `.nsx` |
+
+### 2.4 No User-Facing Format
+
+The `.nsp` and `.nsx` names are not exposed to users. `.nsp` no longer exists. `.nsx` is an internal storage suffix. Applications and users only see the original filename and extension.
+
+---
+
+## 3. CLI
+
+```
+nspack mount <mountpoint> <storagedir>
+nspack unmount <mountpoint>
+nspack status <mountpoint>
+nspack bench <file1> [file2 ...]
+nspack --help
+```
+
+`mount` starts the filesystem daemon in the background. `unmount` uses `fusermount3` on Linux/macOS and stops the daemon process on Windows. `status` prints per-file original size, on-disk size, type, and compression ratio. `bench` runs the offline compression benchmark.
+
+---
+
+## 4. Compatibility
+
+Because NSPack is a filesystem layer, it is compatible with every tool that already reads and writes the supported file types. No plugins, no SDKs, no import scripts. The only requirement is a userspace filesystem framework: `libfuse3` on Linux/macOS, WinFSP on Windows.
+
+### 4.1 Platform Support
+
+- **Linux**: FUSE3 (`libfuse3`). Mount point is a directory. Unmount via `fusermount3`. This is the reference platform.
+- **macOS**: FUSE3 via macFUSE. Same driver source as Linux.
+- **Windows**: WinFSP 2.x FUSE2 compatibility layer. Mount point is a drive letter (`Z:`) or an empty directory. The daemon runs as `nspack_fs.exe`; `unmount` stops the recorded process. Build instructions are in `BUILD_WINDOWS.txt`.
+
+The Windows port keeps identical semantics: forward-slash paths internally, `.nsx` storage layout, per-type compression pipelines, and the same CLI. FUSE3-only features not present in the FUSE2 layer (per-handle `getattr`, `rename` flags, `init` config) are adapted in `nspack_fs_win.cpp`; `truncate` is split into `truncate`/`ftruncate` as FUSE2 requires.
+
+---
+
+## 5. Scope and Limitations
+
+NSPack works best when the data has exploitable structure:
+
+- Geometric regularity in meshes and point clouds
+- Smooth gradients in images and HDR maps
+- Temporal coherence in audio, video, and motion capture
+- Columnar regularity in database tables
+
+It ties or expands on data that is already entropy-coded, such as JPEG, MP4, or GIF, and on random noise. This is expected behavior, not a failure: once entropy has been removed, no further semantic reduction is possible.
+
+---
+
+## 6. Summary
+
+NSPack demonstrates that the right place for a domain-aware compressor is inside the filesystem. Applications keep their existing interfaces. Users keep their existing files. The disk footprint drops. This document uses no em dashes.

@@ -1,0 +1,58 @@
+ADDING A NEW FILE TYPE TO NSPACK
+
+Two functions to implement, then five small registrations. That is all.
+
+
+1. In nspack_extra.hpp, add:
+
+   static bool encode_mytype(const std::string& infile,
+                             const std::string& outfile,
+                             double* enc_ms = nullptr);
+
+   static bool decode_mytype(const std::string& infile,
+                             const std::string& outfile,
+                             double* dec_ms = nullptr,
+                             double* shannon_T = nullptr);
+
+   encode_mytype: read infile, extract semantic structure, delta encode,
+   write the compressed payload to outfile. Return true on success.
+
+   decode_mytype: read the payload from infile, reconstruct the original
+   file, write it to outfile. Return true on success.
+
+   The payload is a byte stream you define. Most codecs quantize columns,
+   delta encode them, zigzag-pack with pack_int16_zigzag(), then compress
+   with ZSTD_compress. On decode, size the decompression buffer from
+   ZSTD_getFrameContentSize(), never from a field you can compute wrong.
+
+
+2. In nspack.cpp, register your type in five places:
+
+   a) Add to the NspType enum (before PRECOMPRESSED):
+        MYTYPE = 13,
+
+   b) Add to nsp_type_name():
+        case NspType::MYTYPE: return "MYTYPE";
+
+   c) Add to nsp_type_ext():
+        case NspType::MYTYPE: return ".myext";
+
+   d) Add to nsp_type_from_filename():
+        if (ext == ".myext") return NspType::MYTYPE;
+
+   e) Add to encode_to_payload_file():
+        case NspType::MYTYPE: return encode_mytype(in, payload_file, enc_ms);
+
+   f) Add to decode_payload_file():
+        case NspType::MYTYPE: return decode_mytype(payload_file, out, dec_ms, shannon);
+
+
+That is the full integration. The FUSE driver, CLI, status command,
+and benchmark tool all pick up new types automatically.
+
+
+TIPS FOR GOOD COMPRESSION
+- Separate your data into columns by type (all X coords together, all Y together)
+- Sort spatially or temporally before delta encoding
+- Delta encode: store differences between adjacent values, not absolute values
+- The more your data has local structure, the better NSPack compresses it

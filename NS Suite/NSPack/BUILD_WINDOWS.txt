@@ -1,0 +1,121 @@
+NSPack - Windows Build Instructions (WinFSP)
+=============================================
+
+NSPack on Windows uses WinFSP's FUSE2 compatibility layer instead of
+libfuse3. The filesystem driver is nspack_fs_win.cpp; it shares all
+compression, path, and mount logic with the Linux/macOS driver through
+nspack_fs_core.hpp and nspack_platform.hpp.
+
+Prerequisites
+-------------
+
+1. WinFSP 2.x (includes the FUSE2 compatibility layer)
+   Download and install from:
+       https://github.com/winfsp/winfsp/releases
+   The installer puts headers under
+       C:\Program Files (x86)\WinFsp\inc
+   and the import library under
+       C:\Program Files (x86)\WinFsp\lib\winfsp-x64.lib
+
+2. A C++17 compiler. Either:
+   - MSVC (Visual Studio 2022, "Desktop development with C++"), or
+   - MinGW-w64 g++ (e.g. via MSYS2)
+
+3. Compression libraries: zstd, lz4, zlib.
+   Easiest via vcpkg:
+       vcpkg install zstd:x64-windows lz4:x64-windows zlib:x64-windows
+   Or via MSYS2 for the MinGW build:
+       pacman -S mingw-w64-x86_64-zstd mingw-w64-x86_64-lz4 mingw-w64-x86_64-zlib
+
+4. Optional: Python 3 on PATH for the AST-based code compressor
+   (encode_code_ast) and SQLite extraction helpers. The filesystem works
+   without it; those codecs fall back to raw storage.
+
+Build with MSVC
+---------------
+
+Open "x64 Native Tools Command Prompt for VS 2022", cd to the NSPack
+directory, then:
+
+    set WINFSP_INC=C:\Program Files (x86)\WinFsp\inc
+    set WINFSP_LIB=C:\Program Files (x86)\WinFsp\lib\winfsp-x64.lib
+
+    cl /O2 /std:c++17 /EHsc /D_WIN32 /I. /INSComp /I"%WINFSP_INC%" ^
+       nspack.cpp NSComp\nscomp.cpp ^
+       /link zstd.lib lz4.lib zlib.lib /OUT:nspack.exe
+
+    cl /O2 /std:c++17 /EHsc /D_WIN32 /DNSPACK_NO_MAIN /I. /INSComp /I"%WINFSP_INC%" ^
+       nspack_fs_win.cpp NSComp\nscomp.cpp ^
+       /link "%WINFSP_LIB%" zstd.lib lz4.lib zlib.lib /OUT:nspack_fs.exe
+
+If you installed the compression libraries with vcpkg, add its include
+and lib paths, e.g.:
+
+    /I%VCPKG_ROOT%\installed\x64-windows\include
+    /LIBPATH:%VCPKG_ROOT%\installed\x64-windows\lib
+
+Build with MinGW-w64 (MSYS2)
+----------------------------
+
+In a "MSYS2 MINGW64" shell:
+
+    g++ -std=c++17 -O2 -D_WIN32 -I. -INSComp \
+        -I"/c/Program Files (x86)/WinFsp/inc/fuse" \
+        nspack.cpp NSComp/nscomp.cpp \
+        -lzstd -llz4 -lz -o nspack.exe
+
+    g++ -std=c++17 -O2 -D_WIN32 -DNSPACK_NO_MAIN -I. -INSComp \
+        -I"/c/Program Files (x86)/WinFsp/inc" \
+        nspack_fs_win.cpp NSComp/nscomp.cpp \
+        "/c/Program Files (x86)/WinFsp/lib/winfsp-x64.dll.a" \
+        -lzstd -llz4 -lz -o nspack_fs.exe
+
+Both binaries must end up in the same directory: `nspack.exe mount`
+launches `nspack_fs.exe` from its own directory.
+
+Usage
+-----
+
+The mount point on Windows is a drive letter or an empty directory:
+
+    nspack.exe mount Z: C:\nspack_storage
+    nspack.exe mount C:\mnt\nspack C:\nspack_storage
+
+Then use the drive normally. Files written through the mount are stored
+compressed as .nsx files under the storage directory; reads decompress
+transparently.
+
+    nspack.exe status C:\nspack_storage
+    nspack.exe unmount Z:
+    nspack.exe bench file1.obj file2.wav
+
+`unmount` stops the nspack_fs.exe process recorded at mount time, which
+makes WinFSP remove the drive or directory mount point.
+
+Cross-checking the Windows sources from Linux/macOS
+---------------------------------------------------
+
+The sources carry a stub layer so they can be type-checked without the
+WinFSP SDK:
+
+    make check-win
+
+which runs:
+
+    g++ -std=c++17 -I. -INSComp -D_WIN32 -fsyntax-only nspack_fs_win.cpp
+    g++ -std=c++17 -I. -INSComp -D_WIN32 -fsyntax-only nspack.cpp
+
+This catches signature and portability errors; it does not link or run.
+
+Notes
+-----
+
+- Paths are normalized to forward slashes inside the filesystem and
+  converted to backslashes only at Win32 API boundaries.
+- The mount record file lives in %TEMP%\nspack_mounts (vs.
+  /tmp/nspack_mounts on POSIX).
+- WinFSP's FUSE2 layer has no `auto_unmount`; killing nspack_fs.exe
+  always releases the mount.
+- `nspack_fs.exe` can also be run directly:
+      nspack_fs.exe mount Z: C:\nspack_storage
+  which is useful for debugging since it stays in the foreground.
