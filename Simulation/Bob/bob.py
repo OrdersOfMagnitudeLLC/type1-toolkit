@@ -164,7 +164,7 @@ def _mp_lookup_formula(formula):
 
 def _generative_screen(query, domain=None, limit=20):
     """Generate novel compositions and screen with foam phonon stability."""
-    from foam_screener_v2 import phonon_stability, vegard_elastic_mix
+    from foam_screener_v2 import phonon_stability, vegard_elastic_mix, molecular_gas_gate
 
     if domain is None:
         domain = _detect_gen_domain(query)
@@ -186,6 +186,7 @@ def _generative_screen(query, domain=None, limit=20):
     min_stability_score = 0.30
 
     results = []
+    results_flagged = []
     for formula in candidates:
         comp = _parse_formula(formula)
         if not comp:
@@ -194,6 +195,14 @@ def _generative_screen(query, domain=None, limit=20):
         # Abundance filter: only check non-exempt elements (metals)
         metal_ppms = [CRUSTAL_ABUNDANCE_PPM.get(el, 0) for el in comp if el not in abundance_exempt]
         if metal_ppms and min(metal_ppms) < profile["min_abundance_ppm"]:
+            continue
+
+        # Pre-phonon gate: molecular gases need pressure validation first
+        gate = molecular_gas_gate(formula)
+        if gate["flag"] == "MOLECULAR_GAS_RISK":
+            results_flagged.append({"formula": formula,
+                                    "source": "foam-generative",
+                                    "domain": domain, **gate})
             continue
 
         n_atoms = _formula_natoms(formula)
@@ -282,7 +291,7 @@ def _generative_screen(query, domain=None, limit=20):
         key=lambda x: (x["properties"]["stability_score"], x["properties"]["theta_D_K"]),
         reverse=True,
     )
-    return results[:limit]
+    return results[:limit] + results_flagged
 
 def _detect_domain(query: str) -> str:
     q = query.lower()
@@ -564,7 +573,7 @@ def search(query: str, limit: int = 20) -> list[dict]:
 def main(argv=None):
     """CLI entry point for Bob search."""
     import argparse
- parser = argparse.ArgumentParser(description="Bob - catalysis hub literature search")
+    parser = argparse.ArgumentParser(description="Bob - catalysis hub literature search")
     parser.add_argument("--query", default="N2 reduction", help="search query")
     parser.add_argument("--limit", type=int, default=10, help="max results")
     parser.add_argument("--domain", default=None, help="domain profile (semiconductor, mram, etc.)")

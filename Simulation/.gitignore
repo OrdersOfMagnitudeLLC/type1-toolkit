@@ -6,3 +6,9 @@ data/*
 !data/.gitkeep
 screening_runs/*
 !screening_runs/.gitkeep
+Bob/bob
+Bob/bob_bench
+Bob/test_k
+Bella/bella_sim.egg-info/
+Bella/NSMace/findings/
+Bella/data/validation/

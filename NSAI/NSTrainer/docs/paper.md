@@ -61,7 +61,7 @@ The algorithm scores every token by its negative log-probability, computes the m
 - **Run A:** standard full-data training for 1000 steps.
 - **Run C (unigram):** NS-data filtered to the 37.3% most information-dense windows, also for 1000 steps.
 
-**Result.** Standard full-data training reaches a final cross-entropy of 8.6294; unigram NS-data reaches a final loss of 8.5095. The filtered run crosses below the standard final loss at **step 132 out of 1000**, an **86.8% compute reduction** in the number of gradient steps required to match baseline quality. This validates that the information-theoretic filtering generalizes from a 1MB toy corpus to a 50MB web-crawl sample and already delivers near an order-of-magnitude training speedup.
+**Result.** Standard full-data training reaches a final cross-entropy of 8.6294; unigram NS-data reaches a final loss of 8.5095. The filtered run crosses below the standard final loss at **step 132 out of 1000**, an **86.8% compute reduction** in the number of gradient steps required to match baseline quality. This validates that the information-theoretic filtering generalizes from a 1MB toy corpus to a 50MB web-crawl sample and reduces gradient steps required by 86.8%.
 
 ### 4.3 Analytical Initialization
 
@@ -150,20 +150,6 @@ Combined: $2 \times 10 \times 5 = 100\times$ compute reduction in the asymptotic
 
 Total: $20\% + 5\% + 5\% = 30\%$ of standard training compute, producing a larger model with better loss. Combined with the 100× data filtering ceiling, the asymptotic pipeline ceiling is $100\times \times (1/0.30) \approx 333\times$.
 
-## 6. Implications for Sovereign AI
-
-The NS filter determines what the model learns. Whoever controls the filter controls the model's inductive bias - not the compute provider, not the cloud, not the foundation model vendor. This shifts AI sovereignty from infrastructure owners back to data owners. The filter is a single-pass, CPU-only computation over raw text; it requires no GPU, no cloud API, and no external service. A data owner with a laptop and a corpus can produce a model whose knowledge distribution reflects their own priorities, not those of a remote platform.
-
-Different filter thresholds produce different models from identical raw data. A medical institution filters for clinical language density, producing a model that prioritizes diagnostic reasoning and terminology. A legal firm filters for rare statutory combinations, producing a model attuned to regulatory edge cases. Same pipeline, different knowledge emphasis, no architectural changes. Customization happens at the data level, not the weight level. This eliminates the need for domain-specific fine-tuning pipelines, LoRA adapters, or prompt engineering - the model is born specialized because it was trained on the information-dense subset of the relevant domain.
-
-The combined compute reduction is substantial. NS-weighted training reduces gradient steps by up to 86.8%. Analytical initialization from a small teacher model, followed by short fine-tuning, reduces total training to approximately 30% of standard cost. Together, the pipeline achieves a theoretical ceiling of roughly 333× reduction from baseline. A model trainable in hours on a laptop CPU removes the dependency on cloud GPU clusters entirely. Nations, institutions, and individuals can train domain-specific models on their own hardware, on their own data, without external dependency. The capital barrier to entry collapses from millions of dollars in GPU rentals to the cost of a consumer CPU and a text file.
-
-NS filtering selects which windows of text the model trains on. The raw data never leaves the local machine. The model learns only the information-dense subset. This is not compression: it is selection. The distinction matters legally and ethically. Compression implies that the original data can be reconstructed from the compressed representation; selection implies that the raw data remains intact and untouched, simply not all of it is used for training. No derivative work is created. No data is transmitted. The filter is a local read operation, and the training set is a subset of the local corpus.
-
-Standard data curation methods: RLHF, content filtering, safety alignment - change what the model is allowed to say. NS filtering changes what the model learns to say by selecting the most information-dense signal. No content is blocked; low-information content is simply not worth the compute. A model trained on NS-filtered data has never been told what not to say - it has merely been taught from the parts of the corpus that carry the most information per token. The result is a model whose knowledge reflects the statistical structure of the most informative text, not the policy preferences of a alignment team.
-
-The pipeline described in this paper - information-theoretic data selection, analytical weight initialization, and architecture-level sparsity - collectively relocate the center of gravity in AI development from compute providers to data holders. The model is a function of the filter. The filter is a function of the data owner's priorities. This is not a minor optimization. It is a structural redistribution of who controls what AI systems learn.
-
 ## Section: Overnight Training Attempt: 252M/300M Scale (2026-09-03)
 
 ### What Was Attempted
@@ -244,9 +230,9 @@ quality at 86.8% less data, the core claim holds at scale.
 
 ---
 
-## 7. Results
+## 6. Results
 
-### 7.1 Level 1 Ablation: NS-Filtered vs Standard Training
+### 6.1 Level 1 Ablation: NS-Filtered vs Standard Training
 
 NS-filtered training beats standard training on all 6 evaluation metrics while
 using **86.8% less data** (37.3% of windows retained). Both runs use identical
@@ -264,7 +250,7 @@ architecture, optimizer, and step count.
 NS filtering improves model quality across all benchmarks while reducing
 training data by 86.8%.
 
-### 7.2 Production Fine-Tune: Qwen3-4B on OpenR1-Math-220K
+### 6.2 Production Fine-Tune: Qwen3-4B on OpenR1-Math-220K
 
 Full NS-filtered LoRA fine-tune on Qwen3-4B-Instruct-2507, evaluated on ARC-Challenge.
 
@@ -281,20 +267,20 @@ Full NS-filtered LoRA fine-tune on Qwen3-4B-Instruct-2507, evaluated on ARC-Chal
 | ARC-Challenge norm  | 58.02%                   |
 | Model size (Q4_K_M) | 2.4GB                    |
 
-### 7.3 Comparison with Existing Models
+### 6.3 Comparison with Existing Models
 
 | Model              | ARC-Challenge | Size  |
 |--------------------|---------------|-------|
 | Llama 3.2 3B       | 52.0%         | ~2GB  |
 | Phi-3.5-mini       | ~55.0%        | ~2GB  |
-| OOM (ours)         | 58.02%        | 2.4GB |
+| OOM (NS-filtered)  | 58.02%        | 2.4GB |
 | Llama 3.1 70B      | ~67.0%        | ~40GB |
 
 OOM (NS-filtered Qwen3-4B, 13% of training data, $0.43 compute) beats
 Llama 3.2 3B by 6 points and Phi-3.5-mini by 3 points on ARC-Challenge
 normalized accuracy, at comparable model size.
 
-### 7.4 3.8B LoRA Knowledge Distillation
+### 6.4 3.8B LoRA Knowledge Distillation
 
 Full LoRA KD pipeline on Qwen2.5-3B-Instruct (3.8B parameters):
 - **Adapter:** LoRA r=16, applied to all linear layers
@@ -305,9 +291,9 @@ Full LoRA KD pipeline on Qwen2.5-3B-Instruct (3.8B parameters):
 
 ---
 
-## 8. NSKVCache: Content-Aware KV Cache Retrieval
+## 7. NSKVCache: Content-Aware KV Cache Retrieval
 
-### 8.1 Architecture
+### 7.1 Architecture
 
 NSKVCache replaces the standard KV cache with a two-tier system: a small working cache (n_batch tokens) for the current decode window, and a large cold store (INT8 quantized) for evicted tokens. A page-level scoring index enables retrieval of relevant cold pages back into the working cache when needed.
 
@@ -323,7 +309,7 @@ NSKVCache replaces the standard KV cache with a two-tier system: a small working
 
 **INT8 cold storage.** K and V are quantized to INT8 with per-(layer,head) fp16 absmax scales. The buffer is bounded at 4,096 positions (73.1 MiB) with FIFO eviction.
 
-### 8.2 Measured Results
+### 7.2 Measured Results
 
 | Metric | Value |
 |---|---|
@@ -336,7 +322,7 @@ NSKVCache replaces the standard KV cache with a two-tier system: a small working
 | - Codebook | 0 entries, 0.00 MiB |
 | **Compression ratio** | **208.7x** |
 
-### 8.3 Cross-Window Recall Test
+### 7.3 Cross-Window Recall Test
 
 A secret code (MANGO7734) is buried at position ~855 in 1,460 tokens of lorem ipsum. The question "What is the secret code?" is appended at the end. With `-b 1024 -c 2048`, the working cache holds only the last 1,024 tokens - the MANGO page is evicted and must be retrieved.
 
@@ -352,7 +338,7 @@ A secret code (MANGO7734) is buried at position ~855 in 1,460 tokens of lorem ip
 
 Content-based K matching correctly identifies the MANGO page (content score 0.939 vs 0.888 for the top lorem page), pulling it from rank 53-85 (QUEST-only) to rank 19. The model recalls the exact code.
 
-### 8.4 Key Insights
+### 7.4 Key Insights
 
 **Pre-RoPE K storage eliminates RoPE distance suppression.** Storing K vectors before RoPE and re-applying rotation at the original position on injection means the model attends to retrieved tokens as if they had never been evicted. Without this, injected tokens would be suppressed by the RoPE distance penalty.
 
@@ -360,7 +346,7 @@ Content-based K matching correctly identifies the MANGO page (content score 0.93
 
 **Single-layer scoring is sufficient.** The page index stores max/min/sum K at only the middle layer (n_layers/2). This reduces the index from 4,398 MiB to 95.4 MiB at 1M context with no loss in retrieval quality - the middle layer's K distribution is representative enough for page-level scoring.
 
-### 8.5 Full-Stack Integration
+### 7.5 Full-Stack Integration
 
 NSKVCache is one of four NS components in the NSRun inference stack:
 
@@ -375,7 +361,7 @@ Full stack speed: **11 tok/s** vs 6.53 baseline (1.7x end-to-end speedup).
 
 ---
 
-## 9. NSQuant: Variable-Rate Per-Cluster Quantization
+## 8. NSQuant: Variable-Rate Per-Cluster Quantization
 
 ### Architecture
 
@@ -391,7 +377,7 @@ The cold 60% of weights receive delta compression on top of Q2, exploiting the o
 
 ---
 
-## 10. What We Ship
+## 9. What We Ship
 
 | Component | Status |
 |---|---|

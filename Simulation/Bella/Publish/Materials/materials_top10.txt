@@ -11,9 +11,9 @@ nitrogen_fixation               | BaAl9Fe2      |    16 | 584C    | VILLAGE     
 co2_reduction_catalyst          | AlFe          |    17 | 913C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
 co2_reduction_catalyst          | AlFe3         |    17 | 806C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
 co2_reduction_catalyst          | BaAl9Fe2      |    17 | 584C    | VILLAGE       | ELECTROCHEMICAL: NOT passive absorption.
-superconductor_ambient          | CaAl2         |    14 | 602C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
-superconductor_ambient          | MgAl3         |    14 | 546C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
-superconductor_ambient          | BaAl9Fe2      |    14 | 584C    | VILLAGE       | Zero electrical resistance at or near room temperature. (CONJECTURE: Tc unverified)
+superconductor_ambient          | CaAl2         |    14 | 602C    | VILLAGE       | Zero electrical resistance at or near room temperature. (UNVALIDATED: Tc unverified)
+superconductor_ambient          | MgAl3         |    14 | 546C    | VILLAGE       | Zero electrical resistance at or near room temperature. (UNVALIDATED: Tc unverified)
+superconductor_ambient          | BaAl9Fe2      |    14 | 584C    | VILLAGE       | Zero electrical resistance at or near room temperature. (UNVALIDATED: Tc unverified)
 water_splitting_catalysts       | AlFe          |    14 | 913C    | VILLAGE       | Green hydrogen production, distributed fuel.
 water_splitting_catalysts       | AlFe3         |    14 | 806C    | VILLAGE       | Green hydrogen production, distributed fuel.
 water_splitting_catalysts       | NaHO          |    14 | 177C    | VILLAGE       | Green hydrogen production, distributed fuel.

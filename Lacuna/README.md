@@ -12,11 +12,11 @@ Lacuna protects compiled NS Suite binaries for commercial distribution:
 - Binary checkpoint patching: inject license checks without recompilation
 - Symbol stripping and section hardening
 
-Ships as: `liblacuna.a` + `lacuna.h` + `keygen` binary + `patcher` binary.
+Ships as: `liblacuna.a` + `lacuna.h` + `keygen` binary.
 
 ## Status
 
-Feature-complete. Pending: Highway integration, CMake cross-platform build, symbol stripping pass.
+Feature-complete. Pending: Highway integration, CMake cross-platform build.
 
 ## Build
 
@@ -31,9 +31,6 @@ make -j$(nproc)
 ```bash
 # Generate a license key
 ./keygen --product nssort --tier indie --expiry 2027-01-01
-
-# Patch a binary with license check
-./patcher --binary libnssort.so --key <license_key>
 ```
 
 ## License

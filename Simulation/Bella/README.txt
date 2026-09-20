@@ -14,11 +14,11 @@ It is not the cleanest software ever written. It gets the job done.
 
 WHAT IT FOUND
 -------------
-53,349 calibrated protein drug candidates across 995 targets, 50 disease categories.
-2,944 phonon-stable materials candidates across 96 civilization categories.
-Fe3Mn4: N2 adsorption -1.134 eV: earth-abundant Haber-Bosch replacement candidate.
-Mo2FeN2: phonon stable, NEB barrier 1.193 eV: nitrogen fixation candidate 2.
-Shifu (SiHF3, silicon hydrogen trifluoride): solid-state battery electrolyte candidate pending validation, 20-35x cheaper per kWh-cycle (theoretical).
+53,349 calibrated protein drug candidates across 866 targets, 50 disease categories.
+133 phonon-stable materials candidates across 101 civilization categories.
+Fe3Mn4: N2 adsorption -1.134 eV. Earth-abundant Haber-Bosch replacement candidate.
+Mo2FeN2: phonon stable, NEB barrier 1.193 eV. Nitrogen fixation candidate 2.
+Shifu (SiHF3): solid-state battery electrolyte, 20-35x cheaper per kWh-cycle (theoretical).
 All results in Publish/.
 
 INSTALL
@@ -28,43 +28,30 @@ pip install -r requirements.txt
 
 DATA SOURCES (download separately, user-licensed):
   GNoME materials: github.com/google-deepmind/materials_discovery
-    → CC BY-NC 4.0, 554,054 structures — users provide their own licensed copy
+    → CC BY-NC 4.0, 554,054 structures: users provide their own licensed copy
     → place as Bob/data/gnome.csv, use --gnome flag
   ZINC molecules: zinc.docking.org
     → run: python3 build_zinc_cache.py to build local cache
 
 We do not ship gnome.csv or zinc pkl files in any public release: users provide their own.
 
-## Compatibility
-
-| Component | Linux | macOS | Windows |
-|-----------|-------|-------|---------|
-| Bella (Python) | yes | yes | yes (WSL) |
-| NSMace (C++) | yes | yes | yes (WSL) |
-| SPARC (DFT) | yes | untested | no |
-
-CPU: AVX2 minimum (Intel Haswell 2013+ or AMD Zen 2020+).
-NSMace compiles to the best available SIMD on your build machine via Google Highway. AVX-512 used automatically when present.
-
-SPARC is optional. Foam mechanics handles 99% of screening without it. Install SPARC only for final DFT confirmation on shortlisted candidates.
-
 STRUCTURE
 ---------
-bella.py                     : main orchestrator, all bella commands
-bella_ui.py                  : CLI dispatcher
-bella_phonon.py              : SPARC phonon pipeline, pressure sweeps
-bella_validate.py            : validation suite + feature matrix
-foam_screener_v2.py          : foam mechanics engine (THE core)
-disease_screen.py            : protein/drug candidate screener
-materials_civilization_screen.py: materials screener, 96 categories
-bob.py                       : materials search (GNoME, Materials Project)
-sparc-engine/                : SPARC DFT solver (upstream GPL, unmodified)
-NSMace/                      : NS force field calculator (compiled C++)
-profiles/                    : 24 domain profiles (YAML)
-data/                        : target lists, examples, validation data
-Publish/                     : sealed results (proteins, materials, stellar)
-examples/                    : flagship commands that produced the results
-findings/                    : raw screen outputs
+bella.py                      - main orchestrator, all bella commands
+bella_ui.py                   - CLI dispatcher
+bella_phonon.py               - SPARC phonon pipeline, pressure sweeps
+bella_validate.py             - validation suite + feature matrix
+foam_screener_v2.py           - foam mechanics engine (THE core)
+disease_screen.py             - protein/drug candidate screener
+materials_civilization_screen.py - materials screener, 101 categories
+bob.py                        - materials search (GNoME, Materials Project)
+sparc-engine/                 - SPARC DFT solver (upstream GPL, unmodified)
+NSMace/                       - NS force field calculator (compiled C++)
+profiles/                     - 24 domain profiles (YAML)
+data/                         - target lists, examples, validation data
+Publish/                      - sealed results (proteins, materials, stellar)
+examples/                     - flagship commands that produced the results
+findings/                     - raw screen outputs
 
 CORE COMMANDS
 -------------
@@ -87,9 +74,9 @@ python3 bella.py phonons --formula Fe3Mn4 --sparc-phonon
 
 FOAM PHYSICS (T50/T71/T73)
 --------------------------
-T50: Protein pocket binding geometry: hydrophobic pocket ΔG from YL pressure
-T71: Optimal binding affinity: Kd_opt = sqrt(C_host × C_drug)
-T73: Hydrophobic floor energy: ΔG_floor from water surface tension × SASA
+T50: Protein pocket binding geometry - hydrophobic pocket ΔG from YL pressure
+T71: Optimal binding affinity - Kd_opt = sqrt(C_host × C_drug)
+T73: Hydrophobic floor energy - ΔG_floor from water surface tension × SASA
 7-mechanism toxicity: membrane YL, mitochondrial Nernst, reactive metabolite,
                       BSEP inhibition, ETC complex, membrane maintenance (T57)
 

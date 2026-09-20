@@ -2,7 +2,7 @@
 
 **by Orders of Magnitude · ofmagnitude.com**
 
-84 theorems. Zero free parameters. All Standard Model parameters derived
+85 theorems. Zero free parameters. All Standard Model parameters derived
 from a single equation: ΔP = 2γ/r.
 
 ## What It Is
@@ -24,7 +24,7 @@ quantum and classical regimes without introducing new constants.
 ## Structure
 
 KunFramework/
-├── theorems/: T1–T84, formal statements and proofs
+├── theorems/: T1–T85, formal statements and proofs
 ├── derivations/: Standard Model parameter derivations
 ├── paper/: Full framework paper
 └── scripts/: Verification and cross-check scripts
@@ -34,3 +34,6 @@ KunFramework/
 
 CC BY 4.0: cite Orders of Magnitude LLC
 https://ofmagnitude.com
+
+Theory, theorems, and documentation: CC BY 4.0
+soap_bowl_full.py and all code: MIT

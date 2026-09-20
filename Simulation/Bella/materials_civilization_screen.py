@@ -731,13 +731,13 @@ CATEGORY_NOTES = {
         "Vessel walls for plasma confinement, fusion-adjacent. "
         "NEEDS: High-T sintering or CVD. Debye > 800K, formation energy < -1.0 eV/atom. "
         "OUTPUT: Plasma-facing component surviving extreme ion flux. "
-        "DEPLOY: Fusion reactor vessels. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Fusion reactor vessels. UNVALIDATED pending phonon confirmation."
     ),
     "room_temp_superconductor_candidates": (
         "Civilization-scale energy transmission. "
         "NEEDS: High-pressure synthesis or thin-film deposition. "
         "OUTPUT: Lossless power transmission if confirmed. "
- "DEPLOY: Grid-scale transformation. CONJECTURE: no confirmed RT superconductors exist. "
+ "DEPLOY: Grid-scale transformation. UNVALIDATED: no confirmed RT superconductors exist. "
         "Phonon confirmation REQUIRED before any claim."
     ),
     "room-temperature-superconductor": (
@@ -753,49 +753,49 @@ CATEGORY_NOTES = {
         "Space-grade shielding, nuclear-adjacent. "
         "NEEDS: Composite fabrication or sintering. "
         "OUTPUT: Radiation protection for spacecraft and nuclear environments. "
-        "DEPLOY: Spacecraft hulls, nuclear containment. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Spacecraft hulls, nuclear containment. UNVALIDATED pending phonon confirmation."
     ),
     "extreme_hardness": (
         "Post-diamond cutting, drilling, wear applications. "
         "NEEDS: High-pressure synthesis or CVD. "
         "OUTPUT: Cutting tools, drill bits, wear surfaces exceeding diamond. "
-        "DEPLOY: Industrial tooling. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Industrial tooling. UNVALIDATED pending phonon confirmation."
     ),
     "thermal_interface_materials": (
         "Electronics cooling, high-power density thermal management. "
         "NEEDS: Thin-film or composite processing. "
         "OUTPUT: Heat dissipation for high-power electronics. "
-        "DEPLOY: CPU/GPU packaging, power electronics. CONJECTURE pending phonon confirmation."
+        "DEPLOY: CPU/GPU packaging, power electronics. UNVALIDATED pending phonon confirmation."
     ),
     "hydrogen_storage_hydrides": (
         "Distributed energy storage, off-grid hydrogen. "
         "NEEDS: Pressure vessel 10-30 bar, thermal management for desorption. "
         "OUTPUT: Safe solid-state H2 storage. "
-        "DEPLOY: Village H2 storage for fuel cells. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Village H2 storage for fuel cells. UNVALIDATED pending phonon confirmation."
     ),
     "co2_capture_materials": (
         "Atmospheric remediation at scale. "
         "NEEDS: Contact with CO2 stream, thermal regeneration cycle. "
         "OUTPUT: Captured CO2 for storage or use. "
-        "DEPLOY: Direct air capture, flue gas treatment. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Direct air capture, flue gas treatment. UNVALIDATED pending phonon confirmation."
     ),
     "water_splitting_catalysts": (
         "Green hydrogen production, distributed fuel. "
         "NEEDS: Electrolytic cell or photocatalytic reactor. "
         "OUTPUT: H2 fuel from water splitting. "
-        "DEPLOY: Village solar electrolyzer. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Village solar electrolyzer. UNVALIDATED pending phonon confirmation."
     ),
     "fertilizer_catalyst_expanded": (
         "Extended nitrogen-fixation screen beyond Fe3Mn4/Mo2FeN2. "
         "NEEDS: Electrolytic cell or high-T reactor. "
         "OUTPUT: NH3 fertilizer without Haber-Bosch. "
-        "DEPLOY: Village cooperative with solar-powered electrolyzer. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Village cooperative with solar-powered electrolyzer. UNVALIDATED pending phonon confirmation."
     ),
     "extreme_temperature_structural": (
         "Industrial furnaces, hypersonic vehicles, space re-entry. "
         "NEEDS: High-T sintering or CVD composite fabrication. "
         "OUTPUT: Structural material surviving >2000C. "
-        "DEPLOY: Aerospace, industrial furnaces. CONJECTURE pending phonon confirmation."
+        "DEPLOY: Aerospace, industrial furnaces. UNVALIDATED pending phonon confirmation."
     ),
 }
 CATEGORY_NOTES.update(EXTRA_CATEGORY_NOTES)
@@ -975,16 +975,16 @@ MANUAL_CANDIDATES = {
  ("W2C", 450, 230, 180, -0.8, 0.0, "Tungsten semi-carbide - high T, good thermal conductivity", "ESTIMATED", ""),
     ],
     "room_temp_superconductor_candidates": [
- ("LaH10", 1500, 150, 100, -0.5, 0.0, "Lanthanum decahydride - CONJECTURE, high-pressure SC near 250K"),
- ("YH9", 1400, 140, 90, -0.4, 0.0, "Yttrium nonahydride - CONJECTURE, predicted high-Tc"),
- ("CeH9", 1300, 130, 85, -0.4, 0.0, "Cerium nonahydride - CONJECTURE, predicted high-Tc"),
+ ("LaH10", 1500, 150, 100, -0.5, 0.0, "Lanthanum decahydride - UNVALIDATED, high-pressure SC near 250K"),
+ ("YH9", 1400, 140, 90, -0.4, 0.0, "Yttrium nonahydride - UNVALIDATED, predicted high-Tc"),
+ ("CeH9", 1300, 130, 85, -0.4, 0.0, "Cerium nonahydride - UNVALIDATED, predicted high-Tc"),
  ("MgB2", 900, 120, 80, -0.5, 0.0, "Magnesium diboride - confirmed SC at 39K, high Debye"),
  ("Bi2Sr2CaCu2O8", 350, 80, 40, -1.0, 0.0, "BSCCO - confirmed HTSC at 95K, cuprate"),
  ("YBa2Cu3O7", 400, 90, 50, -1.2, 0.0, "YBCO - confirmed HTSC at 93K, cuprate"),
  ("Tl2Ba2Ca2Cu3O10", 380, 85, 45, -1.0, 0.0, "TBCCO - confirmed HTSC at 127K, cuprate"),
- ("Hg12Tl3Ba30Ca30Cu45O127", 320, 70, 35, -0.8, 0.0, "Hg-Tl cuprate - CONJECTURE, record Tc claim 135K"),
- ("H3S", 1200, 180, 120, -0.3, 0.0, "Hydrogen sulfide - CONJECTURE, SC at 203K under 150GPa"),
- ("BaH12", 1100, 160, 100, -0.3, 0.0, "Barium dodecahydride - CONJECTURE, predicted high-Tc"),
+ ("Hg12Tl3Ba30Ca30Cu45O127", 320, 70, 35, -0.8, 0.0, "Hg-Tl cuprate - UNVALIDATED, record Tc claim 135K"),
+ ("H3S", 1200, 180, 120, -0.3, 0.0, "Hydrogen sulfide - UNVALIDATED, SC at 203K under 150GPa"),
+ ("BaH12", 1100, 160, 100, -0.3, 0.0, "Barium dodecahydride - UNVALIDATED, predicted high-Tc"),
     ],
     "radiation_shielding": [
  ("B4C", 900, 220, 180, -0.8, 2.0, "Boron carbide - neutron absorber, lightweight armor"),
@@ -1166,7 +1166,7 @@ def _build_manual_hits(cat):
             "application_note": CATEGORY_NOTES.get(cat, ""),
  "dG_ads": "N/A [MANUAL: literature values]",
             "score": score,
-            "note": f"CONJECTURE : {note}{ref_str}",
+            "note": f"UNVALIDATED : {note}{ref_str}",
         })
     out.sort(key=lambda x: x["rank_score"], reverse=True)
     return out
@@ -1829,7 +1829,7 @@ def main(args=None):
     for cat, hits in results.items():
         print(f"\n=== {cat.upper()} ===")
         if cat in MANUAL_CANDIDATES:
- print(" # SOURCE: Manual candidates (literature values - CONJECTURE pending phonon confirmation)")
+ print(" # SOURCE: Manual candidates (literature values - UNVALIDATED pending phonon confirmation)")
         elif cat in LITERATURE_CANDIDATES:
  print(" # SOURCE: Literature (mechanism requires porosity/ion-exchange - not screenable from bulk B/G)")
         if not hits:

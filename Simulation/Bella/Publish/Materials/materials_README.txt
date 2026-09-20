@@ -41,19 +41,19 @@ Filter by accessibility = VILLAGE for distributed / low-infrastructure candidate
 
 HONEST STATEMENT
 ----------------
-All candidates are labeled CONJECTURE unless explicitly noted otherwise.
+All candidates are labeled UNVALIDATED unless explicitly noted otherwise.
 Computational predictions require experimental validation before use.
 
   AlFe (nitrogen_fixation): SUPPORTED. Independently confirmed in Nature
   Synthesis 2026. AlFe alloy surfaces electrochemically reduce N2 to NH3
   at ambient conditions.
 
-  Superconductor candidates: CONJECTURE. The screen identifies compositions
+  Superconductor candidates: UNVALIDATED. The screen identifies compositions
   with favorable Debye temperatures but does not compute Tc. A separate
   electron-phonon coupling calculation (McMillan equation or DFPT) is
   required before any experimental pursuit.
 
-  Magnetic candidates: CONJECTURE. The screen identifies favorable
+  Magnetic candidates: UNVALIDATED. The screen identifies favorable
   coordination environments but does not compute magnetic moments or
   anisotropy. Follow-up DFT calculation is required.
 
@@ -62,3 +62,5 @@ CONTACT
 -------
 orders@ofmagnitude.com
 License: CC BY 4.0: Orders of Magnitude LLC: https://creativecommons.org/licenses/by/4.0/
+
+NOTE: SiHF3 (Shifu) failed phonon stability at all tested pressures (gas phase only). Replaced by Lise (Li2SiF6) — solid fluorosilicate with 8.085 eV band gap. Rb2SiF6 and Cs2SiF6 added as secondary candidates.

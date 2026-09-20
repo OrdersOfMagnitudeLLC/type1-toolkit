@@ -120,4 +120,4 @@ It ties or expands on data that is already entropy-coded, such as JPEG, MP4, or 
 
 ## 6. Summary
 
-NSPack demonstrates that the right place for a domain-aware compressor is inside the filesystem. Applications keep their existing interfaces. Users keep their existing files. The disk footprint drops. This document uses no em dashes.
+NSPack demonstrates that the right place for a domain-aware compressor is inside the filesystem. Applications keep their existing interfaces. Users keep their existing files. The disk footprint drops.

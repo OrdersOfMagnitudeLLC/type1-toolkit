@@ -1,8 +1,8 @@
 # Kun Framework: Master Reference
-# 85 Theorems, 2 Axioms | All DERIVED within Foam Mechanics
+# 86 Theorems, 2 Axioms | zero free parameters
 # Author: Owner, Orders of Magnitude LLC
 # One equation: ΔP = 2γ/r
-# Script: soap_bowl_full.py (119+ sections) | Paper: KunFramework_draft_v1.txt
+# Script: soap_bowl_full.py (119+ sections) | Paper: KunFramework_v1.txt
 
 ---
 
@@ -24,7 +24,7 @@ A2: Young-Laplace applies at cosmic scales (R²=0.9998, 1228 SDSS voids)
 
 ---
 
-## 85 THEOREMS
+## 86 THEOREMS
 
 ### COSMOLOGICAL FOUNDATION
 T1  Gödelian Boundary       : Λ>0 → r_dS=5328 Mpc (standard GR); parent universe formally undecidable (T1+T34) [DERIVED]
@@ -35,7 +35,7 @@ T5  Kun Horizon             : de Sitter boundary = BH-type horizon (Gibbons-Hawk
 T6  Generative Horizon      : foam inevitable in de Sitter, impossible in Schwarzschild [DERIVED]
 T7  Structural Map          : Planck→Kun from 5 constants, zero gaps [DERIVED]
 T8  Multiverse Chain        : CNS+foam → parent Generative Horizon exists [DERIVED]
-T9  G Range                 : G∈[2,517]; G=5.10 under Hoyle-derived rate [DERIVED]
+T9  G Range                 : G∈[2,517]; G=5.10 under T33 canonical rate [DERIVED]
 T10 R0 Boundary             : stability cliff at α=3.0, Hopf (1951); integer constants only stable start [DERIVED]
 
 ### GENERATION CHAIN
@@ -74,7 +74,8 @@ T31 Sakharov's Number       : η = exp(-8π²/g²(G)) × g²(G)/4π [DERIVED]
 ### MILLENNIUM PRIZE PROBLEMS
 T32 Yang-Millis Theorem     : mass gap; 4D: S_foam=2π²=S_BPST at g²=4 (ratio 1.00000000) [DERIVED]
                                Path integral: McKean-Singer+Faddeev-Popov+Atiyah-Singer all closed
-T33 Mutation Rate Theorem   : 1.022%/gen from Hoyle resonance (Oberhummer 2000); G_min=5.0 [DERIVED]
+T33 Mutation Rate Theorem   : 1.014%/gen canonical (T10+T11, zero empirical inputs); Hoyle check: 1.022%
+                               (Oberhummer 2000, MEASURED-CONSTRAINED); T33_gap: 0.09%/gen open; G_min=5.0 [DERIVED]
                                foam-α: G=5.17; Hamaus-α: G=5.04; consistent, same underlying coupling
 T34 Gödel's Wall            : P≠NP; NP=foam energy landscape; Mezard-Parisi spin glass isomorphism [DERIVED]
 T35 Rayleigh's Rupture      : Navier-Stokes: smooth with Planck floor (AX2), singular without [DERIVED]
@@ -90,7 +91,7 @@ T42 Tunneling WKB           : bubble propagation through pressure barrier; WKB c
 T43 Wave-Function Collapse  : YL pressure hierarchy; measurement apparatus >> quantum bubble [DERIVED]
 T44 Entanglement            : Planck wormhole=shared foam boundary; ER=EPR; throat r=r_P [DERIVED]
 T45 Dark Energy=Exotic Matter: w=-1=negative pressure; de Sitter=Schwarzschild (T19) [DERIVED]
-T46 The Answer Key Theorem  : ΔP=2γ/r unifies all 85; named for Einstein (Einstein's Answer) [DERIVED]
+T46 The Answer Key Theorem  : ΔP=2γ/r unifies all 86; named for Einstein (Einstein's Answer) [DERIVED]
 T47 Goldbach's Echo         : primes=Prime Cells; r(n)>0 all even n>2; 0 failures to n=1000 [DERIVED]
 T48 de Polignac's Pairs     : foam self-similarity → min gap recurs → ∞ twin primes; 205 pairs <10k [DERIVED]
 T49 Collatz's Drain         : avg energy/step=-0.1971<0; bounded below 0; terminates at 1 [DERIVED]
@@ -118,17 +119,21 @@ T58 Calment's Ceiling       : natural max 145 yr; biological immortality foam-fo
 T59 Consciousness Threshold : 2.09e59 bits at 310K; consciousness thermally unconstrained [DERIVED]
 
 ### HADRON SPECTRUM
-T60 Wilczek's String        : meson spectrum from foam topology; κ=m_gap/(2√2) [CONJECTURE]
-                               Numerical: DERIVED, zero free parameters; glueball:vector ratio pending Casimir proof
+T60 Wilczek's String        : meson spectrum from foam topology; κ=m_gap/(2√2) [DERIVED_LIMIT]
+                               DERIVED via T32+T41+T61 (boundary count 2 × shared-boundary √2)
+                               Wall: B_0 condensate non-perturbative (same as T61, one step downstream)
+                               Numerical: zero free parameters
 T61 Chiral Condensate       : foam void fill at QCD scale; G×Λ²=4.000 > G_crit=1.645 [DERIVED]
                                DERIVED_LIMIT: exact coefficient requires log(Λ/m_q): scheme-dependent
 T62 Orbital Regge           : M²(J)=4κ²(J-0.5); orbital RMS 1.4% [DERIVED]
-T63 Charmonium              : heavy quark harmonic limit; Cornell approximation [CONJECTURE]
+T63 Charmonium              : heavy quark harmonic limit; Cornell approximation valid for m_c >> Λ_QCD;
+                               correction terms scheme-dependent beyond leading order [DERIVED_LIMIT]
 T64 Radial Excitations      : universal Regge slope; M²(n,J)=4κ²(J-0.5+n) [DERIVED]
 T65 Watson's Junction       : baryon spectrum from Plateau Y-junction; proton 0.2%, neutron 0.0% [DERIVED]
 T66 Strange Baryons         : SU3 flavor breaking; δm_strange from kaon-pion splitting [DERIVED]
 T67 Spin-Orbit Splitting    : Y-junction angular momentum coupling; N(1520) 0.1% [DERIVED]
-T68 Delta Resonance         : Casimir BC Dirichlet→Neumann; M_Delta=1247 MeV, 1.2% error [DERIVED]
+T68 Delta Resonance         : Casimir BC Dirichlet→Neumann; M_Delta=1247 MeV, 1.2% error [DERIVED_LIMIT]
+                               Wall: Casimir Neumann/Dirichlet coefficient ratio: analytic proof pending
 
 ### MATERIALS & ENGINEERING
 T69 Reynolds' Threshold     : non-Newtonian transition macro; σ_crit=2γφ/d [DERIVED]
@@ -158,6 +163,12 @@ T83 Yukawa's Ladder         : lepton masses via bottom-tau unification; m_τ 0.0
 T84 Wakata's Archives       : gravitational epigenetics; methylation decay M(t,g)=M_floor+(M0-M_floor)exp(-k(1-g/g_earth)t); Sakura 0% error [DERIVED]
                                Chain: T2→T51→T57→T84; cytoskeletal tensegrity → chromatin → DNMT access
                                Named for Koichi Wakata, JAXA
+
+### PHARMACOPHORE GATE
+T85 Pharmacophore Gate     : hydrophobic protein pocket=closed foam cell; ≥1 aromatic ring (π-stack, T28),
+                               ≥1 H-bond acceptor (T50), ≤2 H-bond donors (T73); rings≥2, rot bonds≤10 [DERIVED]
+                               DERIVED from T50+T28+T73 [S213]
+                               Implemented: foam_screener_v2.py:t85_pharmacophore_gate()
 
 ### NEGATIVE SPACE
 T86 Negative Space          : void fill theorem; m_top=173.95 GeV, 0.7% error [DERIVED]

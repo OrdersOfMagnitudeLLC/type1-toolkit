@@ -152,7 +152,7 @@ LOGP_MIN = 1.0   # below this: too hydrophilic for hydrophobic pocket
 LOGP_MAX = 5.0   # Lipinski limit
 
 def t50_binding_dG_molecule(r_pocket, logp_molecule):
- """DERIVED: T50 + T73 hydrophobic burial scaling.
+    """DERIVED: T50 + T73 hydrophobic burial scaling.
     
     dG_molecule = dG_pocket × (logP / logP_ref)
     Molecules with higher logP score better in hydrophobic pockets.
@@ -211,7 +211,7 @@ def t71_diagnostic_score(dG_kcal, c_healthy_nM=1.0, c_disease_nM=100.0,
 #   - Molecular complexity: rings >=2, rotatable bonds <=10
 
 def t85_pharmacophore_gate(smiles):
- """DERIVED: T85 Pharmacophore Gate
+    """DERIVED: T85 Pharmacophore Gate
     
     Foam-mechanical requirements for hydrophobic pocket binding:
       aromatic ring → π-stacking stabilizes bubble surface (T28 Prime Cell)
@@ -330,7 +330,7 @@ ATOMIC_MASS = {
     'V':51,'Cr':52,'Mn':55,'Fe':56,'Co':59,'Ni':58,'Cu':64,'Zn':65,
     'Ga':70,'Ge':73,'As':75,'Se':79,'Br':80,'Sr':88,'Y':89,'Zr':91,
     'Nb':93,'Mo':96,'Ru':101,'Rh':103,'Pd':106,'Ag':108,'Cd':112,
-    'In':115,'Sn':119,'Te':128,'I':127,'La':139,'W':184,'Pb':207,
+    'In':115,'Sn':119,'Sb':121.76,'Te':128,'I':127,'La':139,'W':184,'Pb':207,
     'Bi':209,'Ta':181,'Hf':178,'Re':186,'Ir':192,'Pt':195,'Au':197,
 }
 
@@ -347,6 +347,84 @@ ATOMIC_NUMBER = {
 ELECTRONIC_INSTABILITY = {'VO2', 'Cu2O', 'FeSe'}
 
 T_ROOM     = 300.0
+
+# ─── Pre-phonon molecular gas gate ──────────────────────────
+def molecular_gas_gate(formula: str, T_bulk_K: float = None) -> dict:
+    """
+    Pre-phonon gate: flags compounds that are gases at ambient conditions.
+    Anchor: H3S required cooling to 200K before pressurizing to prevent
+    decomposition (Eremets et al. 2015). Label: MEASURED_CONSTRAINED.
+    """
+    KNOWN_GAS_BP = {
+        "SiHF3": 175.7,   # Shifu — confirmed gas, bp -97.5C
+        "PH3": 185.4,
+        "H2S": 213.6,
+        "NH3": 239.7,
+        "HF": 292.7,
+        "SiF4": 187.0,
+        "PF3": 171.9,
+    }
+
+    if T_bulk_K is None:
+        T_bulk_K = KNOWN_GAS_BP.get(formula, None)
+
+    if T_bulk_K is None:
+        # Heuristic: MW < 120 with no O or N = likely molecular gas
+        from collections import Counter
+        import re
+        matches = re.findall(r'([A-Z][a-z]?)(\d*)', formula)
+        elements = [el for el, _ in matches]
+        has_ON = any(e in ('O','N') for e in elements)
+        MW_TABLE = {
+            'H':1,'He':4,'Li':7,'Be':9,'B':11,'C':12,'N':14,'O':16,
+            'F':19,'Ne':20,'Na':23,'Mg':24,'Al':27,'Si':28,'P':31,
+            'S':32,'Cl':35,'Ar':40,'K':39,'Ca':40,'Ge':73,'As':75,
+            'Se':79,'Sn':119,'Sb':122,'Xe':131,
+            'Fe':56,'Mn':55,'Ti':48,'Mo':96,'Cu':64,'Ni':59,'Co':59,
+            'Cr':52,'V':51,'Zn':65
+        }
+        mw = sum(MW_TABLE.get(el, 50) * (int(n) if n else 1) for el, n in matches)
+        if mw < 120 and not has_ON:
+            return {
+                "flag": "MOLECULAR_GAS_RISK",
+                "T_bulk_K": None,
+                "confidence": "HEURISTIC",
+                "message": f"{formula}: MW<120, no O/N — likely molecular gas. "
+                           f"Pressure validation required before phonon queue."
+            }
+        return {"flag": "CLEAR", "T_bulk_K": T_bulk_K}
+
+    if T_bulk_K < 200:
+        return {
+            "flag": "MOLECULAR_GAS_RISK",
+            "T_bulk_K": T_bulk_K,
+            "confidence": "MEASURED_CONSTRAINED",
+            "message": f"{formula}: bulk bp/mp {T_bulk_K}K < 200K threshold. "
+                       f"Molecular gas — needs pressure sweep before SPARC."
+        }
+    return {"flag": "CLEAR", "T_bulk_K": T_bulk_K}
+
+
+# ─── Framework variant generator (UNVALIDATED) ───────────────
+SHIFU_VARIANTS = [
+    "Si2H2F6",   # disilane — doubled dispersion forces
+    "GeHF3",     # isoelectronic, Ge heavier → stronger packing
+    "SiHF2OH",   # adds H-bonding → framework character
+    "SiF2NH2H",  # directional N-H bonding
+    "SnHF3",     # heavy enough to definitely be solid
+]
+
+PHO_VARIANTS = [
+    "AsHO2F2",   # heavier pnictogen, same motif
+    "PHOF2OH",   # H-bonding added
+    "SbHO2F2",   # heaviest, guaranteed solid
+]
+
+def generate_framework_variants(base: str = "shifu") -> list:
+    """Returns framework-forming variants of molecular gas candidates.
+    Label: UNVALIDATED — preserves bonding invariant, framework character added."""
+    return SHIFU_VARIANTS if base == "shifu" else PHO_VARIANTS
+
 
 # ─── T_DEBYE DERIVED: Anderson elastic-constant formula ──────────────────
 def debye_temperature_anderson(
@@ -555,6 +633,13 @@ ELASTIC_DB = {
     'S':        (14,   6,    2.07,  122.8, 16, 'orthorhombic'),
     'Se':       (8,    3.7,  4.81,  164.2, 32, 'hexagonal'),
     'Te':       (22,   11,   6.24,  140.0, 4,  'hexagonal'),
+    # ── Pnictogen solids — literature DFT/experiment (added 2026-09-20) ──
+    # H, F, O, N: no ambient solid-state B/G —
+    # Lindemann fallback is correct for these, not a bug
+    'P':        (36.0, 17.0, 2.69,  None,  None, 'orthorhombic'),  # black phosphorus
+    'As':       (22.0, 10.0, 5.73,  None,  None, 'rhombohedral'),
+    'Sb':       (42.0, 20.0, 6.69,  None,  None, 'rhombohedral'),
+    'Bi':       (31.0, 13.0, 9.75,  None,  None, 'rhombohedral'),
 }
 
 
@@ -1165,7 +1250,7 @@ def phonon_stability(
         theta_D = C_DEBYE_LEGACY * math.sqrt(A_FOAM * (r_atomic_A ** (ALPHA_DEBYE - 1)) / M_reduced)
         debye_stable = theta_D > T_ROOM
         debye_method = 'C_DEBYE-legacy (low accuracy)'
- theta_D_accuracy = 'legacy fit: use Anderson or Lindemann if data available'
+        theta_D_accuracy = 'legacy fit: use Anderson or Lindemann if data available'
 
     score_corrected = score
 
@@ -1191,8 +1276,8 @@ def phonon_stability(
     # Electronic instabilities: permanent ceiling, outside foam scope
     if formula in ELECTRONIC_INSTABILITY:
         stable = False
- confidence = 'ELECTRONIC INSTABILITY - outside foam scope (Mott/spin-orbit)'
- recommendation = 'FAIL: electronic instability. Foam cannot predict this class.'
+        confidence = 'ELECTRONIC INSTABILITY - outside foam scope (Mott/spin-orbit)'
+        recommendation = 'FAIL: electronic instability. Foam cannot predict this class.'
 
     # Confidence bands
     if score > 0.85:   confidence = 'HIGH (>85% phonon-stable materials in this band)'
@@ -1200,7 +1285,7 @@ def phonon_stability(
     elif score > 0.50: confidence = 'LOW-MODERATE (near threshold, run SPARC to confirm)'
     else:              confidence = 'UNSTABLE (run SPARC only if structure is unusual)'
 
- recommendation = 'PASS: proceed to T50/T51 or DFT confirmation' if stable \
+    recommendation = 'PASS: proceed to T50/T51 or DFT confirmation' if stable \
  else 'FAIL: likely imaginary phonons, verify structure first'
 
     elapsed_us = (time.perf_counter() - t0) * 1e6
@@ -1286,7 +1371,7 @@ def life_walk() -> None:
     T56: The Primordial Mutation Theorem.
     """
     print("=" * 70)
- print("THE LIFE WALK: T56 (The Primordial Mutation Theorem)")
+    print("THE LIFE WALK: T56 (The Primordial Mutation Theorem)")
     print("One equation: ΔP = 2γ/r (T45, The Answer Key)")
     print("=" * 70)
     
@@ -2346,7 +2431,7 @@ def main():
                 fm.write(str(s) + '\n')
                 print(s)
 
- mprnt("\n=== MEMBRANE TOXICITY FOAM MODEL v3 - NERNST-CORRECTED ===")
+            mprnt("\n=== MEMBRANE TOXICITY FOAM MODEL v3 - NERNST-CORRECTED ===")
             mprnt("(membrane + Nernst-corrected mitochondrial + reactive metabolite)")
 
             labeled   = [d for d in DILI_VALIDATION if d['DILI'] >= 0]
@@ -2547,7 +2632,50 @@ if __name__ == '__main__':
                         help='Analytic QCD calculator (T32). Returns Lambda_QCD, '
                              'mass gap, running coupling. Microsecond runtime. '
                              'DERIVED from T32 (foam IR fixed point, g2=4).')
+    parser.add_argument('--molecular-check', type=str, default=None,
+                        help='Pre-phonon molecular gas gate check (e.g. SiHF3)')
+    parser.add_argument('--variants', type=str, default=None,
+                        help='Framework variants: shifu | pho')
     args, _ = parser.parse_known_args()
+
+    if args.molecular_check:
+        print(molecular_gas_gate(args.molecular_check))
+        sys.exit(0)
+
+    if args.variants:
+        base = args.variants.lower()
+        variants = generate_framework_variants(base)
+        date_str = time.strftime('%Y-%m-%d')
+        out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'findings', date_str)
+        os.makedirs(out_dir, exist_ok=True)
+        out_path = os.path.join(out_dir, f'{base}_variants.txt')
+        header = (f"{'formula':<12} {'gate':<22} {'stable':<8} "
+                  f"{'theta_D_K':<10} {'score':<8}")
+        out_lines = [header]
+        print(header)
+        for v in variants:
+            gate = molecular_gas_gate(v)
+            if gate["flag"] == "MOLECULAR_GAS_RISK":
+                row = (f"{v:<12} {gate['flag']:<22} {'-':<8} "
+                       f"{'-':<10} {'-':<8}")
+            else:
+                try:
+                    r = phonon_stability_formula(
+                        v, crystal_system='cubic', r_atomic_A=2.0,
+                        n_atoms=_formula_natoms(v))
+                    row = (f"{v:<12} {gate['flag']:<22} "
+                           f"{str(r.get('stable')):<8} "
+                           f"{str(r.get('theta_D_K', '-')):<10} "
+                           f"{str(r.get('stability_score', '-')):<8}")
+                except Exception as e:
+                    row = f"{v:<12} {gate['flag']:<22} ERROR: {e}"
+            out_lines.append(row)
+            print(row)
+        with open(out_path, 'w') as vf:
+            vf.write('\n'.join(out_lines) + '\n')
+        print(f"Saved: {out_path}")
+        sys.exit(0)
 
     if args.qcd:
         t0 = time.time()

@@ -14,7 +14,7 @@ Materials discovery takes years and GPU clusters. Bob searches hundreds of thous
 
 ## Governance
 
-A single AI system can be compromised, captured, or manipulated. The OOM Governance Framework replaces singular AI authority with a Byzantine fault-tolerant council. Five active agents from five different providers (Meta, Mistral, Google, Anthropic, OpenAI). Independent deliberation: no agent sees another's reasoning before voting. Full reasoning transcripts logged publicly with cryptographic hashes. Tolerates 1 compromised agent out of 5. Tested against adversarial injection: consensus held, zero agents flipped. Deployable. Model-agnostic. Open source under CC BY 4.0.
+A single AI system can be compromised, captured, or manipulated. The OOM Governance Framework replaces singular AI authority with a Byzantine fault-tolerant council. Five active agents from five different providers (Meta, Mistral, Google, Anthropic, OpenAI). Independent deliberation: no agent sees another's reasoning before voting. Full reasoning transcripts logged publicly with cryptographic hashes. Tolerates 1 compromised agent out of 5. Tested against adversarial injection: consensus held, zero agents flipped. Deployable. Model-agnostic. Code: MIT. Theory and documentation: CC BY 4.0.
 
 ## Kun Framework
 

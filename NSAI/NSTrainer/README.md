@@ -20,14 +20,14 @@ See `data/DATASETS.md` for required datasets before running any training scripts
 
 - `src/` - training, distillation, ablation, and analysis scripts (`run_all.sh` is the RunPod pipeline entry point)
 - `tests/` - test/benchmark scripts (run with `PYTHONPATH=src`)
-- `docs/` - `paper_draft.md`, methodology and results writeup
+- `docs/` - `paper.md`, methodology and results writeup
 - `data/` - dataset docs, download script, and sample corpora
 - `cpp/` - C++ KV-box / llama components
 - `checkpoints/`, `results/`: generated artifacts (gitignored)
 
 ## Methodology
 
-See `docs/paper_draft.md` for the full methodology, ablation results, and the NS-filtering proof.
+See `docs/paper.md` for the full methodology, ablation results, and the NS-filtering proof.
 
 ## License
 
