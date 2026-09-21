@@ -53,6 +53,7 @@ License: MIT
 |---|---|
 | NS Suite | OOM Commercial License v1.0 |
 | NSRun | MIT base + OOM Commercial License v1.0 on OOM additions |
+| NSTrainer | OOM Commercial License v1.0 |
 | KunFramework | CC BY 4.0 (theory) / MIT (code) |
 | Simulation | OOM Commercial License v1.0 |
 | Governance | MIT |
