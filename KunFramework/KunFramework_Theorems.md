@@ -2,7 +2,7 @@
 # 86 Theorems, 2 Axioms | zero free parameters
 # Author: Owner, Orders of Magnitude LLC
 # One equation: ΔP = 2γ/r
-# Script: soap_bowl_full.py (119+ sections) | Paper: KunFramework_v1.txt
+# Script: soap_bowl_full.py | Paper: KunFramework_v1.txt
 
 ---
 
@@ -50,6 +50,9 @@ T18 Compiler Theorem        : 62 orders × 25 generations = 1550 dimensional ord
 T19 Tardis Theorem          : de Sitter horizon = Schwarzschild radius, ratio=1.000000 [DERIVED]
 T20 Initialization Theorem  : 186.72 bits specifies R0 (The Seed); 1-bit = matter/antimatter direction [DERIVED]
 T21 Terminus Theorem        : R5 BHs 10.6 orders below viable parent mass; chain ends R0→R5 [DERIVED]
+T33 Mutation Rate Theorem   : 1.014%/gen canonical (T10+T11, zero empirical inputs); Hoyle check: 1.022%
+                               (Oberhummer 2000, MEASURED-CONSTRAINED); T33_gap: 0.09%/gen open; G_min=5.0 [DERIVED]
+                               foam-α: G=5.17; Hamaus-α: G=5.04; consistent, same underlying coupling
 
 ### QUANTUM MECHANICS
 T22 Bell's Boundary         : local bubble fails CHSH correctly; points to ER=EPR [DERIVED]
@@ -74,9 +77,6 @@ T31 Sakharov's Number       : η = exp(-8π²/g²(G)) × g²(G)/4π [DERIVED]
 ### MILLENNIUM PRIZE PROBLEMS
 T32 Yang-Millis Theorem     : mass gap; 4D: S_foam=2π²=S_BPST at g²=4 (ratio 1.00000000) [DERIVED]
                                Path integral: McKean-Singer+Faddeev-Popov+Atiyah-Singer all closed
-T33 Mutation Rate Theorem   : 1.014%/gen canonical (T10+T11, zero empirical inputs); Hoyle check: 1.022%
-                               (Oberhummer 2000, MEASURED-CONSTRAINED); T33_gap: 0.09%/gen open; G_min=5.0 [DERIVED]
-                               foam-α: G=5.17; Hamaus-α: G=5.04; consistent, same underlying coupling
 T34 Gödel's Wall            : P≠NP; NP=foam energy landscape; Mezard-Parisi spin glass isomorphism [DERIVED]
 T35 Rayleigh's Rupture      : Navier-Stokes: smooth with Planck floor (AX2), singular without [DERIVED]
 T36 Riemann's Equilibrium   : zeros=foam eigenvalues H_foam; self-adjoint → Re(s)=1/2 [DERIVED]

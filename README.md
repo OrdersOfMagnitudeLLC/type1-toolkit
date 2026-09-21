@@ -32,19 +32,19 @@ Ranks candidates by abundance, synthesizability, and property match.
 License: OOM Commercial License
 
 ### NS Suite: `NS Suite/` 
-22 performance products exploiting Negative Space.
-NSHash (55x absl), NSSort (182,000x structured data), NSAttend (30.9x attention).
+23 performance products exploiting Negative Space.
+NSHash (11.76x absl (timestamp lookup)), NSSort (182,000x structured data), NSAttend (30.9x attention).
 License: OOM Commercial License
 
 ### NSTrainer: `NSAI/`
-NS-filtered training pipeline. 86.8% fewer gradient steps. Ships with NSRun.
+NS-filtered training pipeline. 86.8% fewer gradient steps.
 
 ### Lacuna: `Lacuna/`
-Obfuscation layer. Ships with your binary. Zero runtime overhead. Challenge still open.
+Obfuscation layer. Ships with your binary. Zero runtime overhead. Open Challenge.
 
 ### OOM Governance: `Governance/` 
 Byzantine fault-tolerant AI council. 5 agents, f_max=1, supermajority threshold.
-Model-agnostic. Deployable. Not a manifesto.
+Model-agnostic. Deployable.
 License: MIT
 
 ## Licenses
@@ -52,7 +52,7 @@ License: MIT
 | Component | License |
 |---|---|
 | NS Suite | OOM Commercial License v1.0 |
-| NSRun | MIT base + OOM additions |
+| NSRun | MIT base + OOM Commercial License v1.0 on OOM additions |
 | KunFramework | CC BY 4.0 (theory) / MIT (code) |
 | Simulation | OOM Commercial License v1.0 |
 | Governance | MIT |

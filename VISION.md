@@ -6,11 +6,12 @@ Standard library algorithms are generic. They optimize for the average case acro
 
 ## Lacuna
 
-Compiled binaries can be cracked. Existing DRM and obfuscation tools are heavy, slow on small devices, or already compromised. Lacuna is a binary protection layer built using the same Negative Space methodology. 600 lines of code. 136 microsecond startup overhead. Zero hot-path impact. Distributed as liblacuna.a and lacuna.h. Links into any C/C++ binary. Includes a crackme challenge with no winners since launch.
+Compiled binaries can be cracked. Existing DRM and obfuscation tools are heavy, slow on small devices, or already compromised. Lacuna is a binary protection layer built using the same Negative Space methodology. 600 lines of code. 136 microsecond startup overhead. Zero hot-path impact. Distributed as liblacuna.a and lacuna.h. Links into any C/C++ binary. Includes a crackme challenge.
 
 ## Bella + Bob
 
-Materials discovery takes years and GPU clusters. Bob searches hundreds of thousands of materials simultaneously using learned indices: 346x wide query, 1313x tight query, 101x batch, against brute force. Bella simulates candidates using foam mechanics on a laptop, no GPU required. The pipeline: Bob search, CIF resolve, NSMace screen, SPARC DFT confirm, phonon stability check. Found: Fe3Mn4 (N2 adsorption -1.134 eV), 53,349 calibrated protein candidates, 133 phonon-stable materials candidates across 101 categories. Phonon accuracy: 89% MACE. SPARC DFT is authoritative. All results labeled CONJECTURE unless independently confirmed.
+Materials discovery takes years and GPU clusters. Bob searches hundreds of thousands of materials simultaneously using learned indices: 346x wide query, 1313x tight query, 101x batch, against brute force. Bella simulates candidates using foam mechanics on a laptop, no GPU required. The pipeline: Bob search, CIF resolve, NSMace screen, SPARC DFT confirm, phonon stability check. Found: Fe3Mn4 (N2 adsorption -1.134 eV), 53,349 calibrated protein candidates, 133 phonon-stable materials candidates across 101 categories. Phonon accuracy: 89% MACE. SPARC DFT is authoritative. All results labeled unconfirmed unless independently confirmed.
+Bella can also generate novel materials candidates independently of any database.
 
 ## Governance
 
@@ -22,7 +23,7 @@ This is the Answer Key.
 
 ## NSTrainer / AI Stack
 
-Inference at 1M token context requires data center GPUs. Dense attention and dense inference scale linearly with sequence length, making long context prohibitively expensive. NSTrainer composes four NS products into a single inference engine: NSKVCache (300x KV compression, 1M context at 468MB), NSAttend (28.7x speedup on fixed-window attention), NSInfer (3.04x throughput vs dense BLAS), NSQuant (10-12x model size reduction via variable-rate per-cluster quantization). Result: 1M token context running on a laptop CPU. No data center required.
+Inference at 1M token context requires data center GPUs. Dense attention and dense inference scale linearly with sequence length, making long context prohibitively expensive. NSTrainer composes four NS products into a single inference engine: NSKVCache (208x KV compression, 1M context at 168MB), NSAttend (28.7x speedup on fixed-window attention), NSInfer (3.04x throughput vs dense BLAS), NSQuant (3.8x to 7.2x measured compression, improving with model size via variable-rate per-cluster quantization). Result: 1M token context running on a laptop CPU. No data center required.
 
 ## Closing
 

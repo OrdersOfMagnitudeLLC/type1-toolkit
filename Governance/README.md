@@ -8,7 +8,7 @@ Full reasoning transcripts logged. Yearly rotation. No salary. No corruptible in
 
 The failure mode shared by AI systems and human institutions is identical:
 unchecked singular power. This framework addresses both simultaneously.
-Ships as a deployable system, not a manifesto.
+Ships as a deployable system.
 
 ## Council Composition
 | Agent | Model | Provider |

@@ -35,4 +35,4 @@ make -j$(nproc)
 
 ## License
 
-OOM Commercial License v1.0 · https://ofmagnitude.com/license
+OOM Commercial License v1.0
