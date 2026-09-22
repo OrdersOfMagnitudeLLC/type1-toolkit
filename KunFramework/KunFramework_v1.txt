@@ -1,7 +1,7 @@
 The Kun Framework: Foam Mechanics from the Prime Cell to the edge of reality
 
 Version: 1.0 | September 2026
-DOI: [Zenodo: pending]
+DOI: 10.5281/zenodo.22896947
 License: CC BY 4.0
 
 Author: Owner, Orders of Magnitude LLC

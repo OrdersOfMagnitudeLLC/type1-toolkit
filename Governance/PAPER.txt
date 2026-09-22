@@ -1,5 +1,5 @@
 ========================================================================
-                      OOM AGI GOVERNANCE FRAMEWORK
+                      OOM AI GOVERNANCE FRAMEWORK
                          Orders of Magnitude LLC
 ========================================================================
 
@@ -118,3 +118,5 @@ THE PRINCIPLE
     accountable to everyone,
     owned by no one.
 ========================================================================
+
+DOI: 10.5281/zenodo.22897102

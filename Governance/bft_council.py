@@ -1,5 +1,5 @@
 """
-OOM AGI Governance: Byzantine Fault-Tolerant AI Council
+OOM AI Governance: Byzantine Fault-Tolerant AI Council
 Orders of Magnitude LLC
 
 Five agents. Different providers. Independent reasoning.

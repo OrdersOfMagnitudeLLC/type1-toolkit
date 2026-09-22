@@ -1,4 +1,4 @@
-# OOM AGI Governance Framework
+# OOM AI Governance Framework
 Orders of Magnitude LLC | orders@ofmagnitude.com | License: MIT
 
 ## What It Is

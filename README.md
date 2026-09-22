@@ -7,7 +7,7 @@ License: See individual component licenses below.
 ## What This Is
 A unified drop built around one organizing principle: Negative Space. What a system does not compute, store, or load is where the efficiency lives. The physics framework formalizes why. The tools are what happens when you follow that logic all the way down.
 
-This is a first release. The benchmarks are real. The code is functional. It isn't polished software. It's prior art.
+This is a first release. Most of the benchmarks were ran on a laptop.
 
 ## Components
 
@@ -71,4 +71,4 @@ License: MIT
 orders@ofmagnitude.com
 We read everything, reply selectively. Benchmarks are reproducible. Run them yourself.
 
-This is a first release. The benchmarks are real. The code is functional. It isn't polished software, it's a starting off point.
+This is a first release. The benchmarks are real. The code is functional. It isn't polished software, it's a starting off point. 

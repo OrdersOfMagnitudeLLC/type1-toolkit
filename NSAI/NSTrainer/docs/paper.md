@@ -388,3 +388,5 @@ The cold 60% of weights receive delta compression on top of Q2, exploiting the o
 | NSQuant | Architecture complete, benchmark pending |
 
 Each targets a specific bottleneck in the LLM pipeline - training data efficiency, KV cache memory, attention compute, inference latency, and model size - and each applies the same Negative Space principle: exploit the structure that general-purpose tools ignore.
+
+DOI: 10.5281/zenodo.22897274
