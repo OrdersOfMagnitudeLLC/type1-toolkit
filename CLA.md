@@ -30,4 +30,3 @@ Add this line to your first PR description:
 orders@ofmagnitude.com
 
 Governing law: Wyoming, United States.
-CLA assistant integration pending -- see https://cla-assistant.io for setup.
