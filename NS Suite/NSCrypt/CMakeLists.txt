@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.20)
-project(nsmatrix CXX)
+project(nscrypt CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-# --- Highway: system package, vendored copy, or bare library ---
+# --- Highway: system package, vendored copy, or fetch ---
 if(NOT TARGET hwy)
     find_package(HWY QUIET)
 endif()
@@ -38,25 +37,16 @@ if(NOT TARGET hwy)
         endif()
     endif()
 endif()
-if(NOT TARGET hwy_contrib)
-    if(TARGET hwy::hwy_contrib)
-        add_library(hwy_contrib INTERFACE)
-        target_link_libraries(hwy_contrib INTERFACE hwy::hwy_contrib)
-    else()
-        find_library(HWY_CONTRIB_LIB NAMES hwy_contrib libhwy_contrib)
-        if(HWY_CONTRIB_LIB)
-            add_library(hwy_contrib UNKNOWN IMPORTED)
-            set_target_properties(hwy_contrib PROPERTIES
-                IMPORTED_LOCATION "${HWY_CONTRIB_LIB}")
-        else()
-            add_library(hwy_contrib INTERFACE)
-        endif()
-    endif()
-endif()
 # --- end Highway ---
 
-add_executable(nsmatrix bench_nsmatrix.cpp)
-target_include_directories(nsmatrix PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(nsmatrix PRIVATE hwy)
-target_compile_options(nsmatrix PRIVATE -O3 -march=native -DUSE_EIGEN)
-target_include_directories(nsmatrix PRIVATE /usr/include/eigen3)
+find_package(OpenSSL QUIET)
+
+add_executable(nscrypt bench_nscrypt.cpp)
+target_include_directories(nscrypt PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+if(OpenSSL_FOUND)
+    target_link_libraries(nscrypt PRIVATE hwy OpenSSL::Crypto)
+    target_compile_options(nscrypt PRIVATE -O3 -march=native -DUSE_OPENSSL)
+else()
+    target_link_libraries(nscrypt PRIVATE hwy)
+    target_compile_options(nscrypt PRIVATE -O3 -march=native)
+endif()

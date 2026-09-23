@@ -13,3 +13,32 @@ B=100,000 | 171.70              | 353.10           | 2.06x
 Correctness: PASSED | AVX-512: YES
 Win condition: caller declares block-diagonal structure - Eigen has no
 native mechanism for this.
+
+Toeplitz matvec (circulant embedding + AVX-512 radix-2 FFT, O(n log n))
+vs Eigen dense matvec O(n^2), measured 2026-09-23:
+
+N       | NSMatrix (ms) | Eigen (ms) | Speedup | Max rel err
+--------|---------------|------------|---------|------------
+256     | 0.0044        | 0.0020     | 0.45x   | 2.6e-7
+1,024   | 0.020         | 0.092      | 4.60x   | 2.4e-7
+4,096   | 0.085         | 2.879      | 33.97x  | 3.6e-7
+16,384  | 0.635         | 50.23      | 79.09x  | 7.1e-7
+
+Crossover ~N=512; below it FFT overhead loses to dense matvec.
+At 16K Eigen is memory-bound (~1 GB per matvec) while the NS FFT
+workspace (~256 KB) stays L3-resident. Detection on random dense
+correctly refuses the fast path - no win on unstructured input.
+
+NS only, dense unrepresentable (no Eigen comparison possible -
+there is no dense matrix to hand it), measured 2026-09-23:
+
+N         | NSMatrix (ms) | Dense equiv | NS footprint | Max rel err
+----------|---------------|-------------|--------------|------------
+65,536    | 2.90          | 17.2 GB     | 4.7 MB       | 1.5e-7
+262,144   | 14.05         | 274.9 GB    | 18.9 MB      | 1.7e-7
+1,048,576 | 84.96         | 4.4 TB      | 75.5 MB      | 2.0e-7
+
+Headline: 1M x 1M Toeplitz matvec in 85 ms on a 16 GB laptop.
+The dense matrix is 4.4 TB - no machine can store it. NS stores
+2n-1 coefficients + 75 MB FFT workspace. Correctness spot-checked
+with direct O(n) dot products (8 entries per size).

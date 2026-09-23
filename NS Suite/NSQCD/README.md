@@ -23,6 +23,14 @@ and Lambda_QCD is the perturbative breakdown scale.
 DERIVED from T32 (Kun Framework, Foam Mechanics).
 First-principles. Zero tunable parameters.
 
+## Build
+
+No compilation required — pure Python 3:
+
+```bash
+python3 -c "import nsqcd"
+```
+
 ## Usage
   python3 nsqcd_cli.py           # full report
   python3 nsqcd_cli.py --benchmark  # vs lattice

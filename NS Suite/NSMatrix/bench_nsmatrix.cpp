@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <algorithm>
+#include <vector>
 
 #ifdef USE_EIGEN
 #include <Eigen/Dense>
@@ -307,6 +308,183 @@ int main() {
     std::cout << "NSMatrix: " << ns_median3 << " ns/block" << std::endl;
     std::cout << "Eigen: " << eigen_median3 << " ns/block" << std::endl;
     std::cout << "Ratio (NS/Eigen): " << (ns_median3 / eigen_median3) << std::endl;
+
+    // ------------------------------------------------------------------
+    // Toeplitz extension: FFT matvec O(n log n) vs Eigen dense O(n^2)
+    // ------------------------------------------------------------------
+    std::cout << "\nToeplitz matvec (FFT vs Eigen dense):" << std::endl;
+    std::cout.unsetf(std::ios::floatfield);
+    std::cout << std::setprecision(4);
+    const size_t tsizes[] = {256, 1024, 4096, 16384};
+    for (size_t n : tsizes) {
+        // Dense row-major Toeplitz for detection + Eigen reference
+        size_t mbytes = (n * n * sizeof(float) + 63) & ~(size_t)63;
+        float* M = (float*)aligned_alloc(64, mbytes);
+        std::vector<float> tc(n), tr(n);
+        for (size_t i = 0; i < n; ++i) {
+            tc[i] = (float)rand() / RAND_MAX;
+            tr[i] = (float)rand() / RAND_MAX;
+        }
+        tr[0] = tc[0];
+        for (size_t i = 0; i < n; ++i)
+            for (size_t j = 0; j < n; ++j)
+                M[i * n + j] = (i >= j) ? tc[i - j] : tr[j - i];
+
+        bool is_toeplitz = ns_toeplitz_detect(M, n, 1e-5f);
+
+        NSToeplitzMatrix T;
+        if (!T.allocate(n)) {
+            std::cerr << "Toeplitz allocation failed at n=" << n << std::endl;
+            free(M);
+            return 1;
+        }
+        ns_toeplitz_from_dense(M, n, T);
+        auto p0 = std::chrono::high_resolution_clock::now();
+        ns_toeplitz_prepare(T);
+        auto p1 = std::chrono::high_resolution_clock::now();
+        double prep_ms = std::chrono::duration<double, std::milli>(p1 - p0).count();
+
+        Eigen::Map<const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic,
+                                       Eigen::RowMajor>> Me(M, n, n);
+        Eigen::VectorXf x(n), y_ref(n), y_ns(n);
+        for (size_t i = 0; i < n; ++i) x(i) = (float)rand() / RAND_MAX;
+        y_ref.noalias() = Me * x;
+
+        ns_toeplitz_matvec(T, x.data(), y_ns.data());
+        double max_rel = 0.0;
+        for (size_t i = 0; i < n; ++i) {
+            double e = std::abs((double)y_ns(i) - (double)y_ref(i));
+            max_rel = std::max(max_rel, e / (std::abs((double)y_ref(i)) + 1e-6));
+        }
+
+        int iters = (n <= 4096) ? 50 : 10;
+        int warm  = (n <= 4096) ? 5 : 2;
+
+        for (int w = 0; w < warm; ++w) y_ref.noalias() = Me * x;
+        std::vector<double> et(iters);
+        for (int i = 0; i < iters; ++i) {
+            auto t0 = std::chrono::high_resolution_clock::now();
+            y_ref.noalias() = Me * x;
+            auto t1 = std::chrono::high_resolution_clock::now();
+            et[i] = std::chrono::duration<double, std::milli>(t1 - t0).count();
+        }
+        volatile float sink_e = y_ref(0);
+        (void)sink_e;
+
+        for (int w = 0; w < warm; ++w) ns_toeplitz_matvec(T, x.data(), y_ns.data());
+        std::vector<double> nt(iters);
+        for (int i = 0; i < iters; ++i) {
+            auto t0 = std::chrono::high_resolution_clock::now();
+            ns_toeplitz_matvec(T, x.data(), y_ns.data());
+            auto t1 = std::chrono::high_resolution_clock::now();
+            nt[i] = std::chrono::duration<double, std::milli>(t1 - t0).count();
+        }
+        volatile float sink_n = y_ns(0);
+        (void)sink_n;
+
+        std::sort(et.begin(), et.end());
+        std::sort(nt.begin(), nt.end());
+        double em = et[iters / 2], nm = nt[iters / 2];
+
+        std::cout << "N=" << std::setw(6) << n
+                  << " | detect: " << (is_toeplitz ? "TOEPLITZ" : "no")
+                  << " | NS " << nm << " ms"
+                  << " | Eigen " << em << " ms"
+                  << " | speedup " << (em / nm) << "x"
+                  << " | prep " << prep_ms << " ms"
+                  << " | max_rel_err " << max_rel
+                  << std::endl;
+        free(M);
+    }
+
+    // Random dense: detection must refuse the fast path (expected no-win)
+    {
+        const size_t n = 1024;
+        size_t mbytes = (n * n * sizeof(float) + 63) & ~(size_t)63;
+        float* M = (float*)aligned_alloc(64, mbytes);
+        for (size_t i = 0; i < n * n; ++i) M[i] = (float)rand() / RAND_MAX;
+        bool is_t = ns_toeplitz_detect(M, n, 1e-5f);
+        std::cout << "Random dense N=1024 detect: "
+                  << (is_t ? "TOEPLITZ (BUG)"
+                           : "not Toeplitz - no fast path (expected)")
+                  << std::endl;
+        free(M);
+    }
+
+    // ------------------------------------------------------------------
+    // Large N: NS only. The dense matrix cannot be materialized:
+    //   65536^2   = 17.2 GB  > Spectre RAM (16 GB)
+    //   262144^2  = 274.9 GB
+    //   1048576^2 = 4.4 TB
+    // No Eigen comparison is possible - there is no dense matrix to hand
+    // it. Structure is caller-declared; correctness is spot-checked with
+    // direct O(n) dot products on a few output entries.
+    // ------------------------------------------------------------------
+    std::cout << "\nToeplitz matvec, NS only (dense unrepresentable):"
+              << std::endl;
+    const size_t bigsizes[] = {65536, 262144, 1048576};
+    for (size_t n : bigsizes) {
+        NSToeplitzMatrix T;
+        if (!T.allocate(n)) {
+            std::cerr << "Toeplitz allocation failed at n=" << n << std::endl;
+            return 1;
+        }
+        for (size_t i = 0; i < n; ++i) {
+            T.col[i] = (float)rand() / RAND_MAX;
+            T.row[i] = (float)rand() / RAND_MAX;
+        }
+        T.row[0] = T.col[0];
+
+        auto p0 = std::chrono::high_resolution_clock::now();
+        ns_toeplitz_prepare(T);
+        auto p1 = std::chrono::high_resolution_clock::now();
+        double prep_ms = std::chrono::duration<double, std::milli>(p1 - p0).count();
+
+        std::vector<float> x(n), y(n);
+        for (size_t i = 0; i < n; ++i) x[i] = (float)rand() / RAND_MAX;
+
+        ns_toeplitz_matvec(T, x.data(), y.data());
+
+        // Spot-check 8 entries against direct O(n) dot products
+        srand(12345);
+        double max_rel = 0.0;
+        for (int s = 0; s < 8; ++s) {
+            size_t i = (size_t)rand() % n;
+            double ref = 0.0;
+            for (size_t j = 0; j <= i; ++j)
+                ref += (double)T.col[i - j] * x[j];
+            for (size_t j = i + 1; j < n; ++j)
+                ref += (double)T.row[j - i] * x[j];
+            double e = std::abs(ref - (double)y[i]) / (std::abs(ref) + 1e-6);
+            max_rel = std::max(max_rel, e);
+        }
+
+        int iters = (n <= 65536) ? 20 : (n <= 262144) ? 10 : 5;
+        for (int w = 0; w < 2; ++w) ns_toeplitz_matvec(T, x.data(), y.data());
+        std::vector<double> nt(iters);
+        for (int i = 0; i < iters; ++i) {
+            auto t0 = std::chrono::high_resolution_clock::now();
+            ns_toeplitz_matvec(T, x.data(), y.data());
+            auto t1 = std::chrono::high_resolution_clock::now();
+            nt[i] = std::chrono::duration<double, std::milli>(t1 - t0).count();
+        }
+        volatile float sink_b = y[0];
+        (void)sink_b;
+        std::sort(nt.begin(), nt.end());
+        double nm = nt[iters / 2];
+
+        double dense_bytes = (double)n * (double)n * sizeof(float);
+        double ns_mb = (32.0 * T.m + 8.0 * n) / 1e6;
+        std::cout << "N=" << std::setw(8) << n
+                  << " | NS " << nm << " ms"
+                  << " | Eigen n/a (dense = "
+                  << (dense_bytes >= 1e12 ? dense_bytes / 1e12 : dense_bytes / 1e9)
+                  << (dense_bytes >= 1e12 ? " TB" : " GB") << ")"
+                  << " | NS footprint " << ns_mb << " MB"
+                  << " | prep " << prep_ms << " ms"
+                  << " | max_rel_err " << max_rel
+                  << std::endl;
+    }
 #else
     // Benchmark NS (AVX-512 per block)
     auto start_ns = std::chrono::high_resolution_clock::now();

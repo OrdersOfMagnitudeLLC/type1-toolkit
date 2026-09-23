@@ -2,7 +2,7 @@
 
 **by Orders of Magnitude · ofmagnitude.com**
 
-23 high-performance C++ libraries. Drop-in replacements for standard
+26 high-performance libraries. Drop-in replacements for standard
 algorithms and data structures: faster on structured data, documented
 losses on structureless data.
 
@@ -18,8 +18,11 @@ losses on structureless data.
 | NSIndex | PGM-Index | 7.3x hit, 31x predecessor |
 | NSComp | zstd | 30x faster decompress |
 | NSBVH | Intel Embree | 2.78x dense, BVH16 AVX-512 |
-| NSMatrix | Eigen | 2.49x block-diagonal |
+| NSMatrix | Eigen | 3.3x block-diagonal, 79x Toeplitz at 16K |
 | NSCache | LRU, CLOCK | 5.67x random workload |
+| NSNet | DPDK-style parser | 1.85x Mpps at 1K packets |
+| NSGemm | MKL/Eigen | 185x banded, 3.0x weight batch |
+| NSCrypt | OpenSSL AEAD, scalar NTT | 2.7x schema AEAD, 2.78x batch-16 NTT |
 | NSOptimize | 2-opt TSP | 387x at 20K cities |
 | NSMesh | Draco | 2.43x smaller, 13.5x faster encode |
 | NSAttend | Dense attention | 28.7x fixed window |
