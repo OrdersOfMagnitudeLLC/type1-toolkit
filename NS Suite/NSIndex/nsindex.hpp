@@ -6,7 +6,7 @@
 #define NSINDEX_HPP
 
 // NSIndex: Learned Index with AVX-512 Range Query Acceleration
-// License: AGPL-3.0
+// License: OOM Commercial License v1.0
 // Description: Cache-optimized learned index for sorted key arrays with hybrid prediction/BitBlock dispatch
 
 #include <algorithm>

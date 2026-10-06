@@ -20,4 +20,4 @@ import bob
 results = bob.query(materials, constraints)
 ```
 
-**License:** AGPL-3.0 - NS products use AGPL for copyleft compliance
+**License:** OOM Commercial License v1.0 — see LICENSE.md
