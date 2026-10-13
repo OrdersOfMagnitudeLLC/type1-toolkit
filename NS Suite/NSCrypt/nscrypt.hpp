@@ -424,6 +424,22 @@ static inline HWY_ATTR __m512i barrett_reduce_vec(__m512i x) {
     return r;
 }
 
+// Plantard reduction for x < q^2 (< 2^24): t = floor(x*M / 2^40) equals
+// floor(x/q) exactly (excess < 2^-16 < 1/q cannot cross an integer), so
+// r = x - t*q lands directly in [0, q) — no fixup needed.
+// M = floor(2^40/q) + 1 < 2^29 fits a 32-bit lane; x*M < 2^53 fits the
+// 64-bit product lanes of mul_epu32.
+// AVX-512 has no mulhi_epi32: emulate via mul_epu32 on even/odd lane halves.
+static inline HWY_ATTR __m512i plantard_reduce_vec(__m512i x, __m512i vq) {
+    const __m512i vM = _mm512_set1_epi32((int)((1ull << 40) / NS_NTT_Q + 1));
+    __m512i pe = _mm512_mul_epu32(x, vM);                         // even lanes: 64b product
+    __m512i po = _mm512_mul_epu32(_mm512_srli_epi64(x, 32), vM);  // odd lanes
+    __m512i t = _mm512_mask_blend_epi32(0xAAAA,
+                    _mm512_srli_epi64(pe, 40),
+                    _mm512_slli_epi64(_mm512_srli_epi64(po, 40), 32));
+    return _mm512_sub_epi32(x, _mm512_mullo_epi32(t, vq));
+}
+
 // Vectorized forward NTT-256.
 // For each level, precompute per-block twiddles into a contiguous buffer,
 // then process 16 butterflies at once. Levels with len < 16 fall back to
@@ -587,10 +603,10 @@ static HWY_ATTR void ns_ntt_batch_16(uint32_t* out, const uint32_t* in,
                     u2 = reg[li[b+2]], u3 = reg[li[b+3]];
             __m512i v0 = reg[hi[b+0]], v1 = reg[hi[b+1]],
                     v2 = reg[hi[b+2]], v3 = reg[hi[b+3]];
-            __m512i t0 = barrett_reduce_vec(_mm512_mullo_epi32(v0, _mm512_set1_epi32(tv[b+0])));
-            __m512i t1 = barrett_reduce_vec(_mm512_mullo_epi32(v1, _mm512_set1_epi32(tv[b+1])));
-            __m512i t2 = barrett_reduce_vec(_mm512_mullo_epi32(v2, _mm512_set1_epi32(tv[b+2])));
-            __m512i t3 = barrett_reduce_vec(_mm512_mullo_epi32(v3, _mm512_set1_epi32(tv[b+3])));
+            __m512i t0 = plantard_reduce_vec(_mm512_mullo_epi32(v0, _mm512_set1_epi32(tv[b+0])), vq);
+            __m512i t1 = plantard_reduce_vec(_mm512_mullo_epi32(v1, _mm512_set1_epi32(tv[b+1])), vq);
+            __m512i t2 = plantard_reduce_vec(_mm512_mullo_epi32(v2, _mm512_set1_epi32(tv[b+2])), vq);
+            __m512i t3 = plantard_reduce_vec(_mm512_mullo_epi32(v3, _mm512_set1_epi32(tv[b+3])), vq);
             __m512i l0 = _mm512_add_epi32(u0, t0);
             __m512i l1 = _mm512_add_epi32(u1, t1);
             __m512i l2 = _mm512_add_epi32(u2, t2);
