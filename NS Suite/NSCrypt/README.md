@@ -29,16 +29,15 @@ path processes 16 butterflies per instruction at levels where len >= 16
 (4 of 8 butterfly levels). Small levels (len=1,2,4,8) fall back to
 scalar — the butterfly stride is too small for contiguous vector loads.
 
-**Batch-16 NTT:** transposes 16 independent polynomials so each of the
-8 butterfly levels is fully vectorized width=16. Barrett reduction runs
-across all 16 NTTs simultaneously. Correctness matches scalar. Current
-speedup: 2.78x vs 16× scalar (target 4–6x). The remaining gap is
-memory: gather/scatter transpose and the 16KB working set contend for L1
-bandwidth, preventing the pure butterfly arithmetic from dominating.
+**Batch-16 NTT:** transposes 16 independent polynomials so all butterfly
+levels are fully vectorized. Registers run packed epi16 (32 lanes: two
+coefficient positions × 16 polys) with Montgomery reduction via single-uop
+`mullo_epi16`/`mulhi_epi16`. Correctness matches scalar. Current speedup:
+~4.8x vs 16× scalar (was 2.67x with epi32 gather/scatter — the epi16
+rewrite is ~1.81x faster still).
 
 **Loss:** the 93% of butterflies at small levels are scalar, limiting
-single-NTT speedup. Batch-16 does not yet hit the 4–6x target because
-transpose memory traffic is still substantial.
+single-NTT speedup.
 
 ## Architecture
 
@@ -51,9 +50,12 @@ transpose memory traffic is still substantial.
 - **AVX-512:** 16-wide butterfly with `_mm512_mullo_epi32` + vectorized
   Barrett reduction. Per-level twiddle precomputation. Scalar fallback
   for len < 16 and non-AVX-512 targets.
-- **Batch-16 NTT:** 16 polynomials transposed so lane *m* holds NTT *m*.
-  All 8 levels fully vectorized. Gather/scatter transpose with
-  `_mm512_i32gather_epi32` / `_mm512_i32scatter_epi32`.
+- **Batch-16 NTT:** 16 polynomials transposed via contiguous-load 16×16
+  in-register shuffle network (no gather/scatter), then packed to epi16:
+  each ZMM holds 2 coef positions × 16 polys. Montgomery-reduce butterflies
+  on `mullo_epi16`+`mulhi_epi16`, twiddles pre-scaled by 2^16 mod q, level
+  len=1 handled inside 256-bit register halves (w=1, no multiply). Working
+  set halved to 8KB.
 
 ## Build
 
@@ -94,25 +96,18 @@ Output: 56B (40B ciphertext + 16B tag) vs OpenSSL's 80B (64B + 16B tag).
 |--------|----------:|--------:|
 | Scalar | 2.47 µs | 1.00x |
 | AVX-512 | 1.92 µs | 1.29x |
-| Batch-16 (16 NTTs) | 12.97 µs / 16 | 2.78x vs 16× scalar |
+| Batch-16 (16 NTTs) | 8.0 µs / 16 (4.47 µs isolated) | ~4.8x vs 16× scalar |
 
 Correctness: NTT→INTT round-trip OK for scalar and AVX-512; batch-16
 forward output matches scalar reference.
 
-**Profile of one Batch-16 NTT (internal phases):**
+**Batch-16 progression (isolated, best-of-10):**
 
-| Phase | Time |
-|-------|-----:|
-| Gather transpose | 0.64 µs |
-| 8 butterfly levels (fully vectorized) | 4.51 µs |
-| Scatter transpose | 1.13 µs |
-| **Sum** | **6.28 µs** |
-
-The measured end-to-end time is higher than the sum of the isolated
-phases because the 16KB working set competes with L1/L2 bandwidth and
-compiler scheduling across the full loop. Reducing transpose memory
-traffic (e.g. 16×16 permute transpose) is the next step toward the
-4–6x target.
+| Revision | µs/call | ns/NTT |
+|----------|--------:|-------:|
+| epi32 gather/scatter | 8.10 | 506.5 |
+| in-register transpose + hoisted schedule + x4 unroll | 6.26 | 391.2 |
+| epi16 Montgomery (current) | 4.47 | 279.2 |
 
 ## Win / Loss
 

@@ -336,11 +336,15 @@ static inline uint32_t barrett_reduce(uint32_t x) {
     return r;
 }
 
-// Batch-16 butterfly schedule: per-level butterfly index pairs and twiddles.
-// Populated once by ntt_init_twiddles; read by ns_ntt_batch_16.
-static uint16_t ns_ntt_sched_lo[8][128];
-static uint16_t ns_ntt_sched_hi[8][128];
-static uint32_t ns_ntt_sched_tw[8][128];
+// Batch-16 epi16 schedule: reg-space butterfly index pairs and Montgomery-
+// scaled twiddle pairs (w = w_coef * 2^16 mod q). reg r packs coefs {2r, 2r+1}
+// for all 16 polys; levels len>=2 pair whole regs (lanes 0-15 do even-coef
+// butterfly, lanes 16-31 the odd-coef one). Populated by ntt_init_twiddles.
+static uint16_t ns_ntt16_lo[8][64];
+static uint16_t ns_ntt16_hi[8][64];
+static uint16_t ns_ntt16_twa[8][64];
+static uint16_t ns_ntt16_twb[8][64];
+static uint16_t ns_ntt16_qinv;  // q^{-1} mod 2^16, for Montgomery reduce
 
 // Precompute all 256 powers of zeta: zpow[i] = zeta^i mod q
 static void ntt_init_twiddles(uint32_t zpow[NS_NTT_N]) {
@@ -348,14 +352,22 @@ static void ntt_init_twiddles(uint32_t zpow[NS_NTT_N]) {
     for (int i = 1; i < NS_NTT_N; ++i)
         zpow[i] = (uint32_t)((uint64_t)zpow[i-1] * NS_NTT_ZETA % NS_NTT_Q);
 
-    // Butterfly schedule: 128 butterflies per level, 8 levels.
-    for (int lvl = 0, len = 1; len < NS_NTT_N; len <<= 1, ++lvl) {
-        int step = NS_NTT_N / (2 * len), b = 0;
-        for (int i = 0; i < NS_NTT_N; i += 2 * len)
-            for (int j = 0; j < len; ++j, ++b) {
-                ns_ntt_sched_lo[lvl][b] = (uint16_t)(i + j);
-                ns_ntt_sched_hi[lvl][b] = (uint16_t)(i + j + len);
-                ns_ntt_sched_tw[lvl][b] = zpow[j * step];
+    // q^{-1} mod 2^16 via Newton iteration (4 steps: 3 -> 48 bits).
+    uint32_t qi = NS_NTT_Q;
+    for (int i = 0; i < 4; ++i) qi = qi * (2u - NS_NTT_Q * qi);
+    ns_ntt16_qinv = (uint16_t)qi;
+
+    // epi16 reg-space schedule for levels len = 2..128 (lvl 1..7).
+    // Level len=1 is handled in-register (w = zpow[0] = 1, no table needed).
+    const uint32_t R16 = 65536 % NS_NTT_Q;  // Montgomery scale = 2285
+    for (int lvl = 1, len = 2; len < NS_NTT_N; len <<= 1, ++lvl) {
+        int len_r = len >> 1, step = NS_NTT_N / (2 * len), b = 0;
+        for (int i = 0; i < 128; i += 2 * len_r)
+            for (int j = 0; j < len_r; ++j, ++b) {
+                ns_ntt16_lo[lvl][b]  = (uint16_t)(i + j);
+                ns_ntt16_hi[lvl][b]  = (uint16_t)(i + j + len_r);
+                ns_ntt16_twa[lvl][b] = (uint16_t)((uint64_t)zpow[(2*j)*step]     * R16 % NS_NTT_Q);
+                ns_ntt16_twb[lvl][b] = (uint16_t)((uint64_t)zpow[(2*j+1)*step] * R16 % NS_NTT_Q);
             }
     }
 }
@@ -422,22 +434,6 @@ static inline HWY_ATTR __m512i barrett_reduce_vec(__m512i x) {
     __mmask16 m = _mm512_cmpge_epi32_mask(r, q);
     r = _mm512_mask_sub_epi32(r, m, r, q);
     return r;
-}
-
-// Plantard reduction for x < q^2 (< 2^24): t = floor(x*M / 2^40) equals
-// floor(x/q) exactly (excess < 2^-16 < 1/q cannot cross an integer), so
-// r = x - t*q lands directly in [0, q) — no fixup needed.
-// M = floor(2^40/q) + 1 < 2^29 fits a 32-bit lane; x*M < 2^53 fits the
-// 64-bit product lanes of mul_epu32.
-// AVX-512 has no mulhi_epi32: emulate via mul_epu32 on even/odd lane halves.
-static inline HWY_ATTR __m512i plantard_reduce_vec(__m512i x, __m512i vq) {
-    const __m512i vM = _mm512_set1_epi32((int)((1ull << 40) / NS_NTT_Q + 1));
-    __m512i pe = _mm512_mul_epu32(x, vM);                         // even lanes: 64b product
-    __m512i po = _mm512_mul_epu32(_mm512_srli_epi64(x, 32), vM);  // odd lanes
-    __m512i t = _mm512_mask_blend_epi32(0xAAAA,
-                    _mm512_srli_epi64(pe, 40),
-                    _mm512_slli_epi64(_mm512_srli_epi64(po, 40), 32));
-    return _mm512_sub_epi32(x, _mm512_mullo_epi32(t, vq));
 }
 
 // Vectorized forward NTT-256.
@@ -570,59 +566,113 @@ static inline HWY_ATTR void ns_transpose16(__m512i r[16]) {
     }
 }
 
-// Batch-16 forward NTT.
-// 16 independent n=256 polynomials, row-major (in[m*256+k] = poly m, coef k).
-// Contiguous-load 16x16 tile transpose replaces gathers; butterfly schedule
-// is precomputed into lo/hi index + twiddle tables and unrolled x4 so four
-// independent dependency chains keep ~20 ZMM registers live per iteration.
+// Montgomery multiply mod q in epi16 lanes: r = v*w*R^-1 mod q, canonical [0,q).
+// w must be pre-scaled (w*R mod q). mullo+mulhi_epi16 are single-uop on ICL/TGL;
+// the classic signed Montgomery: r = hi(v*w) - hi(lo(v*w)*qinv * q), in (-q,q),
+// then one mask-add fixes to [0,q).
+static inline HWY_ATTR __m512i ns_fqmul16(__m512i v, __m512i w,
+                                          __m512i vq, __m512i vqinv) {
+    __m512i p_lo = _mm512_mullo_epi16(v, w);
+    __m512i p_hi = _mm512_mulhi_epi16(v, w);
+    __m512i m = _mm512_mullo_epi16(p_lo, vqinv);
+    __m512i r = _mm512_sub_epi16(p_hi, _mm512_mulhi_epi16(m, vq));
+    __mmask32 neg = _mm512_cmpgt_epi16_mask(_mm512_setzero_si512(), r);
+    return _mm512_mask_add_epi16(r, neg, r, vq);
+}
+
+// Batch-16 forward NTT, epi16 edition.
+// 16 independent n=256 polynomials, row-major epi32 input (in[m*256+k]).
+// Memory side stays epi32 (contiguous loads + 16x16 transpose); registers are
+// then packed to epi16: reg[c] lanes 0-15 = coef 2c of polys 0-15, lanes 16-31
+// = coef 2c+1. Each ZMM butterfly covers TWO coefficient butterflies, so the
+// 16-poly batch uses 128 regs instead of 256. Level len=1 pairs coefs inside
+// each reg's 256-bit halves (w = zpow[0] = 1, no multiply needed); len>=2
+// levels pair whole regs via the schedule tables. Store path unpacks back to
+// epi32 and reuses the same transpose.
 static HWY_ATTR void ns_ntt_batch_16(uint32_t* out, const uint32_t* in,
                             const uint32_t zpow[NS_NTT_N]) {
-    const __m512i vq = _mm512_set1_epi32(NS_NTT_Q);
+    (void)zpow;  // schedule tables (incl. Montgomery twiddles) come from init
+    const __m512i vq = _mm512_set1_epi16(NS_NTT_Q);
+    const __m512i vqm1 = _mm512_set1_epi16(NS_NTT_Q - 1);
+    const __m512i vqinv = _mm512_set1_epi16((int16_t)ns_ntt16_qinv);
 
-    __m512i reg[NS_NTT_N];  // 16KB stack — transposed: reg[k] lane m = poly m, coef k
+    __m512i reg[NS_NTT_N / 2];  // 8KB stack — epi16 packed regs
 
-    // Transposed load: 16 tiles of 16x16 via contiguous loads.
+    // Transposed load: 16 tiles of 16x16 epi32, pack coef pairs into epi16.
     for (int k0 = 0; k0 < NS_NTT_N; k0 += 16) {
         __m512i t[16];
         for (int m = 0; m < 16; ++m)
             t[m] = _mm512_loadu_si512((const __m512i*)(in + m * NS_NTT_N + k0));
         ns_transpose16(t);
-        for (int j = 0; j < 16; ++j)
-            reg[k0 + j] = t[j];
+        for (int j = 0; j < 16; j += 2) {
+            __m256i e = _mm512_cvtepi32_epi16(t[j]);      // coef k0+j, 16 polys
+            __m256i o = _mm512_cvtepi32_epi16(t[j + 1]);  // coef k0+j+1
+            reg[(k0 + j) / 2] =
+                _mm512_inserti64x4(_mm512_castsi256_si512(e), o, 1);
+        }
     }
 
-    // Butterfly schedule tables were populated by ntt_init_twiddles.
+    // Level len=1: butterfly (coef 2c, coef 2c+1) lives inside reg[c]'s halves.
+    // w = zpow[0] = 1 so t = v directly; 256-bit ops suffice.
+    {
+        const __m256i vq2 = _mm256_set1_epi16(NS_NTT_Q);
+        const __m256i vqm12 = _mm256_set1_epi16(NS_NTT_Q - 1);
+        for (int c = 0; c < NS_NTT_N / 2; ++c) {
+            __m256i u = _mm512_extracti64x4_epi64(reg[c], 0);
+            __m256i v = _mm512_extracti64x4_epi64(reg[c], 1);
+            __m256i l = _mm256_add_epi16(u, v);
+            l = _mm256_mask_sub_epi16(l, _mm256_cmpgt_epi16_mask(l, vqm12), l, vq2);
+            __m256i h = _mm256_sub_epi16(_mm256_add_epi16(u, vq2), v);
+            h = _mm256_mask_sub_epi16(h, _mm256_cmpgt_epi16_mask(h, vqm12), h, vq2);
+            reg[c] = _mm512_inserti64x4(_mm512_castsi256_si512(l), h, 1);
+        }
+    }
 
-    // Unrolled x4: 4 independent butterfly chains in flight.
-    for (int lvl = 0; lvl < 8; ++lvl) {
-        const uint16_t* li = ns_ntt_sched_lo[lvl];
-        const uint16_t* hi = ns_ntt_sched_hi[lvl];
-        const uint32_t* tv = ns_ntt_sched_tw[lvl];
-        for (int b = 0; b < 128; b += 4) {
+    // Levels len=2..128 (lvl 1..7): whole-reg pairs, 64 butterflies each,
+    // unrolled x4. Per reg pair: lanes 0-15 run the even-coef butterfly
+    // (twiddle ta), lanes 16-31 the odd-coef one (twiddle tb).
+    for (int lvl = 1; lvl < 8; ++lvl) {
+        const uint16_t* li = ns_ntt16_lo[lvl];
+        const uint16_t* hi = ns_ntt16_hi[lvl];
+        const uint16_t* ta = ns_ntt16_twa[lvl];
+        const uint16_t* tb = ns_ntt16_twb[lvl];
+        for (int b = 0; b < 64; b += 4) {
             __m512i u0 = reg[li[b+0]], u1 = reg[li[b+1]],
                     u2 = reg[li[b+2]], u3 = reg[li[b+3]];
             __m512i v0 = reg[hi[b+0]], v1 = reg[hi[b+1]],
                     v2 = reg[hi[b+2]], v3 = reg[hi[b+3]];
-            __m512i t0 = plantard_reduce_vec(_mm512_mullo_epi32(v0, _mm512_set1_epi32(tv[b+0])), vq);
-            __m512i t1 = plantard_reduce_vec(_mm512_mullo_epi32(v1, _mm512_set1_epi32(tv[b+1])), vq);
-            __m512i t2 = plantard_reduce_vec(_mm512_mullo_epi32(v2, _mm512_set1_epi32(tv[b+2])), vq);
-            __m512i t3 = plantard_reduce_vec(_mm512_mullo_epi32(v3, _mm512_set1_epi32(tv[b+3])), vq);
-            __m512i l0 = _mm512_add_epi32(u0, t0);
-            __m512i l1 = _mm512_add_epi32(u1, t1);
-            __m512i l2 = _mm512_add_epi32(u2, t2);
-            __m512i l3 = _mm512_add_epi32(u3, t3);
-            __m512i h0 = _mm512_sub_epi32(_mm512_add_epi32(u0, vq), t0);
-            __m512i h1 = _mm512_sub_epi32(_mm512_add_epi32(u1, vq), t1);
-            __m512i h2 = _mm512_sub_epi32(_mm512_add_epi32(u2, vq), t2);
-            __m512i h3 = _mm512_sub_epi32(_mm512_add_epi32(u3, vq), t3);
-            l0 = _mm512_mask_sub_epi32(l0, _mm512_cmpge_epi32_mask(l0, vq), l0, vq);
-            l1 = _mm512_mask_sub_epi32(l1, _mm512_cmpge_epi32_mask(l1, vq), l1, vq);
-            l2 = _mm512_mask_sub_epi32(l2, _mm512_cmpge_epi32_mask(l2, vq), l2, vq);
-            l3 = _mm512_mask_sub_epi32(l3, _mm512_cmpge_epi32_mask(l3, vq), l3, vq);
-            h0 = _mm512_mask_sub_epi32(h0, _mm512_cmpge_epi32_mask(h0, vq), h0, vq);
-            h1 = _mm512_mask_sub_epi32(h1, _mm512_cmpge_epi32_mask(h1, vq), h1, vq);
-            h2 = _mm512_mask_sub_epi32(h2, _mm512_cmpge_epi32_mask(h2, vq), h2, vq);
-            h3 = _mm512_mask_sub_epi32(h3, _mm512_cmpge_epi32_mask(h3, vq), h3, vq);
+            __m512i w0 = _mm512_inserti64x4(
+                _mm512_castsi256_si512(_mm256_set1_epi16((int16_t)ta[b+0])),
+                _mm256_set1_epi16((int16_t)tb[b+0]), 1);
+            __m512i w1 = _mm512_inserti64x4(
+                _mm512_castsi256_si512(_mm256_set1_epi16((int16_t)ta[b+1])),
+                _mm256_set1_epi16((int16_t)tb[b+1]), 1);
+            __m512i w2 = _mm512_inserti64x4(
+                _mm512_castsi256_si512(_mm256_set1_epi16((int16_t)ta[b+2])),
+                _mm256_set1_epi16((int16_t)tb[b+2]), 1);
+            __m512i w3 = _mm512_inserti64x4(
+                _mm512_castsi256_si512(_mm256_set1_epi16((int16_t)ta[b+3])),
+                _mm256_set1_epi16((int16_t)tb[b+3]), 1);
+            __m512i t0 = ns_fqmul16(v0, w0, vq, vqinv);
+            __m512i t1 = ns_fqmul16(v1, w1, vq, vqinv);
+            __m512i t2 = ns_fqmul16(v2, w2, vq, vqinv);
+            __m512i t3 = ns_fqmul16(v3, w3, vq, vqinv);
+            __m512i l0 = _mm512_add_epi16(u0, t0);
+            __m512i l1 = _mm512_add_epi16(u1, t1);
+            __m512i l2 = _mm512_add_epi16(u2, t2);
+            __m512i l3 = _mm512_add_epi16(u3, t3);
+            __m512i h0 = _mm512_sub_epi16(_mm512_add_epi16(u0, vq), t0);
+            __m512i h1 = _mm512_sub_epi16(_mm512_add_epi16(u1, vq), t1);
+            __m512i h2 = _mm512_sub_epi16(_mm512_add_epi16(u2, vq), t2);
+            __m512i h3 = _mm512_sub_epi16(_mm512_add_epi16(u3, vq), t3);
+            l0 = _mm512_mask_sub_epi16(l0, _mm512_cmpgt_epi16_mask(l0, vqm1), l0, vq);
+            l1 = _mm512_mask_sub_epi16(l1, _mm512_cmpgt_epi16_mask(l1, vqm1), l1, vq);
+            l2 = _mm512_mask_sub_epi16(l2, _mm512_cmpgt_epi16_mask(l2, vqm1), l2, vq);
+            l3 = _mm512_mask_sub_epi16(l3, _mm512_cmpgt_epi16_mask(l3, vqm1), l3, vq);
+            h0 = _mm512_mask_sub_epi16(h0, _mm512_cmpgt_epi16_mask(h0, vqm1), h0, vq);
+            h1 = _mm512_mask_sub_epi16(h1, _mm512_cmpgt_epi16_mask(h1, vqm1), h1, vq);
+            h2 = _mm512_mask_sub_epi16(h2, _mm512_cmpgt_epi16_mask(h2, vqm1), h2, vq);
+            h3 = _mm512_mask_sub_epi16(h3, _mm512_cmpgt_epi16_mask(h3, vqm1), h3, vq);
             reg[li[b+0]] = l0; reg[hi[b+0]] = h0;
             reg[li[b+1]] = l1; reg[hi[b+1]] = h1;
             reg[li[b+2]] = l2; reg[hi[b+2]] = h2;
@@ -630,11 +680,14 @@ static HWY_ATTR void ns_ntt_batch_16(uint32_t* out, const uint32_t* in,
         }
     }
 
-    // Transposed store: 16 tiles of 16x16 via contiguous stores.
+    // Transposed store: unpack epi16 pairs to epi32 regs, transpose, store.
     for (int k0 = 0; k0 < NS_NTT_N; k0 += 16) {
         __m512i t[16];
-        for (int j = 0; j < 16; ++j)
-            t[j] = reg[k0 + j];
+        for (int j = 0; j < 16; j += 2) {
+            __m512i v = reg[(k0 + j) / 2];
+            t[j]     = _mm512_cvtepi16_epi32(_mm512_extracti64x4_epi64(v, 0));
+            t[j + 1] = _mm512_cvtepi16_epi32(_mm512_extracti64x4_epi64(v, 1));
+        }
         ns_transpose16(t);
         for (int m = 0; m < 16; ++m)
             _mm512_storeu_si512((__m512i*)(out + m * NS_NTT_N + k0), t[m]);
