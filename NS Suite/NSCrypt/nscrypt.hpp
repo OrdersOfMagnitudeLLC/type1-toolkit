@@ -336,11 +336,28 @@ static inline uint32_t barrett_reduce(uint32_t x) {
     return r;
 }
 
+// Batch-16 butterfly schedule: per-level butterfly index pairs and twiddles.
+// Populated once by ntt_init_twiddles; read by ns_ntt_batch_16.
+static uint16_t ns_ntt_sched_lo[8][128];
+static uint16_t ns_ntt_sched_hi[8][128];
+static uint32_t ns_ntt_sched_tw[8][128];
+
 // Precompute all 256 powers of zeta: zpow[i] = zeta^i mod q
 static void ntt_init_twiddles(uint32_t zpow[NS_NTT_N]) {
     zpow[0] = 1;
     for (int i = 1; i < NS_NTT_N; ++i)
         zpow[i] = (uint32_t)((uint64_t)zpow[i-1] * NS_NTT_ZETA % NS_NTT_Q);
+
+    // Butterfly schedule: 128 butterflies per level, 8 levels.
+    for (int lvl = 0, len = 1; len < NS_NTT_N; len <<= 1, ++lvl) {
+        int step = NS_NTT_N / (2 * len), b = 0;
+        for (int i = 0; i < NS_NTT_N; i += 2 * len)
+            for (int j = 0; j < len; ++j, ++b) {
+                ns_ntt_sched_lo[lvl][b] = (uint16_t)(i + j);
+                ns_ntt_sched_hi[lvl][b] = (uint16_t)(i + j + len);
+                ns_ntt_sched_tw[lvl][b] = zpow[j * step];
+            }
+    }
 }
 
 // Scalar forward NTT (reference king). Standard Cooley-Tukey.
@@ -511,55 +528,100 @@ static HWY_ATTR void intt256_avx512(uint32_t a[NS_NTT_N], const uint32_t zpow[NS
     }
 }
 
+// 16x16 epi32 in-register transpose: r[i] swaps row<->column.
+// 4-stage network: unpack32 -> unpack64 -> 2x shuffle_i32x4 rounds.
+static inline HWY_ATTR void ns_transpose16(__m512i r[16]) {
+    __m512i t[16];
+    for (int i = 0; i < 8; ++i) {
+        t[2*i]   = _mm512_unpacklo_epi32(r[2*i], r[2*i+1]);
+        t[2*i+1] = _mm512_unpackhi_epi32(r[2*i], r[2*i+1]);
+    }
+    for (int i = 0; i < 4; ++i) {
+        r[4*i+0] = _mm512_unpacklo_epi64(t[4*i+0], t[4*i+2]);
+        r[4*i+1] = _mm512_unpackhi_epi64(t[4*i+0], t[4*i+2]);
+        r[4*i+2] = _mm512_unpacklo_epi64(t[4*i+1], t[4*i+3]);
+        r[4*i+3] = _mm512_unpackhi_epi64(t[4*i+1], t[4*i+3]);
+    }
+    for (int i = 0; i < 4; ++i) {
+        t[i]    = _mm512_shuffle_i32x4(r[i],   r[i+4],  0x88);
+        t[i+4]  = _mm512_shuffle_i32x4(r[i],   r[i+4],  0xdd);
+        t[i+8]  = _mm512_shuffle_i32x4(r[i+8], r[i+12], 0x88);
+        t[i+12] = _mm512_shuffle_i32x4(r[i+8], r[i+12], 0xdd);
+    }
+    for (int i = 0; i < 8; ++i) {
+        r[i]   = _mm512_shuffle_i32x4(t[i], t[i+8], 0x88);
+        r[i+8] = _mm512_shuffle_i32x4(t[i], t[i+8], 0xdd);
+    }
+}
+
 // Batch-16 forward NTT.
-// Takes 16 independent n=256 polynomials in row-major order (in[m*NS_NTT_N + k]
-// is NTT m, element k). Transposes so each __m512i register holds the k-th
-// element of all 16 NTTs. Every butterfly level is then width=16: one vector
-// butterfly operates on 16 independent (u, v) pairs simultaneously. Barrett
-// reduction is applied across all 16 lanes at once.
+// 16 independent n=256 polynomials, row-major (in[m*256+k] = poly m, coef k).
+// Contiguous-load 16x16 tile transpose replaces gathers; butterfly schedule
+// is precomputed into lo/hi index + twiddle tables and unrolled x4 so four
+// independent dependency chains keep ~20 ZMM registers live per iteration.
 static HWY_ATTR void ns_ntt_batch_16(uint32_t* out, const uint32_t* in,
                             const uint32_t zpow[NS_NTT_N]) {
     const __m512i vq = _mm512_set1_epi32(NS_NTT_Q);
-    // Lane m holds NTT m; base offsets are m * NS_NTT_N.
-    const __m512i base_idx = _mm512_set_epi32(
-        15 * NS_NTT_N, 14 * NS_NTT_N, 13 * NS_NTT_N, 12 * NS_NTT_N,
-        11 * NS_NTT_N, 10 * NS_NTT_N,  9 * NS_NTT_N,  8 * NS_NTT_N,
-         7 * NS_NTT_N,  6 * NS_NTT_N,  5 * NS_NTT_N,  4 * NS_NTT_N,
-         3 * NS_NTT_N,  2 * NS_NTT_N,  1 * NS_NTT_N,  0 * NS_NTT_N);
 
-    __m512i reg[NS_NTT_N];  // 16KB stack — transposed registers
+    __m512i reg[NS_NTT_N];  // 16KB stack — transposed: reg[k] lane m = poly m, coef k
 
-    // Gather-transpose: reg[k][m] = in[m][k]
-    for (int k = 0; k < NS_NTT_N; ++k) {
-        __m512i idx = _mm512_add_epi32(base_idx, _mm512_set1_epi32(k));
-        reg[k] = _mm512_i32gather_epi32(idx, in, 4);
+    // Transposed load: 16 tiles of 16x16 via contiguous loads.
+    for (int k0 = 0; k0 < NS_NTT_N; k0 += 16) {
+        __m512i t[16];
+        for (int m = 0; m < 16; ++m)
+            t[m] = _mm512_loadu_si512((const __m512i*)(in + m * NS_NTT_N + k0));
+        ns_transpose16(t);
+        for (int j = 0; j < 16; ++j)
+            reg[k0 + j] = t[j];
     }
 
-    // All 8 butterfly levels, fully vectorized (16 NTTs in parallel).
-    for (int len = 1; len < NS_NTT_N; len <<= 1) {
-        int step = NS_NTT_N / (2 * len);
-        for (int i = 0; i < NS_NTT_N; i += 2 * len) {
-            for (int j = 0; j < len; ++j) {
-                __m512i u = reg[i + j];
-                __m512i v = reg[i + j + len];
-                __m512i w = _mm512_set1_epi32(zpow[j * step]);
-                __m512i t = barrett_reduce_vec(_mm512_mullo_epi32(v, w));
-                __m512i lo = _mm512_add_epi32(u, t);
-                __mmask16 mlo = _mm512_cmpge_epi32_mask(lo, vq);
-                lo = _mm512_mask_sub_epi32(lo, mlo, lo, vq);
-                __m512i hi = _mm512_sub_epi32(_mm512_add_epi32(u, vq), t);
-                __mmask16 mhi = _mm512_cmpge_epi32_mask(hi, vq);
-                hi = _mm512_mask_sub_epi32(hi, mhi, hi, vq);
-                reg[i + j] = lo;
-                reg[i + j + len] = hi;
-            }
+    // Butterfly schedule tables were populated by ntt_init_twiddles.
+
+    // Unrolled x4: 4 independent butterfly chains in flight.
+    for (int lvl = 0; lvl < 8; ++lvl) {
+        const uint16_t* li = ns_ntt_sched_lo[lvl];
+        const uint16_t* hi = ns_ntt_sched_hi[lvl];
+        const uint32_t* tv = ns_ntt_sched_tw[lvl];
+        for (int b = 0; b < 128; b += 4) {
+            __m512i u0 = reg[li[b+0]], u1 = reg[li[b+1]],
+                    u2 = reg[li[b+2]], u3 = reg[li[b+3]];
+            __m512i v0 = reg[hi[b+0]], v1 = reg[hi[b+1]],
+                    v2 = reg[hi[b+2]], v3 = reg[hi[b+3]];
+            __m512i t0 = barrett_reduce_vec(_mm512_mullo_epi32(v0, _mm512_set1_epi32(tv[b+0])));
+            __m512i t1 = barrett_reduce_vec(_mm512_mullo_epi32(v1, _mm512_set1_epi32(tv[b+1])));
+            __m512i t2 = barrett_reduce_vec(_mm512_mullo_epi32(v2, _mm512_set1_epi32(tv[b+2])));
+            __m512i t3 = barrett_reduce_vec(_mm512_mullo_epi32(v3, _mm512_set1_epi32(tv[b+3])));
+            __m512i l0 = _mm512_add_epi32(u0, t0);
+            __m512i l1 = _mm512_add_epi32(u1, t1);
+            __m512i l2 = _mm512_add_epi32(u2, t2);
+            __m512i l3 = _mm512_add_epi32(u3, t3);
+            __m512i h0 = _mm512_sub_epi32(_mm512_add_epi32(u0, vq), t0);
+            __m512i h1 = _mm512_sub_epi32(_mm512_add_epi32(u1, vq), t1);
+            __m512i h2 = _mm512_sub_epi32(_mm512_add_epi32(u2, vq), t2);
+            __m512i h3 = _mm512_sub_epi32(_mm512_add_epi32(u3, vq), t3);
+            l0 = _mm512_mask_sub_epi32(l0, _mm512_cmpge_epi32_mask(l0, vq), l0, vq);
+            l1 = _mm512_mask_sub_epi32(l1, _mm512_cmpge_epi32_mask(l1, vq), l1, vq);
+            l2 = _mm512_mask_sub_epi32(l2, _mm512_cmpge_epi32_mask(l2, vq), l2, vq);
+            l3 = _mm512_mask_sub_epi32(l3, _mm512_cmpge_epi32_mask(l3, vq), l3, vq);
+            h0 = _mm512_mask_sub_epi32(h0, _mm512_cmpge_epi32_mask(h0, vq), h0, vq);
+            h1 = _mm512_mask_sub_epi32(h1, _mm512_cmpge_epi32_mask(h1, vq), h1, vq);
+            h2 = _mm512_mask_sub_epi32(h2, _mm512_cmpge_epi32_mask(h2, vq), h2, vq);
+            h3 = _mm512_mask_sub_epi32(h3, _mm512_cmpge_epi32_mask(h3, vq), h3, vq);
+            reg[li[b+0]] = l0; reg[hi[b+0]] = h0;
+            reg[li[b+1]] = l1; reg[hi[b+1]] = h1;
+            reg[li[b+2]] = l2; reg[hi[b+2]] = h2;
+            reg[li[b+3]] = l3; reg[hi[b+3]] = h3;
         }
     }
 
-    // Scatter-transpose: out[m][k] = reg[k][m]
-    for (int k = 0; k < NS_NTT_N; ++k) {
-        __m512i idx = _mm512_add_epi32(base_idx, _mm512_set1_epi32(k));
-        _mm512_i32scatter_epi32(out, idx, reg[k], 4);
+    // Transposed store: 16 tiles of 16x16 via contiguous stores.
+    for (int k0 = 0; k0 < NS_NTT_N; k0 += 16) {
+        __m512i t[16];
+        for (int j = 0; j < 16; ++j)
+            t[j] = reg[k0 + j];
+        ns_transpose16(t);
+        for (int m = 0; m < 16; ++m)
+            _mm512_storeu_si512((__m512i*)(out + m * NS_NTT_N + k0), t[m]);
     }
 }
 
