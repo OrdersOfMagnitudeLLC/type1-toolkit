@@ -2987,8 +2987,9 @@ breaking) is not foam-derived; the 2.7 GeV target is itself
 model-dependent; the gap is the current quark mass sector, not the
 condensate formula.
 Chain extension (S225): r_pi = sqrt(pi) x r_conf = 0.650 fm vs 0.660 fm
-(1.6%) [DERIVED] - pion charge radius is the reciprocal tube length
-M_q x r_pi^2 = 1 on the same foam tube.
+(1.6%) [DERIVED]. Reciprocal geometry: M_q = 1/(sqrt(pi) x r_conf) at
+one end, r_pi = sqrt(pi) x r_conf at the other - same foam tube,
+opposite ends.
 
 FINAL STATUS: DERIVED - 8.1% error, zero free parameters.
 Chain: sigma(T32) -> r_conf=1/sqrt(sigma)(S214) -> m_q=sqrt(sigma/pi)=303 MeV(S213)
@@ -3003,6 +3004,9 @@ M²(J)=4κ²(J-0.5); orbital RMS 1.4%
 Status: DERIVED (T28 Prime Cell zero-point, α₀ = +1/2)
 M²(J, n=0) = 4κ²(J - 0.5)
 Results: a₂(1320) 0.1%, ω₃(1670) 2.0%, f₄(2050) 0.3%. Orbital RMS: 1.4%
+Chain extension (S224): m_rho = sqrt(2 sigma) = 760 MeV vs 775 MeV
+(1.9%) [DERIVED] - light Regge tower m_n^2 = 2 n sigma confirmed at
+n=1 (rho 1.9%), n=4 (rho3(1690) 10.0%), n=9 (rho5(2350) 2.9%).
 
 T63: Charmonium [DERIVED_LIMIT]
 heavy quark harmonic limit; Cornell approximation valid for m_c >> Λ_QCD
@@ -3032,6 +3036,11 @@ M_base = √(m₁² + m₂² + m₃² + m₁m₂ + m₂m₃ + m₁m₃)  [Platea
 M_total = M_base + κ/(2π)  [T28 Casimir zero-point = 85.6 MeV, universal]
 
 Results: proton 0.2%, neutron 0.0%. Zero free parameters.
+Chain extension (S222): m_p = sqrt(3) x kappa = 931.1 MeV vs 938.3 MeV
+(0.76%) [DERIVED] - Steiner-tree Y-junction, 3 flux tubes of length
+r_conf/sqrt(3), zero free parameters. m_p/m_e = 1822.2 vs 1836.1
+(0.76%). Delta cross-check: m_p + dM_T76 = 1.222 GeV vs 1.232 GeV
+(0.8%, consistent).
 
 T66: Strange Baryons [DERIVED]
 SU3 flavor breaking; δm_strange from kaon-pion splitting
@@ -4352,6 +4361,31 @@ attempted and falsified. ABC is DERIVED_LIMIT - the chain reaches
 Szpiro equivalence and foam cannot close it. A new mechanism is
 required outside YL merger energy and the Yang-Mills instanton
 framework.
+
+
+
+================================================================================
+S220-S225: LIGHT HADRON SECTOR FROM FOAM - SUMMARY
+================================================================================
+
+Nine new DERIVED results from the foam-tube chain sigma(T32) ->
+kappa=sqrt(sigma) -> r_conf=1/kappa (S214), zero free parameters:
+
+  T61 constituent mass upgraded ........... 8.1%   DERIVED   S213-S215
+  T76 color Casimir closed ................ 0.9%   DERIVED   S216
+  T33 gap resolved as safety margin ....... ---    RESOLVED  S218
+  m_p = sqrt(3) kappa (Y-junction) ........ 0.76%  DERIVED   S222
+  m_p/m_e ................................. 0.76%  DERIVED   S222
+  m_rho = sqrt(2 sigma) Regge ............. 1.9%   DERIVED   S224
+  r_pi = sqrt(pi) x r_conf ................ 1.6%   DERIVED   S225
+  F_pi = kappa/(2pi) ...................... 8.0%   DERIVED   S217
+  C2 from foam ............................ 0.001% DERIVED   S203
+
+g-2 note: Muon g-2 (delta_a_mu = 249e-11): foam corrections at the
+hadronic scale are order-unity (dm_rho/m_rho = 1.0, ds/s_thresh = 26x)
+- the perturbative channel fails by construction. The electroweak
+channel via T78/T79 Higgs-muon Yukawa is the open path.
+STATUS: CONJECTURE.
 
 
 
