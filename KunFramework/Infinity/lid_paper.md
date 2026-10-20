@@ -1,6 +1,7 @@
 # The Lid Equation: N = W(∂K, f)
 ## A Topological Counting Framework Unifying Prime Zero Distribution and Cosmic Void Surface Tension
 
+*DOI: https://doi.org/10.5281/zenodo.23497824*  
 *Builds on the Kun Framework https://doi.org/10.5281/zenodo.22896946*  
 *Date: 2026-10-20*
 
