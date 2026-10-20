@@ -22,6 +22,10 @@ Verifies the four quantitative claims of the paper:
      + compute_winding_number(T) on the critical line
      (ported from Kun Framework, DOI: 10.5281/zenodo.22896946)
 
+  6. Physical Lid: gamma = W(dK, f_rho) test           [TEST]
+     two candidate f_rho constructions vs measured gamma
+     on all BOSS CMASS-N voids (compute_physical_lid)
+
 Run:  python3 lid_unification.py
 Deps: mpmath, numpy, scipy, pandas
 """
@@ -168,9 +172,9 @@ print("4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)")
 print(SEP)
 
 CATALOG_CANDIDATES = [
-    "/mnt/Storage/NS/UniverseResearch/SoapBowl/cache/apjaa508et1_mrt.txt",
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "..", "cache", "apjaa508et1_mrt.txt"),
+    "/mnt/Storage/NS/UniverseResearch/SoapBowl/cache/apjaa508et1_mrt.txt",
 ]
 colspecs = [(0, 11), (12, 17), (18, 25), (26, 32), (33, 38), (39, 45),
             (46, 55), (56, 63), (64, 73), (74, 80), (81, 86),
@@ -190,7 +194,7 @@ else:
     dm = pd.to_numeric(df["delmin"], errors="coerce").values.astype(float)
     g = -dm * r ** 3 / 2.0
     mask = (r > 0) & np.isfinite(g) & (g > 0)
-    r_v, g_v = r[mask], g[mask]
+    r_v, g_v, dm_v = r[mask], g[mask], dm[mask]
 
     popt, _ = curve_fit(lambda x, A, a: A * x ** a,
                         r_v, g_v, p0=(0.3, 3.0), bounds=([0, 0], [10, 10]))
@@ -200,7 +204,7 @@ else:
     ss_tot = np.sum((g_v - np.mean(g_v)) ** 2)
     r2 = 1 - ss_res / ss_tot
 
-    print(f"  catalog: {cat}")
+    print(f"  catalog: {os.path.relpath(cat, os.path.dirname(os.path.abspath(__file__)))}")
     print(f"  voids used: {len(r_v)}")
     print(f"  fit: gamma = {A_fit:.3e} * r^{alpha_fit:.4f}   R^2 = {r2:.4f}")
     print(f"  (paper value: 0.334 * r^3.052, R^2 = 0.9998)")
@@ -282,6 +286,107 @@ note("compute_winding_number(T) on Re(s)=1/2",
      f"(S(T)/2, arc term)", "MEASURED")
 
 # =====================================================================
+# 6. Physical Lid test: gamma = W(dK, f_rho)
+#    Two candidate f_rho constructions on the void-wall contour
+#    dK = {|z| = r}. W via argument-change integration.
+# =====================================================================
+print()
+print(SEP)
+print("6. Physical Lid: W(dK, f_rho) vs measured gamma (all voids)")
+print(SEP)
+
+
+def compute_physical_lid(r_arr, gamma_arr, npts=1440, mpts=360):
+    """Test gamma = W(dK, f_rho) for two candidate constructions of
+    the holomorphic extension f_rho, on every void.
+
+    Attempt 1 — logarithmic density potential:
+        f_rho(z) = log(1 + delta*r / (z - r*exp(i*theta))),  theta = 0
+        with delta = -2*gamma/r^3 (= delmin, the wall density contrast).
+
+    Attempt 2 — Cauchy extension of the pressure gradient:
+        f_rho(z) = oint_{dK} (dP(zeta)/gamma) / (z - zeta) d(zeta)
+        with dP/gamma = 2/r at Young-Laplace equilibrium.
+        Evaluated on a contour infinitesimally inside dK (PV-regularized);
+        for z outside dK the integral is 0 by Cauchy.
+
+    Returns dict of per-attempt stats: mean W, Pearson r of W vs
+    gamma_measured, and W/gamma ratio statistics (constancy check).
+    """
+    r_arr = np.asarray(r_arr, dtype=float)
+    gamma_arr = np.asarray(gamma_arr, dtype=float)
+    delta = -2.0 * gamma_arr / r_arr ** 3          # = delmin per void
+
+    phi = np.linspace(0.0, 2.0 * np.pi, npts, endpoint=False) + np.pi / npts
+
+    def winding(f_vals):
+        a = np.unwrap(np.angle(f_vals))
+        return (a[-1] - a[0]) / (2.0 * np.pi)
+
+    # ---- Attempt 1 -------------------------------------------------
+    W1 = np.empty(len(r_arr))
+    for i, (r, d) in enumerate(zip(r_arr, delta)):
+        z = r * np.exp(1j * phi)
+        f = np.log(1.0 + d * r / (z - r))          # theta = 0 anchor
+        W1[i] = winding(f)
+
+    # ---- Attempt 2 -------------------------------------------------
+    psi = np.linspace(0.0, 2.0 * np.pi, mpts, endpoint=False)
+    W2 = np.empty(len(r_arr))
+    f2_outside_mean = 0.0
+    for i, r in enumerate(r_arr):
+        zeta_pts = r * np.exp(1j * psi)
+        dzeta = 1j * zeta_pts * (2.0 * np.pi / mpts)   # d(zeta)
+        kern = 2.0 / r                                # dP/gamma at YL eq.
+        # z on dK, regularized infinitesimally inside the wall
+        z_on = 0.999 * r * np.exp(1j * phi)
+        f_on = (1.0 / (z_on[:, None] - zeta_pts[None, :])) @ (kern * dzeta)
+        W2[i] = winding(f_on)
+        # z strictly outside dK -> should give ~0 by Cauchy
+        z_out = 1.2 * r * np.exp(1j * phi[:64])
+        f_out = (1.0 / (z_out[:, None] - zeta_pts[None, :])) @ (kern * dzeta)
+        f2_outside_mean += float(np.mean(np.abs(f_out)))
+    f2_outside_mean /= len(r_arr)
+
+    def stats(W, tag):
+        g = gamma_arr
+        if np.std(W) > 0 and np.std(g) > 0:
+            pear = float(np.corrcoef(W, g)[0, 1])
+        else:
+            pear = float("nan")
+        ratio = W / g
+        r_mean, r_std = float(np.mean(ratio)), float(np.std(ratio))
+        cv = abs(r_std / r_mean) if r_mean != 0 else float("inf")
+        print(f"  {tag}:")
+        print(f"    mean W             = {np.mean(W):+.6f}")
+        print(f"    Pearson r(W, gamma)= {pear:+.6f}")
+        print(f"    W/gamma ratio      = {r_mean:+.3e} +- {r_std:.3e} "
+              f"(CV = {cv:.3f}; constant iff CV ~ 0 and r > 0.95)")
+        return {"mean_W": float(np.mean(W)), "pearson": pear,
+                "ratio_mean": r_mean, "ratio_cv": cv}
+
+    s1 = stats(W1, "Attempt 1: f_rho = log(1 + delta*r/(z - r e^{i*0}))")
+    s2 = stats(W2, "Attempt 2: f_rho = Cauchy ext, dP/gamma = 2/r, z on dK")
+    print(f"  Attempt 2 outside-dK check: mean |f_rho(z_out)| = "
+          f"{f2_outside_mean:.3e}  (~0, Cauchy)")
+    return {"attempt1": s1, "attempt2": s2}
+
+
+if cat is not None:
+    pl = compute_physical_lid(r_v, g_v)
+    ok1 = pl["attempt1"]["pearson"] > 0.95 and pl["attempt1"]["ratio_cv"] < 0.05
+    ok2 = pl["attempt2"]["pearson"] > 0.95 and pl["attempt2"]["ratio_cv"] < 0.05
+    phys_lid_label = "DERIVED_LIMIT" if (ok1 or ok2) else "CONJECTURE"
+    note("Physical Lid: gamma = W(dK, f_rho)",
+         f"att1 r={pl['attempt1']['pearson']:+.4f}, "
+         f"att2 r={pl['attempt2']['pearson']:+.4f} (need >0.95 + const ratio)",
+         phys_lid_label)
+else:
+    phys_lid_label = "CONJECTURE"
+    print("  skipped (catalog missing)")
+    note("Physical Lid: gamma = W(dK, f_rho)", "SKIPPED", "CONJECTURE")
+
+# =====================================================================
 # SUMMARY TABLE
 # =====================================================================
 print()
@@ -293,10 +398,10 @@ print("  " + "-" * 110)
 for c, v, l in rows:
     print(f"  {c:<44} {v:<48} {l}")
 
-print("""
+print(f"""
   Framework status (paper labels):
     Lid equation N = W(dK,f)        DERIVED    (argument principle)
     Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
     S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
-    gamma = W(dK, f_rho)            CONJECTURE (physical lid)
+    gamma = W(dK, f_rho)            {phys_lid_label} (physical lid)
 """)

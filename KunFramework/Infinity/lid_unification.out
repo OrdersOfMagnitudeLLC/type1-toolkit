@@ -27,7 +27,7 @@
 ==================================================================
 4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
 ==================================================================
-  catalog: /mnt/Storage/NS/UniverseResearch/SoapBowl/cache/apjaa508et1_mrt.txt
+  catalog: ../cache/apjaa508et1_mrt.txt
   voids used: 1228
   fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
   (paper value: 0.334 * r^3.052, R^2 = 0.9998)
@@ -42,6 +42,19 @@
   Delta arg zeta(1/2+it)/2pi, t<=T=500: +0.2066  (= S(T)/2)
 
 ==================================================================
+6. Physical Lid: W(dK, f_rho) vs measured gamma (all voids)
+==================================================================
+  Attempt 1: f_rho = log(1 + delta*r/(z - r e^{i*0})):
+    mean W             = -0.082745
+    Pearson r(W, gamma)= +0.103189
+    W/gamma ratio      = -3.357e-06 +- 7.207e-06 (CV = 2.147; constant iff CV ~ 0 and r > 0.95)
+  Attempt 2: f_rho = Cauchy ext, dP/gamma = 2/r, z on dK:
+    mean W             = -0.245699
+    Pearson r(W, gamma)= +0.000269
+    W/gamma ratio      = -9.736e-06 +- 2.040e-05 (CV = 2.095; constant iff CV ~ 0 and r > 0.95)
+  Attempt 2 outside-dK check: mean |f_rho(z_out)| = 4.386e-17  (~0, Cauchy)
+
+==================================================================
 SUMMARY — claim / value / label
 ==================================================================
   CLAIM                                        VALUE                                            LABEL
@@ -53,6 +66,7 @@ SUMMARY — claim / value / label
   gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
   CBP off-Fix pair {rho, sigma(rho)} winding sum -0.4997 +0.4997 = 2.78e-16 (<1e-6, assert passed) DERIVED (verified numerically)
   compute_winding_number(T) on Re(s)=1/2       T=100: +0.4988, T=500: +0.2066  (S(T)/2, arc term) MEASURED
+  Physical Lid: gamma = W(dK, f_rho)           att1 r=+0.1032, att2 r=+0.0003 (need >0.95 + const ratio) CONJECTURE
 
   Framework status (paper labels):
     Lid equation N = W(dK,f)        DERIVED    (argument principle)

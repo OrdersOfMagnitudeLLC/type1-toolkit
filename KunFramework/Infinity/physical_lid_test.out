@@ -1,0 +1,15 @@
+]633;E;echo "physical_lid_test.out — lid_unification.py section 6";4abb81f9-cb64-4691-b127-0cd77b8315f1]633;Cphysical_lid_test.out — lid_unification.py section 6
+gamma = W(dK, f_rho) tested on all 1228 BOSS CMASS-N voids
+verdict: neither candidate construction recovers gamma -> CONJECTURE
+
+6. Physical Lid: W(dK, f_rho) vs measured gamma (all voids)
+==================================================================
+  Attempt 1: f_rho = log(1 + delta*r/(z - r e^{i*0})):
+    mean W             = -0.082745
+    Pearson r(W, gamma)= +0.103189
+    W/gamma ratio      = -3.357e-06 +- 7.207e-06 (CV = 2.147; constant iff CV ~ 0 and r > 0.95)
+  Attempt 2: f_rho = Cauchy ext, dP/gamma = 2/r, z on dK:
+    mean W             = -0.245699
+    Pearson r(W, gamma)= +0.000269
+    W/gamma ratio      = -9.736e-06 +- 2.040e-05 (CV = 2.095; constant iff CV ~ 0 and r > 0.95)
+  Attempt 2 outside-dK check: mean |f_rho(z_out)| = 4.386e-17  (~0, Cauchy)

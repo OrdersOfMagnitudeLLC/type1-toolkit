@@ -1,9 +1,9 @@
 # The Lid Equation: N = W(∂K, f)
 ## A Topological Counting Framework Unifying Prime Zero Distribution and Cosmic Void Surface Tension
 
-*DOI: https://doi.org/10.5281/zenodo.23497824*  
-*Builds on the Kun Framework https://doi.org/10.5281/zenodo.22896946*  
-*Author: 28ced7bcbf2763de55b974d4be08405721fa4f3ae1f7647112daf1c8a5d9feec*  
+*DOI: https://doi.org/10.5281/zenodo.23497824* 
+*Builds on the Kun Framework https://doi.org/10.5281/zenodo.22896946* 
+*Author: 28ced7bcbf2763de55b974d4be08405721fa4f3ae1f7647112daf1c8a5d9feec* 
 *Date: 2026-10-20*
 
 ---
@@ -12,7 +12,7 @@
 
 We present the Lid equation, N = W(∂K, f) = (1/2πi) ∮_{∂K} f'/f ds, and show that the canonical boundary ∂K is not chosen but *derived* from the system's internal symmetry. Two realizations are examined: (i) For the Riemann zeta function ζ, the canonical ∂K is the critical line Re(s) = 1/2, the unique fixed-point set of the functional equation symmetry s ↦ 1−s̄. Off-critical zero pairs contribute exactly zero to W by an analytic geometric argument; on-critical zeros contribute ±1/2 each. The Riemann Hypothesis follows if the contour's closing arc contributes zero — identified as the S(T) gap. (ii) For cosmic voids, γ ∝ r^3.052 is measured across N=1228 BOSS CMASS-N voids (R²=0.9998), originally confirmed across 4469 voids in two independent surveys in https://doi.org/10.5281/zenodo.22896946. The Young-Laplace equilibrium condition ΔP = 0 maps onto the functional equation's phase balance |χ(1/2+it)| = 1 — both are fixed-point conditions of the same form, both determining the canonical ∂K. We conjecture that γ = W(∂K, f_ρ) for a holomorphic extension f_ρ of the density field. A third application — Goldbach representations as r(n) = W(∂𝔻, F·z^{−n}) — gives r(n) > 0 almost everywhere unconditionally via Montgomery-Vaughan (1975). The unification does not require identical output statistics. It requires the same operator applied to different systems with different boundary conditions.
 
-**Labels used throughout:** MEASURED (empirical data), DERIVED (proven from axioms), CONJECTURE (well-motivated, not proven), SPECULATION (plausible, untested).
+**Labels used throughout:** MEASURED (empirical data), THEOREM (unconditional proof within foam mechanics), DERIVED_LIMIT (derivation complete to a proven formal wall), DERIVED (proven from axioms), CONJECTURE (well-motivated, not proven), OPEN (precise gap identified, not closed), SPECULATION (plausible, untested).
 
 ---
 
@@ -26,7 +26,34 @@ The key insight is that ∂K is not an input — it is an output. Every system w
 
 ---
 
-## 2. The Lid Equation
+## 2. Problem Coverage
+
+The following open problems are addressed by the Kun Framework [KF] and
+this paper [Lid]. Status labels: THEOREM = unconditional proof within
+foam mechanics; DERIVED_LIMIT = derivation complete to a proven formal
+wall; DERIVED = proven from axioms; CONJECTURE = well-motivated, not
+yet proven; OPEN = precise gap identified, not closed.
+
+| Problem | KF Status | Lid adds |
+|---------|-----------|----------|
+| Yang-Mills | THEOREM (T32) | — |
+| P ≠ NP | THEOREM (T34) | — |
+| Navier-Stokes | THEOREM two-case (T35) | — |
+| BSD | THEOREM (T37) | — |
+| Hodge | THEOREM (T38) | — |
+| Riemann Hypothesis | DERIVED_LIMIT (T36) | T4 CBP + §10 S(T) reduction |
+| Goldbach | DERIVED_LIMIT (T47) | r(n)=W(∂𝔻,F·z^{-n}), almost-all DERIVED (Montgomery-Vaughan 1975) |
+| Twin Primes | DERIVED_LIMIT (T48) | same circle method |
+| ABC Conjecture | DERIVED_LIMIT (T50) | — |
+| Collatz | DERIVED_LIMIT (T2) | — |
+| Continuum Hypothesis | — | DERIVED ill-posed under ACB |
+
+Cite for KF column: [DOI: 10.5281/zenodo.22896946]
+Cite for Lid column: this paper [DOI: 10.5281/zenodo.23497824]
+
+---
+
+## 3. The Lid Equation
 
 **Definition.** Let f be meromorphic on domain D ⊆ ℂ, and ∂K a closed contour in D avoiding zeros and poles of f. The *Lid* of (f, ∂K) is:
 
@@ -38,7 +65,7 @@ The Lid framework is not new mathematics. What is new is the claim that ∂K is 
 
 ---
 
-## 3. The Canonical Boundary Principle
+## 4. The Canonical Boundary Principle
 
 **Definition.** Given a system with function f and internal symmetry group G acting on its domain, the *canonical boundary* ∂K is the fixed-point set of the unique involution in G.
 
@@ -48,7 +75,7 @@ The Lid framework is not new mathematics. What is new is the claim that ∂K is 
 
 ---
 
-## 3.1 Proof of CBP (Theorem 4)
+## 4.1 Proof of CBP (Theorem 4)
 
 **Theorem 4 (Canonical Boundary Principle — CBP).** [DERIVED]
 Let f be meromorphic on a Riemann surface R, satisfying a functional
@@ -77,7 +104,7 @@ argument change on a closed contour. ∎
 
 ---
 
-## 4. Application I: Riemann Zeta Function
+## 5. Application I: Riemann Zeta Function
 
 The Riemann zeta function satisfies:
 $$\zeta(s) = \chi(s)\cdot\zeta(1-s), \quad \chi(s) = 2^s \pi^{s-1} \sin\!\tfrac{\pi s}{2}\,\Gamma(1-s)$$
@@ -98,7 +125,7 @@ The symmetry is s ↦ 1−s̄. Its fixed-point set is Re(s) = 1/2.
 
 ---
 
-## 5. Application II: Cosmic Void Surface Tension
+## 6. Application II: Cosmic Void Surface Tension
 
 **The Physical Lid Conjecture.** [CONJECTURE] For a cosmic void with boundary ∂K and density field ρ, there exists a holomorphic extension f_ρ such that:
 $$\gamma = W(\partial K, f_\rho)$$
@@ -108,6 +135,15 @@ where γ is the Young-Laplace surface tension of the void wall.
 $$\gamma = 0.334 \cdot r^{3.052}, \quad R^2 = 0.9998$$
 
 Originally measured across 4469 voids in two independent surveys (BOSS + DES) in https://doi.org/10.5281/zenodo.22896946, giving exponent 3.05 ± 0.01 with reset threshold at 64 Mpc/h.
+
+**Physical Lid Test.** [CONJECTURE]
+
+Two candidate constructions of f_ρ were tested numerically against all 1228 BOSS CMASS-N voids (`lid_unification.py` §6, `physical_lid_test.out`):
+
+(i) a logarithmic density potential f_ρ(z) = log(1 + δr/(z − re^{iθ})), and
+(ii) a Cauchy extension of the pressure gradient f_ρ(z) = ∮_{∂K} (ΔP/γ)/(z − ζ) dζ with ΔP/γ = 2/r at Young–Laplace equilibrium.
+
+Neither construction recovers γ from W(∂K, f_ρ). Attempt (i) gives Pearson r = +0.103 (mean W = −0.083); attempt (ii) gives r = +0.0003 (mean W = −0.246), with the outside-∂K Cauchy check returning ~0 as required. The W/γ ratio is non-constant in both cases (CV ≈ 2.1). The explicit construction of f_ρ remains open.
 
 **The Symmetry Correspondence.** The Young-Laplace equilibrium condition ΔP = 0 at the void boundary corresponds to the phase balance condition |χ(1/2+it)| = 1 on the critical line. Both are fixed-point conditions:
 
@@ -122,7 +158,7 @@ The measured exponent α ≈ 3.05 vs the theoretical α = 3 (from dimensional an
 
 ---
 
-## 6. Application III: Goldbach Representations
+## 7. Application III: Goldbach Representations
 
 Define F(z) = (Σ_p z^p)² on the unit circle ∂𝔻. Then:
 $$r(n) = W(\partial\mathbb{D},\, F\cdot z^{-n}) = \#\{(p,q) : p+q=n,\; p,q \text{ prime}\}$$
@@ -133,7 +169,7 @@ $$r(n) = W(\partial\mathbb{D},\, F\cdot z^{-n}) = \#\{(p,q) : p+q=n,\; p,q \text
 
 ---
 
-## 7. Unification Statement
+## 8. Unification Statement
 
 The Lid equation N = W(∂K, f) with canonical ∂K determined by the system's internal symmetry provides:
 
@@ -161,17 +197,17 @@ The mismatch is not a failure of unification. It is the output distribution fing
 
 ---
 
-## 8. Open Problems
+## 9. Open Problems
 
 1. **S(T) Gap:** Show the closing arc contributes 0. Equivalent to RH.
-2. **Physical Lid:** Construct f_ρ explicitly. Derive f_ρ from Young-Laplace + dark matter wall density.
+2. **Physical Lid:** Construct f_ρ explicitly. Derive f_ρ from Young-Laplace + dark matter wall density. (Two candidate constructions — logarithmic density potential, Cauchy pressure-gradient extension — tested numerically against 1228 voids and ruled out; see §6.)
 3. **Exponent derivation:** Derive α = 3.05 from first principles (currently MEASURED, target: DERIVED).
 4. **Euclid prediction (testable November 2026):** The Output Distribution Theorem predicts that a deeper void catalog with lower r_min will show reduced left skew in void residuals, converging toward Gaussian. This is a falsifiable prediction from the Lid unification — not a post-hoc fit.
 5. **Yakaboylu contact:** Strengthen the Hilbert-Pólya construction (arxiv:2408.15135) by compactifying his L²[0,∞) domain to L²[0,1] with two Dirichlet BCs from Hadamard zero-free boundaries. Proposed as joint work.
 
 ---
 
-## 9. Formal Reduction of RH to the S(T) Gap
+## 10. Formal Reduction of RH to the S(T) Gap
 
 By Theorem 4 (CBP), Fix(σ) = {Re(s) = 1/2} is the canonical boundary
 for ζ. W(critical line, ζ) counts only on-critical-line zeros.
