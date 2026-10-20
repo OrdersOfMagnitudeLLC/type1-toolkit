@@ -1,0 +1,51 @@
+==================================================================
+1. |chi(1/2+it)| = 1  (canonical dK: fixed-point set of s -> 1-s)
+==================================================================
+  t =    14.1347:  |chi| = 1.000000000000000   (|.|chi|-1| = 1.08e-30)
+  t =    25.0000:  |chi| = 1.000000000000000   (|.|chi|-1| = 2.17e-30)
+  t =    50.0000:  |chi| = 1.000000000000000   (|.|chi|-1| = 4.34e-30)
+  t =   100.0000:  |chi| = 1.000000000000000   (|.|chi|-1| = 8.58e-30)
+  t =   500.0000:  |chi| = 1.000000000000000   (|.|chi|-1| = 8.09e-30)
+  t =  1000.0000:  |chi| = 1.000000000000000   (|.|chi|-1| = 1.62e-29)
+
+==================================================================
+2. Off-critical zero-pair cancellation  W_rho + W_{1-rho} = 0
+==================================================================
+  hypothetical pair at t=14.13:
+    rho  = 0.6+14.13i  ->  W = -0.4997
+    rho' = 0.4+14.13i  ->  W = +0.4997
+    pair total                     ->  -0.0000
+  on-critical rho = 0.5+14.13i    ->  W = +0.5000
+
+==================================================================
+3. W(dK, zeta) = N(T) via argument principle
+==================================================================
+  T =   100:  W = +29.0000  ->  N_rect = 29   N_RvM = 29   N_enum = 29   MATCH
+  T =   500:  W = +269.0000  ->  N_rect = 269   N_RvM = 269   N_enum = 269   MATCH
+  T =  1000:  W = +649.0000  ->  N_rect = 649   N_RvM = 649   N_enum = 649   MATCH
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: /mnt/Storage/NS/UniverseResearch/SoapBowl/cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  |chi(1/2+it)| on critical line               = 1, max deviation 1.6e-29 over 6 t-values up to t=1000 DERIVED (verified numerically)
+  Off-critical pair contribution to W(dK)      -0.4997 +0.4997 = -0.0000  (~0)                  DERIVED (verified numerically)
+  On-critical single-zero contribution         +0.5000 (~+-1/2)                                 DERIVED (verified numerically)
+  W(dK, zeta) = N(T), T=100/500/1000           rectangle count = RvM = enumeration (29, 269, 649) MEASURED
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (functional eqn symmetry)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            CONJECTURE (physical lid)
+
