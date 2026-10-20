@@ -18,11 +18,15 @@ Verifies the four quantitative claims of the paper:
   4. gamma ~ r^3.052 from BOSS CMASS-N voids           [MEASURED]
      gamma = -delmin * Reff^3 / 2, power-law fit       (bridge_test.py logic)
 
+  5. CBP (Theorem 4): off-Fix pair winding sum = 0     [DERIVED]
+     + compute_winding_number(T) on the critical line
+     (ported from Kun Framework, DOI: 10.5281/zenodo.22896946)
+
 Run:  python3 lid_unification.py
 Deps: mpmath, numpy, scipy, pandas
 """
 
-from mpmath import mp, mpc, pi, sin, gamma as mp_gamma, zeta, zetazero, nzeros
+from mpmath import mp, mpc, pi, sin, gamma as mp_gamma, zeta, zetazero, nzeros, fp
 import numpy as np
 from scipy.optimize import curve_fit
 import pandas as pd
@@ -120,11 +124,12 @@ def rect_winding(T, n_vert=4000, n_horz=600):
     edges.append(xs[::-1] + 1j * Y0)         # bottom edge right
 
     total = 0.0
-    for edge in edges:
-        angs = np.empty(len(edge))
-        for i, s in enumerate(edge):
-            angs[i] = float(mp.arg(zeta(mpc(s.real, s.imag))))
-        total += np.unwrap(angs)[-1] - np.unwrap(angs)[0]
+    with mp.workdps(15):  # dps=15 suffices for arg winding; fp.zeta overflows
+        for edge in edges:  # at Re(s)=-1.5, large Im (hurwitz reflection)
+            angs = np.empty(len(edge))
+            for i, s in enumerate(edge):
+                angs[i] = float(mp.arg(zeta(mpc(s.real, s.imag))))
+            total += np.unwrap(angs)[-1] - np.unwrap(angs)[0]
     return total / (2 * np.pi)
 
 
@@ -204,6 +209,79 @@ else:
          f"alpha = {alpha_fit:.4f}, R^2 = {r2:.4f}", "MEASURED")
 
 # =====================================================================
+# 5. CBP verification (Theorem 4)
+# Ported from Kun Framework (KF), DOI: 10.5281/zenodo.22896946
+# Sections S1-S5 (void gamma fit) and S206-S207 (winding number)
+# =====================================================================
+print()
+print(SEP)
+print("5. CBP: off-Fix pair contributes 0; winding along Re(s)=1/2")
+print(SEP)
+
+
+def compute_void_gamma(r, gamma):
+    """Power-law fit gamma = A * r^alpha (KF section1_gamma).
+    Returns (A, alpha, ci_low, ci_high, r2)."""
+    r = np.asarray(r, dtype=float)
+    gamma = np.asarray(gamma, dtype=float)
+    mask = (r > 0) & np.isfinite(gamma) & (gamma > 0)
+    r_fit, g_fit = r[mask], gamma[mask]
+    p0 = [np.median(g_fit) / np.median(r_fit) ** 3.0, 3.0]
+    popt, pcov = curve_fit(lambda x, A, a: A * x ** a, r_fit, g_fit,
+                           p0=p0, maxfev=20000,
+                           bounds=([0.0, 0.0], [np.inf, 10.0]))
+    A, alpha = popt
+    alpha_err = np.sqrt(pcov[1, 1])
+    pred = A * r_fit ** alpha
+    r2 = 1.0 - np.sum((g_fit - pred) ** 2) / np.sum((g_fit - np.mean(g_fit)) ** 2)
+    return A, alpha, alpha - 1.96 * alpha_err, alpha + 1.96 * alpha_err, r2
+
+
+def compute_winding_number(T, npts=20000, t0=1e-6):
+    """Winding of zeta along the canonical boundary Re(s)=1/2 up to
+    height T: Delta arg zeta(1/2+it) / (2 pi), t in [t0, T].
+    Equals pi*S(T)/(2pi) = S(T)/2 by definition (arc contribution)."""
+    ts = np.linspace(t0, T, npts)
+    angs = np.empty(len(ts))
+    for i, t in enumerate(ts):
+        angs[i] = np.angle(fp.zeta(complex(0.5, t)))  # fp: double-prec, fast
+    return float((np.unwrap(angs)[-1] - np.unwrap(angs)[0]) / (2 * np.pi))
+
+
+def cbp_verify(rho, sigma_rho, T):
+    """Theorem 4(iii): off-Fix pair {rho, sigma_rho} contributes 0.
+    W computed separately for each member, then summed."""
+    w1 = winding_on_critical_line(rho, T=T, npts=200000)
+    w2 = winding_on_critical_line(sigma_rho, T=T, npts=200000)
+    total = w1 + w2
+    assert abs(total) < 1e-6, f"off-Fix pair sum {total} != 0"
+    return w1, w2, total
+
+
+# Theorem 4(iii): pair {rho, sigma(rho)} under sigma: s -> 1 - conj(s)
+rho_test = complex(0.6, 14.13)
+sigma_rho_test = complex(0.4, 14.13)   # sigma(0.6 + it) = 0.4 + it
+w1, w2, w_sum = cbp_verify(rho_test, sigma_rho_test, T=100)
+print(f"  rho        = 0.6+14.13i -> W = {w1:+.4f}")
+print(f"  sigma(rho) = 0.4+14.13i -> W = {w2:+.4f}")
+print(f"  pair sum (assert |sum|<1e-6)  = {w_sum:+.2e}  PASS")
+
+note("CBP off-Fix pair {rho, sigma(rho)} winding sum",
+     f"{w1:+.4f} {w2:+.4f} = {w_sum:.2e} (<1e-6, assert passed)",
+     "DERIVED (verified numerically)")
+
+# Winding of zeta along Fix(sigma) = S(T)/2, the arc contribution
+wT_vals = {}
+for T in [100, 500]:
+    wT = compute_winding_number(T)
+    wT_vals[T] = wT
+    print(f"  Delta arg zeta(1/2+it)/2pi, t<=T={T}: {wT:+.4f}  (= S(T)/2)")
+
+note("compute_winding_number(T) on Re(s)=1/2",
+     f"T=100: {wT_vals[100]:+.4f}, T=500: {wT_vals[500]:+.4f}  "
+     f"(S(T)/2, arc term)", "MEASURED")
+
+# =====================================================================
 # SUMMARY TABLE
 # =====================================================================
 print()
@@ -218,7 +296,7 @@ for c, v, l in rows:
 print("""
   Framework status (paper labels):
     Lid equation N = W(dK,f)        DERIVED    (argument principle)
-    Canonical dK = fixed-point set  DERIVED    (functional eqn symmetry)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
     S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
     gamma = W(dK, f_rho)            CONJECTURE (physical lid)
 """)

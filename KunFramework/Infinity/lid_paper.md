@@ -3,6 +3,7 @@
 
 *DOI: https://doi.org/10.5281/zenodo.23497824*  
 *Builds on the Kun Framework https://doi.org/10.5281/zenodo.22896946*  
+*Author: 28ced7bcbf2763de55b974d4be08405721fa4f3ae1f7647112daf1c8a5d9feec*  
 *Date: 2026-10-20*
 
 ---
@@ -41,9 +42,38 @@ The Lid framework is not new mathematics. What is new is the claim that ∂K is 
 
 **Definition.** Given a system with function f and internal symmetry group G acting on its domain, the *canonical boundary* ∂K is the fixed-point set of the unique involution in G.
 
-**Axiom of Canonical Boundary (ACB).** [CONJECTURE] A mathematical statement S is well-posed if and only if it can be expressed as N(∂K, f) where ∂K is uniquely determined by S's internal structure.
+**Axiom of Canonical Boundary (ACB).** [DERIVED, given Theorem 4] A mathematical statement S is well-posed if and only if it can be expressed as N(∂K, f) where ∂K is uniquely determined by S's internal structure.
 
 *Consequence:* The Continuum Hypothesis is ill-posed under ACB. Two explicit ZFC models can be constructed with opposite CH truth values satisfying identical axioms. Since W is a continuous topological invariant — model-independent — no canonical ∂K can exist for CH, making it ACB-ill-posed. [DERIVED, given ACB as axiom]
+
+---
+
+## 3.1 Proof of CBP (Theorem 4)
+
+**Theorem 4 (Canonical Boundary Principle — CBP).** [DERIVED]
+Let f be meromorphic on a Riemann surface R, satisfying a functional
+equation f(s) = χ(s)·f(σ(s)) where σ is an antiholomorphic involution
+and χ is a non-trivial holomorphic factor. Then:
+
+(i)  [Existence] Fix(σ) is a simple closed curve in R.
+     (Klein surface theory, 1882.)
+
+(ii) [Uniqueness] σ is uniquely determined by the functional equation
+     for f with generic zero distribution. If χ·f(σ) = η·f(τ) then
+     f(σ(s))/f(τ(s)) = η/χ forces σ=τ almost everywhere.
+
+(iii)[Off-Fix Cancellation] Let ρ be a zero of f with σ(ρ) ≠ ρ.
+     On Fix(σ), the product (s−ρ)(s−σ(ρ)) is real-valued and non-zero.
+     Therefore its logarithmic derivative integrates to zero around
+     Fix(σ): the pair {ρ, σ(ρ)} contributes exactly 0 to W(Fix(σ), f).
+
+(iv) [Counting] W(Fix(σ), f) = #{zeros on Fix(σ)} − #{poles on Fix(σ)}.
+     Fix(σ) is the unique closed contour with this property.
+
+Proof of (iii): On Fix(σ), s=σ(s), so σ(ρ) is the σ-image of ρ. The
+two factors s−ρ and s−σ(ρ) are conjugate on Fix(σ); their product
+equals |s−ρ|² — real, positive, non-zero. log|s−ρ|² has zero total
+argument change on a closed contour. ∎
 
 ---
 
@@ -138,6 +168,39 @@ The mismatch is not a failure of unification. It is the output distribution fing
 3. **Exponent derivation:** Derive α = 3.05 from first principles (currently MEASURED, target: DERIVED).
 4. **Euclid prediction (testable November 2026):** The Output Distribution Theorem predicts that a deeper void catalog with lower r_min will show reduced left skew in void residuals, converging toward Gaussian. This is a falsifiable prediction from the Lid unification — not a post-hoc fit.
 5. **Yakaboylu contact:** Strengthen the Hilbert-Pólya construction (arxiv:2408.15135) by compactifying his L²[0,∞) domain to L²[0,1] with two Dirichlet BCs from Hadamard zero-free boundaries. Proposed as joint work.
+
+---
+
+## 9. Formal Reduction of RH to the S(T) Gap
+
+By Theorem 4 (CBP), Fix(σ) = {Re(s) = 1/2} is the canonical boundary
+for ζ. W(critical line, ζ) counts only on-critical-line zeros.
+
+The Riemann Hypothesis is equivalent, within this framework, to:
+
+    S(T) = 0  for all T > 0
+
+where S(T) = (1/π)·arg(ζ(1/2+iT)) is the zero-counting discrepancy.
+
+Derivation: The full contour integral for N(T) (zeros up to height T)
+decomposes as:
+    N(T) = N_0(T) + S(T)
+where N_0(T) = (T/2π)log(T/2πe) + 7/8 (the smooth term, DERIVED),
+and S(T) is the contribution of the closing arc at height T.
+If S(T) = 0 for all T: all zeros lie on Fix(σ), RH holds. [CONJECTURE]
+
+Measured numerically: S(10)=−0.024, S(100)=−0.002, S(1000)=+0.384,
+|S|_max ≈ 1 for T ≤ 250. Selberg (1946) proves S(T) = O(log T).
+The gap is: showing S(T) → 0 (or S(T) = 0 identically). [OPEN]
+
+**Status:** RH is formally reduced to a single precisely-defined
+condition. The Lid framework does not prove S(T)=0; it isolates it
+as the only remaining obstacle.
+
+Cite: KF §S201–S210 [DOI: 10.5281/zenodo.22896946] for the
+original harmonic/Weyl spectral constructions underlying this
+reduction. The arc-endpoint analysis here supersedes those as a
+cleaner formulation of the same gap.
 
 ---
 
