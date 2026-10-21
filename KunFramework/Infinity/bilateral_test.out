@@ -1,0 +1,83 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+9. Bilateral Contour: W over rectangle Re[1/2,2] x Im[-T,T]
+==================================================================
+  critical-line arg grid ready (100001 pts, dt=0.02)
+  T =   100:  A_top =   +0.0377 rad   A_bottom =   +0.0377 rad   |A_top+A_bottom| = 7.53e-02
+           W_bil(edge=1/2) =   -1.0044   2N(T) = 58   |W-2N| = 59.0044
+           W_bil(edge=0.45) =  +56.9953   2N(T)-1 = 57   |W-(2N-1)| = 4.67e-03
+  T =   500:  A_top =   -1.5547 rad   A_bottom =   -1.5547 rad   |A_top+A_bottom| = 3.11e+00
+           W_bil(edge=1/2) =   -1.0070   2N(T) = 538   |W-2N| = 539.0070
+           W_bil(edge=0.45) = +536.9913   2N(T)-1 = 537   |W-(2N-1)| = 8.74e-03
+  T =  1000:  A_top =   +1.3212 rad   A_bottom =   +1.3212 rad   |A_top+A_bottom| = 2.64e+00
+           W_bil(edge=1/2) =   -1.0000   2N(T) = 1298   |W-2N| = 1299.0000
+           W_bil(edge=0.45) = +1297.0000   2N(T)-1 = 1297   |W-(2N-1)| = 1.10e-09
+
+  max |A_top + A_bottom| = 3.11e+00   (arcs do NOT cancel: A_bottom = A_top by symmetry — bottom arc = conjugated top arc, opposite direction)
+  max |W_bil(edge=1/2) - 2N(T)| = 1299.0000   -> W ~ -1: zeros lie ON the contour (not counted)
+  max |W_bil(edge=0.45) - (2N-1)| = 8.74e-03   (zeros interior; -1 = pole at s=1)
+  Bilateral Contour label: DERIVED
+  (bilateral dK is S(T)-free by zeta(s-bar)=conj(zeta(s)); exact count is 2N-1 due to the s=1 pole, not 2N)
+
+  9b. Deformation bridge: equal-arc family vs real axis
+         tau    A_top(tau)    A_bot(tau)      |diff|  pi*S_line(tau)
+        0.01     -3.109035     -3.109035    0.00e+00       +0.026850
+        0.05     -2.979165     -2.979165    0.00e+00       +0.133930
+        0.20     -2.512634     -2.512634    0.00e+00       +0.517504
+        1.00     -1.010597     -1.010597    0.00e+00       +1.767548
+        5.00     +0.202213     +0.202213    0.00e+00       +3.459620
+       20.00     -0.885459     -0.885459    0.00e+00       +1.954698
+       23.54     -0.262912     -0.262912    0.00e+00       +2.898401
+       27.71     +0.000743     +0.000743    0.00e+00       +3.113280
+       32.61     -0.901015     -0.901015    0.00e+00       +2.410184
+       38.39     +0.643935     +0.643935    0.00e+00       +3.697414
+       45.18     +0.296753     +0.296753    0.00e+00       +3.546257
+       53.18     +1.462654     +1.462654    0.00e+00       +4.745603
+       62.60     +0.386325     +0.386325    0.00e+00       +3.721354
+       73.68     +0.041412     +0.041412    0.00e+00       +3.085595
+       86.72     -0.899330     -0.899330    0.00e+00       +2.191023
+      102.08     +0.399276     +0.399276    0.00e+00       +3.389021
+      120.15     -0.337582     -0.337582    0.00e+00       +2.574569
+      141.42     +1.495505     +1.495505    0.00e+00       +4.857643
+      166.46     -0.414388     -0.414388    0.00e+00       +2.527983
+      195.93     +0.115858     +0.115858    0.00e+00       +3.276308
+      230.61     -1.082406     -1.082406    0.00e+00       +1.856019
+      271.44     -1.232750     -1.232750    0.00e+00       +1.997354
+      319.50     +0.719772     +0.719772    0.00e+00       +3.748382
+      376.06     +0.165999     +0.165999    0.00e+00       +3.363620
+      442.64     -0.700202     -0.700202    0.00e+00       +2.594924
+      521.00     -0.777959     -0.777959    0.00e+00       +2.247448
+      613.24     -1.199866     -1.199866    0.00e+00       +1.986460
+      721.80     +0.032280     +0.032280    0.00e+00       +3.247029
+      849.59     -0.737513     -0.737513    0.00e+00       +2.672535
+     1000.00     +1.321245     +1.321245    0.00e+00       +4.347204
+    max |A_top - A_bot| over sweep = 0.00e+00   (equality holds at every height: DERIVED)
+    min |A_arc(tau)| over sweep  = 0.0007
+    real-axis limit arc(tau->0+) = -3.141267 rad (= -0.9999 * pi; zeta real on axis: sign flip at s=1 gives arg pi->0, Delta=-pi)
+    bridge exists (arc hits ~0 somewhere): True
+    -> deformation retraces S; equality of two unknowns
+       never yields a zero.  Bridge still open.
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Bilateral Contour: W_bil(0.45) = 2N(T)-1 exactly max|W-(2N-1)| = 8.7e-03 over T in {100,500,1000}; on-line edge gives W ~ -1 (zeros on contour) DERIVED
+  Deformation bridge: A_top(tau)=A_bot(tau) for all tau max|diff| = 0.0e+00; min|arc| = 0.001 rad; real-axis limit = -1.000*pi NAMED OPEN PROBLEM
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

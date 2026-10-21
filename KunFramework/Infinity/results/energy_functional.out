@@ -1,0 +1,43 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+15. Zero-position energy from the edge scan
+==================================================================
+  Part A: E(T) = int_{1/2}^1 2(s-1/2)(W(s,T)+1) ds
+    steps: (1) layer-cake  (2) W = N-1 (arg. principle)
+           (3) substitute  (4) W+1 = excess winding
+    proof recorded: True   label: DERIVED
+
+  Part B: trapezoid integral over sigma in [0.5, 1.0]
+    T=  100: E = -6.310183e-08   max|W+1| (s>0.5) = 4.216e-06   cumul range = [-1.42e-07, 7.33e-09]
+      W row: 0.50:-1.000 0.55:-1.000 0.60:-1.000 0.65:-1.000 0.70:-1.000 0.75:-1.000 0.80:-1.000 0.85:-1.000 0.90:-1.000 0.95:-1.000
+    T=  500: E = +2.339289e-06   max|W+1| (s>0.5) = 1.457e-04   cumul range = [-2.93e-07, 4.28e-06]
+      W row: 0.50:-1.000 0.55:-1.000 0.60:-1.000 0.65:-1.000 0.70:-1.000 0.75:-1.000 0.80:-1.000 0.85:-1.000 0.90:-1.000 0.95:-1.000
+    cumulative plot -> results/energy_functional.png
+    (sigma=1.0 edge excluded: pole s=1 ON contour there)
+    max |E(T)| = 2.339e-06   E ~ 0: energy minimum, RH consistent
+
+  Part C: E=0 <=> W=-1 a.e. (s>1/2) <=> RH  (recorded: True, label: DERIVED)
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Energy identity E=int 2(s-.5)(W+1)ds         layer-cake + arg. principle; E=0 <=> RH          DERIVED
+  Energy functional numeric                    E(100)=-6.31e-08, E(500)=+2.34e-06; cumulative flat MEASURED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

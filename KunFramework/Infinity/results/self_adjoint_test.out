@@ -1,0 +1,54 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+14. Lid self-adjointness: K(t,t') = A(t) conj(A(t'))
+==================================================================
+    max|K(t,t') - conj(K(t',t))| on [20,120]^2 grid:
+      zeta     : 1.137e-13
+      g (off)  : 1.972e-31
+      h (line) : 0.000e+00
+
+    NOTE: K = A(t)conj(A(t')) is a rank-1 Gram kernel --
+    conj(K(t',t)) = conj(A(t')conj(A(t))) = A(t)conj(A(t'))
+    identically for ANY f.  Hermiticity is automatic and
+    carries no information about zero positions.
+    verdict: TEST NOT SENSITIVE: rank-1 Gram kernel is identically Hermitian for all three functions
+
+  14b. Reflection kernel K_R = A(t) - conj(A(-t'))
+    function                         max|D|       max|S|
+    zeta                         1.7919e+00   2.9496e+00
+    xi (completed)               3.3138e-08   2.3452e-08
+    g sym quartet                8.8818e-16   4.9878e-16
+    g asym (0.6 pair only)       2.0000e+01   2.0000e+01
+    h on-line                    2.2204e-16   1.1102e-16
+
+    algebra: D(t,t') = S(t)-conj(S(t')), S=A(t)+A(-t);
+    Schwarz gives S = 2 Re f'/f = 2 d(sigma) log|f| at 1/2.
+    This vanishes iff f is symmetric under s->1-s on the
+    line (exact FE) -- it is BLIND to FE-paired off-line
+    zeros (their Re parts cancel) and nonzero for any
+    f lacking exact line symmetry (zeta's chi factor).
+    verdict: K_R detects FE-asymmetry, not off-line zeros: g_sym and xi read ~0, g_asym reads large, zeta reads nonzero via chi
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Lid self-adjointness K=A.conj(A)             res zeta=1.1e-13, g=2.0e-31, h=0.0e+00; TEST NOT SENSITIVE MEASURED
+  Reflection kernel K_R (14b)                  xi=3.3e-08, g_sym=8.9e-16, g_asym=2.0e+01, zeta=1.8e+00; sensitive to FE-asymmetry only MEASURED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

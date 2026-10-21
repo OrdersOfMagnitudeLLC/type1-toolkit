@@ -1,0 +1,45 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+7. Seam Theorem: eps_zeta(T) = |S(T)|/N(T) vs eps_voids = 0.0173
+==================================================================
+  T =      10:  S(T) =  +0.9763   N(T) =       1.0   eps = 0.97693   (eps_voids = 0.0173)
+  T =      25:  S(T) =  +0.6088   N(T) =       3.0   eps = 0.20295   (eps_voids = 0.0173)
+  T =      50:  S(T) =  +1.5771   N(T) =      11.0   eps = 0.14337   (eps_voids = 0.0173)
+  T =     100:  S(T) =  +0.9976   N(T) =      30.0   eps = 0.03325   (eps_voids = 0.0173)
+  T =     200:  S(T) =  +0.8067   N(T) =      80.0   eps = 0.01008   (eps_voids = 0.0173)
+  T =     500:  S(T) =  +0.4133   N(T) =     270.0   eps = 0.00153   (eps_voids = 0.0173)
+  T =     750:  S(T) =  +0.6586   N(T) =     453.0   eps = 0.00145   (eps_voids = 0.0173)
+  T =    1000:  S(T) =  +1.3838   N(T) =     650.0   eps = 0.00213   (eps_voids = 0.0173)
+  T =    1228:  S(T) =  +1.5575   N(T) =     838.0   eps = 0.00186   (eps_voids = 0.0173)
+
+  fit a) eps = A T^beta :  A = 22.0401, beta = -1.4040,  R^2 = 0.9805
+  fit b) eps = C / N(T) :  C = 0.9443,         R^2 = 0.9791
+  winner: power fit
+
+  T* (eps_zeta = 0.0173, power fit) = 163, measured-grid interp T* = 169
+  |T* - 1228| = 86.7% of N_voids (outside 20%)
+  Seam Theorem label: SPECULATION
+  plot -> seam_theorem_test.png
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Seam Theorem: eps_zeta(T*) = eps_voids       power fit; T* = 163 vs N_voids = 1228 (86.7% off), measured-grid interp T* = 169 SPECULATION
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

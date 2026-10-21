@@ -1,0 +1,52 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+12. Completeness: W(sigma>1/2)=-1 <=> RH; detector check
+==================================================================
+  Task A: antoine_completeness_proof()
+    statement: W_f(sigma)= -1 for all sigma>1/2  <=>  RH
+    steps: (1) argument principle  (2) no zeros Re>1/2
+           (3) FE pairing 1-conj(rho) rules out Re<1/2
+           (4) RH => W=0-1=-1
+    proof recorded: True   label: DERIVED
+
+  Task B: synthetic g, off-line pair at 0.6+50i / 0.4+50i
+     sigma  N_int       W_g       res
+     0.300     10  +10.0000   -0.0000
+     0.390     10  +10.0000   -0.0000
+     0.410      8   +8.0000   -0.0000
+     0.450      8   +8.0000   +0.0000
+     0.490      8   +8.0000   +0.0000
+     0.500      2   +5.0000   +3.0000
+     0.550      2   +2.0000   +0.0000
+     0.590      2   +2.0000   +0.0000
+     0.600      0   +2.0000   +2.0000
+     0.610      0   +0.0000   +0.0000
+     0.700      0   +0.0000   +0.0000
+
+    plateau W in (0.5, 0.6): [np.float64(2.0), np.float64(2.0)] (expected +2 = the 0.6 pair still interior)
+    pre-jump detected at sigma = 0.6: yes   offset error = 0.10499999999999998
+    Detector Validation label: DERIVED
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Completeness: W(sigma>1/2)=-1 <=> RH         proof via argument principle + FE pairing        DERIVED
+  Detector: plateau at off-line zero           g(0.6+50i): plateau [np.float64(2.0), np.float64(2.0)] -> jump at sigma=0.6; offset err 0.10499999999999998 DERIVED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

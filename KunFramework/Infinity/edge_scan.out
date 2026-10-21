@@ -1,0 +1,56 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+11. Edge Scan: W_bilateral(sigma_edge), T in {100, 500}
+==================================================================
+  T = 100:   N(T) = 29   (zeros at sigma=0.5 only, by catalog)
+      sigma  N_int      W_bil  N_int-1   residual
+     0.4500     58   +57.0000       57    -0.0000
+     0.4700     58   +57.0000       57    -0.0000
+     0.4900     58   +57.0000       57    -0.0000
+     0.4990     58   +57.0000       57    -0.0000
+     0.4999     58   +57.0000       57    -0.0000
+     0.5000      0    -1.0000       -1    -0.0000  <-- zeros ON contour
+     0.5001      0    -1.0000       -1    -0.0000
+     0.5010      0    -1.0000       -1    -0.0000
+     0.5100      0    -1.0000       -1    -0.0000
+
+  T = 500:   N(T) = 269   (zeros at sigma=0.5 only, by catalog)
+      sigma  N_int      W_bil  N_int-1   residual
+     0.4500    538  +537.0000      537    -0.0000
+     0.4700    538  +537.0000      537    -0.0000
+     0.4900    538  +537.0000      537    -0.0000
+     0.4990    538  +537.0000      537    -0.0000
+     0.4999    538  +537.0000      537    -0.0000
+     0.5000      0    -1.0000       -1    -0.0000  <-- zeros ON contour
+     0.5001      0    -1.0000       -1    -0.0000
+     0.5010      0    -1.0000       -1    -0.0000
+     0.5100      0    -1.0000       -1    -0.0000
+
+  max |W - (N_int-1)| over interior edges = 0.0000
+  W at sigma=0.5001: {100: np.float64(-1.0000000000087625), 500: np.float64(-1.000000000316594)}  (must be ~ -1 immediately; plateau => off-line zero)
+  NB: N_int uses the zetazero catalog (line zeros only);
+      W is the independent detector of off-line zeros.
+  Edge Scan label: MEASURED
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Edge Scan: W jumps 2N-1 -> -1 at sigma=0.5   max|W-(N_int-1)| = 3.96e-10; W(0.5001) = [np.float64(-1.0000000000087625), np.float64(-1.000000000316594)] (no plateau) MEASURED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

@@ -1,0 +1,45 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+13. Euler Product truncations vs edge scan, T = 100
+==================================================================
+         P   W(0.45)  W(0.48)  W(0.50)  W(0.51)  W(0.52)  W(0.55)   max|W(s>0.5)+1|
+        20    -0.000   -0.000   -0.000   -0.000   -0.000   -0.000   1.0000
+        50    -0.000   -0.000   -0.000   -0.000   -0.000   -0.000   1.0000
+       100    -0.000   -0.000   -0.000   -0.000   -0.000   -0.000   1.0000
+       200    -0.000   -0.000   -0.000   -0.000   -0.000   -0.000   1.0000
+       500    +0.000   +0.000   +0.000   +0.000   +0.000   +0.000   1.0000
+       inf   +57.000  +57.000   -1.000   -1.000   -1.000   -1.000   0.0000   (full zeta)
+
+  off-line zero scan (min |zeta_P| on 0.5<Re<0.9, |Im|<100):
+    P= 20: min|zeta_P| = 1.2741e-01 at s = 0.51-14.14i
+    P= 50: min|zeta_P| = 1.0680e-01 at s = 0.51-14.14i
+    P=100: min|zeta_P| = 1.1907e-01 at s = 0.51-14.14i
+    P=200: min|zeta_P| = 7.0618e-02 at s = 0.51-0.88i
+    P=500: min|zeta_P| = 1.4668e-02 at s = 0.51+0.63i
+  (algebraic: 1-p^-s = 0 only on Re(s)=0 -> zeta_P has
+   NO zeros anywhere, only poles on Re(s)=0; so truncations
+   cannot produce off-line zeros -- and cannot produce the
+   -1 either, since the s=1 pole appears only in the limit)
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Euler product truncations                    W(s>0.5) = 0 for all P (zero-free; pole enters at P=inf) MEASURED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

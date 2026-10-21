@@ -1,0 +1,44 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+10. Horizontal Principle: A(tau) + theta(tau) ?
+==================================================================
+      tau          A      theta       V   pi*S=V+A       A+th       A-th    A/th (A+th+V)/pi   N-1
+       10    -0.0085    -3.0671 -0.0660    -0.0745    -3.0756    +3.0585 +0.0028     -1.0000    -1
+       20    -0.8855    +1.1869 -0.3014    -1.1869    +0.3014    -2.0724 -0.7460      0.0000     0
+       50    +1.6517   +26.4614 +0.1613    +1.8130   +28.1130   -24.8097 +0.0624      9.0000     9
+      100    +0.0377   +87.9722 -0.0452    -0.0076   +88.0098   -87.9345 +0.0004     28.0000    28
+      200    -0.4706  +245.6514 -0.1366    -0.6072  +245.1809  -246.1220 -0.0019     78.0000    78
+      500    -1.5547  +843.7901 -0.2885    -1.8433  +842.2354  -845.3448 -0.0018    268.0000   268
+     1000    +1.3212 +2034.5464 -0.1156    +1.2056 +2035.8677 -2033.2252 +0.0006    648.0000   648
+
+  A+theta:  min = -3.0756  max = +2035.8677  range = 2038.9433 rad
+  A+theta+V (i.e. pi*S + theta): exact multiple of pi?
+    max |(A+theta+V)/pi - (N-1)| = 5.68e-14   YES — RvM staircase exact
+  const test A+theta = -pi? residual vs -pi: max|A+th+pi| = 2039.009
+  claim A = -pi + pi*S ?  i.e. V = pi?  max|V| = 0.301  -> FALSE (V bounded < pi/2)
+  Horizontal Principle label: DERIVED
+  (real principle: A+theta+V = pi*(N-1) integer staircase —
+   Z(τ) real gives the mod-pi info; the integer is N, not 0)
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  Horizontal Principle: A+theta+V = pi*(N-1) staircase max residual 5.7e-14 vs integers; A+theta alone ranges 2038.9 rad (not const) DERIVED
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+

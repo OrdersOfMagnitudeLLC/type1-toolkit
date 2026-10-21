@@ -1,0 +1,42 @@
+
+==================================================================
+4. gamma = A * r^alpha  (gamma = -delmin * r^3 / 2)
+==================================================================
+  catalog: ../cache/apjaa508et1_mrt.txt
+  voids used: 1228
+  fit: gamma = 3.345e-01 * r^3.0517   R^2 = 0.9998
+  (paper value: 0.334 * r^3.052, R^2 = 0.9998)
+
+==================================================================
+8. CBP Exact Count: S(T)=0 crossings -> integer W_line
+==================================================================
+  identity check W_line(T) == S(T): max |W_line - S| = 4.44e-16
+  S(T)=0 crossings in [10,500]: 2 (fine grid; coarse 500-pt grid detects 0 of them)
+  crossings with |W_line - integer| < 0.01: 2/2   max residual = 5.57e-13
+  decomp  W_line ~ N_exact - S      : mean|r| = 116.75  (= |S - N_smooth|, fails as written)
+  decomp  W_line = N_exact - N_smooth: max|r| = 2.80e-14  (exact identity)
+/home/lumiere/.local/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:3028: RuntimeWarning: Degrees of freedom <= 0 for slice
+  c = cov(x, y, rowvar, dtype=dtype)
+/home/lumiere/.local/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2901: RuntimeWarning: divide by zero encountered in divide
+  c *= np.true_divide(1, fact)
+/home/lumiere/.local/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:2901: RuntimeWarning: invalid value encountered in multiply
+  c *= np.true_divide(1, fact)
+  normalized-spacing stats  S-zeros: mean=0.026 std=0.000  |  zeta zeros: mean=1.001 std=0.365  (GUE: mean 1, std ~0.52)
+  Q-Q Pearson r (sorted spacings): +nan
+  plot -> cbp_exact_count.png
+  CBP Exact Count label: CONJECTURE
+
+==================================================================
+SUMMARY — claim / value / label
+==================================================================
+  CLAIM                                        VALUE                                            LABEL
+  --------------------------------------------------------------------------------------------------------------
+  gamma ~ r^alpha, N=1228 BOSS CMASS-N         alpha = 3.0517, R^2 = 0.9998                     MEASURED
+  CBP Exact Count: integer W_line at S(T)=0    2/2 crossings integer (max res 5.57e-13); Q-Q r = +nan CONJECTURE
+
+  Framework status (paper labels):
+    Lid equation N = W(dK,f)        DERIVED    (argument principle)
+    Canonical dK = fixed-point set  DERIVED    (Theorem 4, CBP)
+    S(T) closing arc = 0            NAMED OPEN PROBLEM  (== RH)
+    gamma = W(dK, f_rho)            NOT RUN (physical lid)
+
