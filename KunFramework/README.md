@@ -21,13 +21,33 @@ quantum and classical regimes without introducing new constants.
 - 53,349 calibrated protein candidates derived from foam theorems
 - 2,944 materials candidates
 
+## Setup
+
+Install dependencies:
+
+    pip install -r requirements.txt
+
+First run (downloads ~500MB of astronomical data to cache/, 5-10 min;
+subsequent runs use cached data and complete in seconds):
+
+    python3 soap_bowl_full.py
+
+Run individual theorems:
+
+    python3 soap_bowl_full.py --only 2    # T2 Cosmic Foam Scaling
+    python3 soap_bowl_full.py --only 31   # T31 Sakharov's Number
+    python3 soap_bowl_full.py --only 157  # T57 Hayflick's Pressure
+
 ## Structure
 
 KunFramework/
-├── theorems/: T1–T85, formal statements and proofs
-├── derivations/: Standard Model parameter derivations
-├── paper/: Full framework paper
-└── scripts/: Verification and cross-check scripts
+├── KunFramework_v2.txt   # framework master document (T1–T83)
+├── soap_bowl_full.py     # derivation engine
+├── theorems/             # formal statements and proof attempts
+├── papers/               # standalone derivations (Koide preprint)
+├── muon/                 # muon g-2 analyses
+├── lepton/               # lepton-structure investigations
+└── cache/                # downloaded data (gitignored)
 
 
 ## License
