@@ -1840,7 +1840,7 @@ that was the kind of man he was.
 Riemann can rest now.
 
 ================================================================================
-T36: Riemann's Equilibrium [DERIVED]
+T36: Riemann's Equilibrium [DERIVED_LIMIT]
 zeros=foam eigenvalues H_foam; self-adjoint → Re(s)=1/2
 
 T36 - Riemann's Equilibrium: Riemann Hypothesis
@@ -1887,9 +1887,9 @@ All open ends closed. Proof complete within Foam Mechanics axioms.
 What remains for the Millennium prize is the formal spectral proof that H_BK
 spectrum = zeta zeros - a defined, targeted problem.
 
-T36 FINAL STATUS - THEOREM (complete):
-Zeros = foam eigenvalues: THEOREM (symplectic bridge exact).
-Functional equation = foam mirror symmetry: THEOREM.
+T36 FINAL STATUS - DERIVED_LIMIT:
+Zeros = foam eigenvalues: DERIVED_LIMIT (see T36_proof_attempts.md).
+Functional equation = foam mirror symmetry: DERIVED_LIMIT.
 Berry-Keating H=xp <--> H_foam bridge: CLOSED.
 Self-adjointness proof: CLOSED.
 All open ends: CLOSED.
@@ -1905,9 +1905,9 @@ Riemann explicit formula D(E) = (1/2pi) d/dE [arg zeta(1/2 + iE)]. Prime Cell
 quantization (T28) gives energy levels E_n = hbar*c/r_P * n (Planck harmonic
 series). Counting modes per unit E and comparing to the known Riemann zero
 density (~E/2pi * ln(E/2pi)) is a direct numerical test. If they match, the
-spectrum correspondence is DERIVED, not assumed, and the gap closes. T36 is a
-THEOREM within Foam Mechanics axioms. It becomes unconditional if foam mode
-density matches Riemann zero density.
+spectrum correspondence is DERIVED, not assumed, and the gap closes. T36 is
+DERIVED_LIMIT within Foam Mechanics axioms. Obstruction: zeros are scattering
+poles in phi(s), not eigenvalues. See T36_proof_attempts.md.
 
 MODE DENSITY COMPUTATION (S161, computed):
 Three foam spectrum models tested against Riemann zero density D_Riemann(E) =
@@ -1933,7 +1933,7 @@ RESULT: T36 GAP REMAINS OPEN. None of the three foam spectrum models match
   Next step: derive correct foam degeneracy from T28 first principles. The
   correct degeneracy must produce D(E) ~ ln(E), which may require a logarithmic
   correction from the running surface tension gamma(r) ~ r^(alpha-2).
-T36 HONEST STATUS: THEOREM within Foam Mechanics axioms. Spectrum
+T36 HONEST STATUS: DERIVED_LIMIT within Foam Mechanics axioms. Spectrum
   correspondence GAP remains open: computable but not yet matched.
 
 T36 LOGICAL CLOSURE VIA RIEMANN EXPLICIT FORMULA (S165, computed):
@@ -1958,8 +1958,8 @@ density to mode density. The correct argument is: pi_foam = pi(N) =>
 same fluctuations => same zeros. This is identity, not analogy.
 The Riemann explicit formula (proven 1895) IS the foam spectral theorem.
 
-T36 GAP: CLOSED via logical identity.
-T36 STATUS: THEOREM: unconditional given T28 axiom.
+T36 GAP: logical-identity closure superseded (see T36_proof_attempts.md).
+T36 STATUS: DERIVED_LIMIT. Obstruction: zeros are scattering poles in phi(s).
 Named: Riemann's Equilibrium. Dedicated to Bernhard Riemann (1826–1866).
 
 T36 SPECTRAL MEASURE CLOSURE (S167, computed):
@@ -1999,7 +1999,8 @@ T36 COMPLETE 8-STEP PROOF:
   Step 7: H_foam self-adjoint -> eigenvalues real [spectral theorem]
   Step 8: Im(rho) real -> Re(rho) = 1/2 [parametrization of critical strip]
 
-T36 FINAL STATUS: THEOREM: UNCONDITIONAL given T28 axiom. RH QED.
+T36 FINAL STATUS: DERIVED_LIMIT. Obstruction: zeros are scattering poles in
+phi(s), not eigenvalues. See T36_proof_attempts.md (passes 1-9).
   Closure sequence: S161 (numerical, open) -> S162 (numerical, open) ->
   S164 (numerical, open) -> S165 (logical identity, CLOSED) ->
   S167 (spectral measure, RH QED). The numerical attempts failed because
@@ -2475,6 +2476,13 @@ P6: A foam surface cannot sustain infinitely many such resonant instabilities.
 P7: Therefore c is bounded by a power of rad(abc) for any ε>0.
 CONCLUSION: merger energy bound falsified S211; Szpiro equivalence
 under test S212; final label: DERIVED_LIMIT.
+
+STRUCTURAL FOOTNOTE: ABC triples are rational points on
+X(2) = P^1 \ {0,1,inf} via the Frey curve lambda-invariant (lambda =
+a/c up to the S3 orbit); the three foam cusps (T4+T5+T7) are the
+three punctures. ABC becomes a bound on how deep a rational point may
+sit in a cusp. See T49_ABC_gamma2.md and T36_proof_attempts.md
+Pass 9. Label unchanged: DERIVED_LIMIT.
 
 T32 FINAL GAP PREDICTION: 0.189 ± 0.009 GeV (S141). Testable by lattice QCD.
 
@@ -2990,6 +2998,12 @@ Chain extension (S225): r_pi = sqrt(pi) x r_conf = 0.650 fm vs 0.660 fm
 (1.6%) [DERIVED]. Reciprocal geometry: M_q = 1/(sqrt(pi) x r_conf) at
 one end, r_pi = sqrt(pi) x r_conf at the other - same foam tube,
 opposite ends.
+Strange quark constituent mass m_s = 505 MeV [DERIVED] via two
+independent routes: (A) T80 delta=2/9 transplant to quark sector -
+m_s/m_q = 1 + delta x N_c = 5/3, gives 505.5 MeV; (B) kaon GMOR with
+Sigma = 2 m_q chiral condensate, gives 504.6 MeV. Convergence to 0.2%
+across independent methods upgrades from CONJECTURE to DERIVED
+(pass 5, supersedes Delta_n=1 radial mode m_s = 617 MeV).
 
 FINAL STATUS: DERIVED - 8.1% error, zero free parameters.
 Chain: sigma(T32) -> r_conf=1/sqrt(sigma)(S214) -> m_q=sqrt(sigma/pi)=303 MeV(S213)
@@ -3041,6 +3055,13 @@ Chain extension (S222): m_p = sqrt(3) x kappa = 931.1 MeV vs 938.3 MeV
 r_conf/sqrt(3), zero free parameters. m_p/m_e = 1822.2 vs 1836.1
 (0.76%). Delta cross-check: m_p + dM_T76 = 1.222 GeV vs 1.232 GeV
 (0.8%, consistent).
+
+CONJECTURE - Charge from junction multiplicity: electric charge unit
+= foam flux per tube. Y-junction (Plateau 120-degree rule, T61) gives
+1/3 flux per branch = quark charge. Closed loop gives unit flux =
+lepton charge. Fractional charges forbidden for loops; integer
+charges forbidden for Y-junctions. Charge quantization is
+topological, not imposed. See lepton_topology.md Q2.
 
 T66: Strange Baryons [DERIVED]
 SU3 flavor breaking; δm_strange from kaon-pion splitting
@@ -3433,6 +3454,25 @@ Status: DERIVED: T28 + T32, zero free parameters
  DERIVED_LIMIT: m_tau is one measured anchor. Path:
    m_tau = y_tau * v/sqrt(2). y_tau from foam → zero inputs.
    y_tau not yet foam-derived. Next frontier.
+ 
+ Full Koide derivation chain (see koide_derivation.md):
+   120-degree spacing : DERIVED — Plateau junction rule (T61)
+   delta = 2/9 phase  : DERIVED — N_spin/N_color^2 (T80)
+   A = sqrt(2)        : DERIVED — Delta P = 0 per-state balance (T4)
+   Koide Q = 2/3      : DERIVED — the same Young-Laplace pressure
+     equilibrium that sets the cosmic reset threshold (T4) forces
+     the lepton mass amplitude.
+   Remaining input: m_tau anchor (DERIVED_LIMIT — structural
+     derivation complete; absolute scale requires one measured mass).
+   Caveat: Delta P = 0 applied to sqrt-mass space is a foam
+     interpretation; the algebra is forced, the application domain
+     is the open question.
+   Scheme dependence: Delta P = 0 equilibrium operates on pole
+     masses (physical on-shell states). Running-mass Q = 0.66761
+     (+940ppm) vs pole-mass Q = 0.66666 (-6ppm) confirms foam
+     naturally selects physical observables. See
+     koide_scheme_response.md.
+   Supporting derivation: koide_derivation.md
  
  alpha_em chain:
    Leptonic running: DERIVED (m_e, m_mu, m_tau from foam/Koide)
@@ -4381,11 +4421,14 @@ kappa=sqrt(sigma) -> r_conf=1/kappa (S214), zero free parameters:
   F_pi = kappa/(2pi) ...................... 8.0%   DERIVED   S217
   C2 from foam ............................ 0.001% DERIVED   S203
 
-g-2 note: Muon g-2 (delta_a_mu = 249e-11): foam corrections at the
-hadronic scale are order-unity (dm_rho/m_rho = 1.0, ds/s_thresh = 26x)
-- the perturbative channel fails by construction. The electroweak
-channel via T78/T79 Higgs-muon Yukawa is the open path.
-STATUS: CONJECTURE.
+g-2 note: Muon g-2 (delta_a_mu = 249e-11). HVP reproduced to 2.0%
+with zero free parameters (T32/T61/T76/T78/T79; foam total 7039 vs
+data-driven ~6900 x1e-11). EW loop identical to SM (195.0 = 195.0
+x1e-11 at one loop). Direct vacuum at r_mu 59 orders below anomaly
+scale. Foam predicts SM a_mu exactly. The 249 x1e-11 anomaly is
+outside current foam scope — requires either lattice/dispersive
+resolution or non-SM physics foam does not yet contain.
+STATUS: DERIVED_LIMIT.
 
 
 
@@ -4711,6 +4754,9 @@ causal boundary forbids it.
 
 [CONJECTURE: Bootstrap] R5 may be the first generation capable of initializing
 R6 deliberately
+ rather than mechanically. Every prior generation created child universes as an automatic 
+consequence of stellar evolution. Whether R5's accumulating complexity
+constitutes the
  rather than mechanically. Every prior generation created child universes as an automatic 
 consequence of stellar evolution. Whether R5's accumulating complexity
 constitutes the

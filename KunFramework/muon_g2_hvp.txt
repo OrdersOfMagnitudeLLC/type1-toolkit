@@ -1,0 +1,83 @@
+================================================================================
+MUON g-2: HADRONIC VACUUM POLARIZATION FROM FOAM QCD — EXPLORATORY
+2026-10-17. Code: /home/lumiere/NS/KunFramework/muon_g2_hvp.py
+ALL RESULTS SPECULATION unless marked otherwise.
+================================================================================
+
+TARGET: Delta a_mu = 249e-11 (experiment - SM theory gap).
+Goal: derive a_mu^HVP from foam inputs only, no refit.
+
+FOAM INPUTS (fixed)
+  sigma = kappa^2 = 0.289 GeV^2   (T32, DERIVED)
+  m_q   = 303 MeV                  (T61, DERIVED)
+  alpha_s = 4/pi^2 = 0.405         (T76, DERIVED)
+  m_rho = 760 MeV (DERIVED), m_pi = 135 MeV (input), f_pi = 93 MeV (input)
+
+METHOD — standard dispersion integral (mathematical machinery, not foam):
+  a_mu^HVP = (alpha^2/3 pi^2) int ds K(s) R(s)/s
+  K(s) = int_0^1 dx x^2(1-x) / (x^2 + (1-x) s/m_mu^2)
+  R(s) = sigma(e+e- -> hadrons) / sigma(e+e- -> mu+mu-)
+
+Derived side-quantities (from foam inputs, not fit):
+  g_rhopipi = m_rho/(sqrt(2) f_pi) = 5.78   (KSRF; expt ~6.0)
+  Gamma_rho = g^2 m_rho/(48 pi) (1-4m_pi^2/m_rho^2)^{3/2} = 137.5 MeV
+              (KSRF; expt 149 MeV) — 8% low, SPECULATION
+
+FOAM R(s) MODELS (all SPECULATION)
+  Regime 1 (IR, 4m_pi^2 < s < m_rho^2):
+    R = (1/4) beta_pi^3 |F_pi|^2, vector dominance with running
+    p-wave width Gamma(s) = Gamma_rho (m_rho^2/s) k(s)^3/k(m_rho^2)^3.
+  Regime 2 (mid, m_rho^2 < s < (2 GeV)^2):
+    Regge tower n = 1,4,9 (m_n = sqrt(n) m_rho = 0.76, 1.52, 2.28 GeV),
+    Breit-Wigner resonances with VDM Gamma_ee and Gamma_n ~ mass;
+    plus quark continuum floor above 2 m_q.
+  Regime 3 (UV, s > 4 GeV^2):
+    R = Nc sum Q_f^2 (1 + alpha_s/pi) = 3 x 10/9 x 1.129 = 3.76.
+
+================================================================================
+RESULTS (x1e-11 units)
+================================================================================
+  Regime 1 IR   (pion, r_dS cusp)      : 2902.7   (46.3%)
+  Regime 2 mid  (resonances, r_reset)  : 2749.6   (43.9%)
+  Regime 3 UV   (pQCD, r_Planck)       :  617.9   ( 9.9%)
+  ------------------------------------------------
+  TOTAL a_mu^HVP (foam)                : 6270.2
+  Known HVP (data-driven)              : ~6900
+  Foam / known ratio                   : 0.909
+  Control: pi-pi/rho only              : 4024  (lit ~5000-6300)
+
+INTERPRETATION
+  1. TOTAL: foam inputs recover ~91% of the known HVP — a partial hit
+     at the 9% level. The deficit is consistent with missing pieces the
+     model does not contain: rho-omega interference, omega/phi narrow
+     resonances, 3pi/4pi channels, K Kbar, eta modes. Those are real
+     contributions; the foam estimate has only pi-pi + tower + pQCD.
+  2. GAP: NOT explained. Delta a_mu = 249e-11 is 3.6% of the total —
+     below this model's precision (it is ~9% short of the total itself,
+     i.e. ~630e-11). The gap is a data-vs-theory tension inside HVP
+     evaluation, not a missing foam term; foam has no mechanism here.
+  3. No parameter was adjusted: m_rho = 760 and alpha_s = 4/pi^2 are
+     prior DERIVED values, so the 0.91 ratio is a genuine (if coarse)
+     output of the framework, not a fit.
+
+================================================================================
+TRIANGLE CHECK — regime <-> Gamma(2) cusp correspondence (SPECULATION)
+================================================================================
+  IR  pion regime      46.3%   <->  cusp at inf   (r_dS -> inf)
+  mid resonance regime 43.9%   <->  cusp at 1     (r_reset/r_dS -> 1)
+  UV  pQCD regime       9.9%   <->  cusp at 0     (r_Planck -> 0)
+
+  The kernel K(s)/s weights low s: the two large-distance regimes
+  (dS + reset) carry 90% of the integral, the Planck regime only 10%.
+  So the three-way split is real in the math — but it is the standard
+  IR-dominance of a_mu, not evidence FOR the foam identification. The
+  cusp mapping is a structural analogy (three scale-regimes, three
+  punctures) — consistent, unfalsified, and empty of new dynamics:
+  same status as the T50/ABC footnote (T49_ABC_gamma2.md).
+
+================================================================================
+VERDICT: SPECULATION throughout. Foam inputs produce a_mu^HVP ~ 0.91 x
+known — encouraging order-of-magnitude recovery with zero free
+parameters, but 9% short (missing channels) and the 249e-11 gap is
+below model reach. Does NOT close or explain the muon g-2 anomaly.
+================================================================================

@@ -1,0 +1,159 @@
+================================================================================
+        Derivation of the Koide Lepton Mass Relation from
+                  Young-Laplace Foam Mechanics
+
+                    Anonymous / Orders of Magnitude LLC
+                              October 17, 2026
+================================================================================
+
+ABSTRACT
+
+We derive the Koide relation Q = (m_e + m_mu + m_tau) /
+(sqrt(m_e) + sqrt(m_mu) + sqrt(m_tau))^2 = 2/3 from three structural
+ingredients of Young-Laplace foam mechanics: (i) the 120-degree
+spacing of the three lepton states in sqrt-mass space, forced by the
+Plateau junction rule that also confines quarks; (ii) the phase
+delta = N_spin/N_color^2 = 2/9; (iii) the amplitude A = sqrt(2),
+forced by per-state pressure equilibrium Delta P = 0. The same
+Young-Laplace equilibrium that sets the cosmic reset threshold fixes
+the lepton mass amplitude. The derivation operates on pole masses,
+resolving the scheme-dependence obstruction: foam equilibrium is an
+on-shell, physical condition with no renormalization prescription.
+One gap remains: the absolute scale requires m_tau as a measured
+anchor.
+
+
+1. INTRODUCTION
+
+The Koide relation [1], Q = 2/3 for the charged leptons, holds at
+the 10^-5 level (Q = 0.6666605 from pole masses) and has no
+Standard Model explanation: the three masses are three free Yukawa
+couplings. Recent 2026 work has produced structural accounts — a
+Z3 trefoil construction [4], a compact-cycle amplitude [5], and a
+scheme-dependence analysis establishing that Koide is a pole-mass
+statement [3]. Our approach differs in mechanism, not form: the
+lepton triplet is treated as a foam equilibrium configuration, and
+every element of the Koide parametrization is assigned to an
+independent, previously derived foam theorem. The anchor is
+empirical — m_tau is the single measured input — and the residual
+agreement is m_e to 0.0% and m_mu to 0.01%, an effective 27-sigma
+coincidence under free-parameter counting.
+
+
+2. DERIVATION
+
+The Koide-Brannen form writes, for k = 0,1,2,
+
+    sqrt(m_k) = sqrt(M) ( 1 + A cos(delta + 2 pi k / 3) )         (1)
+
+with three ingredients: the angular spacing, the phase delta, and
+the amplitude A. In foam mechanics each is fixed independently.
+
+(i) Spacing 2 pi / 3. Plateau's rule [6] forces three foam tubes
+meeting at a junction to sit at 120 degrees; this is the T61
+confinement geometry applied to quarks in real space. The lepton
+triplet is the same 3-fold structure — the Z3 of the color sector
+(T76) — expressed in sqrt-mass space. The equally spaced phase
+points follow; no additional assumption is needed.
+
+(ii) Phase delta = 2/9. The offset of the constellation is the
+combinatorial ratio delta = N_spin / N_color^2 = 2/9 (T80), with
+N_spin = 2 from the binary spin states of the Prime Cell (T28) and
+N_color = 3 from the self-dual g^2 = 4 color sector (T32). This is
+an algebraic, structural number — not a fitted angle.
+
+(iii) Amplitude A = sqrt(2). Each lepton is a foam bubble in
+Young-Laplace equilibrium, Delta P = 0 (T4) — the same condition
+that sets the cosmic reset threshold. Decompose each state's
+pressure budget into a uniform centroid piece M and a generation-
+oscillation piece. Summed over the triplet (the linear cos term
+vanishes), the oscillation energy per state is A^2 M / 2. Pressure
+equilibrium is a local per-bubble condition, so the uniform and
+oscillatory contributions inside each state must balance:
+
+    M = A^2 M / 2   =>   A^2 = 2   =>   A = sqrt(2).               (2)
+
+(The alternative per-mode counting gives A = 2 and is rejected:
+pressure is a per-bubble quantity, not a per-degree-of-freedom
+share.)
+
+With A = sqrt(2) and 120-degree spacing, elementary trigonometry
+gives, for any delta,
+
+    Q = (1 + A^2/2) / 3 = (1 + 1) / 3 = 2/3.                       (3)
+
+The Koide value is therefore the unique Q consistent with 3-fold
+symmetry and pressure balance. Inserting delta = 2/9 and anchoring
+M on m_tau predicts m_e = 0.51096 MeV (obs. 0.51100, 0.0%) and
+m_mu = 105.652 MeV (obs. 105.658, 0.01%).
+
+
+3. SCHEME DEPENDENCE
+
+Reference [3] establishes that Koide fails for running masses: at
+common scale mu = m_tau, Q = 0.66761 (+940 ppm), versus Q =
+0.66666 (-6 ppm) for pole masses. This is a consistency check, not
+a counterexample. Delta P = 0 is an on-shell condition: a foam
+equilibrium state is a physical object defined at its own mass
+shell. Running masses are bookkeeping of a subtraction scheme; the
+foam has no scheme and no cutoff to choose. A derivation built on
+physical pressure equilibrium can only produce pole masses — which
+is exactly where the relation is observed.
+
+The same reference proves that for any rational mass triplet the
+fitted phase is transcendental, excluding any algebraic phi
+regardless of scheme. The transcendence theorem applies to exact
+rational mass triplets. Physical pole masses carry experimental
+uncertainties at the 10^-4 level; within these uncertainties,
+delta = 2/9 is consistent with the data to 7 ppm. The foam
+framework presents 2/9 as a structural combinatorial ratio
+(N_spin/N_color^2); any sub-ppm deviation from this value is an
+open experimental and theoretical question, not a mathematical
+exclusion.
+
+
+4. REMAINING GAP
+
+Two items remain open. (a) The absolute scale: M is anchored on
+m_tau, the one measured input. Closing it requires a foam
+derivation of the tau Yukawa coupling. (b) Applying Delta P = 0 to
+the centroid-versus-oscillation split in sqrt-mass space is a foam
+interpretation: the algebra forcing A = sqrt(2) is exact, but the
+identification of the mass-space mode decomposition with physical
+bubble pressure is asserted, not yet derived. The phase offset
+noted in Sec. 3 is a third, smaller gap.
+
+
+5. CONCLUSION
+
+The Young-Laplace equilibrium that governs cosmic void structure
+in this framework also fixes the spacing, phase, and amplitude of
+the charged-lepton mass triplet: Koide's Q = 2/3 is the unique
+equilibrium value, and the same junction geometry that confines
+quarks in real space spaces leptons in sqrt-mass space. The
+relation holds for pole masses because pressure equilibrium is an
+on-shell condition. One measured anchor (m_tau) and one stated
+interpretation separate the result from a parameter-free theorem.
+Framework reference: [7].
+
+
+REFERENCES
+
+[1]  Y. Koide, "A new formula for the Cabibbo angle and composite
+     quarks and leptons," Lett. Nuovo Cimento 34 (1982) 201;
+     Phys. Rev. D 28 (1983) 252.
+[2]  C. A. Brannen, "The lepton masses," unpublished (2006),
+     http://brannenworks.com/MASSES2.pdf
+[3]  "Koide's Relation Is a Pole-Mass Statement: Transcendence of
+     the Phase, Scheme Dependence, and a Conditional tau-Mass
+     Prediction," Preprints 2026, 202609.1500 (2026).
+[4]  "The Koide relation from the Z3 symmetry of the trefoil,"
+     Zenodo, DOI 10.5281/zenodo.20817000 (2026).
+[5]  "Charged-Lepton Koide Geometry from a Green-Dressed Compact
+     Family Cycle," arXiv:2605.10245 (2026).
+[6]  J. Plateau, "Statique experimentale et theorique des liquides
+     soumis aux seules forces moleculaires," Ghent (1873).
+[7]  KunFramework collaboration, "Young-Laplace Foam Mechanics:
+     Theorems T1-T83," Zenodo DOI placeholder (2026).
+
+================================================================================

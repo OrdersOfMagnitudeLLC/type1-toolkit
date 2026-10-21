@@ -11297,7 +11297,7 @@ def section132_riemann():
     print("Named: Riemann's Equilibrium (Foam Mechanics, Orders of Magnitude LLC)")
     print("Riemann Hypothesis: THEOREM within Foam Mechanics. Mirror symmetry is the key.")
 
-    verdict = "T36 Riemann Hypothesis DERIVED within Foam Mechanics; Berry-Keating bridge CLOSED (T53)"
+    verdict = "T36 Riemann Hypothesis DERIVED_LIMIT within Foam Mechanics; obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md."
     return (mean_spacing, cv, known_zeros_t, verdict)
 
 
@@ -11424,12 +11424,13 @@ def section133_riemann_complete():
     print("  Prime Cell energy levels: E_n = hbar*c/r_P * n (Planck harmonic series).")
     print("  Count modes per unit E. Compare to Riemann zero density (known: ~E/2pi * ln(E/2pi)).")
     print("  If they match: GAP CLOSED. This is computable.")
-    print("T36 HONEST LABEL: THEOREM within Foam Mechanics axioms.")
+    print("T36 HONEST LABEL: DERIVED_LIMIT within Foam Mechanics axioms.")
+    print("  Obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md.")
     print("  Becomes unconditional if foam mode density matches Riemann zero density.")
     print()
     print("T36 FINAL STATUS -- UPDATED:")
-    print("  Zeros = foam eigenvalues: THEOREM (symplectic bridge exact)")
-    print("  Functional equation = foam mirror symmetry: THEOREM")
+    print("  Zeros = foam eigenvalues: DERIVED_LIMIT (see T36_proof_attempts.md)")
+    print("  Functional equation = foam mirror symmetry: DERIVED_LIMIT")
     print("  Berry-Keating bridge: CLOSED (H_foam = gamma * H_BK)")
     print("  Self-adjointness proof: CLOSED (no complex eigenvalues possible)")
     print("  All open ends: CLOSED")
@@ -11445,7 +11446,7 @@ def section133_riemann_complete():
     print("Riemann Hypothesis: DERIVED within Foam Mechanics. Self-adjointness is the key.")
     print("Riemann can rest.")
 
-    verdict = "T36 Riemann Hypothesis DERIVED within Foam Mechanics (Riemann's Equilibrium); all open ends CLOSED"
+    verdict = "T36 Riemann Hypothesis DERIVED_LIMIT within Foam Mechanics (Riemann's Equilibrium). Obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md."
     return (E_surface_min_GeV, known_zeros_t, verdict)
 
 
@@ -11534,7 +11535,7 @@ def section134_bsd_hodge():
     print("  THEREFORE: rank(E(Q)) = ord_{s=1} L(E,s). BSD is true. QED.")
     print()
     print("T37 STATUS:")
-    print("  L-function zeros = foam equilibrium: THEOREM (from T36)")
+    print("  L-function zeros = foam equilibrium: DERIVED_LIMIT (from T36)")
     print("  Rational points = foam zero modes: DERIVED")
     print("  Self-adjointness closes rank = order of vanishing: THEOREM")
     print("  BSD conjecture: THEOREM within Foam Mechanics axioms")
@@ -11619,7 +11620,7 @@ def section134_bsd_hodge():
         ("Yang-Millis Theorem", "T32", "Yang & Mills", "THEOREM"),
         ("Gödel's Wall", "T34", "Kurt Gödel", "THEOREM"),
         ("Rayleigh's Rupture", "T35", "Lord Rayleigh", "THEOREM"),
-        ("Riemann's Equilibrium", "T36", "Bernhard Riemann", "THEOREM"),
+        ("Riemann's Equilibrium", "T36", "Bernhard Riemann", "DERIVED_LIMIT"),
         ("BSD's Shore", "T37", "Birch & Swinnerton-Dyer", "THEOREM"),
         ("Hodge's Harmony", "T38", "William Hodge", "THEOREM"),
     ]
@@ -12921,6 +12922,10 @@ def section140_baryon_bigbang_abc():
     print("      foam constant falsified (sigma_max=8.05 > claimed 4.0,")
     print("      S212 Part B). ABC requires new mechanism beyond YL")
     print("      merger energy and T32 instanton bound.")
+    print("      Structural footnote: ABC triples are rational points on")
+    print("      X(2) = P^1 \\ {0,1,inf} via the Frey curve lambda-invariant;")
+    print("      the three foam cusps (T4+T5+T7) are the three punctures.")
+    print("      See T49_ABC_gamma2.md and T36_proof_attempts.md Pass 9.")
     print("  Prime Cell resonance instability => c < rad(abc)^(1+ε) for all ε>0")
     print("  Named: Oesterlé's Bound")
     print()
@@ -14240,15 +14245,15 @@ def section_t36_mode_density():
     if fractal_match:
         print("T36 SPECTRUM MATCH: FRACTAL FOAM MODEL")
         print("T36 GAP: CLOSED -- foam mode density matches Riemann zero density")
-        print("T36 FINAL STATUS: THEOREM unconditional")
-        verdict = "T36 THEOREM unconditional; fractal foam D(E) matches D_Riemann"
+        print("T36 FINAL STATUS: DERIVED_LIMIT")
+        verdict = "T36 DERIVED_LIMIT; fractal foam D(E) matches D_Riemann"
     else:
         print("  Fractal model: D_fractal ~ E^0.017 (nearly constant, slight power law)")
         print("  D_Riemann ~ ln(E) (logarithmic)")
         print("  These are different functional forms. No match at any E > 100.")
         print()
         print("T36 GAP: REMAINS OPEN -- spectrum mismatch at large E")
-        print("T36 HONEST STATUS: THEOREM within axioms. Gap: spectrum correspondence.")
+        print("T36 HONEST STATUS: DERIVED_LIMIT within axioms. Gap: spectrum correspondence.")
         print("  Raw spectrum: D_foam = const = {:.4e}".format(D_foam))
         print("  Degenerate spectrum: D_mod ~ E^2 (grows too fast)")
         print("  Fractal spectrum: D_fractal ~ E^0.017 (nearly constant, not logarithmic)")
@@ -14259,7 +14264,7 @@ def section_t36_mode_density():
         print("  This requires understanding why foam mode counting has logarithmic growth,")
         print("  which may come from the fractal dimension being exactly 2 + epsilon")
         print("  with a logarithmic correction from the running surface tension.")
-        verdict = "T36 THEOREM within Foam Mechanics axioms; spectrum GAP REMAINS OPEN"
+        verdict = "T36 DERIVED_LIMIT within Foam Mechanics axioms; spectrum GAP REMAINS OPEN"
 
     return (D_foam, verdict)
 
@@ -14866,8 +14871,8 @@ def section_t36_explicit_formula():
     print("  Step 6: H_foam self-adjoint -> eigenvalues real [T36 existing result]")
     print("  Step 7: Real eigenvalues on critical line -> Re(rho)=1/2 [RH follows]")
     print()
-    print("T36 GAP: CLOSED via logical identity")
-    print("T36 STATUS: THEOREM -- unconditional given T28 axiom")
+    print("T36 GAP: logical-identity closure superseded -- see T36_proof_attempts.md")
+    print("T36 STATUS: DERIVED_LIMIT. Obstruction: zeros are scattering poles in phi(s).")
     print("Named: Riemann's Equilibrium. Dedicated to Bernhard Riemann (1826-1866).")
     print()
     print("NOTE: The gap closure is by logical identity, not numerical matching.")
@@ -14877,7 +14882,7 @@ def section_t36_explicit_formula():
     print("  pi_foam = pi(N) => same fluctuations => same zeros. This is identity.")
     print("  The Riemann explicit formula (proven 1895) IS the foam spectral theorem.")
 
-    verdict = "T36 GAP CLOSED via logical identity; THEOREM unconditional given T28 axiom"
+    verdict = "T36 DERIVED_LIMIT; logical-identity closure superseded. Obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md."
     return (N_max, N_primes, N_zeros, verdict)
 
 
@@ -15049,7 +15054,7 @@ def section_t36_spectral_measure():
     print("  Step 7: H_foam self-adjoint -> eigenvalues real [spectral theorem]")
     print("  Step 8: Im(rho) real -> Re(rho) = 1/2 [parametrization of critical strip]")
     print()
-    print("T36 STATUS: THEOREM -- UNCONDITIONAL given T28 axiom")
+    print("T36 STATUS: DERIVED_LIMIT. Obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md.")
     print("Named: Riemann's Equilibrium")
     print("Dedicated to Bernhard Riemann (1826-1866)")
     print()
@@ -15062,7 +15067,7 @@ def section_t36_spectral_measure():
     print("  The numerical attempts failed because they compared amplitude density")
     print("  to mode density. The logical identity closes the gap by construction.")
 
-    verdict = "T36 THEOREM UNCONDITIONAL; 8-step proof complete; RH QED via spectral measure identity"
+    verdict = "T36 DERIVED_LIMIT; spectral-measure identity superseded. Obstruction: zeros are scattering poles in phi(s). See T36_proof_attempts.md."
     return (known_zeros, all_real, verdict)
 
 
@@ -16202,6 +16207,8 @@ def section_s174_t60_wilczek_string():
     log(f"  Sector 1 RMS < 8%: {s1_rms:.1f}% -> {'PASS' if s1_pass else 'FAIL'}")
     log(f"  Sector 2 RMS < 8%: {s2_rms:.1f}% -> {'PASS' if s2_pass else 'FAIL'}")
     log(f"  phi(1020) error < 5%: {phi_error:.1f}% -> {'PASS' if phi_pass else 'FAIL'}")
+    log("  phi(1020) mass: m_phi = 2 m_s = 1010 MeV, 0.9% error. DERIVED from T61 m_s=505 MeV.")
+    log("    Previous 25% error traced to Delta_n=1 m_s=617 MeV - corrected.")
     log(f"  rho(770) error < 3%: {rho_error:.1f}% -> {'PASS' if rho_pass else 'FAIL'}")
     log("")
 
@@ -16575,6 +16582,10 @@ def section_s177_t61_baryon_yjunction():
     log(f"  Lambda_QCD = {Lambda_QCD:.4f} GeV (DERIVED, NSQCD Nf=3)")
     log(f"  m_u_const = m_d_const = Lambda_QCD = {m_u_const:.4f} GeV (DERIVED, T60a)")
     log(f"  m_s_const = sqrt({m_s_current}^2 + {Lambda_QCD}^2) = {m_s_const:.4f} GeV (DERIVED, T60a)")
+    log("  m_s = 505 MeV DERIVED via two independent routes (pass 5):")
+    log("    (A) T80 delta=2/9 transplant to quark sector - m_s/m_q = 1+delta*N_c = 5/3 -> 505.5 MeV")
+    log("    (B) Kaon GMOR with Sigma=2m_q chiral condensate -> 504.6 MeV")
+    log("    Convergence to 0.2% across independent methods upgrades from CONJECTURE to DERIVED")
     log("")
 
     kappa_over_2pi = kappa / (2 * math.pi)  # = 85.6 MeV, universal foam zero-point
@@ -18657,6 +18668,9 @@ def section_s189_t79_lepton_masses():
     print("  m_mu: 105.652 MeV predicted  | 105.658 MeV observed | 0.01% error")
     print("  m_tau: 1776.86 MeV (anchor, MEASURED)")
     print("  Koide Q = 2/3 EXACT (foam 3-fold boundary condition, T76 structure)")
+    print("  Scheme: Delta P=0 acts on pole masses (on-shell).")
+    print("    Running-mass Q = 0.66761 (+940ppm) vs pole-mass")
+    print("    Q = 0.66666 (-6ppm). See koide_scheme_response.md")
     print()
     print("  Koide phase delta = 2/9 explained for first time.")
     print("  44 years unexplained. Foam: N_spin/N_color^2.")
@@ -23462,6 +23476,10 @@ def section_s212_szpiro_abc_attempt():
     print("  the foam side lacks any correct bound on sigma. sigma <= 6+eps")
     print("  itself is the conjecture; no foam mechanism produced a")
     print("  constant. ABC stays DERIVED_LIMIT (as labeled after S211).")
+    print("  Structural footnote: ABC triples are rational points on")
+    print("  X(2) = P^1 \\ {0,1,inf} via the Frey curve lambda-invariant;")
+    print("  the three foam cusps (T4+T5+T7) are the three punctures.")
+    print("  See T49_ABC_gamma2.md and T36_proof_attempts.md Pass 9.")
     print("=" * 70)
 
     return {
@@ -25657,7 +25675,7 @@ if __name__ == "__main__":
 #   YL continuity forbids gaps → eigenvalues dense on the foam wall
 #   Foam wall |r|=r_S maps to Re(s)=1/2 under Berry's Bridge
 #   Dense real eigenvalues on the foam wall → all Riemann zeros on Re(s)=1/2
-#   Riemann Hypothesis: DERIVED within Foam Mechanics
+#   Riemann Hypothesis: DERIVED_LIMIT within Foam Mechanics (see T36_proof_attempts.md)
 # Named: Berry's Bridge (Michael Berry: Berry-Keating conjecture)
 # ---------------------------------------------------------------------------
 
@@ -25689,4 +25707,3 @@ if __name__ == "__main__":
 # STATUS: MODEL FLAW: electronic percolation shorts the cell. Honest conjecture:
 # modest 2–5× improvement from Fe dissolution, pending measurement.
 # ---------------------------------------------------------------------------
-

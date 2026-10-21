@@ -9,7 +9,7 @@
 
 ---
 
-## Abstract (3 sentences)
+## Abstract
 
 The Lid equation counts a system's fundamental objects as the
 winding number N = W(∂K, f), where the canonical boundary ∂K is
