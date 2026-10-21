@@ -1,0 +1,10 @@
+name,p_norm,jones_abs_coeff_sum,jones_is_1
+unknot (0 cr),0.0,1,True
+unknot (1 kink),-2.0,1,True
+unknot (2 kinks),-4.0,1,True
+trefoil 3_1,-6.0,3,False
+figure-8 4_1,0.0,5,False
+5_1,-10.0,5,False
+5_2,10.0,7,False
+Conway 11n34,-2.0,15,False
+Kinoshita-Ter. 11n42,-2.0,15,False

@@ -1,0 +1,818 @@
+[
+ {
+  "pair": 1,
+  "traces": "Cinf",
+  "L": {
+   "label": "K6a1",
+   "census": "s912",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p01_L_K6a1.txt",
+   "crossings": 6,
+   "resolved_by": "census:s912"
+  },
+  "R": {
+   "label": "19nh_78",
+   "census": "[10,11]",
+   "g4_paper": 1,
+   "pdfile": null,
+   "resolved_by": "unresolvable"
+  }
+ },
+ {
+  "pair": 2,
+  "traces": "Cinf",
+  "L": {
+   "label": "K9n4",
+   "census": "-m199",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p02_L_K9n4.txt",
+   "crossings": 9,
+   "resolved_by": "census:-m199"
+  },
+  "R": {
+   "label": "-18nh_23",
+   "census": "o9_34801",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p02_R_m18nh_23.txt",
+   "crossings": 18,
+   "resolved_by": "census:o9_34801"
+  }
+ },
+ {
+  "pair": 3,
+  "traces": "not C0",
+  "L": {
+   "label": "K10n10",
+   "census": "-t12200",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p03_L_K10n10.txt",
+   "crossings": 10,
+   "resolved_by": "census:-t12200"
+  },
+  "R": {
+   "label": "-16nh_17",
+   "census": "-t11532",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p03_R_m16nh_17.txt",
+   "crossings": 16,
+   "resolved_by": "census:-t11532"
+  }
+ },
+ {
+  "pair": 4,
+  "traces": "Cinf",
+  "L": {
+   "label": "K10n10",
+   "census": "-t12200",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p03_L_K10n10.txt",
+   "crossings": 10,
+   "resolved_by": "census:-t12200"
+  },
+  "R": {
+   "label": "u_17-28",
+   "census": "o9_43446",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p04_R_u_17m28.txt",
+   "crossings": 28,
+   "resolved_by": "census:o9_43446"
+  }
+ },
+ {
+  "pair": 5,
+  "traces": "Cinf",
+  "L": {
+   "label": "K10n13",
+   "census": "m201",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p05_L_K10n13.txt",
+   "crossings": 10,
+   "resolved_by": "census:m201"
+  },
+  "R": {
+   "label": "u_17-23",
+   "census": "o9_34818",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p05_R_u_17m23.txt",
+   "crossings": 23,
+   "resolved_by": "census:o9_34818"
+  }
+ },
+ {
+  "pair": 6,
+  "traces": "Cinf",
+  "L": {
+   "label": "K11n38",
+   "census": "-m224",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p06_L_K11n38.txt",
+   "crossings": 11,
+   "resolved_by": "census:-m224"
+  },
+  "R": {
+   "label": "-16nh_9",
+   "census": "v3093",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p06_R_m16nh_9.txt",
+   "crossings": 16,
+   "resolved_by": "census:v3093"
+  }
+ },
+ {
+  "pair": 7,
+  "traces": "unknown",
+  "L": {
+   "label": "K11n49",
+   "census": "-v3536",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p07_L_K11n49.txt",
+   "crossings": 11,
+   "resolved_by": "census:-v3536"
+  },
+  "R": {
+   "label": "K15n103488",
+   "census": "-v3423",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p07_R_K15n103488.txt",
+   "crossings": 15,
+   "resolved_by": "census:-v3423"
+  }
+ },
+ {
+  "pair": 8,
+  "traces": "Cinf",
+  "L": {
+   "label": "K11n49",
+   "census": "-v3536",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p07_L_K11n49.txt",
+   "crossings": 11,
+   "resolved_by": "census:-v3536"
+  },
+  "R": {
+   "label": "u_17-27",
+   "census": "o9_42735",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p08_R_u_17m27.txt",
+   "crossings": 27,
+   "resolved_by": "census:o9_42735"
+  }
+ },
+ {
+  "pair": 9,
+  "traces": "Cinf",
+  "L": {
+   "label": "K11n116",
+   "census": "-t12748",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p09_L_K11n116.txt",
+   "crossings": 11,
+   "resolved_by": "census:-t12748"
+  },
+  "R": {
+   "label": "17nh_28",
+   "census": "-t12607",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p09_R_17nh_28.txt",
+   "crossings": 18,
+   "resolved_by": "census:-t12607"
+  }
+ },
+ {
+  "pair": 10,
+  "traces": "unknown",
+  "L": {
+   "label": "K12n121",
+   "census": "s239",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p10_L_K12n121.txt",
+   "crossings": 12,
+   "resolved_by": "census:s239"
+  },
+  "R": {
+   "label": "u_17-25",
+   "census": "-t11441",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p10_R_u_17m25.txt",
+   "crossings": 25,
+   "resolved_by": "census:-t11441"
+  }
+ },
+ {
+  "pair": 11,
+  "traces": "unknown",
+  "L": {
+   "label": "K12n200",
+   "census": "t09735",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p11_L_K12n200.txt",
+   "crossings": 12,
+   "resolved_by": "census:t09735"
+  },
+  "R": {
+   "label": "u_17-23b",
+   "census": "t11748",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p11_R_u_17m23b.txt",
+   "crossings": 23,
+   "resolved_by": "census:t11748"
+  }
+ },
+ {
+  "pair": 12,
+  "traces": "not C0",
+  "L": {
+   "label": "K12n309",
+   "census": "-v3195",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p12_L_K12n309.txt",
+   "crossings": 12,
+   "resolved_by": "census:-v3195"
+  },
+  "R": {
+   "label": "-K14n14254",
+   "census": "v2508",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p12_R_mK14n14254.txt",
+   "crossings": 14,
+   "resolved_by": "census:v2508"
+  }
+ },
+ {
+  "pair": 13,
+  "traces": "not C0",
+  "L": {
+   "label": "K12n318",
+   "census": "-o9_40519",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p13_L_K12n318.txt",
+   "crossings": 12,
+   "resolved_by": "census:-o9_40519"
+  },
+  "R": {
+   "label": "-18nh_32",
+   "census": "-o9_39433",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p13_R_m18nh_32.txt",
+   "crossings": 18,
+   "resolved_by": "census:-o9_39433"
+  }
+ },
+ {
+  "pair": 14,
+  "traces": "Cinf",
+  "L": {
+   "label": "K13n469",
+   "census": "v2272",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p14_L_K13n469.txt",
+   "crossings": 13,
+   "resolved_by": "census:v2272"
+  },
+  "R": {
+   "label": "-K13n469",
+   "census": "-v2272",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p14_R_mK13n469.txt",
+   "crossings": 13,
+   "resolved_by": "census:-v2272"
+  }
+ },
+ {
+  "pair": 15,
+  "traces": "Cinf",
+  "L": {
+   "label": "K13n572",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p15_L_K13n572.txt",
+   "crossings": 13,
+   "resolved_by": "linkexteriors:13n572"
+  },
+  "R": {
+   "label": "-K15n89587",
+   "census": "[10,11]",
+   "g4_paper": 1,
+   "pdfile": null,
+   "resolved_by": "unresolvable"
+  }
+ },
+ {
+  "pair": 16,
+  "traces": "unknown",
+  "L": {
+   "label": "K13n1021",
+   "census": "-t09900",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p16_L_K13n1021.txt",
+   "crossings": 13,
+   "resolved_by": "census:-t09900"
+  },
+  "R": {
+   "label": "u_17-28b",
+   "census": "-o9_34908",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p16_R_u_17m28b.txt",
+   "crossings": 28,
+   "resolved_by": "census:-o9_34908"
+  }
+ },
+ {
+  "pair": 17,
+  "traces": "unknown",
+  "L": {
+   "label": "K13n1021",
+   "census": "-t09900",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p16_L_K13n1021.txt",
+   "crossings": 13,
+   "resolved_by": "census:-t09900"
+  },
+  "R": {
+   "label": "K15n101402",
+   "census": "-o9_43876",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p17_R_K15n101402.txt",
+   "crossings": 15,
+   "resolved_by": "census:-o9_43876"
+  }
+ },
+ {
+  "pair": 18,
+  "traces": "Cinf",
+  "L": {
+   "label": "K13n2527",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p18_L_K13n2527.txt",
+   "crossings": 13,
+   "resolved_by": "linkexteriors:13n2527"
+  },
+  "R": {
+   "label": "-K15n9379",
+   "census": "t12270",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p18_R_mK15n9379.txt",
+   "crossings": 15,
+   "resolved_by": "census:t12270"
+  }
+ },
+ {
+  "pair": 19,
+  "traces": "unknown",
+  "L": {
+   "label": "K13n3158",
+   "census": "o9_42515",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p19_L_K13n3158.txt",
+   "crossings": 13,
+   "resolved_by": "census:o9_42515"
+  },
+  "R": {
+   "label": "19nh_40",
+   "census": "o9_41909",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p19_R_19nh_40.txt",
+   "crossings": 19,
+   "resolved_by": "census:o9_41909"
+  }
+ },
+ {
+  "pair": 20,
+  "traces": "unknown",
+  "L": {
+   "label": "K14n3155",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p20_L_K14n3155.txt",
+   "crossings": 14,
+   "resolved_by": "linkexteriors:14n3155"
+  },
+  "R": {
+   "label": "-K14n3155",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p20_R_mK14n3155.txt",
+   "crossings": 14,
+   "resolved_by": "linkexteriors:14n3155"
+  }
+ },
+ {
+  "pair": 21,
+  "traces": "unknown",
+  "L": {
+   "label": "K14n3155",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p20_L_K14n3155.txt",
+   "crossings": 14,
+   "resolved_by": "linkexteriors:14n3155"
+  },
+  "R": {
+   "label": "u_16-20",
+   "census": "t11462",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p21_R_u_16m20.txt",
+   "crossings": 20,
+   "resolved_by": "census:t11462"
+  }
+ },
+ {
+  "pair": 22,
+  "traces": "unknown",
+  "L": {
+   "label": "K14n3155",
+   "census": "10",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p20_L_K14n3155.txt",
+   "crossings": 14,
+   "resolved_by": "linkexteriors:14n3155"
+  },
+  "R": {
+   "label": "u_16-20b",
+   "census": "-t11462",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p22_R_u_16m20b.txt",
+   "crossings": 20,
+   "resolved_by": "census:-t11462"
+  }
+ },
+ {
+  "pair": 23,
+  "traces": "Cinf",
+  "L": {
+   "label": "K14n3611",
+   "census": "o9_33568",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p23_L_K14n3611.txt",
+   "crossings": 14,
+   "resolved_by": "census:o9_33568"
+  },
+  "R": {
+   "label": "u_16-25",
+   "census": "-o9_27542",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p23_R_u_16m25.txt",
+   "crossings": 25,
+   "resolved_by": "census:-o9_27542"
+  }
+ },
+ {
+  "pair": 24,
+  "traces": "C0",
+  "L": {
+   "label": "K14n5084",
+   "census": "-o9_33833",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p24_L_K14n5084.txt",
+   "crossings": 14,
+   "resolved_by": "census:-o9_33833"
+  },
+  "R": {
+   "label": "u_23-35",
+   "census": "-o9_37547",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p24_R_u_23m35.txt",
+   "crossings": 35,
+   "resolved_by": "census:-o9_37547"
+  }
+ },
+ {
+  "pair": 25,
+  "traces": "Cinf",
+  "L": {
+   "label": "K15n19499",
+   "census": "o9_37768",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p25_L_K15n19499.txt",
+   "crossings": 15,
+   "resolved_by": "census:o9_37768"
+  },
+  "R": {
+   "label": "K15n153789",
+   "census": "10",
+   "g4_paper": 0,
+   "pdfile": null,
+   "resolved_by": "unresolvable"
+  }
+ },
+ {
+  "pair": 26,
+  "traces": "Cinf",
+  "L": {
+   "label": "K15n19499",
+   "census": "o9_37768",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p25_L_K15n19499.txt",
+   "crossings": 15,
+   "resolved_by": "census:o9_37768"
+  },
+  "R": {
+   "label": "u_17-26",
+   "census": "o9_31828",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p26_R_u_17m26.txt",
+   "crossings": 26,
+   "resolved_by": "census:o9_31828"
+  }
+ },
+ {
+  "pair": 27,
+  "traces": "Cinf",
+  "L": {
+   "label": "K15n94464",
+   "census": "[10,11]",
+   "g4_paper": 1,
+   "pdfile": null,
+   "resolved_by": "unresolvable"
+  },
+  "R": {
+   "label": "u_17-24",
+   "census": "-o9_40081",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p27_R_u_17m24.txt",
+   "crossings": 24,
+   "resolved_by": "census:-o9_40081"
+  }
+ },
+ {
+  "pair": 28,
+  "traces": "unknown",
+  "L": {
+   "label": "K15n101402",
+   "census": "-o9_43876",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p17_R_K15n101402.txt",
+   "crossings": 15,
+   "resolved_by": "census:-o9_43876"
+  },
+  "R": {
+   "label": "u_17-28c",
+   "census": "-o9_34908",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p28_R_u_17m28c.txt",
+   "crossings": 28,
+   "resolved_by": "census:-o9_34908"
+  }
+ },
+ {
+  "pair": 29,
+  "traces": "unknown",
+  "L": {
+   "label": "K15n103488",
+   "census": "-v3423",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p07_R_K15n103488.txt",
+   "crossings": 15,
+   "resolved_by": "census:-v3423"
+  },
+  "R": {
+   "label": "u_17-27b",
+   "census": "o9_42735",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p29_R_u_17m27b.txt",
+   "crossings": 27,
+   "resolved_by": "census:o9_42735"
+  }
+ },
+ {
+  "pair": 30,
+  "traces": "unknown",
+  "L": {
+   "label": "K15n153789",
+   "census": "10",
+   "g4_paper": 0,
+   "pdfile": null,
+   "crossings": null,
+   "resolved_by": "unresolvable"
+  },
+  "R": {
+   "label": "u_17-26b",
+   "census": "o9_31828",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p30_R_u_17m26b.txt",
+   "crossings": 26,
+   "resolved_by": "census:o9_31828"
+  }
+ },
+ {
+  "pair": 31,
+  "traces": "not C0",
+  "L": {
+   "label": "16nh_17",
+   "census": "t11532",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p31_L_16nh_17.txt",
+   "crossings": 16,
+   "resolved_by": "census:t11532"
+  },
+  "R": {
+   "label": "u_17-28d",
+   "census": "-o9_43446",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p31_R_u_17m28d.txt",
+   "crossings": 28,
+   "resolved_by": "census:-o9_43446"
+  }
+ },
+ {
+  "pair": 32,
+  "traces": "unknown",
+  "L": {
+   "label": "18nh_2",
+   "census": "v0595",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p32_L_18nh_2.txt",
+   "crossings": 18,
+   "resolved_by": "census:v0595"
+  },
+  "R": {
+   "label": "u_19-30",
+   "census": "t12120",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p32_R_u_19m30.txt",
+   "crossings": 30,
+   "resolved_by": "census:t12120"
+  }
+ },
+ {
+  "pair": 33,
+  "traces": "C0",
+  "L": {
+   "label": "18nh_7",
+   "census": "v2869",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p33_L_18nh_7.txt",
+   "crossings": 18,
+   "resolved_by": "census:v2869"
+  },
+  "R": {
+   "label": "u_16-22",
+   "census": "t12388",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p33_R_u_16m22.txt",
+   "crossings": 22,
+   "resolved_by": "census:t12388"
+  }
+ },
+ {
+  "pair": 34,
+  "traces": "unknown",
+  "L": {
+   "label": "18nh_16",
+   "census": "-t10974",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p34_L_18nh_16.txt",
+   "crossings": 18,
+   "resolved_by": "census:-t10974"
+  },
+  "R": {
+   "label": "u_17-32",
+   "census": "o9_39967",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p34_R_u_17m32.txt",
+   "crossings": 32,
+   "resolved_by": "census:o9_39967"
+  }
+ },
+ {
+  "pair": 35,
+  "traces": "Cinf",
+  "L": {
+   "label": "19nh_4",
+   "census": "t07281",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p35_L_19nh_4.txt",
+   "crossings": 19,
+   "resolved_by": "census:t07281"
+  },
+  "R": {
+   "label": "u_23-42",
+   "census": "o9_34949",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p35_R_u_23m42.txt",
+   "crossings": 42,
+   "resolved_by": "census:o9_34949"
+  }
+ },
+ {
+  "pair": 36,
+  "traces": "unknown",
+  "L": {
+   "label": "19nh_4",
+   "census": "t07281",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p35_L_19nh_4.txt",
+   "crossings": 19,
+   "resolved_by": "census:t07281"
+  },
+  "R": {
+   "label": "u_17-31",
+   "census": "o9_39806",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p36_R_u_17m31.txt",
+   "crossings": 31,
+   "resolved_by": "census:o9_39806"
+  }
+ },
+ {
+  "pair": 37,
+  "traces": "Cinf",
+  "L": {
+   "label": "u_16-20c",
+   "census": "t11462",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p37_L_u_16m20c.txt",
+   "crossings": 20,
+   "resolved_by": "census:t11462"
+  },
+  "R": {
+   "label": "u_16-20d",
+   "census": "-t11462",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p37_R_u_16m20d.txt",
+   "crossings": 20,
+   "resolved_by": "census:-t11462"
+  }
+ },
+ {
+  "pair": 38,
+  "traces": "C0",
+  "L": {
+   "label": "u_17-24b",
+   "census": "t11900",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p38_L_u_17m24b.txt",
+   "crossings": 24,
+   "resolved_by": "census:t11900"
+  },
+  "R": {
+   "label": "u_16-28",
+   "census": "-o9_40803",
+   "g4_paper": 1,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p38_R_u_16m28.txt",
+   "crossings": 28,
+   "resolved_by": "census:-o9_40803"
+  }
+ },
+ {
+  "pair": 39,
+  "traces": "Cinf",
+  "L": {
+   "label": "u_17-31a",
+   "census": "o9_22951",
+   "g4_paper": null,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p39_L_u_17m31a.txt",
+   "crossings": 31,
+   "resolved_by": "census:o9_22951"
+  },
+  "R": {
+   "label": "u_17-31b",
+   "census": "-o9_22951",
+   "g4_paper": null,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p39_R_u_17m31b.txt",
+   "crossings": 31,
+   "resolved_by": "census:-o9_22951"
+  }
+ },
+ {
+  "pair": 40,
+  "traces": "unknown",
+  "L": {
+   "label": "u_17-31c",
+   "census": "o9_39806",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p40_L_u_17m31c.txt",
+   "crossings": 31,
+   "resolved_by": "census:o9_39806"
+  },
+  "R": {
+   "label": "u_23-42b",
+   "census": "o9_34949",
+   "g4_paper": 0,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p40_R_u_23m42b.txt",
+   "crossings": 42,
+   "resolved_by": "census:o9_34949"
+  }
+ },
+ {
+  "pair": 41,
+  "traces": "Cinf",
+  "L": {
+   "label": "u_16-26",
+   "census": "o9_41058",
+   "g4_paper": null,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p41_L_u_16m26.txt",
+   "crossings": 26,
+   "resolved_by": "census:o9_41058"
+  },
+  "R": {
+   "label": "u_16-26b",
+   "census": "-o9_41058",
+   "g4_paper": null,
+   "pdfile": "/mnt/HIVE/FrontierMath/SPC4/pds/p41_R_u_16m26b.txt",
+   "crossings": 26,
+   "resolved_by": "census:-o9_41058"
+  }
+ }
+]

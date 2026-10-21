@@ -1,0 +1,152 @@
+nohup: ignoring input
+/tmp/sphenv/lib/python3.12/site-packages/plink/gui.py:33: UserWarning: Plink failed to import tkinter, GUI will not be available
+  warnings.warn('Plink failed to import tkinter, GUI will not be available')
+==============================================================================
+SU(2) FLAT-CONNECTION (foam-equilibrium) SPECTRUM PER KNOT
+==============================================================================
+unknot: pi_1 = Z  ->  every rep abelian (rho(a)=e^{i theta} sigma3)
+        -> trivial flat connections only -> foam pressure = 0
+
+--- 3_1   gens=['a', 'b'] rels=['aabbb']
+    volume=0.000000   CS(geometric rep)=-0.083333
+    reps found: 110 total, 20 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(0.01972)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(-0.334337)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(-0.534636)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(1.0), np.float64(-1.730991)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(-1.198837)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(1.0), np.float64(1.632507)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(1.0), np.float64(-1.307574)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(-1.588663)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(-0.018154)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.0), np.float64(1.587277)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(1.0), np.float64(-1.278671)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(1.0), np.float64(1.21316)]
+    nonabelian arcs (char-variety components): 0
+
+--- 4_1   gens=['a', 'b'] rels=['abbbaBAAB']
+    volume=2.029883   CS(geometric rep)=-0.000000
+    reps found: 239 total, 154 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(-0.076864), np.float64(-1.617024), np.float64(0.029371)]
+      char(tr gens, tr pairs...) = [np.float64(-0.913554), np.float64(0.082996), np.float64(0.996237)]
+      char(tr gens, tr pairs...) = [np.float64(-0.149052), np.float64(-1.614227), np.float64(0.057016)]
+      char(tr gens, tr pairs...) = [np.float64(-0.417864), np.float64(0.462001), np.float64(0.776699)]
+      char(tr gens, tr pairs...) = [np.float64(-0.495395), np.float64(0.412348), np.float64(0.843007)]
+      char(tr gens, tr pairs...) = [np.float64(0.166649), np.float64(-1.613271), np.float64(-0.06377)]
+      char(tr gens, tr pairs...) = [np.float64(0.657024), np.float64(-1.539228), np.float64(-0.25875)]
+      char(tr gens, tr pairs...) = [np.float64(1.083622), np.float64(-1.368458), np.float64(-0.457522)]
+      char(tr gens, tr pairs...) = [np.float64(0.09581), np.float64(-1.616464), np.float64(-0.036618)]
+      char(tr gens, tr pairs...) = [np.float64(0.348256), np.float64(-1.59695), np.float64(-0.134102)]
+      char(tr gens, tr pairs...) = [np.float64(1.38238), np.float64(-0.529871), np.float64(-0.903592)]
+      char(tr gens, tr pairs...) = [np.float64(-0.665608), np.float64(-1.537001), np.float64(0.26236)]
+    nonabelian arcs (char-variety components): 2
+      arc on tr(mu)/2 = cos(alpha), alpha in [0.771,2.370], samples=44
+      arc on tr(mu)/2 = cos(alpha), alpha in [0.810,2.331], samples=40
+
+--- 5_1   gens=['a', 'b'] rels=['aabbbbb']
+    volume=0.000000   CS(geometric rep)=0.050000
+    reps found: 140 total, 62 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(0.091826)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(-1.759312)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(-0.618034), np.float64(-1.5301)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.618034), np.float64(-0.402754)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(-1.232632)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(1.534786)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(-0.360432)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(-0.226707)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(-0.618034), np.float64(-1.455982)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(-0.618034), np.float64(0.972488)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(1.618034), np.float64(-1.173996)]
+      char(tr gens, tr pairs...) = [np.float64(-0.0), np.float64(-0.618034), np.float64(1.791377)]
+    nonabelian arcs (char-variety components): 0
+
+--- 5_2   gens=['a', 'b'] rels=['aBBBabbAAbb']
+    volume=2.828122   CS(geometric rep)=-0.153204
+    reps found: 238 total, 144 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(-0.60625), np.float64(-1.741688), np.float64(0.834775)]
+      char(tr gens, tr pairs...) = [np.float64(-1.323593), np.float64(-0.846635), np.float64(0.403842)]
+      char(tr gens, tr pairs...) = [np.float64(-0.515934), np.float64(-1.75897), np.float64(0.72051)]
+      char(tr gens, tr pairs...) = [np.float64(0.192555), np.float64(-1.796145), np.float64(-0.276993)]
+      char(tr gens, tr pairs...) = [np.float64(1.391662), np.float64(-0.94768), np.float64(-0.604328)]
+      char(tr gens, tr pairs...) = [np.float64(-1.384184), np.float64(-0.933615), np.float64(0.576442)]
+      char(tr gens, tr pairs...) = [np.float64(-0.046501), np.float64(-1.801602), np.float64(0.067178)]
+      char(tr gens, tr pairs...) = [np.float64(1.260105), np.float64(-0.78159), np.float64(-0.277592)]
+      char(tr gens, tr pairs...) = [np.float64(1.239513), np.float64(-1.475519), np.float64(-1.328217)]
+      char(tr gens, tr pairs...) = [np.float64(0.90547), np.float64(-1.656607), np.float64(-1.15917)]
+      char(tr gens, tr pairs...) = [np.float64(-0.804116), np.float64(-1.690933), np.float64(1.060881)]
+      char(tr gens, tr pairs...) = [np.float64(0.118506), np.float64(-1.799751), np.float64(-0.170953)]
+    nonabelian arcs (char-variety components): 3
+      arc on tr(mu)/2 = cos(alpha), alpha in [0.381,2.761], samples=62
+      arc on tr(mu)/2 = cos(alpha), alpha in [0.810,2.331], samples=40
+      arc on tr(mu)/2 = cos(alpha), alpha in [0.810,2.331], samples=40
+
+--- 8_18   gens=['a', 'b', 'c'] rels=['aacAbCBCbAc', 'aCACacBaCAcacACbAcaCacAbCAcacACaBc']
+    volume=12.350906   CS(geometric rep)=-0.000000
+    reps found: 136 total, 129 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(0.175936), np.float64(-0.969047), np.float64(-0.067338), np.float64(-0.103152), np.float64(-1.612723), np.float64(-0.216398), np.float64(1.761816)]
+      char(tr gens, tr pairs...) = [np.float64(-1.940197), np.float64(0.533778), np.float64(-0.985634), np.float64(-0.05), np.float64(1.254841), np.float64(-1.449003), np.float64(1.254841)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(2.0), np.float64(0.0), np.float64(-0.0), np.float64(1.338261), np.float64(0.0), np.float64(1.338261)]
+      char(tr gens, tr pairs...) = [np.float64(0.025811), np.float64(-0.999334), np.float64(-0.024077), np.float64(-0.001716), np.float64(-1.955548), np.float64(-0.026397), np.float64(1.33631)]
+      char(tr gens, tr pairs...) = [np.float64(1.0), np.float64(-2.0), np.float64(-1.0), np.float64(-1.0), np.float64(-0.0), np.float64(1.0), np.float64(0.0)]
+      char(tr gens, tr pairs...) = [np.float64(0.093265), np.float64(-0.991302), np.float64(-0.035644), np.float64(-0.056809), np.float64(-1.616546), np.float64(-0.115123), np.float64(-0.218263)]
+      char(tr gens, tr pairs...) = [np.float64(0.0), np.float64(2.0), np.float64(-0.0), np.float64(0.0), np.float64(0.618034), np.float64(-0.0), np.float64(0.618034)]
+      char(tr gens, tr pairs...) = [np.float64(1.703087), np.float64(1.830332), np.float64(1.648033), np.float64(1.469183), np.float64(1.762739), np.float64(1.211216), np.float64(1.286596)]
+      char(tr gens, tr pairs...) = [np.float64(0.787187), np.float64(-0.380336), np.float64(-0.976427), np.float64(0.677031), np.float64(0.193808), np.float64(1.12899), np.float64(0.591089)]
+      char(tr gens, tr pairs...) = [np.float64(-0.008812), np.float64(-0.999922), np.float64(0.023065), np.float64(-0.014254), np.float64(0.617943), np.float64(-0.02851), np.float64(-1.956014)]
+      char(tr gens, tr pairs...) = [np.float64(1.717574), np.float64(0.32389), np.float64(-0.669936), np.float64(1.226242), np.float64(-0.243761), np.float64(-0.100231), np.float64(-0.34996)]
+      char(tr gens, tr pairs...) = [np.float64(-0.004944), np.float64(-0.999976), np.float64(0.001888), np.float64(0.003055), np.float64(-1.61803), np.float64(0.00611), np.float64(-0.209083)]
+
+--- 11n34   gens=['a', 'b', 'c'] rels=['aaBcbbcAc', 'aacAbCBBaCAAbbcBc']
+    volume=11.219118   CS(geometric rep)=-0.135620
+    reps found: 181 total, 138 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(-0.172824), np.float64(-0.448869), np.float64(1.606584), np.float64(1.433722), np.float64(0.100068), np.float64(0.100068), np.float64(1.536622)]
+      char(tr gens, tr pairs...) = [np.float64(1.078054), np.float64(-0.429389), np.float64(-1.482728), np.float64(-0.181307), np.float64(-0.09475), np.float64(-0.09475), np.float64(0.559353)]
+      char(tr gens, tr pairs...) = [np.float64(1.769974), np.float64(-1.543624), np.float64(-0.427677), np.float64(-1.197798), np.float64(-0.238208), np.float64(-0.238208), np.float64(0.137878)]
+      char(tr gens, tr pairs...) = [np.float64(-0.445042), np.float64(-1.24698), np.float64(0.554958), np.float64(-1.24698), np.float64(-1.24698), np.float64(-1.24698), np.float64(0.554958)]
+      char(tr gens, tr pairs...) = [np.float64(-0.191272), np.float64(-0.457992), np.float64(1.587188), np.float64(1.37408), np.float64(0.126913), np.float64(0.126913), np.float64(1.4712)]
+      char(tr gens, tr pairs...) = [np.float64(1.68062), np.float64(0.072456), np.float64(0.449406), np.float64(-0.518792), np.float64(0.352664), np.float64(0.352664), np.float64(-0.704807)]
+      char(tr gens, tr pairs...) = [np.float64(-0.140247), np.float64(-1.613182), np.float64(0.012748), np.float64(-0.417599), np.float64(-0.400654), np.float64(-0.400654), np.float64(-0.645016)]
+      char(tr gens, tr pairs...) = [np.float64(0.64256), np.float64(-1.837215), np.float64(-0.377298), np.float64(-1.043434), np.float64(0.773748), np.float64(0.773748), np.float64(-0.964181)]
+      char(tr gens, tr pairs...) = [np.float64(-0.134174), np.float64(-1.618084), np.float64(-0.004451), np.float64(-0.406508), np.float64(-0.379104), np.float64(-0.379104), np.float64(-0.661229)]
+      char(tr gens, tr pairs...) = [np.float64(0.794731), np.float64(-1.78067), np.float64(-0.246642), np.float64(-1.30942), np.float64(0.874396), np.float64(0.874396), np.float64(-0.840429)]
+      char(tr gens, tr pairs...) = [np.float64(0.141107), np.float64(1.108047), np.float64(-1.200434), np.float64(-1.377058), np.float64(0.097036), np.float64(0.097036), np.float64(0.877827)]
+      char(tr gens, tr pairs...) = [np.float64(0.392352), np.float64(-1.349752), np.float64(-1.318217), np.float64(-1.030648), np.float64(0.168092), np.float64(0.168092), np.float64(0.118424)]
+
+--- 11n42   gens=['a', 'b', 'c'] rels=['accbCCAcABaCAcAbaCaccBaC', 'acbCbAB']
+    volume=11.219118   CS(geometric rep)=-0.135620
+    reps found: 151 total, 126 nonabelian classes
+      char(tr gens, tr pairs...) = [np.float64(0.898781), np.float64(-0.724651), np.float64(-1.75838), np.float64(-0.105489), np.float64(-0.206087), np.float64(0.440501), np.float64(0.355428)]
+      char(tr gens, tr pairs...) = [np.float64(-0.223652), np.float64(0.981109), np.float64(-1.110008), np.float64(-1.517034), np.float64(-1.026905), np.float64(-0.833093), np.float64(0.019399)]
+      char(tr gens, tr pairs...) = [np.float64(-0.56145), np.float64(-0.887133), np.float64(1.842374), np.float64(0.51859), np.float64(-0.461), np.float64(-0.416425), np.float64(0.869968)]
+      char(tr gens, tr pairs...) = [np.float64(0.174497), np.float64(0.400047), np.float64(-0.005704), np.float64(-1.451965), np.float64(1.060282), np.float64(1.263739), np.float64(-0.636119)]
+      char(tr gens, tr pairs...) = [np.float64(-0.587501), np.float64(-0.89375), np.float64(-0.099231), np.float64(0.08582), np.float64(0.610118), np.float64(1.743128), np.float64(-1.155411)]
+      char(tr gens, tr pairs...) = [np.float64(-1.040895), np.float64(-0.327471), np.float64(-1.454539), np.float64(-0.544325), np.float64(0.542055), np.float64(0.756337), np.float64(-0.719562)]
+      char(tr gens, tr pairs...) = [np.float64(0.230862), np.float64(-0.671698), np.float64(0.189046), np.float64(0.833419), np.float64(-0.813167), np.float64(1.561314), np.float64(1.359369)]
+      char(tr gens, tr pairs...) = [np.float64(1.301224), np.float64(1.697398), np.float64(-0.413615), np.float64(1.6897), np.float64(0.928291), np.float64(-0.855762), np.float64(0.647388)]
+      char(tr gens, tr pairs...) = [np.float64(0.969056), np.float64(-0.566734), np.float64(1.594302), np.float64(-0.773009), np.float64(0.811943), np.float64(0.026801), np.float64(-1.2721)]
+      char(tr gens, tr pairs...) = [np.float64(0.629906), np.float64(-0.426621), np.float64(1.57317), np.float64(-1.140669), np.float64(1.156022), np.float64(-0.589284), np.float64(-1.649205)]
+      char(tr gens, tr pairs...) = [np.float64(-0.886583), np.float64(-0.732023), np.float64(-1.331387), np.float64(0.551194), np.float64(0.13089), np.float64(-0.606725), np.float64(-0.226705)]
+      char(tr gens, tr pairs...) = [np.float64(1.045797), np.float64(-0.560921), np.float64(-1.524331), np.float64(0.048431), np.float64(0.112345), np.float64(-0.220639), np.float64(-0.175361)]
+
+==============================================================================
+MUTANT PAIR: 11n34 (Conway) vs 11n42 (Kinoshita-Terasaka)
+==============================================================================
+  vol: 11.219118 vs 11.219118  (same=True)
+  geo CS: -0.135620 vs -0.135620
+  #nonabelian classes found: 138 vs 126
+  spectra NN-distance: 1.6413 / 1.6926 (internal spread 5.293)
+  character spectra identical (NN<5% spread): False
+  tr(gen0) set 11n34: [np.float64(-1.837), np.float64(-1.802), np.float64(-1.729), np.float64(-1.727), np.float64(-1.726), np.float64(-1.705), np.float64(-1.683), np.float64(-1.677)]
+  tr(gen0) set 11n42: [np.float64(-1.239), np.float64(-1.234), np.float64(-1.211), np.float64(-1.192), np.float64(-1.191), np.float64(-1.14), np.float64(-1.123), np.float64(-1.118)]
+
+==============================================================================
+VERDICT
+==============================================================================
+  P(rho)=|CS| test on reps:
+    unknot: only trivial/abelian flat SU(2) connections exist.
+    every tested nontrivial knot: nonabelian flat connections exist
+    (Kronheimer-Mrowka: proven for ALL nontrivial knots).
+    => flat-SU(2) foam detects the unknot UNCONDITIONALLY.
+    Jones=1 detection remains conjectural.
+  mutant pair: SU(2) character data DIFFER
+    -> FOAM STRONGER than Jones (sees mutants Jones cannot)

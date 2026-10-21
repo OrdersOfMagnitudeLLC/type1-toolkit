@@ -1,0 +1,26 @@
+# Re-include results/ (parent KunFramework/.gitignore ignores results/)
+!results/
+# ...except bulky SPC4 raw data
+results/SPC4/data/
+results/SPC4/pds/
+results/SPC4/code/
+
+# Bulk/binary supplement assets — excluded
+papers/computational_supplement/spc4/code/
+papers/computational_supplement/spc4/exotic_traces.zip
+papers/computational_supplement/spc4/pds/
+papers/computational_supplement/knotjob/KnotJob21.jar
+
+# Keep named data files despite repo-root *.json / *.csv ignores
+!papers/computational_supplement/spc4/kegel_spreer_results.json
+!papers/computational_supplement/spc4/kegel_spreer_results_draft.json
+!papers/computational_supplement/spc4/resolved.json
+!papers/computational_supplement/jones/p_vs_jones.csv
+
+# Python cruft, logs, editor junk
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+.ipynb_checkpoints/
+!papers/computational_supplement/jones/su2_foam.log

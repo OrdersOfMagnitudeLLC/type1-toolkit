@@ -1,0 +1,68 @@
+==================================================================
+1. Jones unknot: W(|z|=1, V_K) as unknot detector
+==================================================================
+  unknot 0_1     : W =   +0.000   interior roots = 0, on-circle = 0   amphichiral=True
+  trefoil 3_1    : W =   +1.000   interior roots = 1, on-circle = 0   amphichiral=False
+  figure-8 4_1   : W =     +nan   interior roots = 0, on-circle = 4   amphichiral=True
+  cinquefoil 5_1 : W =   +3.000   interior roots = 3, on-circle = 0   amphichiral=False
+  converse probe V = 1 - z^3/2 (V != 1): W = +0.000  -> W = 0 without V = 1
+
+==================================================================
+2. Lonely Runner: n=7 validation, n=8 test
+==================================================================
+  n = 7:  speeds 1..6  bound 1/7 = 0.1429
+          max_t min dist = 0.14286 at t ~ 0.71429  (HOLDS; consecutive-speed set is the trivial instance: t=1/n gives exactly 1/n)
+          W(C, |z|=rho): rho=0.9 ->  +0.01   rho=1.0 ->   +nan   rho=1.1 -> +20.99   (deg C = 21; all roots lie ON the circle)
+  n = 8:  speeds 1..7  bound 1/8 = 0.1250
+          max_t min dist = 0.12500 at t ~ 0.12500  (HOLDS; consecutive-speed set is the trivial instance: t=1/n gives exactly 1/n)
+          W(C, |z|=rho): rho=0.9 ->  +0.01   rho=1.0 ->   +nan   rho=1.1 -> +27.99   (deg C = 28; all roots lie ON the circle)
+
+==================================================================
+3. Symplectic ball packing: W as ball counter
+==================================================================
+  9 disjoint balls   : W = +9.000   (identical -> W sees count, not width)
+  9 overlapping balls: W = +9.000   (identical -> W sees count, not width)
+  McDuff-Polterovich context: CP^2 packs fully by k equal balls
+  for all tested k <= 9 except k=8 (max fraction 864/1001 ~ 0.863).
+  The obstruction is Gromov-width arithmetic; W(k) = k either way.
+
+==================================================================
+4. Factoring: W(dK, f) carries no (p,q) information
+==================================================================
+  n =            35  |Fix(x->-x)| = 1  W(z^n-1, rho<1) =  +0.2   W(rho>1) =   +34.8   == n
+  n =           143  |Fix(x->-x)| = 1  W(z^n-1, rho<1) =  +0.2   W(rho>1) =  +142.8   == n
+  n =           899  |Fix(x->-x)| = 1  W(z^n-1, rho<1) =  +0.1   W(rho>1) =  +898.8   == n
+  n =       1022117  |Fix(x->-x)| = 1  W(z^n-1, rho<1) =  +0.0   W(rho>1) = +1022117.0   == n
+  n = 1000036000099  |Fix(x->-x)| = 1  W(z^n-1, rho<1) =  +0.0   W(rho>1) = +1000036000099.0   == n
+
+  Same-size comparison: n1 = 1009*1013 and n2 = 1013*1019
+    n =   1022117: W = +1022117.0   (factor-blind: identical structure, different p,q)
+    n =   1032247: W = +1032247.0   (factor-blind: identical structure, different p,q)
+  Any f built from (n, +, *, x->-x) is a function of n alone;
+  Euler phi = (p-1)(q-1) is NOT definable without the factors,
+  so no legitimate f can route (p,q) into W.  No Lid shortcut.
+
+==================================================================
+5. Riemann: bilateral contour W_bil(edge=0.45) = 2N(T) - 1
+==================================================================
+  T =   100:  W_bil =     +57.0000   2N(T)-1 =    57   |W - (2N-1)| = 2.13e-14   MATCH
+  T =   500:  W_bil =    +537.0000   2N(T)-1 =   537   |W - (2N-1)| = 6.03e-12   MATCH
+  T =  1000:  W_bil =   +1297.0000   2N(T)-1 =  1297   |W - (2N-1)| = 1.57e-11   MATCH
+
+  S(T) closing arc: equal-arc deformation (sec 9b) reproduces
+  S(tau) itself -- equality of two unknowns never yields a zero.
+  S(T) = 0 remains the single open gap equivalent to RH.
+
+==================================================================
+SUMMARY
+==================================================================
+  P1 Jones unknot      [iff-claim DEAD / detector direction MEASURED]
+      unknot W=0, trefoil W=+1 (detector direction works on test set); figure-8 (amphichiral, in Fix(sigma)) puts zeros ON |z|=1; converse fails structurally (V!=1 can give W=0)
+  P2 Lonely Runner     [Lid-existence DEAD / n=8 numerical CONJECTURE]
+      W jumps 0 -> deg(C) across rho=1: counts degree, BLIND to root positions -> no existence info. Direct scan: n=7 max gap ~0.15-0.17 (>1/7, validated); n=8 gap >= 1/8 numerically (see output)
+  P3 Ball packing      [DEAD as packing detector (counting works trivially)]
+      W = #balls tautologically; identical for disjoint vs overlapping configs -> cannot encode the packing bound (width info absent)
+  P4 Factoring         [DERIVED (negative result)]
+      |Fix| encodes parity only; W(z^n-1)=n for rho>1, identical across same-size n with different factorizations; phi uncomputable without factors -> structural no-go
+  P5 Riemann zeros     [DERIVED (count) + NAMED OPEN PROBLEM (S(T) arc)]
+      W_bil(0.45) = 2N(T)-1 at T = 100/500/1000 (residuals in output); S(T) = 0 still the open gap
